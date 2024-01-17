@@ -1,0 +1,5 @@
+contributingModels=EnterpriseArchitecture::../models/travelAgencyEA.xmi,\
+                   ReqIf::../models/bookingTripRequirements.xmi,\
+                   BPMN::../models/bookingTripProccess.xmi
+viewpoint=../src-gen/EAView.eviewpoint
+matchingModel=../src-gen/EAView.ecl

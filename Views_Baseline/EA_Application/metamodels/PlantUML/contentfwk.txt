@@ -1,0 +1,406 @@
+@startuml
+class EnterpriseArchitecture [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//EnterpriseArchitecture]] {
+}
+abstract class Architecture [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Architecture]] {
+}
+class BusinessArchitecture [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//BusinessArchitecture]] {
+}
+class DataArchitecture [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//DataArchitecture]] {
+}
+class TechnologyArchitecture [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//TechnologyArchitecture]] {
+}
+class Driver [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Driver]] {
+}
+class Goal [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Goal]] {
+}
+class Objective [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Objective]] {
+}
+class OrganizationUnit [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//OrganizationUnit]] {
+	headcount: EString
+}
+class Actor [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Actor]] {
+	FTEs: EString
+	actorGoal: EString
+	actorTasks: EString
+}
+class Role [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Role]] {
+	estimatedFTEs: EString
+}
+class DataEntity [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//DataEntity]] {
+	dataEntityCategory: DataEntityCategory
+	privacyClassification: EString
+	retentionClassification: EString
+}
+class LogicalApplicationComponent [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//LogicalApplicationComponent]] {
+}
+class Function [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Function]] {
+}
+class BusinessService [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//BusinessService]] {
+}
+class Process [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Process]] {
+	processCritiality: EString
+	isAutomated: EBoolean
+	processVolumetrics: EString
+}
+class PlatformService [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//PlatformService]] {
+	categoryTRM: EString
+}
+class PhysicalTechnologyComponent [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//PhysicalTechnologyComponent]] {
+	productName: EString
+	moduleName: EString
+	vendor: EString
+	version: EString
+	categoryTRM: EString
+}
+class Product [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Product]] {
+}
+class Measure [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Measure]] {
+}
+class ServiceQuality [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//ServiceQuality]] {
+}
+class Contract [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Contract]] {
+	behaviorCharacteristics: EString
+	ServiceNameCaller: EString
+	ServiceNameCalled: EString
+	serviceQualityCharacteristics: EString
+	availabilityQualityCharacteristics: EString
+	servicesTimes: EString
+	manageabilityCharacteristics: EString
+	serviceabilityCharacteristics: EString
+	performanceCharacteristics: EString
+	responseCharacteristics: EString
+	reliabilityCharacteristics: EString
+	qualityOfInformationRequired: EString
+	contractControlRequirements: EString
+	resultControlRequirements: EString
+	recoverabilityCharacteristics: EString
+	locatabilityCharacteristics: EString
+	securityCharacteristics: EString
+	privacyCharacteristics: EString
+	integrityCharacteristics: EString
+	credibilityCharacteristics: EString
+	localizationCharacteristics: EString
+	internationalizationCharacteristics: EString
+	interoperabilityCharacteristics: EString
+	scalabilityCharacteristics: EString
+	portabilityCharacteristics: EString
+	extensibilityCharacteristics: EString
+	capacityCharacteristics: EString
+	throughput: EString
+	throughputPeriod: EString
+	growth: EString
+	growthPeriod: EString
+	peakProfileShortTerm: EString
+	peakProfileLongTerm: EString
+}
+class Event [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Event]] {
+}
+class Control [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Control]] {
+}
+class Element [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Element]] {
+	name: EString
+	description: EString
+	sourceDescr: EString
+	ownerDescr: EString
+	ID: EString
+}
+class Container [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Container]] {
+	name: EString
+	id: EString
+	description: EString
+}
+class Label [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Label]] {
+	name: EString
+	id: EString
+	description: EString
+}
+class Location [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Location]] {
+}
+class Capability [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Capability]] {
+	businessValue: EString
+	increments: EString
+}
+abstract class StrategicElement [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//StrategicElement]] {
+}
+class Principle [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Principle]] {
+	principleCategory: PrincipleCategory
+	priority: EString
+	statementOfPrinciple: EString
+	rationale: EString
+	implication: EString
+	metric: EString
+}
+class Constraint [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Constraint]] {
+}
+class Assumption [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Assumption]] {
+}
+class Requirement [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Requirement]] {
+	statementOfRequirement: EString
+	rationale: EString
+	acceptanceCriteria: EString
+}
+class Gap [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Gap]] {
+}
+class WorkPackage [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//WorkPackage]] {
+	workPackageCategory: WorkPackageCategory
+}
+class LogicalDataComponent [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//LogicalDataComponent]] {
+}
+class PhysicalDataComponent [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//PhysicalDataComponent]] {
+}
+class ApplicationArchitecture [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//ApplicationArchitecture]] {
+}
+class PhysicalApplicationComponent [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//PhysicalApplicationComponent]] {
+	lifeCycleStatus: LifeCycleStatus
+	initialLiveDate: EDate
+	dateOfLastRelease: EDate
+	dateOfNextRelease: EDate
+	retirementDate: EDate
+	availabilityQualityCharacteristics: EString
+	servicesTimes: EString
+	manageabilityCharacteristics: EString
+	serviceabilityCharacteristics: EString
+	performanceCharacteristics: EString
+	reliabilityCharacteristics: EString
+	recoverabilityCharacteristics: EString
+	locatabilityCharacteristics: EString
+	securityCharacteristics: EString
+	privacyCharacteristics: EString
+	integrityCharacteristics: EString
+	credibilityCharacteristics: EString
+	localizationCharacteristics: EString
+	internationalizationCharacteristics: EString
+	interoperabilityCharacteristics: EString
+	scalabilityCharacteristics: EString
+	portabilityCharacteristics: EString
+	extensibilityCharacteristics: EString
+	capacityCharacteristics: EString
+	throughput: EString
+	throughputPeriod: EString
+	growth: EString
+	growthPeriod: EString
+	peakProfileShortTerm: EString
+	peakProfileLongTerm: EString
+}
+class LogicalTechnologyComponent [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//LogicalTechnologyComponent]] {
+	categoryTRM: EString
+}
+class StrategicArchitecture [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//StrategicArchitecture]] {
+}
+enum PrincipleCategory [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//PrincipleCategory]] {
+	GuidingPrinciple: GuidingPrinciple
+	BusinessPrinciple: BusinessPrinciple
+	DataPrinciple: DataPrinciple
+	ApplicationPrinciple: ApplicationPrinciple
+	IntegrationPrinciple: IntegrationPrinciple
+	TechnologyPrinciple: TechnologyPrinciple
+}
+enum StandardsClass [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//StandardsClass]] {
+	NonStandard: NonStandard
+	Proposed: Proposed
+	Provisional: Provisional
+	Standard: Standard
+	PhasingOut: PhasingOut
+	Retired: Retired
+}
+abstract class Standard [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Standard]] {
+	standardClass: StandardsClass
+	standardCreationDate: EDate
+	lastStandardCreationDate: EDate
+	nextStandardCreationDate: EDate
+	retireDate: EDate
+}
+abstract class Service [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Service]] {
+}
+abstract class ApplicationComponent [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//ApplicationComponent]] {
+}
+class InformationSystemService [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//InformationSystemService]] {
+}
+enum LifeCycleStatus [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//LifeCycleStatus]] {
+	Proposed: Proposed
+	InDevelopment: InDevelopment
+	Live: Live
+	PhasingOut: PhasingOut
+	Retired: Retired
+}
+enum DataEntityCategory [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//DataEntityCategory]] {
+	Message: Message
+	InternallyStoredEntity: InternallyStoredEntity
+}
+abstract class DataComponent [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//DataComponent]] {
+}
+abstract class TechnologyComponent [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//TechnologyComponent]] {
+}
+enum WorkPackageCategory [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//WorkPackageCategory]] {
+	WorkPackage: WorkPackage
+	WorkStream: WorkStream
+	Project: Project
+	Program: Program
+	Portofolio: Portofolio
+}
+Architecture <|-- BusinessArchitecture
+Architecture <|-- DataArchitecture
+Architecture <|-- TechnologyArchitecture
+Element <|-- Driver
+Element <|-- Goal
+Element <|-- Objective
+Element <|-- OrganizationUnit
+Element <|-- Actor
+Element <|-- Role
+Element <|-- DataEntity
+Element <|-- LogicalApplicationComponent
+ApplicationComponent <|-- LogicalApplicationComponent
+Element <|-- Function
+Standard <|-- Function
+Element <|-- BusinessService
+Service <|-- BusinessService
+Element <|-- Process
+Standard <|-- Process
+Element <|-- PlatformService
+Service <|-- PlatformService
+Element <|-- PhysicalTechnologyComponent
+TechnologyComponent <|-- PhysicalTechnologyComponent
+Element <|-- Product
+Element <|-- Measure
+Element <|-- ServiceQuality
+Element <|-- Contract
+Element <|-- Event
+Element <|-- Control
+Element <|-- Location
+Element <|-- Capability
+Element <|-- StrategicElement
+StrategicElement <|-- Principle
+StrategicElement <|-- Constraint
+StrategicElement <|-- Assumption
+StrategicElement <|-- Requirement
+StrategicElement <|-- Gap
+StrategicElement <|-- WorkPackage
+Element <|-- LogicalDataComponent
+DataComponent <|-- LogicalDataComponent
+Element <|-- PhysicalDataComponent
+DataComponent <|-- PhysicalDataComponent
+Architecture <|-- ApplicationArchitecture
+Element <|-- PhysicalApplicationComponent
+ApplicationComponent <|-- PhysicalApplicationComponent
+Element <|-- LogicalTechnologyComponent
+TechnologyComponent <|-- LogicalTechnologyComponent
+Architecture <|-- StrategicArchitecture
+Standard <|-- Service
+Standard <|-- ApplicationComponent
+Service <|-- InformationSystemService
+Element <|-- InformationSystemService
+Standard <|-- DataComponent
+Standard <|-- TechnologyComponent
+EnterpriseArchitecture *--> "architectures *" Architecture
+EnterpriseArchitecture *--> "containers *" Container
+EnterpriseArchitecture *--> "labels *" Label
+BusinessArchitecture *--> "drivers *" Driver
+BusinessArchitecture *--> "goals *" Goal
+BusinessArchitecture *--> "objectives *" Objective
+BusinessArchitecture *--> "units *" OrganizationUnit
+BusinessArchitecture *--> "actors *" Actor
+BusinessArchitecture *--> "roles *" Role
+BusinessArchitecture *--> "functions *" Function
+BusinessArchitecture *--> "services *" BusinessService
+BusinessArchitecture *--> "processes *" Process
+BusinessArchitecture *--> "controls *" Control
+BusinessArchitecture *--> "events *" Event
+BusinessArchitecture *--> "locations *" Location
+BusinessArchitecture *--> "products *" Product
+BusinessArchitecture *--> "contracts *" Contract
+BusinessArchitecture *--> "measures *" Measure
+BusinessArchitecture *--> "servicesQuality *" ServiceQuality
+DataArchitecture *--> "entities *" DataEntity
+DataArchitecture *--> "logicalComponents *" LogicalDataComponent
+DataArchitecture *--> "physicalComponents *" PhysicalDataComponent
+TechnologyArchitecture *--> "platformServices *" PlatformService
+TechnologyArchitecture *--> "physicalComponents *" PhysicalTechnologyComponent
+TechnologyArchitecture *--> "logicalComponents *" LogicalTechnologyComponent
+Driver "addressesDrivers *" -- "createsGoals *" Goal
+Driver "isMotivatedByDrivers *" -- "motivatesOrganizationUnits *" OrganizationUnit
+Driver --> "decomposesDriver" Driver
+Goal "realizesGoals *" -- "isRealizedThroughObjectives *" Objective
+Goal --> "decomposesGoal" Goal
+Objective "setsPerformanceCriteriaForObjectives *" -- "isTrackedAgainstMeasures *" Measure
+Objective --> "decomposesObjective" Objective
+OrganizationUnit "isOwnedAndGovernedByOrganizationUnits *" -- "ownsAndGovernsServices *" Service
+OrganizationUnit "belongsTo" -- "containsActors *" Actor
+OrganizationUnit "isOwnedByUnit" -- "ownsFunctions *" Function
+OrganizationUnit "involvesOrganizationUnits *" -- "participatesInProcesses *" Process
+OrganizationUnit "isProducedByOrganizationUnits *" -- "producesProducts *" Product
+OrganizationUnit "containsOrganizationUnits *" -- "operatesInLocation" Location
+Actor "isSuppliedByActors *" -- "suppliesEntities *" DataEntity
+Actor "isConsumedByActors *" -- "consumesEntities *" DataEntity
+Actor "supportsActors *" -- "interactsWithFunctions *" Function
+Actor "isAssumedByActors *" -- "performsTaskInRoles *" Role
+Actor "involvesActors *" -- "participatesInProcesses *" Process
+Actor --> "consumesServices *" Service
+Actor "isResolvedByActors *" -- "resolvesEvents *" Event
+Actor "isGeneratedByActors" -- "generatesEvents *" Event
+Actor "containsActors *" -- "operatesInLocation" Location
+Actor "isPerformedByActors *" -- "performsFunctions *" Function
+Actor --> "decomposesActors *" Actor
+Role "canBeAccessedByRoles *" -- "accessesFunctions *" Function
+Role --> "decomposesRole" Role
+DataEntity "consumesEntities *" -- "isAccessedByServices *" Service
+DataEntity "providesEntities *" -- "isUpdatedThroughServices *" Service
+DataEntity "encapsulatesDataEntities *" -- "residesWithinLogicalDataComponent" LogicalDataComponent
+DataEntity "operatesOnDataEntities *" -- "isProcessesByLogicalApplicationComponents *" LogicalApplicationComponent
+DataEntity --> "decomposeEntity" DataEntity
+DataEntity --> "relatesTo *" DataEntity
+LogicalApplicationComponent "isRealizedThroughLogicalApplicationComponent *" -- "implementsServices *" Service
+LogicalApplicationComponent "extendsLogicalApplicationComponents *" -- "isExtendedByPhysicalApplicationComponents *" PhysicalApplicationComponent
+LogicalApplicationComponent --> "communicatesWith *" LogicalApplicationComponent
+LogicalApplicationComponent --> "decomposesLogicalApplicationComponent" LogicalApplicationComponent
+Function "providesGovernedInterfaceToAccessFunctions *" -- "isBoundedByServices *" Service
+Function "decomposesFunctions *" -- "supportsProcesses *" Process
+Function "orchestratesFunctions *" -- "isRealizedByProcesses *" Process
+Function --> "decomposesFunction" Function
+Function --> "communicatedWithFunctions *" Function
+BusinessService --> "supportsObjective *" Objective
+Process "isRealizedByProcesses *" -- "orchestratesServices *" Service
+Process "supportsProcesses *" -- "decomposesServices *" Service
+Process "ensuresCorrectOperationOfProcesses *" -- "isGuidedByControls *" Control
+Process "isResolvedByProcesses *" -- "resolvesEvents *" Event
+Process "isGeneratedByProcesses *" -- "generatesEvents *" Event
+Process "isProducedByProcesses *" -- "producesProducts *" Product
+Process --> "decomposesProcess" Process
+PlatformService "suppliesPlatformServices *" -- "isSuppliedByLogicalTechnologyComponents *" LogicalTechnologyComponent
+PhysicalTechnologyComponent --> "realizesApplicationComponents *" PhysicalApplicationComponent
+PhysicalTechnologyComponent "isRealizedByPhysicalTechnologyComponents *" -- "extendsLogicalTechnologyComponents *" LogicalTechnologyComponent
+PhysicalTechnologyComponent "containsPhysicalTechnologyComponents *" -- "isHostedInLocation *" Location
+PhysicalTechnologyComponent --> "decomposesPhysicalTechnologyComponent" PhysicalTechnologyComponent
+PhysicalTechnologyComponent --> "isDependentOnPhysicalTechnologyComponents *" PhysicalTechnologyComponent
+Measure "isTrackedAgainstMeasures *" -- "setsPerformanceCriteriaForServices *" Service
+Measure --> "decomposesMeasure" Measure
+ServiceQuality "meetsQualities *" -- "appliesToServices *" Service
+ServiceQuality "meetsServiceQuality *" -- "appliesToContracts *" Contract
+Contract "isGovernedAndMeasuredByContracts *" -- "governsAndMeasuresBusinessServices *" Service
+Event "resolvesEvents *" -- "isResolvedByBusinessServices *" Service
+Element "ownedElements *" -- "category *" Label
+Container *--> "subContainers *" Container
+Container "containers *" -- "labels *" Label
+Label *--> "subLabels *" Label
+Location "isHotedInLocation" -- "containsPhysicalDataComponents *" PhysicalDataComponent
+Location "isHostedInLocation *" -- "containsPhysicalApplicationComponents *" PhysicalApplicationComponent
+Location --> "decomposesLocation" Location
+Capability "deliversCapabilities *" -- "isDeliveredBy" WorkPackage
+LogicalDataComponent "extendsLogicalDataComponents *" -- "isExtendedByPhysicalDataComponents *" PhysicalDataComponent
+PhysicalDataComponent --> "decomposesPhysicalDataComponent" PhysicalDataComponent
+PhysicalDataComponent --> "encapsulatesPhysicalApplicationComponents *" PhysicalApplicationComponent
+ApplicationArchitecture *--> "logicalApplicationComponents *" LogicalApplicationComponent
+ApplicationArchitecture *--> "physicalApplicationComponents *" PhysicalApplicationComponent
+ApplicationArchitecture *--> "informationSystemServices *" InformationSystemService
+PhysicalApplicationComponent --> "communicatesWith *" PhysicalApplicationComponent
+PhysicalApplicationComponent --> "encapsulatesPhysicalDataComponents *" PhysicalDataComponent
+PhysicalApplicationComponent --> "isRealizedByPhysicalTechnologyComponents *" PhysicalTechnologyComponent
+PhysicalApplicationComponent --> "decomposesPhysicalApplicationComponent" PhysicalApplicationComponent
+LogicalTechnologyComponent "isImplementedOnLogicalTechnologyComponents *" -- "providesPlatformForServices *" Service
+LogicalTechnologyComponent --> "decomposesLogicalTechnologyComponent" LogicalTechnologyComponent
+LogicalTechnologyComponent --> "isDependentOnLogicalTechnologyComponents *" LogicalTechnologyComponent
+StrategicArchitecture *--> "capabilities *" Capability
+StrategicArchitecture *--> "strategicElements *" StrategicElement
+Service --> "isProvidedToActors *" Actor
+Service --> "consumesServices *" Service
+Service --> "decomposesServices *" Service
+@enduml

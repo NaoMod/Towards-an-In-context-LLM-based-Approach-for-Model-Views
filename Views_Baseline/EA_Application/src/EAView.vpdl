@@ -1,0 +1,22 @@
+create view EAView as
+
+select EnterpriseArchitecture.EnterpriseArchitecture.architectures,
+       EnterpriseArchitecture.BusinessArchitecture.processes,
+       EnterpriseArchitecture.StrategicArchitecture.strategicElements,
+       EnterpriseArchitecture.Process.name,
+       BPMN.Process.*,
+       ReqIf.ReqIF.coreContent,
+       ReqIf.ReqIFContent.specObjects,
+       ReqIf.SpecObject.values,
+       ReqIf.AttributeValueString.theValue,
+       EnterpriseArchitecture.Process join BPMN.Process as detailedProcess,
+       EnterpriseArchitecture.Requirement join ReqIf.SpecObject as detailedRequirement,
+
+from 'http://www.obeonetwork.org/dsl/togaf/contentfwk/9.0.0' as EnterpriseArchitecture,
+     'http://www.omg.org/spec/ReqIF/20110401/reqif.xsd' as ReqIf,
+     'http://www.omg.org/spec/BPMN/20100524/MODEL-XMI' as BPMN
+
+where s.name = t.name
+      for detailedProcess,
+      t.values.exists(v | v.theValue=s.name)
+      for detailedRequirement
