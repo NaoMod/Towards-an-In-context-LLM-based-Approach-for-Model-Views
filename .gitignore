@@ -263,3 +263,6 @@ replay_pid*
 
 # EMF Views
 **/src-gen
+
+#large model
+PetStore_java.xmi

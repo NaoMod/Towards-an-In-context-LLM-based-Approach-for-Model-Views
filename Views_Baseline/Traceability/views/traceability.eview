@@ -1,0 +1,6 @@
+contributingModels=ReqIf::../models/requirements.reqif,\
+                   UML::../models/components.uml,\
+                   Java::../models/PetStore_java.xmi,\
+                   Trace::../models/log.xmi
+viewpoint=../src-gen/traceability.eviewpoint
+matchingModel=../src-gen/traceability.ecl
