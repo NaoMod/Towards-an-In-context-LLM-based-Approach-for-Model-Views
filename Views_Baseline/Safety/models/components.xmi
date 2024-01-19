@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SimpleUMLComponents:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SimpleUMLComponents="http://SimpleUMLComponents" xsi:schemaLocation="http://SimpleUMLComponents ../Metamodels/SimpleUMLComponents.ecore">
+  <elements xsi:type="SimpleUMLComponents:Component" xmi:id="_gUedUB4ZEeimxaqxxOlH4A" name="M22 Door LCU1"/>
+  <elements xsi:type="SimpleUMLComponents:Component" xmi:id="_ulQ5kCODEei_4cw9e9cViw" name="M21 Positioning LCU1"/>
+  <elements xsi:type="SimpleUMLComponents:Component" xmi:id="_PR6ggCOFEei_4cw9e9cViw" name="M23 Door LCU2"/>
+  <elements xsi:type="SimpleUMLComponents:Component" xmi:id="_QNuogCOFEei_4cw9e9cViw" name="M24 Positioning LCU 2"/>
+  <elements xsi:type="SimpleUMLComponents:Component" xmi:id="_Q67swCOFEei_4cw9e9cViw" name="M11 Computing Unit">
+    <packagedElement xsi:type="SimpleUMLComponents:Usage" name="Train position" client="_Q67swCOFEei_4cw9e9cViw" supplier="_ulQ5kCODEei_4cw9e9cViw _QNuogCOFEei_4cw9e9cViw"/>
+    <packagedElement xsi:type="SimpleUMLComponents:Usage" name="Train speed" client="_Q67swCOFEei_4cw9e9cViw" supplier="_ulQ5kCODEei_4cw9e9cViw _QNuogCOFEei_4cw9e9cViw"/>
+    <packagedElement xsi:type="SimpleUMLComponents:Usage" name="Door opening" client="_Q67swCOFEei_4cw9e9cViw" supplier="_gUedUB4ZEeimxaqxxOlH4A _PR6ggCOFEei_4cw9e9cViw"/>
+    <packagedElement xsi:type="SimpleUMLComponents:Usage" name="Door closed/closing" client="_Q67swCOFEei_4cw9e9cViw" supplier="_gUedUB4ZEeimxaqxxOlH4A _PR6ggCOFEei_4cw9e9cViw"/>
+  </elements>
+</SimpleUMLComponents:Model>

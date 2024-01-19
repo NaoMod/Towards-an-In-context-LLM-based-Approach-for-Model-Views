@@ -1,0 +1,3 @@
+contributingModels=CAEX_Original::../models/out-original.caex,CAEX_New::../models/out.caex,Traces::../models/log.xmi
+viewpoint=../src-gen/evolution.eviewpoint
+matchingModel=../src-gen/evolution.ecl

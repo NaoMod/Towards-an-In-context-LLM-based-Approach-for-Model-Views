@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Log:Log xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Log="http://log" xsi:schemaLocation="Log ../Metamodels/Log.ecore" name="traces">
+  <events name="0" timestamp="0">
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Position" sensor="M24" value="33118" name="M11.LogiqueSecu.Algo_DonneesUtiles__Position_M24"/>
+  </events>
+  <events name="20161017" timestamp="231131709">
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Speed" sensor="M24" value="1" name="M11.LogiqueSecu.Algo_DonneesUtiles__Speed_M24"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Position" sensor="M21" value="33142" name="M11.LogiqueSecu.Algo_DonneesUtiles__Position_M21"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="fallback" sensor="M11" value="inconsistent_position" name="M11.LogiqueSecu.Algo_DonneesUtiles__fallback_M11"/>
+  </events>
+  <events name="20161017" timestamp="231135969">
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Speed" sensor="M21" value="2" name="M11.LogiqueSecu.Algo_DonneesUtiles__Speed_M21"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Position" sensor="M21" value="33136" name="M11.LogiqueSecu.Algo_DonneesUtiles__Position_M21"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="aopp" sensor="M11" value="close" name="M11.LogiqueSecu.Algo_DonneesUtiles__aopp_M11"/>
+  </events>
+  <events name="20161017" timestamp="231136025">
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Speed" sensor="M21" value="7" name="M11.LogiqueSecu.Algo_DonneesUtiles__Speed_M21"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Speed" sensor="M24" value="5" name="M11.LogiqueSecu.Algo_DonneesUtiles__Speed_M24"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Position" sensor="M24" value="33117" name="M11.LogiqueSecu.Algo_DonneesUtiles__Position_M24"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="aopp" sensor="M11" value="close" name="M11.LogiqueSecu.Algo_DonneesUtiles__aopp_M11"/>
+  </events>
+  <events name="20161017" timestamp="231136077">
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Speed" sensor="M24" value="0" name="M11.LogiqueSecu.Algo_DonneesUtiles__Speed_M24"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Position" sensor="M21" value="33137" name="M11.LogiqueSecu.Algo_DonneesUtiles__Position_M21"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="aopp" sensor="M11" value="close" name="M11.LogiqueSecu.Algo_DonneesUtiles__aopp_M11"/>
+  </events>
+  <events name="20161017-setsM21" timestamp="231136106">
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Position" sensor="M24" value="33116" name="M11.LogiqueSecu.Algo_DonneesUtiles__Position_M24"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Speed" sensor="M21" value="6" name="M11.LogiqueSecu.Algo_DonneesUtiles__Speed_M21"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Speed" sensor="M24" value="2" name="M11.LogiqueSecu.Algo_DonneesUtiles__Speed_M24"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Position" sensor="M21" value="33139" name="M11.LogiqueSecu.Algo_DonneesUtiles__Position_M21-setsM21"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="aopp" sensor="M11" value="close" name="M11.LogiqueSecu.Algo_DonneesUtiles__aopp_M11"/>
+  </events>
+  <events name="20161017" timestamp="231136181">
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Speed" sensor="M21" value="3" name="M11.LogiqueSecu.Algo_DonneesUtiles__Speed_M21"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Position" sensor="M24" value="33117" name="M11.LogiqueSecu.Algo_DonneesUtiles__Position_M24"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="aopp" sensor="M11" value="close" name="M11.LogiqueSecu.Algo_DonneesUtiles__aopp_M11"/>
+  </events>
+  <events name="20161017" timestamp="231136227">
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Speed" sensor="M21" value="5" name="M11.LogiqueSecu.Algo_DonneesUtiles__Speed_M21"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Position" sensor="M24" value="33118" name="M11.LogiqueSecu.Algo_DonneesUtiles__Position_M24"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="aopp" sensor="M11" value="close" name="M11.LogiqueSecu.Algo_DonneesUtiles__aopp_M11"/>
+  </events>
+  <events name="20161017" timestamp="231136256">
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Speed" sensor="M21" value="3" name="M11.LogiqueSecu.Algo_DonneesUtiles__Speed_M21"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="aopp" sensor="M11" value="close" name="M11.LogiqueSecu.Algo_DonneesUtiles__aopp_M11"/>
+  </events>
+  <events name="20161017" timestamp="231136331">
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Speed" sensor="M24" value="3" name="M11.LogiqueSecu.Algo_DonneesUtiles__Speed_M24"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Position" sensor="M24" value="33116" name="M11.LogiqueSecu.Algo_DonneesUtiles__Position_M24"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="aopp" sensor="M11" value="close" name="M11.LogiqueSecu.Algo_DonneesUtiles__aopp_M11"/>
+  </events>
+  <events name="20161017-setsM24" timestamp="231136377">
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Speed" sensor="M21" value="0" name="M11.LogiqueSecu.Algo_DonneesUtiles__Speed_M21"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Speed" sensor="M24" value="1" name="M11.LogiqueSecu.Algo_DonneesUtiles__Speed_M24"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Position" sensor="M24" value="32766" name="M11.LogiqueSecu.Algo_DonneesUtiles__Position_M24-setsM24"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="aopp" sensor="M11" value="close" name="M11.LogiqueSecu.Algo_DonneesUtiles__aopp_M11"/>
+  </events>
+  <events name="20161017-f" timestamp="231136480">
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Speed" sensor="M24" value="65535" name="M11.LogiqueSecu.Algo_DonneesUtiles__Speed_M24"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Position" sensor="M24" value="33117" name="M11.LogiqueSecu.Algo_DonneesUtiles__Position_M24-f"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="fallback" sensor="M11" value="inconsistent_position" name="M11.LogiqueSecu.Algo_DonneesUtiles__fallback_M11-f"/>
+  </events>
+  <events name="20161017" timestamp="231150677">
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Speed" sensor="M21" value="4" name="M11.LogiqueSecu.Algo_DonneesUtiles__Speed_M21"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Position" sensor="M21" value="33136" name="M11.LogiqueSecu.Algo_DonneesUtiles__Position_M21"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="aopp" sensor="M11" value="close" name="M11.LogiqueSecu.Algo_DonneesUtiles__aopp_M11"/>
+  </events>
+  <events name="20161017" timestamp="231150719">
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Speed" sensor="M21" value="2" name="M11.LogiqueSecu.Algo_DonneesUtiles__Speed_M21"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Speed" sensor="M24" value="7" name="M11.LogiqueSecu.Algo_DonneesUtiles__Speed_M24"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Position" sensor="M24" value="33117" name="M11.LogiqueSecu.Algo_DonneesUtiles__Position_M24"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="aopp" sensor="M11" value="close" name="M11.LogiqueSecu.Algo_DonneesUtiles__aopp_M11"/>
+  </events>
+  <events name="20161017" timestamp="231150774">
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Speed" sensor="M24" value="3" name="M11.LogiqueSecu.Algo_DonneesUtiles__Speed_M24"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Position" sensor="M21" value="33138" name="M11.LogiqueSecu.Algo_DonneesUtiles__Position_M21"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="aopp" sensor="M11" value="close" name="M11.LogiqueSecu.Algo_DonneesUtiles__aopp_M11"/>
+  </events>
+  <events name="20161017" timestamp="231150828">
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Position" sensor="M24" value="33115" name="M11.LogiqueSecu.Algo_DonneesUtiles__Position_M24"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Position" sensor="M21" value="33139" name="M11.LogiqueSecu.Algo_DonneesUtiles__Position_M21"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="aopp" sensor="M11" value="close" name="M11.LogiqueSecu.Algo_DonneesUtiles__aopp_M11"/>
+  </events>
+  <events name="20161017" timestamp="231150872">
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Speed" sensor="M21" value="4" name="M11.LogiqueSecu.Algo_DonneesUtiles__Speed_M21"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Position" sensor="M21" value="33137" name="M11.LogiqueSecu.Algo_DonneesUtiles__Position_M21"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="aopp" sensor="M11" value="close" name="M11.LogiqueSecu.Algo_DonneesUtiles__aopp_M11"/>
+  </events>
+  <events name="20161017" timestamp="231150931">
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Position" sensor="M24" value="32766" name="M11.LogiqueSecu.Algo_DonneesUtiles__Position_M24"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Speed" sensor="M21" value="2" name="M11.LogiqueSecu.Algo_DonneesUtiles__Speed_M21"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Speed" sensor="M24" value="65535" name="M11.LogiqueSecu.Algo_DonneesUtiles__Speed_M24"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Position" sensor="M21" value="33138" name="M11.LogiqueSecu.Algo_DonneesUtiles__Position_M21"/>
+    <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="fallback" sensor="M11" value="inconsistent_speed" name="M11.LogiqueSecu.Algo_DonneesUtiles__fallback_M11"/>
+  </events>
+</Log:Log>

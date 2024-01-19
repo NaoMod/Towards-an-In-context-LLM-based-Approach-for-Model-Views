@@ -1,0 +1,32 @@
+create view safety as
+
+select Trace.TraceabilityModel.traceabilityLinks,
+       Trace.TraceabilityLink.*,
+       B.Program.machines,
+       B.Machine.sets,
+       B.Sets.exprs,
+       B.Set.elems,
+       B.Variable.*,
+       Log.Log.events,
+       Log.Event.*,
+       Log.Trace.*,
+       UML.Model.elements,
+       UML.Component.*,
+       Trace.TraceabilityLink join B.Variable as specification,
+       Trace.TraceabilityLink join Log.Event as events,
+       Trace.TraceabilityLink join Log.Event as events2,
+       Log.Trace join UML.Component as designComponent
+       
+
+from 'http://www.clearsy.com/B-extended' as B,
+     'http://SimpleUMLComponents' as UML,
+     'http://log' as Log,
+     'http://TraceabilityMetamodel' as Trace
+     
+where s.rightLinkEnd.traceableArtefact.includes(t) for specification,
+      s.leftLinkEnd.traceableArtefact.includes(t) for events,
+      s.leftLinkEnd.traceableArtefact.includes(t) for events2,
+      t.name.startsWith(s.sensor) for designComponent
+      
+      
+      

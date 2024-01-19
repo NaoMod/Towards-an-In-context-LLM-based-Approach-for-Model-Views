@@ -1,0 +1,21 @@
+create view evolution as
+
+select CAEX_Original.CAEXFile.*,
+       CAEX_Original.InstanceHierarchy.*,
+	   CAEX_Original.InternalElement[name,attribute],
+	   CAEX_New.CAEXFile.*,
+       CAEX_New.InstanceHierarchy.*,
+	   CAEX_New.InternalElement.*,
+	   Traces.Log.*,
+	   Traces.Event[fatureAndClass,id],
+	   Traces.FeatureAndClass.*,
+	   CAEX_Original.InternalElement join CAEX_New.InternalElement as old_to_new,
+	   CAEX_Original.InternalElement join Traces.Event as traces
+
+from 'http://www.dke.de/CAEX/300' as CAEX_Original,
+     'http://www.dke.de/CAEX/300' as CAEX_New,
+     'http://www.example.org/ecoreXES' as Traces,
+
+
+where s.name = t.name for old_to_new,
+      s.name = s.eResource().getEObject(t.id.name).name for traces

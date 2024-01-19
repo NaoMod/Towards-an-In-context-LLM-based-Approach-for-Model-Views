@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="ecoreXES" nsURI="http://www.example.org/ecoreXES" nsPrefix="ecoreXES">
+  <eClassifiers xsi:type="ecore:EClass" name="Event">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="set" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="timestamp" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fatureAndClass" lowerBound="1"
+        eType="#//FeatureAndClass"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="id" lowerBound="1" eType="#//ID"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referencevalue" eType="#//ReferenceValue"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="eventType" eType="#//EventType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Log">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="resource" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="event" upperBound="-1"
+        eType="#//Event" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attributes" upperBound="-1"
+        eType="#//Attributes" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Attributes" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FeatureAndClass" eSuperTypes="#//Attributes">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="class" lowerBound="1" eType="#//JavaClass"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="feature" lowerBound="1"
+        eType="#//Feature"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Feature" eSuperTypes="#//Attributes"/>
+  <eClassifiers xsi:type="ecore:EClass" name="JavaClass" eSuperTypes="#//Attributes"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ID" eSuperTypes="#//Attributes"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ReferenceValue" eSuperTypes="#//Attributes"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="EventType">
+    <eLiterals name="SET" value="1"/>
+    <eLiterals name="UNSET" value="2"/>
+    <eLiterals name="ADD" value="3"/>
+    <eLiterals name="REMOVE" value="4"/>
+    <eLiterals name="ADD_MANY" value="5"/>
+    <eLiterals name="REMOVE_MANY" value="6"/>
+    <eLiterals name="MOVE" value="7"/>
+    <eLiterals name="RESOLVE" value="9"/>
+  </eClassifiers>
+</ecore:EPackage>

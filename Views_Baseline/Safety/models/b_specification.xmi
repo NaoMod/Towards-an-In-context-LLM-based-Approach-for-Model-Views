@@ -1,0 +1,1007 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<b:Program 
+xmi:version="2.0" 
+xmlns:xmi="http://www.omg.org/XMI" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns:b="http://www.clearsy.com/B-extended" 
+xsi:schemaLocation="http://www.clearsy.com/B-extended /jtl.log2b-extended/metamodels/B.ecore">
+  <machines name="Train">
+    <operations>
+      <operations name="is_train_in_par"/>
+      <operations name="is_train_stopped"/>
+    </operations>
+    <sets>
+      <exprs>
+        <name name="PAR_RESULT"/>
+        <elems name="IN_PAR"/>
+        <elems name="NOT_IN_PAR"/>
+        <elems name="INCONS_POSITION"/>
+      </exprs>
+      <exprs>
+        <name name="SPEED_RESULT"/>
+        <elems name="STOPPED"/>
+        <elems name="MOVING"/>
+        <elems name="INCONS_SPEED"/>
+      </exprs>
+    </sets>
+  </machines>
+  <machines name="Doors">
+    <sees/>
+    <definitions>
+      <exprs name="DOOR_SENSOR_CONSISTENT">
+        <args name="visible"/>
+        <args name="opening"/>
+        <args name="closed"/>
+        <args name="closing"/>
+        <expr xsi:type="b:AndExpr">
+          <exprs xsi:type="b:ImplyExpr">
+            <left xsi:type="b:EqualExpr">
+              <left xsi:type="b:Ref" var="//@machines.1/@definitions/@exprs.0/@args.0"/>
+              <right xsi:type="b:ConstantExpr" constant="FALSE"/>
+            </left>
+            <right xsi:type="b:AndExpr">
+              <exprs xsi:type="b:EqualExpr">
+                <left xsi:type="b:Ref" var="//@machines.1/@operations/@operations.0/@outputs.0"/>
+                <right xsi:type="b:ConstantExpr" constant="FALSE"/>
+              </exprs>
+              <exprs xsi:type="b:EqualExpr">
+                <left xsi:type="b:Ref" var="//@machines.1/@definitions/@exprs.0/@args.2"/>
+                <right xsi:type="b:ConstantExpr" constant="FALSE"/>
+              </exprs>
+              <exprs xsi:type="b:EqualExpr">
+                <left xsi:type="b:Ref" var="//@machines.1/@definitions/@exprs.0/@args.3"/>
+                <right xsi:type="b:ConstantExpr" constant="FALSE"/>
+              </exprs>
+            </right>
+          </exprs>
+          <exprs xsi:type="b:ImplyExpr">
+            <left xsi:type="b:EqualExpr">
+              <left xsi:type="b:Ref" var="//@machines.1/@operations/@operations.0/@outputs.0"/>
+              <right xsi:type="b:ConstantExpr"/>
+            </left>
+            <right xsi:type="b:AndExpr">
+              <exprs xsi:type="b:EqualExpr">
+                <left xsi:type="b:Ref" var="//@machines.1/@definitions/@exprs.0/@args.2"/>
+                <right xsi:type="b:ConstantExpr" constant="FALSE"/>
+              </exprs>
+              <exprs xsi:type="b:EqualExpr">
+                <left xsi:type="b:Ref" var="//@machines.1/@definitions/@exprs.0/@args.3"/>
+                <right xsi:type="b:ConstantExpr" constant="FALSE"/>
+              </exprs>
+            </right>
+          </exprs>
+          <exprs xsi:type="b:ImplyExpr">
+            <left xsi:type="b:EqualExpr">
+              <left xsi:type="b:Ref" var="//@machines.1/@definitions/@exprs.0/@args.2"/>
+              <right xsi:type="b:ConstantExpr"/>
+            </left>
+            <right xsi:type="b:AndExpr">
+              <exprs xsi:type="b:EqualExpr">
+                <left xsi:type="b:Ref" var="//@machines.1/@operations/@operations.0/@outputs.0"/>
+                <right xsi:type="b:ConstantExpr" constant="FALSE"/>
+              </exprs>
+              <exprs xsi:type="b:EqualExpr">
+                <left xsi:type="b:Ref" var="//@machines.1/@definitions/@exprs.0/@args.3"/>
+                <right xsi:type="b:ConstantExpr" constant="FALSE"/>
+              </exprs>
+            </right>
+          </exprs>
+          <exprs xsi:type="b:ImplyExpr">
+            <left xsi:type="b:EqualExpr">
+              <left xsi:type="b:Ref" var="//@machines.1/@definitions/@exprs.0/@args.3"/>
+              <right xsi:type="b:ConstantExpr"/>
+            </left>
+            <right xsi:type="b:AndExpr">
+              <exprs xsi:type="b:EqualExpr">
+                <left xsi:type="b:Ref" var="//@machines.1/@definitions/@exprs.0/@args.1"/>
+                <right xsi:type="b:ConstantExpr" constant="FALSE"/>
+              </exprs>
+              <exprs xsi:type="b:EqualExpr">
+                <left xsi:type="b:Ref" var="//@machines.1/@definitions/@exprs.0/@args.2"/>
+                <right xsi:type="b:ConstantExpr" constant="FALSE"/>
+              </exprs>
+            </right>
+          </exprs>
+        </expr>
+      </exprs>
+    </definitions>
+    <operations>
+      <operations name="are_doors_opening">
+        <outputs name="opening"/>
+        <body xsi:type="b:Begin">
+          <expr xsi:type="b:ReturnTuple">
+            <value xsi:type="b:AndExpr">
+              <exprs xsi:type="b:TypeConstraint">
+                <type xsi:type="b:PrimitiveType"/>
+              </exprs>
+              <exprs xsi:type="b:ImplyExpr">
+                <left xsi:type="b:EqualExpr">
+                  <left xsi:type="b:Ref" var="//@machines.1/@definitions/@exprs.0/@args.1"/>
+                  <right xsi:type="b:ConstantExpr"/>
+                </left>
+                <right xsi:type="b:AndExpr">
+                  <exprs xsi:type="b:DefinitionCall">
+                    <args xsi:type="b:Ref" var="//@machines.3/@concreteVariables/@variables.2"/>
+                    <args xsi:type="b:Ref" var="//@machines.3/@concreteVariables/@variables.3"/>
+                    <args xsi:type="b:Ref" var="//@machines.3/@concreteVariables/@variables.9"/>
+                    <args xsi:type="b:Ref" var="//@machines.3/@concreteVariables/@variables.8"/>
+                  </exprs>
+                  <exprs xsi:type="b:DefinitionCall">
+                    <args xsi:type="b:Ref" var="//@machines.3/@concreteVariables/@variables.6"/>
+                    <args xsi:type="b:Ref" var="//@machines.3/@concreteVariables/@variables.3"/>
+                    <args xsi:type="b:Ref" var="//@machines.3/@concreteVariables/@variables.9"/>
+                    <args xsi:type="b:Ref" var="//@machines.3/@concreteVariables/@variables.8"/>
+                  </exprs>
+                </right>
+              </exprs>
+            </value>
+          </expr>
+        </body>
+      </operations>
+    </operations>
+  </machines>
+  <machines name="Treatment">
+    <operations>
+      <operations name="aopp_authorization">
+        <outputs name="aopp"/>
+        <outputs name="fallback"/>
+        <body xsi:type="b:Begin">
+          <expr xsi:type="b:ReturnTuple">
+            <value xsi:type="b:AndExpr">
+              <exprs xsi:type="b:TypeConstraint">
+                <type xsi:type="b:PrimitiveType"/>
+              </exprs>
+              <exprs xsi:type="b:TypeConstraint">
+                <type xsi:type="b:Ref" type="//@machines.2/@sets/@exprs.0/@name"/>
+              </exprs>
+              <exprs xsi:type="b:ImplyExpr">
+                <left xsi:type="b:EqualExpr">
+                  <left xsi:type="b:Ref" var="//@implementations.0/@operations/@operations.0/@outputs.0"/>
+                  <right xsi:type="b:ConstantExpr"/>
+                </left>
+                <right xsi:type="b:EqualExpr">
+                  <left xsi:type="b:Ref" var="//@machines.2/@operations/@operations.0/@outputs.1"/>
+                  <right xsi:type="b:Ref" var="//@machines.2/@sets/@exprs.0/@elems.2"/>
+                </right>
+              </exprs>
+            </value>
+          </expr>
+        </body>
+      </operations>
+    </operations>
+    <sets>
+      <exprs>
+        <name name="FALLBACKS"/>
+        <elems name="INCONSISTENT_POSITION"/>
+        <elems name="INCONSISTENT_SPEED"/>
+        <elems name="NOMINAL"/>
+      </exprs>
+    </sets>
+  </machines>
+  <machines name="Inputs">
+    <operations>
+      <operations name="get_inputs">
+        <body xsi:type="b:Begin">
+          <expr xsi:type="b:ReturnOr">
+            <exprs>
+              <type xsi:type="b:Ref" type="//@machines.4/@concreteConstants/@constants.1"/>
+            </exprs>
+            <exprs>
+              <type xsi:type="b:Ref" type="//@machines.4/@concreteConstants/@constants.1"/>
+            </exprs>
+            <exprs>
+              <type xsi:type="b:PrimitiveType"/>
+            </exprs>
+            <exprs>
+              <type xsi:type="b:PrimitiveType"/>
+            </exprs>
+            <exprs>
+              <type xsi:type="b:PrimitiveType"/>
+            </exprs>
+            <exprs>
+              <type xsi:type="b:PrimitiveType"/>
+            </exprs>
+            <exprs>
+              <type xsi:type="b:PrimitiveType"/>
+            </exprs>
+            <exprs>
+              <type xsi:type="b:PrimitiveType"/>
+            </exprs>
+            <exprs>
+              <type xsi:type="b:PrimitiveType"/>
+            </exprs>
+            <exprs>
+              <type xsi:type="b:PrimitiveType"/>
+            </exprs>
+            <exprs>
+              <type xsi:type="b:Ref" type="//@machines.4/@concreteConstants/@constants.1"/>
+            </exprs>
+            <exprs>
+              <type xsi:type="b:Ref" type="//@machines.4/@concreteConstants/@constants.1"/>
+            </exprs>
+          </expr>
+        </body>
+      </operations>
+    </operations>
+    <concreteVariables>
+      <variables name="M21_Position"/>
+      <variables name="M21_Speed"/>
+      <variables name="M22_DoorsVisible"/>
+      <variables name="M22_DoorsOpening"/>
+      <variables name="M22_DoorsClosing"/>
+      <variables name="M22_DoorsClosed"/>
+      <variables name="M23_DoorsVisible"/>
+      <variables name="M23_DoorsOpening"/>
+      <variables name="M23_DoorsClosing"/>
+      <variables name="M23_DoorsClosed"/>
+      <variables name="M24_Position"/>
+      <variables name="M24_Speed"/>
+    </concreteVariables>
+    <invariant>
+      <exprs>
+        <type xsi:type="b:Ref" type="//@machines.4/@concreteConstants/@constants.1"/>
+      </exprs>
+      <exprs>
+        <type xsi:type="b:Ref" type="//@machines.4/@concreteConstants/@constants.1"/>
+      </exprs>
+      <exprs>
+        <type xsi:type="b:PrimitiveType"/>
+      </exprs>
+      <exprs>
+        <type xsi:type="b:PrimitiveType"/>
+      </exprs>
+      <exprs>
+        <type xsi:type="b:PrimitiveType"/>
+      </exprs>
+      <exprs>
+        <type xsi:type="b:PrimitiveType"/>
+      </exprs>
+      <exprs>
+        <type xsi:type="b:PrimitiveType"/>
+      </exprs>
+      <exprs>
+        <type xsi:type="b:PrimitiveType"/>
+      </exprs>
+      <exprs>
+        <type xsi:type="b:PrimitiveType"/>
+      </exprs>
+      <exprs>
+        <type xsi:type="b:PrimitiveType"/>
+      </exprs>
+      <exprs>
+        <type xsi:type="b:Ref" type="//@machines.4/@concreteConstants/@constants.1"/>
+      </exprs>
+      <exprs>
+        <type xsi:type="b:Ref" type="//@machines.4/@concreteConstants/@constants.1"/>
+      </exprs>
+    </invariant>
+    <initialisation>
+      <exprs>
+        <type xsi:type="b:Ref" type="//@machines.4/@concreteConstants/@constants.1"/>
+      </exprs>
+      <exprs>
+        <type xsi:type="b:Ref" type="//@machines.4/@concreteConstants/@constants.1"/>
+      </exprs>
+      <exprs>
+        <type xsi:type="b:PrimitiveType"/>
+      </exprs>
+      <exprs>
+        <type xsi:type="b:PrimitiveType"/>
+      </exprs>
+      <exprs>
+        <type xsi:type="b:PrimitiveType"/>
+      </exprs>
+      <exprs>
+        <type xsi:type="b:PrimitiveType"/>
+      </exprs>
+      <exprs>
+        <type xsi:type="b:PrimitiveType"/>
+      </exprs>
+      <exprs>
+        <type xsi:type="b:PrimitiveType"/>
+      </exprs>
+      <exprs>
+        <type xsi:type="b:PrimitiveType"/>
+      </exprs>
+      <exprs>
+        <type xsi:type="b:PrimitiveType"/>
+      </exprs>
+      <exprs>
+        <type xsi:type="b:Ref" type="//@machines.4/@concreteConstants/@constants.1"/>
+      </exprs>
+      <exprs>
+        <type xsi:type="b:Ref"/>
+      </exprs>
+    </initialisation>
+  </machines>
+  <machines name="Utils">
+    <concreteConstants>
+      <constants name="UINT16_MAX"/>
+      <constants name="uint16_t"/>
+    </concreteConstants>
+    <properties>
+      <exprs xsi:type="b:PropertyTyped" constant="//@machines.4/@concreteConstants/@constants.0">
+        <type xsi:type="b:PrimitiveType" type="NAT1"/>
+      </exprs>
+      <expr xsi:type="b:PropertyRange" constant="//@machines.4/@concreteConstants/@constants.1">
+        <range/>
+      </expr>
+    </properties>
+    <operations>
+      <operations name="print">
+        <args name="sensor"/>
+        <args name="variable"/>
+        <args name="value"/>
+        <body xsi:type="b:Pre">
+          <exprs>
+            <type xsi:type="b:PrimitiveType" type="STRING"/>
+          </exprs>
+          <exprs>
+            <type xsi:type="b:PrimitiveType" type="STRING"/>
+          </exprs>
+          <exprs>
+            <type xsi:type="b:PrimitiveType" type="STRING"/>
+          </exprs>
+          <expr xsi:type="b:Skip"/>
+        </body>
+      </operations>
+      <operations name="urgent_print">
+        <args name="sensor"/>
+        <args name="variable"/>
+        <args name="value"/>
+        <body xsi:type="b:Pre">
+          <exprs>
+            <type xsi:type="b:PrimitiveType" type="STRING"/>
+          </exprs>
+          <exprs>
+            <type xsi:type="b:PrimitiveType" type="STRING"/>
+          </exprs>
+          <exprs>
+            <type xsi:type="b:PrimitiveType" type="STRING"/>
+          </exprs>
+          <expr xsi:type="b:Skip"/>
+        </body>
+      </operations>
+      <operations name="flush">
+        <body xsi:type="b:Skip"/>
+      </operations>
+    </operations>
+    <concreteVariables>
+      <variables name="current_date"/>
+      <variables name="current_time"/>
+      <variables name="toprint"/>
+    </concreteVariables>
+    <invariant>
+      <exprs>
+        <type xsi:type="b:PrimitiveType" type="INT"/>
+      </exprs>
+      <exprs>
+        <type xsi:type="b:PrimitiveType" type="INT"/>
+      </exprs>
+      <exprs>
+        <type xsi:type="b:PrimitiveType"/>
+      </exprs>
+    </invariant>
+    <initialisation>
+      <exprs>
+        <type xsi:type="b:PrimitiveType" type="INT"/>
+      </exprs>
+      <exprs>
+        <type xsi:type="b:PrimitiveType" type="INT"/>
+      </exprs>
+      <exprs>
+        <type xsi:type="b:PrimitiveType"/>
+      </exprs>
+    </initialisation>
+    <assertions>
+      <exprs>
+        <type xsi:type="b:PrimitiveType" type="INT"/>
+      </exprs>
+    </assertions>
+  </machines>
+  <machines name="Main">
+    <operations>
+      <operations name="do_cycle">
+        <body xsi:type="b:Skip"/>
+      </operations>
+    </operations>
+  </machines>
+  <machines name="Outputs">
+    <operations>
+      <operations name="set_aopp">
+        <args name="aopp"/>
+        <body xsi:type="b:Pre">
+          <exprs var="//@machines.6/@operations/@operations.0/@args.0">
+            <type xsi:type="b:PrimitiveType"/>
+          </exprs>
+          <expr xsi:type="b:Assign" var="//@machines.6/@concreteVariables/@variables.0">
+            <value xsi:type="b:Ref" var="//@machines.6/@operations/@operations.0/@args.0"/>
+          </expr>
+        </body>
+      </operations>
+    </operations>
+    <concreteVariables>
+      <variables name="AOPP"/>
+    </concreteVariables>
+    <invariant>
+      <exprs variable="//@machines.6/@concreteVariables/@variables.0">
+        <type xsi:type="b:PrimitiveType"/>
+      </exprs>
+    </invariant>
+    <initialisation>
+      <exprs variable="//@machines.6/@concreteVariables/@variables.0">
+        <type xsi:type="b:PrimitiveType"/>
+      </exprs>
+    </initialisation>
+  </machines>
+  <implementations name="Treatment_i">
+    <operations>
+      <operations name="aopp_authorization">
+        <outputs name="aopp"/>
+        <outputs name="fallback"/>
+        <body xsi:type="b:Var">
+          <vars name="train_in_par"/>
+          <vars name="train_stopped"/>
+          <vars name="doors_opening"/>
+          <in>
+            <exprs xsi:type="b:Call" rets="//@implementations.0/@operations/@operations.0/@body/@vars.0" op="//@machines.0/@operations/@operations.0"/>
+            <exprs xsi:type="b:Call" rets="//@implementations.0/@operations/@operations.0/@body/@vars.1" op="//@machines.0/@operations/@operations.1"/>
+            <exprs xsi:type="b:Call" rets="//@implementations.0/@operations/@operations.0/@body/@vars.2"/>
+            <exprs xsi:type="b:Assign">
+              <value xsi:type="b:BoolTest">
+                <expr xsi:type="b:AndExpr">
+                  <exprs xsi:type="b:EqualExpr">
+                    <left xsi:type="b:Ref" var="//@implementations.0/@operations/@operations.0/@body/@vars.0"/>
+                    <right xsi:type="b:Ref" var="//@machines.0/@sets/@exprs.0/@elems.0"/>
+                  </exprs>
+                  <exprs xsi:type="b:EqualExpr">
+                    <left xsi:type="b:Ref" var="//@implementations.0/@operations/@operations.0/@body/@vars.1"/>
+                    <right xsi:type="b:Ref" var="//@machines.0/@sets/@exprs.1/@elems.0"/>
+                  </exprs>
+                  <exprs xsi:type="b:EqualExpr">
+                    <left xsi:type="b:Ref" var="//@implementations.0/@operations/@operations.0/@body/@vars.2"/>
+                    <right xsi:type="b:ConstantExpr"/>
+                  </exprs>
+                </expr>
+              </value>
+            </exprs>
+            <exprs xsi:type="b:If">
+              <exprs>
+                <condition xsi:type="b:CondEq">
+                  <left xsi:type="b:Ref" var="//@implementations.0/@operations/@operations.0/@body/@vars.0"/>
+                  <right xsi:type="b:Ref" var="//@machines.0/@sets/@exprs.0/@elems.2"/>
+                </condition>
+                <then xsi:type="b:Assign">
+                  <value xsi:type="b:Ref" var="//@machines.0/@sets/@exprs.0/@elems.2"/>
+                </then>
+              </exprs>
+              <exprs>
+                <condition xsi:type="b:CondEq">
+                  <left xsi:type="b:Ref" var="//@implementations.0/@operations/@operations.0/@body/@vars.1"/>
+                  <right xsi:type="b:Ref" var="//@machines.0/@sets/@exprs.1/@elems.2"/>
+                </condition>
+                <then xsi:type="b:Assign">
+                  <value xsi:type="b:Ref"/>
+                </then>
+              </exprs>
+              <else xsi:type="b:Assign">
+                <value xsi:type="b:Ref"/>
+              </else>
+            </exprs>
+          </in>
+        </body>
+      </operations>
+    </operations>
+  </implementations>
+  <implementations name="Doors_i">
+    <definitions>
+      <exprs name="DOOR_SENSOR_CONSISTENT">
+        <args name="visible"/>
+        <args name="opening"/>
+        <args name="closed"/>
+        <args name="closing"/>
+        <expr xsi:type="b:AndExpr">
+          <exprs xsi:type="b:ImplyExpr">
+            <left xsi:type="b:EqualExpr">
+              <left xsi:type="b:Ref" var="//@implementations.1/@definitions/@exprs.0/@args.0"/>
+              <right xsi:type="b:ConstantExpr" constant="FALSE"/>
+            </left>
+            <right xsi:type="b:AndExpr">
+              <exprs xsi:type="b:EqualExpr">
+                <left xsi:type="b:Ref" var="//@implementations.1/@definitions/@exprs.0/@args.1"/>
+                <right xsi:type="b:ConstantExpr" constant="FALSE"/>
+              </exprs>
+              <exprs xsi:type="b:EqualExpr">
+                <left xsi:type="b:Ref" var="//@implementations.1/@definitions/@exprs.0/@args.2"/>
+                <right xsi:type="b:ConstantExpr" constant="FALSE"/>
+              </exprs>
+              <exprs xsi:type="b:EqualExpr">
+                <left xsi:type="b:Ref" var="//@implementations.1/@definitions/@exprs.0/@args.3"/>
+                <right xsi:type="b:ConstantExpr" constant="FALSE"/>
+              </exprs>
+            </right>
+          </exprs>
+          <exprs xsi:type="b:ImplyExpr">
+            <left xsi:type="b:EqualExpr">
+              <left xsi:type="b:Ref" var="//@implementations.1/@definitions/@exprs.0/@args.1"/>
+              <right xsi:type="b:ConstantExpr"/>
+            </left>
+            <right xsi:type="b:AndExpr">
+              <exprs xsi:type="b:EqualExpr">
+                <left xsi:type="b:Ref" var="//@implementations.1/@definitions/@exprs.0/@args.2"/>
+                <right xsi:type="b:ConstantExpr" constant="FALSE"/>
+              </exprs>
+              <exprs xsi:type="b:EqualExpr">
+                <left xsi:type="b:Ref" var="//@implementations.1/@definitions/@exprs.0/@args.3"/>
+                <right xsi:type="b:ConstantExpr" constant="FALSE"/>
+              </exprs>
+            </right>
+          </exprs>
+          <exprs xsi:type="b:ImplyExpr">
+            <left xsi:type="b:EqualExpr">
+              <left xsi:type="b:Ref" var="//@implementations.1/@definitions/@exprs.0/@args.2"/>
+              <right xsi:type="b:ConstantExpr"/>
+            </left>
+            <right xsi:type="b:AndExpr">
+              <exprs xsi:type="b:EqualExpr">
+                <left xsi:type="b:Ref" var="//@implementations.1/@definitions/@exprs.0/@args.1"/>
+                <right xsi:type="b:ConstantExpr" constant="FALSE"/>
+              </exprs>
+              <exprs xsi:type="b:EqualExpr">
+                <left xsi:type="b:Ref" var="//@implementations.1/@definitions/@exprs.0/@args.3"/>
+                <right xsi:type="b:ConstantExpr" constant="FALSE"/>
+              </exprs>
+            </right>
+          </exprs>
+          <exprs xsi:type="b:ImplyExpr">
+            <left xsi:type="b:EqualExpr">
+              <left xsi:type="b:Ref" var="//@implementations.1/@definitions/@exprs.0/@args.3"/>
+              <right xsi:type="b:ConstantExpr"/>
+            </left>
+            <right xsi:type="b:AndExpr">
+              <exprs xsi:type="b:EqualExpr">
+                <left xsi:type="b:Ref" var="//@implementations.1/@definitions/@exprs.0/@args.1"/>
+                <right xsi:type="b:ConstantExpr" constant="FALSE"/>
+              </exprs>
+              <exprs xsi:type="b:EqualExpr">
+                <left xsi:type="b:Ref" var="//@implementations.1/@definitions/@exprs.0/@args.2"/>
+                <right xsi:type="b:ConstantExpr" constant="FALSE"/>
+              </exprs>
+            </right>
+          </exprs>
+        </expr>
+      </exprs>
+    </definitions>
+    <operations>
+      <operations name="door_consistency">
+        <outputs name="cons"/>
+        <args name="visible"/>
+        <args name="opening"/>
+        <args name="closed"/>
+        <args name="closing"/>
+        <body xsi:type="b:If">
+          <exprs>
+            <condition xsi:type="b:CondEq">
+              <left xsi:type="b:Ref" var="//@implementations.1/@operations/@operations.0/@args.0"/>
+              <right xsi:type="b:BoolLiteral" value="FALSE"/>
+            </condition>
+            <then xsi:type="b:Assign" var="//@implementations.1/@operations/@operations.0/@outputs.0">
+              <value xsi:type="b:BoolTest">
+                <expr xsi:type="b:AndExpr">
+                  <exprs xsi:type="b:EqualExpr">
+                    <left xsi:type="b:Ref" var="//@implementations.1/@operations/@operations.0/@args.1"/>
+                    <right xsi:type="b:ConstantExpr" constant="FALSE"/>
+                  </exprs>
+                  <exprs xsi:type="b:EqualExpr">
+                    <left xsi:type="b:Ref" var="//@implementations.1/@operations/@operations.0/@args.2"/>
+                    <right xsi:type="b:ConstantExpr" constant="FALSE"/>
+                  </exprs>
+                  <exprs xsi:type="b:EqualExpr">
+                    <left xsi:type="b:Ref" var="//@implementations.1/@operations/@operations.0/@args.3"/>
+                    <right xsi:type="b:ConstantExpr" constant="FALSE"/>
+                  </exprs>
+                </expr>
+              </value>
+            </then>
+          </exprs>
+          <else xsi:type="b:If">
+            <exprs>
+              <condition xsi:type="b:CondEq">
+                <left xsi:type="b:Ref" var="//@implementations.1/@operations/@operations.0/@args.1"/>
+                <right xsi:type="b:BoolLiteral"/>
+              </condition>
+              <then xsi:type="b:Assign" var="//@implementations.1/@operations/@operations.0/@outputs.0">
+                <value xsi:type="b:BoolTest">
+                  <expr xsi:type="b:AndExpr">
+                    <exprs xsi:type="b:EqualExpr">
+                      <left xsi:type="b:Ref" var="//@implementations.1/@operations/@operations.0/@args.3"/>
+                      <right xsi:type="b:ConstantExpr" constant="FALSE"/>
+                    </exprs>
+                    <exprs xsi:type="b:EqualExpr">
+                      <left xsi:type="b:Ref" var="//@implementations.1/@operations/@operations.0/@args.2"/>
+                      <right xsi:type="b:ConstantExpr" constant="FALSE"/>
+                    </exprs>
+                  </expr>
+                </value>
+              </then>
+            </exprs>
+            <else xsi:type="b:If">
+              <exprs>
+                <condition xsi:type="b:CondEq">
+                  <left xsi:type="b:Ref" var="//@implementations.1/@operations/@operations.0/@args.3"/>
+                  <right xsi:type="b:BoolLiteral"/>
+                </condition>
+                <then xsi:type="b:Assign" var="//@implementations.1/@operations/@operations.0/@outputs.0">
+                  <value xsi:type="b:BoolTest">
+                    <expr xsi:type="b:AndExpr">
+                      <exprs xsi:type="b:EqualExpr">
+                        <left xsi:type="b:Ref" var="//@implementations.1/@operations/@operations.0/@args.2"/>
+                        <right xsi:type="b:ConstantExpr" constant="FALSE"/>
+                      </exprs>
+                      <exprs xsi:type="b:EqualExpr">
+                        <left xsi:type="b:Ref" var="//@implementations.1/@operations/@operations.0/@args.1"/>
+                        <right xsi:type="b:ConstantExpr" constant="FALSE"/>
+                      </exprs>
+                    </expr>
+                  </value>
+                </then>
+              </exprs>
+              <else xsi:type="b:Assign" var="//@implementations.1/@operations/@operations.0/@outputs.0">
+                <value xsi:type="b:BoolLiteral"/>
+              </else>
+            </else>
+          </else>
+        </body>
+      </operations>
+      <operations name="are_doors_opening">
+        <outputs name="opening"/>
+        <body xsi:type="b:Var">
+          <vars name="M22_cons"/>
+          <vars name="M23_cons"/>
+          <in>
+            <exprs xsi:type="b:Call" rets="//@implementations.1/@operations/@operations.1/@body/@vars.0" op="//@implementations.1/@operations/@operations.0">
+              <args xsi:type="b:Ref" var="//@machines.3/@concreteVariables/@variables.2"/>
+              <args xsi:type="b:Ref" var="//@machines.3/@concreteVariables/@variables.3"/>
+              <args xsi:type="b:Ref" var="//@machines.3/@concreteVariables/@variables.5"/>
+              <args xsi:type="b:Ref" var="//@machines.3/@concreteVariables/@variables.4"/>
+            </exprs>
+            <exprs xsi:type="b:Call" rets="//@implementations.1/@operations/@operations.1/@body/@vars.1" op="//@implementations.1/@operations/@operations.0">
+              <args xsi:type="b:Ref" var="//@machines.3/@concreteVariables/@variables.6"/>
+              <args xsi:type="b:Ref" var="//@machines.3/@concreteVariables/@variables.7"/>
+              <args xsi:type="b:Ref" var="//@machines.3/@concreteVariables/@variables.9"/>
+              <args xsi:type="b:Ref" var="//@machines.3/@concreteVariables/@variables.8"/>
+            </exprs>
+            <exprs xsi:type="b:If">
+              <exprs>
+                <condition xsi:type="b:CondAnd">
+                  <exprs xsi:type="b:CondEq">
+                    <left xsi:type="b:Ref" var="//@implementations.1/@operations/@operations.1/@body/@vars.0"/>
+                    <right xsi:type="b:BoolLiteral"/>
+                  </exprs>
+                  <exprs xsi:type="b:CondEq">
+                    <left xsi:type="b:Ref" var="//@implementations.1/@operations/@operations.1/@body/@vars.1"/>
+                    <right xsi:type="b:BoolLiteral"/>
+                  </exprs>
+                </condition>
+                <then xsi:type="b:If">
+                  <exprs>
+                    <condition xsi:type="b:CondAnd">
+                      <exprs xsi:type="b:CondEq">
+                        <left xsi:type="b:Ref" var="//@machines.3/@concreteVariables/@variables.3"/>
+                        <right xsi:type="b:BoolLiteral"/>
+                      </exprs>
+                      <exprs xsi:type="b:CondEq">
+                        <left xsi:type="b:Ref" var="//@machines.3/@concreteVariables/@variables.7"/>
+                        <right xsi:type="b:BoolLiteral"/>
+                      </exprs>
+                    </condition>
+                    <then xsi:type="b:Assign" var="//@implementations.1/@operations/@operations.1/@outputs.0">
+                      <value xsi:type="b:BoolLiteral"/>
+                    </then>
+                  </exprs>
+                  <else xsi:type="b:Assign" var="//@implementations.1/@operations/@operations.1/@outputs.0">
+                    <value xsi:type="b:BoolLiteral" constant="FALSE"/>
+                  </else>
+                </then>
+              </exprs>
+              <else xsi:type="b:Assign" var="//@implementations.1/@operations/@operations.1/@outputs.0">
+                <value xsi:type="b:BoolLiteral" constant="FALSE"/>
+              </else>
+            </exprs>
+          </in>
+        </body>
+      </operations>
+    </operations>
+    <localOperations>
+      <operations name="door_consistency">
+        <outputs name="cons"/>
+        <args name="visible"/>
+        <args name="opening"/>
+        <args name="closed"/>
+        <args name="closing"/>
+        <body xsi:type="b:Pre">
+          <exprs var="//@implementations.1/@operations/@operations.0/@args.0">
+            <type xsi:type="b:PrimitiveType"/>
+          </exprs>
+          <exprs var="//@implementations.1/@operations/@operations.0/@args.1">
+            <type xsi:type="b:PrimitiveType"/>
+          </exprs>
+          <exprs var="//@implementations.1/@operations/@operations.0/@args.2">
+            <type xsi:type="b:PrimitiveType"/>
+          </exprs>
+          <exprs var="//@implementations.1/@operations/@operations.0/@args.3">
+            <type xsi:type="b:PrimitiveType"/>
+          </exprs>
+          <expr xsi:type="b:ReturnTuple" vars="//@implementations.1/@localOperations/@operations.0/@outputs.0">
+            <value xsi:type="b:AndExpr">
+              <exprs xsi:type="b:TypeConstraint" var="//@implementations.1/@localOperations/@operations.0/@outputs.0">
+                <type xsi:type="b:PrimitiveType"/>
+              </exprs>
+              <exprs xsi:type="b:EqualExpr">
+                <left xsi:type="b:Ref" var="//@implementations.1/@localOperations/@operations.0/@outputs.0"/>
+                <right xsi:type="b:BoolTest">
+                  <expr xsi:type="b:DefinitionCall" def="//@implementations.1/@definitions/@exprs.0">
+                    <args xsi:type="b:Ref" var="//@implementations.1/@localOperations/@operations.0/@args.0"/>
+                    <args xsi:type="b:Ref" var="//@implementations.1/@localOperations/@operations.0/@args.1"/>
+                    <args xsi:type="b:Ref" var="//@implementations.1/@localOperations/@operations.0/@args.2"/>
+                    <args xsi:type="b:Ref" var="//@implementations.1/@localOperations/@operations.0/@args.3"/>
+                  </expr>
+                </right>
+              </exprs>
+            </value>
+          </expr>
+        </body>
+      </operations>
+    </localOperations>
+  </implementations>
+  <implementations name="Main_i">
+    <operations>
+      <operations name="do_cycle">
+        <body xsi:type="b:Begin">
+          <expr xsi:type="b:Seq">
+            <exprs xsi:type="b:Call" op="//@machines.3/@operations/@operations.0"/>
+            <exprs xsi:type="b:Var">
+              <vars name="aopp"/>
+              <vars name="fb"/>
+              <in>
+                <exprs xsi:type="b:Call" rets="//@implementations.2/@operations/@operations.0/@body/@expr/@exprs.1/@vars.0 //@implementations.2/@operations/@operations.0/@body/@expr/@exprs.1/@vars.1" op="//@machines.2/@operations/@operations.0"/>
+                <exprs xsi:type="b:Call" op="//@machines.6/@operations/@operations.0">
+                  <args xsi:type="b:Ref" var="//@implementations.2/@operations/@operations.0/@body/@expr/@exprs.1/@vars.0"/>
+                </exprs>
+                <exprs xsi:type="b:Case" var="//@implementations.2/@operations/@operations.0/@body/@expr/@exprs.1/@vars.1">
+                  <cases test="//@machines.2/@sets/@exprs.0/@elems.2">
+                    <expr xsi:type="b:If">
+                      <exprs>
+                        <condition xsi:type="b:CondEq">
+                          <left xsi:type="b:Ref" var="//@implementations.2/@operations/@operations.0/@body/@expr/@exprs.1/@vars.0"/>
+                          <right xsi:type="b:BoolLiteral"/>
+                        </condition>
+                        <then xsi:type="b:Call" op="//@machines.4/@operations/@operations.0">
+                          <args xsi:type="b:StringLiteral" value="M11"/>
+                          <args xsi:type="b:StringLiteral" value="aopp"/>
+                          <args xsi:type="b:StringLiteral" value="2"/>
+                        </then>
+                      </exprs>
+                      <else xsi:type="b:Call" op="//@machines.4/@operations/@operations.0">
+                        <args xsi:type="b:StringLiteral" value="M11"/>
+                        <args xsi:type="b:StringLiteral" value="aopp"/>
+                        <args xsi:type="b:StringLiteral" value="1"/>
+                      </else>
+                    </expr>
+                  </cases>
+                  <cases test="//@machines.2/@sets/@exprs.0/@elems.0">
+                    <expr xsi:type="b:Call" op="//@machines.4/@operations/@operations.0">
+                      <args xsi:type="b:StringLiteral" value="M11"/>
+                      <args xsi:type="b:StringLiteral" value="fallback"/>
+                      <args xsi:type="b:StringLiteral" value="1"/>
+                    </expr>
+                  </cases>
+                  <cases test="//@machines.2/@sets/@exprs.0/@elems.1">
+                    <expr xsi:type="b:Call" op="//@machines.4/@operations/@operations.0">
+                      <args xsi:type="b:StringLiteral" value="M11"/>
+                      <args xsi:type="b:StringLiteral" value="fallback"/>
+                      <args xsi:type="b:StringLiteral" value="2"/>
+                    </expr>
+                  </cases>
+                </exprs>
+              </in>
+            </exprs>
+          </expr>
+        </body>
+      </operations>
+    </operations>
+  </implementations>
+  <implementations name="Train_i">
+    <concreteConstants>
+      <constants name="POSITION_DELTA"/>
+      <constants name="SPEED_DELTA"/>
+      <constants name="PAR_POSITION"/>
+    </concreteConstants>
+    <properties>
+      <exprs xsi:type="b:PropertyTyped" constant="//@implementations.3/@concreteConstants/@constants.0">
+        <type xsi:type="b:PrimitiveType" type="NAT1"/>
+      </exprs>
+      <expr xsi:type="b:PropertyTyped" constant="//@implementations.3/@concreteConstants/@constants.1">
+        <type xsi:type="b:PrimitiveType" type="NAT1"/>
+      </expr>
+      <expr xsi:type="b:PropertyTyped" constant="//@implementations.3/@concreteConstants/@constants.2">
+        <type xsi:type="b:PrimitiveType" type="NAT1"/>
+      </expr>
+    </properties>
+    <operations>
+      <operations name="abs">
+        <outputs name="res"/>
+        <args name="xx"/>
+        <body xsi:type="b:If">
+          <exprs>
+            <condition xsi:type="b:CondLessThan">
+              <left xsi:type="b:Ref" var="//@implementations.3/@operations/@operations.0/@args.0"/>
+              <right xsi:type="b:IntLiteral"/>
+            </condition>
+            <then xsi:type="b:Assign" var="//@implementations.3/@operations/@operations.0/@outputs.0">
+              <value xsi:type="b:Neg">
+                <expr xsi:type="b:Ref" var="//@implementations.3/@operations/@operations.0/@args.0"/>
+              </value>
+            </then>
+          </exprs>
+          <else xsi:type="b:Assign" var="//@implementations.3/@operations/@operations.0/@outputs.0">
+            <value xsi:type="b:Ref" var="//@implementations.3/@operations/@operations.0/@args.0"/>
+          </else>
+        </body>
+      </operations>
+      <operations name="is_train_in_par">
+        <outputs name="in_par"/>
+        <body xsi:type="b:Var">
+          <vars name="dd"/>
+          <in>
+            <exprs xsi:type="b:Call" rets="//@implementations.3/@operations/@operations.1/@body/@vars.0" op="//@implementations.3/@operations/@operations.0">
+              <args xsi:type="b:ArgMinus">
+                <left xsi:type="b:Ref" var="//@machines.3/@concreteVariables/@variables.0"/>
+                <right xsi:type="b:Ref" var="//@machines.3/@concreteVariables/@variables.10"/>
+              </args>
+            </exprs>
+            <exprs xsi:type="b:If">
+              <exprs>
+                <condition xsi:type="b:CondLessThan">
+                  <left xsi:type="b:Ref" var="//@implementations.3/@operations/@operations.1/@body/@vars.0"/>
+                  <right xsi:type="b:Ref" var="//@implementations.3/@concreteConstants/@constants.0"/>
+                </condition>
+                <then xsi:type="b:Var">
+                  <vars name="par1"/>
+                  <vars name="par2"/>
+                  <in>
+                    <exprs xsi:type="b:Call" rets="//@implementations.3/@operations/@operations.1/@body/@in/@exprs.1/@exprs.0/@then/@vars.0" op="//@implementations.3/@operations/@operations.0">
+                      <args xsi:type="b:ArgMinus">
+                        <left xsi:type="b:Ref" var="//@machines.3/@concreteVariables/@variables.0"/>
+                        <right xsi:type="b:Ref" var="//@implementations.3/@concreteConstants/@constants.2"/>
+                      </args>
+                    </exprs>
+                    <exprs xsi:type="b:Call" rets="//@implementations.3/@operations/@operations.1/@body/@in/@exprs.1/@exprs.0/@then/@vars.1" op="//@implementations.3/@operations/@operations.0">
+                      <args xsi:type="b:ArgMinus">
+                        <left xsi:type="b:Ref" var="//@machines.3/@concreteVariables/@variables.10"/>
+                        <right xsi:type="b:Ref" var="//@implementations.3/@concreteConstants/@constants.2"/>
+                      </args>
+                    </exprs>
+                    <exprs xsi:type="b:If">
+                      <exprs>
+                        <condition xsi:type="b:CondAnd">
+                          <exprs xsi:type="b:CondLessThan">
+                            <left xsi:type="b:Ref" var="//@implementations.3/@operations/@operations.1/@body/@in/@exprs.1/@exprs.0/@then/@vars.0"/>
+                            <right xsi:type="b:Ref" var="//@implementations.3/@concreteConstants/@constants.0"/>
+                          </exprs>
+                          <exprs xsi:type="b:CondLessThan">
+                            <left xsi:type="b:Ref" var="//@implementations.3/@operations/@operations.1/@body/@in/@exprs.1/@exprs.0/@then/@vars.1"/>
+                            <right xsi:type="b:Ref" var="//@implementations.3/@concreteConstants/@constants.0"/>
+                          </exprs>
+                        </condition>
+                        <then xsi:type="b:Assign" var="//@implementations.3/@operations/@operations.1/@outputs.0">
+                          <value xsi:type="b:Ref" var="//@machines.0/@sets/@exprs.0/@elems.0"/>
+                        </then>
+                      </exprs>
+                      <else xsi:type="b:Assign" var="//@implementations.3/@operations/@operations.1/@outputs.0">
+                        <value xsi:type="b:Ref" var="//@machines.0/@sets/@exprs.0/@elems.1"/>
+                      </else>
+                    </exprs>
+                  </in>
+                </then>
+              </exprs>
+              <else xsi:type="b:Assign" var="//@implementations.3/@operations/@operations.1/@outputs.0">
+                <value xsi:type="b:Ref" var="//@machines.0/@sets/@exprs.0/@elems.2"/>
+              </else>
+            </exprs>
+          </in>
+        </body>
+      </operations>
+      <operations name="is_train_stopped">
+        <outputs name="stopped"/>
+        <body xsi:type="b:Var">
+          <vars name="dd"/>
+          <in>
+            <exprs xsi:type="b:Call" rets="//@implementations.3/@operations/@operations.2/@body/@vars.0" op="//@implementations.3/@operations/@operations.0">
+              <args xsi:type="b:ArgMinus">
+                <left xsi:type="b:Ref" var="//@machines.3/@concreteVariables/@variables.1"/>
+                <right xsi:type="b:Ref" var="//@machines.3/@concreteVariables/@variables.11"/>
+              </args>
+            </exprs>
+            <exprs xsi:type="b:If">
+              <exprs>
+                <condition xsi:type="b:CondLessThan">
+                  <left xsi:type="b:Ref" var="//@implementations.3/@operations/@operations.2/@body/@vars.0"/>
+                  <right xsi:type="b:Ref" var="//@implementations.3/@concreteConstants/@constants.1"/>
+                </condition>
+                <then xsi:type="b:If">
+                  <exprs>
+                    <condition xsi:type="b:CondAnd">
+                      <exprs xsi:type="b:CondLessThan">
+                        <left xsi:type="b:Ref" var="//@machines.3/@concreteVariables/@variables.1"/>
+                        <right xsi:type="b:Ref" var="//@implementations.3/@concreteConstants/@constants.1"/>
+                      </exprs>
+                      <exprs xsi:type="b:CondLessThan">
+                        <left xsi:type="b:Ref" var="//@machines.3/@concreteVariables/@variables.11"/>
+                        <right xsi:type="b:Ref" var="//@implementations.3/@concreteConstants/@constants.1"/>
+                      </exprs>
+                    </condition>
+                    <then xsi:type="b:Assign" var="//@implementations.3/@operations/@operations.2/@outputs.0">
+                      <value xsi:type="b:Ref" var="//@machines.0/@sets/@exprs.1/@elems.0"/>
+                    </then>
+                  </exprs>
+                  <else xsi:type="b:Assign" var="//@implementations.3/@operations/@operations.2/@outputs.0">
+                    <value xsi:type="b:Ref" var="//@machines.0/@sets/@exprs.1/@elems.1"/>
+                  </else>
+                </then>
+              </exprs>
+              <else xsi:type="b:Assign" var="//@implementations.3/@operations/@operations.2/@outputs.0">
+                <value xsi:type="b:Ref" var="//@machines.0/@sets/@exprs.1/@elems.2"/>
+              </else>
+            </exprs>
+          </in>
+        </body>
+      </operations>
+    </operations>
+    <values>
+      <exprs constant="//@implementations.3/@concreteConstants/@constants.0" value="100"/>
+      <exprs constant="//@implementations.3/@concreteConstants/@constants.1" value="100"/>
+      <exprs constant="//@implementations.3/@concreteConstants/@constants.2" value="32768"/>
+    </values>
+    <localOperations>
+      <operations name="abs">
+        <outputs name="res"/>
+        <args name="xx"/>
+        <body xsi:type="b:Pre">
+          <exprs var="//@implementations.3/@operations/@operations.0/@args.0">
+            <type xsi:type="b:PrimitiveType" type="INT"/>
+          </exprs>
+          <expr xsi:type="b:ReturnTuple" vars="//@implementations.3/@localOperations/@operations.0/@outputs.0">
+            <value xsi:type="b:AndExpr">
+              <exprs xsi:type="b:TypeConstraint" var="//@implementations.3/@localOperations/@operations.0/@outputs.0">
+                <type xsi:type="b:PrimitiveType" type="NAT"/>
+              </exprs>
+              <exprs xsi:type="b:ImplyExpr">
+                <left xsi:type="b:InequalityExpr">
+                  <left xsi:type="b:Ref" var="//@implementations.3/@localOperations/@operations.0/@args.0"/>
+                  <right xsi:type="b:IntLiteral"/>
+                </left>
+                <right xsi:type="b:EqualExpr">
+                  <left xsi:type="b:Ref" var="//@implementations.3/@localOperations/@operations.0/@outputs.0"/>
+                  <right xsi:type="b:NegExpr">
+                    <expr xsi:type="b:Ref" var="//@implementations.3/@localOperations/@operations.0/@args.0"/>
+                  </right>
+                </right>
+              </exprs>
+              <exprs xsi:type="b:ImplyExpr">
+                <left xsi:type="b:InequalityExpr" op=">=">
+                  <left xsi:type="b:Ref" var="//@implementations.3/@localOperations/@operations.0/@args.0"/>
+                  <right xsi:type="b:IntLiteral"/>
+                </left>
+                <right xsi:type="b:EqualExpr">
+                  <left xsi:type="b:Ref" var="//@implementations.3/@localOperations/@operations.0/@outputs.0"/>
+                  <right xsi:type="b:Ref" var="//@implementations.3/@localOperations/@operations.0/@args.0"/>
+                </right>
+              </exprs>
+            </value>
+          </expr>
+        </body>
+      </operations>
+    </localOperations>
+  </implementations>
+</b:Program>

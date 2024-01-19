@@ -1,0 +1,27 @@
+@startuml
+class TraceabilityModel [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/TraceabilityMetamodel.ecore?uri=platform:/resource/Safety/metamodels/TraceabilityMetamodel.ecore%23/0/TraceabilityModel]] {
+	name: String
+}
+class TraceabilityLink [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/TraceabilityMetamodel.ecore?uri=platform:/resource/Safety/metamodels/TraceabilityMetamodel.ecore%23/0/TraceabilityLink]] {
+	id: Integer
+	name: String
+	description: String
+}
+class TraceabilityLinkEnd [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/TraceabilityMetamodel.ecore?uri=platform:/resource/Safety/metamodels/TraceabilityMetamodel.ecore%23/0/TraceabilityLinkEnd]] {
+	name: String
+}
+class TraceabilityContext [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/TraceabilityMetamodel.ecore?uri=platform:/resource/Safety/metamodels/TraceabilityMetamodel.ecore%23/0/TraceabilityContext]] {
+	name: String
+	description: String
+}
+class TraceabilityContextData [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/TraceabilityMetamodel.ecore?uri=platform:/resource/Safety/metamodels/TraceabilityMetamodel.ecore%23/0/TraceabilityContextData]] {
+	name: String
+	value: String
+}
+TraceabilityModel *--> "traceabilityLinks *" TraceabilityLink
+TraceabilityLink *--> "rightLinkEnd *" TraceabilityLinkEnd
+TraceabilityLink *--> "leftLinkEnd *" TraceabilityLinkEnd
+TraceabilityLink *--> "traceabilityContext" TraceabilityContext
+TraceabilityLinkEnd --> "traceableArtefact" EObject
+TraceabilityContext *--> "traceabilityContextData *" TraceabilityContextData
+@enduml

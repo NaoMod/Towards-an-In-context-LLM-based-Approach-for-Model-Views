@@ -1,0 +1,342 @@
+@startuml
+class Abstraction [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Abstraction]] {
+	name: EString
+}
+class Machine [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Machine]] {
+}
+class Implementation [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Implementation]] {
+}
+class Sees [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Sees]] {
+}
+class Imports [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Imports]] {
+}
+class Values [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Values]] {
+}
+class ValueExpr [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//ValueExpr]] {
+	value: EString
+}
+class ConcreteVariables [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//ConcreteVariables]] {
+}
+class Variable [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Variable]] {
+	name: EString
+}
+class ConcreteConstants [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//ConcreteConstants]] {
+}
+class Invariant [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Invariant]] {
+}
+class InvariantExpr [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//InvariantExpr]] {
+}
+class Type [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Type]] {
+}
+enum PrimitiveTypeEnum [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//PrimitiveTypeEnum]] {
+	BOOL: BOOL
+	INT: INT
+	NAT: NAT
+	NAT1: NAT1
+	STRING: STRING
+}
+class Initialisation [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Initialisation]] {
+}
+class InitialisationExpr [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//InitialisationExpr]] {
+}
+class Properties [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Properties]] {
+}
+class PropertyExpr [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//PropertyExpr]] {
+}
+class Range [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Range]] {
+	lowerBound: EInt
+}
+class Assertions [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Assertions]] {
+}
+class AssertionExpr [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//AssertionExpr]] {
+}
+class Definitions [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Definitions]] {
+}
+class Definition [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Definition]] {
+	name: EString
+}
+class LogicalExpr [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//LogicalExpr]] {
+}
+enum InequalityOp [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//InequalityOp]] {
+	<: LESS
+	<=: LESS_EQ
+	>: GREATER
+	>=: GREATER_EQ
+}
+class DefinitionCall [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//DefinitionCall]] {
+}
+class IntLiteral [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//IntLiteral]] {
+	value: EInt
+}
+enum BoolLiteralEnum [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//BoolLiteralEnum]] {
+	TRUE: TRUE
+	FALSE: FALSE
+}
+class Sets [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Sets]] {
+}
+class Set [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Set]] {
+}
+class Operations [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Operations]] {
+}
+class Operation [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Operation]] {
+	name: EString
+}
+class Body [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Body]] {
+}
+class Expr [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Expr]] {
+}
+class Skip [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Skip]] {
+}
+class Statement [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Statement]] {
+}
+class If [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//If]] {
+}
+class IfCond [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//IfCond]] {
+}
+class Condition [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Condition]] {
+}
+class Pre [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Pre]] {
+}
+class PreExpr [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//PreExpr]] {
+}
+class Var [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Var]] {
+}
+class Begin [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Begin]] {
+}
+class BeginBody [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//BeginBody]] {
+}
+class Assign [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Assign]] {
+}
+class Return [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Return]] {
+}
+class ReturnTypeExpr [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//ReturnTypeExpr]] {
+}
+class ReturnExpr [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//ReturnExpr]] {
+}
+class Case [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Case]] {
+}
+class CaseExpr [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//CaseExpr]] {
+}
+class Seq [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Seq]] {
+}
+class FinalExpr [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//FinalExpr]] {
+}
+class Call [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Call]] {
+}
+class SimpleCall [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//SimpleCall]] {
+}
+class Arg [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Arg]] {
+}
+class LocalOperations [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//LocalOperations]] {
+}
+class PrimitiveType [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//PrimitiveType]] {
+	type: PrimitiveTypeEnum
+}
+class Ref [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Ref]] {
+}
+class PropertyTyped [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//PropertyTyped]] {
+}
+class PropertyRange [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//PropertyRange]] {
+}
+class AndExpr [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//AndExpr]] {
+}
+class ImplyExpr [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//ImplyExpr]] {
+}
+class InequalityExpr [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//InequalityExpr]] {
+	op: InequalityOp
+}
+class EqualExpr [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//EqualExpr]] {
+}
+class NegExpr [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//NegExpr]] {
+}
+class BoolTest [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//BoolTest]] {
+}
+class TypeConstraint [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//TypeConstraint]] {
+}
+class ConstantExpr [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//ConstantExpr]] {
+	constant: BoolLiteralEnum
+}
+class CondAnd [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//CondAnd]] {
+}
+class CondEq [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//CondEq]] {
+}
+class CondLessThan [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//CondLessThan]] {
+}
+class CondMinus [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//CondMinus]] {
+}
+class CondNeg [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//CondNeg]] {
+}
+class BoolLiteral [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//BoolLiteral]] {
+	value: BoolLiteralEnum
+	constant: BoolLiteralEnum
+}
+class ReturnTuple [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//ReturnTuple]] {
+}
+class ReturnOr [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//ReturnOr]] {
+}
+class Neg [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//Neg]] {
+}
+class ArgMinus [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//ArgMinus]] {
+}
+class StringLiteral [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/B.ecore?uri=platform:/resource/Safety/metamodels/B.ecore%23//StringLiteral]] {
+	value: EString
+}
+Abstraction <|-- Machine
+Abstraction <|-- Implementation
+LogicalExpr <|-- DefinitionCall
+LogicalExpr <|-- IntLiteral
+Condition <|-- IntLiteral
+Arg <|-- IntLiteral
+Body <|-- Skip
+Expr <|-- Skip
+Body <|-- If
+Expr <|-- If
+FinalExpr <|-- If
+Body <|-- Pre
+Body <|-- Var
+Expr <|-- Var
+FinalExpr <|-- Var
+Body <|-- Begin
+Expr <|-- Assign
+Statement <|-- Assign
+Expr <|-- Return
+FinalExpr <|-- Return
+Return <|-- ReturnTypeExpr
+Expr <|-- Case
+FinalExpr <|-- Case
+Body <|-- Seq
+BeginBody <|-- Seq
+BeginBody <|-- FinalExpr
+Expr <|-- Call
+Statement <|-- Call
+Type <|-- PrimitiveType
+Type <|-- Ref
+LogicalExpr <|-- Ref
+Condition <|-- Ref
+ReturnExpr <|-- Ref
+Arg <|-- Ref
+PropertyExpr <|-- PropertyTyped
+PropertyExpr <|-- PropertyRange
+LogicalExpr <|-- AndExpr
+LogicalExpr <|-- ImplyExpr
+LogicalExpr <|-- InequalityExpr
+LogicalExpr <|-- EqualExpr
+LogicalExpr <|-- NegExpr
+LogicalExpr <|-- BoolTest
+ReturnExpr <|-- BoolTest
+LogicalExpr <|-- TypeConstraint
+LogicalExpr <|-- ConstantExpr
+Condition <|-- CondAnd
+Condition <|-- CondEq
+Condition <|-- CondLessThan
+Condition <|-- CondMinus
+Condition <|-- CondNeg
+Condition <|-- BoolLiteral
+ReturnExpr <|-- BoolLiteral
+Arg <|-- BoolLiteral
+Return <|-- ReturnTuple
+ReturnTypeExpr <|-- ReturnOr
+ReturnExpr <|-- Neg
+Arg <|-- ArgMinus
+Arg <|-- StringLiteral
+Abstraction *--> "sees" Sees
+Abstraction *--> "concreteConstants" ConcreteConstants
+Abstraction *--> "definitions" Definitions
+Abstraction *--> "properties" Properties
+Abstraction *--> "operations" Operations
+Machine *--> "concreteVariables" ConcreteVariables
+Machine *--> "invariant" Invariant
+Machine *--> "initialisation" Initialisation
+Machine *--> "assertions" Assertions
+Machine *--> "sets" Sets
+Implementation --> "refine" Machine
+Implementation *--> "imports" Imports
+Implementation *--> "values" Values
+Implementation *--> "localOperations" LocalOperations
+Sees --> "seens *" Abstraction
+Imports --> "imports *" Abstraction
+Values *--> "exprs *" ValueExpr
+ValueExpr --> "constant" Variable
+ConcreteVariables *--> "variables *" Variable
+ConcreteConstants *--> "constants *" Variable
+Invariant *--> "exprs *" InvariantExpr
+InvariantExpr --> "variable" Variable
+InvariantExpr *--> "type" Type
+Initialisation *--> "exprs *" InitialisationExpr
+InitialisationExpr --> "variable" Variable
+InitialisationExpr *--> "type" Type
+Properties *--> "exprs *" PropertyExpr
+Properties *--> "expr *" PropertyExpr
+PropertyExpr --> "constant" Variable
+Range --> "upperBound" Variable
+Assertions *--> "exprs *" AssertionExpr
+AssertionExpr --> "constant" Variable
+AssertionExpr *--> "type" Type
+Definitions *--> "exprs *" Definition
+Definition *--> "args *" Variable
+Definition *--> "expr" LogicalExpr
+DefinitionCall --> "def" Definition
+DefinitionCall *--> "args *" Arg
+Sets *--> "exprs *" Set
+Set *--> "name" Variable
+Set *--> "elems *" Variable
+Operations *--> "operations *" Operation
+Operation *--> "outputs *" Variable
+Operation *--> "args *" Variable
+Operation *--> "body" Body
+If *--> "exprs *" IfCond
+If *--> "else" Expr
+IfCond *--> "condition" Condition
+IfCond *--> "then" Expr
+Pre *--> "exprs *" PreExpr
+Pre *--> "expr" Expr
+PreExpr --> "var" Variable
+PreExpr *--> "type" Type
+Var *--> "vars *" Variable
+Var *--> "in" Seq
+Begin *--> "expr" BeginBody
+Assign --> "var" Variable
+Assign *--> "value" ReturnExpr
+ReturnTypeExpr --> "var" Variable
+ReturnTypeExpr *--> "type" Type
+Case --> "var" Variable
+Case *--> "cases *" CaseExpr
+CaseExpr --> "test" Variable
+CaseExpr *--> "expr" Expr
+Seq *--> "exprs *" EObject
+Call --> "rets *" Variable
+Call --> "op" Operation
+Call *--> "args *" Arg
+SimpleCall --> "op" Operation
+SimpleCall *--> "args *" Arg
+LocalOperations *--> "operations *" Operation
+Ref --> "type" Variable
+Ref --> "var" Variable
+PropertyTyped *--> "type" Type
+PropertyRange *--> "range" Range
+AndExpr *--> "exprs *" LogicalExpr
+ImplyExpr *--> "left" LogicalExpr
+ImplyExpr *--> "right" LogicalExpr
+InequalityExpr *--> "left" LogicalExpr
+InequalityExpr *--> "right" LogicalExpr
+EqualExpr *--> "left" LogicalExpr
+EqualExpr *--> "right" LogicalExpr
+NegExpr *--> "expr" LogicalExpr
+BoolTest *--> "expr" LogicalExpr
+TypeConstraint --> "var" Variable
+TypeConstraint *--> "type" Type
+CondAnd *--> "exprs *" Condition
+CondEq *--> "left" Condition
+CondEq *--> "right" Condition
+CondLessThan *--> "left" Condition
+CondLessThan *--> "right" Condition
+CondMinus *--> "left" Condition
+CondMinus *--> "right" Condition
+CondNeg *--> "expr" Condition
+ReturnTuple --> "vars *" Variable
+ReturnTuple *--> "value" LogicalExpr
+ReturnOr *--> "exprs *" ReturnTypeExpr
+Neg *--> "expr" ReturnExpr
+ArgMinus *--> "left" Arg
+ArgMinus *--> "right" Arg
+@enduml

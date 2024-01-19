@@ -1,0 +1,46 @@
+@startuml
+class Event [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/ecoreXES.ecore?uri=platform:/resource/Evolution/metamodels/ecoreXES.ecore%23//Event]] {
+	set: EBoolean
+	timestamp: EDate
+	dataValue: EString
+	eventType: EventType
+}
+class Log [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/ecoreXES.ecore?uri=platform:/resource/Evolution/metamodels/ecoreXES.ecore%23//Log]] {
+	resource: EString
+}
+abstract class Attributes [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/ecoreXES.ecore?uri=platform:/resource/Evolution/metamodels/ecoreXES.ecore%23//Attributes]] {
+	name: EString
+}
+class FeatureAndClass [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/ecoreXES.ecore?uri=platform:/resource/Evolution/metamodels/ecoreXES.ecore%23//FeatureAndClass]] {
+}
+class Feature [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/ecoreXES.ecore?uri=platform:/resource/Evolution/metamodels/ecoreXES.ecore%23//Feature]] {
+}
+class JavaClass [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/ecoreXES.ecore?uri=platform:/resource/Evolution/metamodels/ecoreXES.ecore%23//JavaClass]] {
+}
+class ID [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/ecoreXES.ecore?uri=platform:/resource/Evolution/metamodels/ecoreXES.ecore%23//ID]] {
+}
+class ReferenceValue [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/ecoreXES.ecore?uri=platform:/resource/Evolution/metamodels/ecoreXES.ecore%23//ReferenceValue]] {
+}
+enum EventType [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/ecoreXES.ecore?uri=platform:/resource/Evolution/metamodels/ecoreXES.ecore%23//EventType]] {
+	SET: SET
+	UNSET: UNSET
+	ADD: ADD
+	REMOVE: REMOVE
+	ADD_MANY: ADD_MANY
+	REMOVE_MANY: REMOVE_MANY
+	MOVE: MOVE
+	RESOLVE: RESOLVE
+}
+Attributes <|-- FeatureAndClass
+Attributes <|-- Feature
+Attributes <|-- JavaClass
+Attributes <|-- ID
+Attributes <|-- ReferenceValue
+Event --> "fatureAndClass" FeatureAndClass
+Event --> "id" ID
+Event --> "referencevalue" ReferenceValue
+Log *--> "event *" Event
+Log *--> "attributes *" Attributes
+FeatureAndClass --> "class" JavaClass
+FeatureAndClass --> "feature" Feature
+@enduml

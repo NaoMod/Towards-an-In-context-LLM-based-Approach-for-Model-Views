@@ -1,0 +1,6 @@
+contributingModels=B::../models/b_specification.xmi,\
+				   Log::../models/shortoutputs_sample.xmi,\
+				   Trace::../models/TraceabilityModel.xmi,\
+				   UML::../models/components.xmi
+viewpoint=../src-gen/safety.eviewpoint
+matchingModel=../src-gen/safety.ecl

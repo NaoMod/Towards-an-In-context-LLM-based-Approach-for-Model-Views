@@ -1,0 +1,50 @@
+@startuml
+class Dependency [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/SimpleUMLComponents.ecore?uri=platform:/resource/Safety/metamodels/SimpleUMLComponents.ecore%23//Dependency]] {
+	name: EString
+}
+abstract class Classifier [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/SimpleUMLComponents.ecore?uri=platform:/resource/Safety/metamodels/SimpleUMLComponents.ecore%23//Classifier]] {
+	name: EString
+}
+class Operation [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/SimpleUMLComponents.ecore?uri=platform:/resource/Safety/metamodels/SimpleUMLComponents.ecore%23//Operation]] {
+	name: EString
+}
+class Interface [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/SimpleUMLComponents.ecore?uri=platform:/resource/Safety/metamodels/SimpleUMLComponents.ecore%23//Interface]] {
+}
+class InterfaceRealization [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/SimpleUMLComponents.ecore?uri=platform:/resource/Safety/metamodels/SimpleUMLComponents.ecore%23//InterfaceRealization]] {
+}
+class Component [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/SimpleUMLComponents.ecore?uri=platform:/resource/Safety/metamodels/SimpleUMLComponents.ecore%23//Component]] {
+}
+class ComponentRealization [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/SimpleUMLComponents.ecore?uri=platform:/resource/Safety/metamodels/SimpleUMLComponents.ecore%23//ComponentRealization]] {
+}
+class Model [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/SimpleUMLComponents.ecore?uri=platform:/resource/Safety/metamodels/SimpleUMLComponents.ecore%23//Model]] {
+}
+class Usage [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/SimpleUMLComponents.ecore?uri=platform:/resource/Safety/metamodels/SimpleUMLComponents.ecore%23//Usage]] {
+}
+class Property [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/SimpleUMLComponents.ecore?uri=platform:/resource/Safety/metamodels/SimpleUMLComponents.ecore%23//Property]] {
+	name: EString
+}
+class Port [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/SimpleUMLComponents.ecore?uri=platform:/resource/Safety/metamodels/SimpleUMLComponents.ecore%23//Port]] {
+}
+Classifier <|-- Interface
+Dependency <|-- InterfaceRealization
+Classifier <|-- Component
+Dependency <|-- Usage
+Property <|-- Port
+Dependency --> "client *" Classifier
+Dependency --> "supplier *" Classifier
+Interface *--> "ownedAttribute *" Property
+Interface --> "redefinedInterface *" Interface
+Interface *--> "ownedOperation *" Operation
+InterfaceRealization --> "contract" Interface
+Component *--> "packagedElement *" Dependency
+Component --> "/ provided *" Interface
+Component "abstraction" *-- "realization *" ComponentRealization
+Component --> "/ required *" Interface
+Component *--> "super" Component
+Component *--> "interfaceRealization *" InterfaceRealization
+ComponentRealization --> "realizingClassifier *" Component
+Model *--> "elements *" Classifier
+Port --> "/ provided *" Interface
+Port --> "redefinedPort *" Port
+Port --> "/ required *" Interface
+@enduml

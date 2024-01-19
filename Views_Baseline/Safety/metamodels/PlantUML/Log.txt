@@ -1,0 +1,24 @@
+@startuml
+class Log [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/Log.ecore?uri=platform:/resource/Safety/metamodels/Log.ecore%23//Log]] {
+	name: EString
+}
+class Trace [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/Log.ecore?uri=platform:/resource/Safety/metamodels/Log.ecore%23//Trace]] {
+	automata: EString
+	component: EString
+	variable: EString
+	sensor: EString
+	value: EString
+	name: EString
+	type: VarType
+}
+class Event [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/Log.ecore?uri=platform:/resource/Safety/metamodels/Log.ecore%23//Event]] {
+	name: EString
+	timestamp: EString
+}
+enum VarType [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/Log.ecore?uri=platform:/resource/Safety/metamodels/Log.ecore%23//VarType]] {
+	IN: IN
+	OUT: OUT
+}
+Log *--> "events *" Event
+Event *--> "traces *" Trace
+@enduml
