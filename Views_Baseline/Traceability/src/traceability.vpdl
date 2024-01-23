@@ -20,8 +20,7 @@ from 'http://www.omg.org/spec/ReqIF/20110401/reqif.xsd' as ReqIf,
 
 where "s.source.split('\\.')[0] = t.name"
       for javaClass,
-      s.name = t.name.toLowerCase()
-      for component,
+      s.name = t.name.toLowerCase() for component,
       's.name.toLowerCase().isSubstringOf(t.values[0].theValue.toLowerCase())'
       for requirements
       

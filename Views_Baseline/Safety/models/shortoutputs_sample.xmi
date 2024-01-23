@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Log:Log xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Log="http://log" xsi:schemaLocation="Log ../Metamodels/Log.ecore" name="traces">
+<Log:Log xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Log="http://log" xsi:schemaLocation="Log ../metamodels/Log.ecore" name="traces">
   <events name="0" timestamp="0">
     <traces automata="M11" component="LogiqueSecu.Algo_DonneesUtiles" variable="Position" sensor="M24" value="33118" name="M11.LogiqueSecu.Algo_DonneesUtiles__Position_M24"/>
   </events>
