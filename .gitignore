@@ -264,5 +264,8 @@ replay_pid*
 # EMF Views
 **/src-gen
 
-#large model
+# Large model in one of the Views example
 PetStore_java.xmi
+
+#Token file
+token.txt
