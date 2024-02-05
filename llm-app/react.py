@@ -1,7 +1,6 @@
 from langchain import hub
 from langchain.agents import Tool, create_react_agent
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings
-from langchain_community.utilities import GoogleSerperAPIWrapper
+from langchain_openai import ChatOpenAI
 import os
 from typing import TypedDict, Annotated, Union
 from langchain_core.agents import AgentAction, AgentFinish
@@ -19,7 +18,7 @@ from langchain_community.tools import DuckDuckGoSearchRun
 st.set_page_config(page_title="Agent for Views", layout="wide")
 
 def read_tokens():
-     # Read the file and load the keys
+    # Read the file and load the keys
     script_dir = os.path.dirname(__file__)
     token_file_path = os.path.join(script_dir, 'token.txt')
 
