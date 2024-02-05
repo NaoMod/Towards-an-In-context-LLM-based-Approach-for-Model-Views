@@ -6,14 +6,16 @@ from typing import TypedDict, Annotated, Union
 from langchain_core.agents import AgentAction, AgentFinish
 from langchain_core.messages import BaseMessage
 import operator
-from typing import TypedDict, Annotated
-from langchain_core.agents import AgentFinish
 from langgraph.prebuilt.tool_executor import ToolExecutor
 from langgraph.prebuilt import ToolInvocation
 from langgraph.graph import END, StateGraph
 from langchain_core.agents import AgentActionMessageLog
 import streamlit as st
-from langchain_community.tools import DuckDuckGoSearchRun
+from langchain.chains import RetrievalQA
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain.text_splitter import CharacterTextSplitter
+from langchain_community.vectorstores import Chroma
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 
 st.set_page_config(page_title="Agent for Views", layout="wide")
 
@@ -44,7 +46,7 @@ def read_tokens():
     if langsmith_key is not None:
         # Configure LangSmith
         os.environ["LANGCHAIN_TRACING_V2"] = "true"
-        os.environ["LANGCHAIN_PROJECT"] = "APP"
+        os.environ["LANGCHAIN_PROJECT"] = "MULTI-AGENT"
         os.environ["LANGCHAIN_ENDPOINT"] = "https://api.smith.langchain.com"
         os.environ["LANGCHAIN_API_KEY"] = langsmith_key
     
@@ -58,48 +60,64 @@ def main():
     uploaded_file_2 = st.sidebar.file_uploader('2nd PlantUML model', type=['txt'])
 
     # Input from user
-    input_text = st.text_area("Enter your text:")
+    input_text = st.text_area("Enter your task:")
     
     if st.button("Run Agent"):
+        open_ai_key = read_tokens()
+        llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo-0613", openai_api_key=open_ai_key)
 
-        def toggle_case(word):
-            toggled_word = ""
-            for char in word:
-                if char.islower():
-                    toggled_word += char.upper()
-                elif char.isupper():
-                    toggled_word += char.lower()
-                else:
-                    toggled_word += char
-            return toggled_word
+        tools = []
 
-        def sort_string(string):
-            return ''.join(sorted(string))
-        
-        search = DuckDuckGoSearchRun()
-
-        tools = [
-                Tool(
-                    name = "DuckDuckGo",
-                    func=search,
-                    description="useful for when you need to search for information",
-                ),
-                Tool(
-                    name = "Toogle_Case",
-                    func = lambda word: toggle_case(word),
-                    description = "use when you want covert the letter to uppercase or lowercase",
-                ),
-                Tool(
-                    name = "Sort String",
-                    func = lambda string: sort_string(string),
-                    description = "use when you want sort a string alphabetically",
-                ),
-
+        documents = [
+            {"name": uploaded_file_1.name[:-4], "content": uploaded_file_1.read().decode()}, 
+            {"name": uploaded_file_2.name[:-4], "content": uploaded_file_2.read().decode()}
         ]
+        # Split documents into chunks
+        text_splitter = CharacterTextSplitter(chunk_size=20, chunk_overlap=5)
+        texts = text_splitter.create_documents(list(d['content'] for d in documents))
+        # Select embeddings
+        embeddings = OpenAIEmbeddings(openai_api_key=open_ai_key)
+        # Create a vectorstore from documents
+        db = Chroma.from_documents(texts, embeddings)
+        # Create retriever interface
+        retriever = db.as_retriever()
         
-        prompt = hub.pull("hwchase17/react")
+        # Create QA chain inside a tool
+        tools.append(
+            Tool(
+                name=documents[0]["name"],
+                description=f"useful when you want to answer questions about {documents[0]['name']}",
+                func=RetrievalQA.from_chain_type(llm=llm, chain_type='stuff', retriever=retriever),
+            )
+        )
+        tools.append(
+            Tool(
+                name=documents[1]["name"],
+                description=f"useful when you want to answer questions about {documents[1]['name']}",
+                func=RetrievalQA.from_chain_type(llm=llm, chain_type='stuff', retriever=retriever),
+            )
+        )
 
-        llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo-0613", openai_api_key=read_tokens())
+    
+        # prompt = hub.pull("hwchase17/react")
+        prompt = ChatPromptTemplate.from_messages(
+            [
+                (
+                    "system",
+                    "You are a AI assistant, collaborating with other assistants."
+                    " Use the provided tools to progress towards defining the key elements to create a View. \
+                        The final response should be a JSON text that includes filters, join rules and the potential comparisons."
+                    " If you are unable to fully answer, that's OK, another assistant with different tools "
+                    " will help where you left off. Execute what you can to make progress."
+                    " If you or any of the other assistants have the final answer or deliverable,"
+                    " prefix your response with FINAL ANSWER so the team knows to stop."
+                    " You have access to the following tools: {tool_names}.",
+                ),
+                MessagesPlaceholder(variable_name="messages"),
+            ]
+        )
+        # prompt = prompt.partial(system_message=system_message)
+        prompt = prompt.partial(tool_names=", ".join([tool.name for tool in tools]))
 
         agent_runnable = create_react_agent(llm, tools, prompt)
 
