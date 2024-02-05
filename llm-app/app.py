@@ -75,6 +75,7 @@ def generate_response(uploaded_file_1, uplodaded_file_2, query_text):
         db = Chroma.from_documents(texts, embeddings)
         # Create retriever interface
         retriever = db.as_retriever()
+        
         # Create QA chain inside a tool
         tools.append(
             Tool(
