@@ -97,21 +97,29 @@ def main():
                 func=RetrievalQA.from_chain_type(llm=llm, chain_type='stuff', retriever=retriever),
             )
         )
-
     
         # prompt = hub.pull("hwchase17/react")
         prompt = ChatPromptTemplate.from_messages(
             [
                 (
                     "system",
-                    "You are a AI assistant, collaborating with other assistants."
+                    "You are a AI assistant, specialized in reason on PlantUML metamodels serialized as txt files,\
+                        especially combining and merging them into an object called View."
+                    "The key elements to create a View are filters, join rules and potential comparisons between its elements."
                     " Use the provided tools to progress towards defining the key elements to create a View. \
                         The final response should be a JSON text that includes filters, join rules and the potential comparisons."
-                    " If you are unable to fully answer, that's OK, another assistant with different tools "
-                    " will help where you left off. Execute what you can to make progress."
-                    " If you or any of the other assistants have the final answer or deliverable,"
-                    " prefix your response with FINAL ANSWER so the team knows to stop."
-                    " You have access to the following tools: {tool_names}.",
+                    " You have access to the following tools: {tool_names}."
+                    "Use the following format: \
+                        Metamodels: the input metamodels for which you must provide an answer. They are paths to two metamodels in the filesystem separated by a comma \
+                        Thought: you should always think about what to do \
+                        Action: the action to take should be one of [{tool_names}] \
+                        Action Input: the input to the action \
+                        Observation: the result of the action \
+                        ... (this Thought/Action/Action Input/Observation can repeat N times) \
+                        Thought: I now know the final answer \
+                        Final Answer: the final answer to the original input metamodels \
+                        Metamodels: {input} \
+                        {agent_scratchpad}",
                 ),
                 MessagesPlaceholder(variable_name="messages"),
             ]
