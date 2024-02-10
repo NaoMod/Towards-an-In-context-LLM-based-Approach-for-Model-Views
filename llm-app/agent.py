@@ -211,7 +211,7 @@ def main():
 
     open_ai_key = read_tokens()
 
-    llm = ChatOpenAI(model="gpt-3.5-turbo-0613", openai_api_key=open_ai_key)
+    llm = ChatOpenAI(model="gpt-3.5-turbo", openai_api_key=open_ai_key)
 
     join_tools = get_tools_for_metamodels(llm, open_ai_key, tools, uploaded_file_1, uploaded_file_2)
 

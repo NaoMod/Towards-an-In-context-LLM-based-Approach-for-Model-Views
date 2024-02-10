@@ -64,7 +64,7 @@ def main():
     
     if st.button("Run Agent"):
         open_ai_key = read_tokens()
-        llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo-0613", openai_api_key=open_ai_key)
+        llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo", openai_api_key=open_ai_key)
 
         tools = []
 

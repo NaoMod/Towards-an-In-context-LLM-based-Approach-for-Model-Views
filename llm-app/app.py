@@ -63,7 +63,7 @@ def load_txt(input_file):
 tools = []
 
 def generate_response(uploaded_file_1, uplodaded_file_2, query_text):
-    llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo-0613", openai_api_key=open_ai_key)
+    llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo", openai_api_key=open_ai_key)
     if uploaded_file_1 is not None and uplodaded_file_2 is not None:
         documents = [{"name": uploaded_file_1.name[:-4], "content": uploaded_file_1.read().decode()}, {"name": uplodaded_file_2.name[:-4], "content": uplodaded_file_2.read().decode()}]
         # Split documents into chunks
