@@ -269,3 +269,6 @@ PetStore_java.xmi
 
 #Token file
 token.txt
+
+#temp folder
+**/temp
