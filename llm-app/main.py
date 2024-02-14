@@ -14,7 +14,6 @@ config.load_keys()
 llm = config.get_llm()
 open_ai_key = config.get_open_ai_key()
 
-
 # Get the retrieval tools
 retrieval_tools_creator = MetamodelRetrievalToolsCreator(llm, open_ai_key)
 retrieval_tools = retrieval_tools_creator.create_retrieval_tools()
@@ -58,15 +57,15 @@ workflow.set_entry_point("GetJoinRules")
 graph = workflow.compile()
 
 for s in graph.stream(
-    {
-        "messages": [
-            HumanMessage(
-                content="Since the same book being represented by a Book model or by a Publication model, the task is to define the best way to combine a book with a publication getting all the information in the same View"
-            )
-        ],
-    },
-    # Maximum number of steps to take in the graph
-    {"recursion_limit": 100},
-):
+        {
+            "messages": [
+                HumanMessage(
+                    content="Since the same book being represented by a Book model or by a Publication model, the task is to define the best way to combine a book with a publication getting all the information in the same View"
+                )
+            ],
+        },
+        # Maximum number of steps to take in the graph
+        {"recursion_limit": 100},
+    ):
     print(s)
     print("----")

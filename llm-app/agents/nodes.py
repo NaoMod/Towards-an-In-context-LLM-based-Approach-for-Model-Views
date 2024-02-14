@@ -8,6 +8,7 @@ class Nodes:
         self.llm = llm
         self.tools = tools
 
+    @staticmethod
     def agent_node(state, agent, name):
         """
         Helper function to create a node for a given agent.
@@ -46,6 +47,7 @@ class Nodes:
             result = HumanMessage(**result.dict(exclude={"type", "name"}), name=name)
         return {
             "messages": [result],
+            # track the sender so we know who to pass to next.
             "sender": name,
         }
     
@@ -70,7 +72,7 @@ class Nodes:
                             Only use class names that actually exist in the metamodels; \
                                 don't try to invent new class names. The relation's name should combine these class names, always in camelCase."
         )
-        return functools.partial(self.agent_node, agent=get_join_rules_agent, name="GetJoinRules")
+        return functools.partial(Nodes.agent_node, agent=get_join_rules_agent, name="GetJoinRules")
     
     def filter_generator_node(self):
         """
@@ -91,4 +93,4 @@ class Nodes:
                         Note that frequently, the metamodels can represent the same domain, so it's possible to get some overlap between them.\
                         This should be taken into account to avoid repeating information."
         )
-        return functools.partial(self.agent_node, agent=filter_generator_agent, name="FilterGenerator")
+        return functools.partial(Nodes.agent_node, agent=filter_generator_agent, name="FilterGenerator")

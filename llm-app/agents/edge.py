@@ -1,8 +1,7 @@
 class Edge:
-    def __init__(self, state):
-        self.state = state
-
-    def router(self):
+    
+    @staticmethod
+    def router(state):
         """
         Either agent can decide to end
 
@@ -14,7 +13,7 @@ class Edge:
             - "end": if any agent has decided that the work is done.
             - "continue": if the work should continue.
         """
-        messages = self.state["messages"]
+        messages = state["messages"]
         last_message = messages[-1]
         if "function_call" in last_message.additional_kwargs:
             # The previous agent is invoking a tool
