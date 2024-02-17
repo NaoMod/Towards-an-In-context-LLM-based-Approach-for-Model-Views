@@ -56,6 +56,7 @@ workflow.add_conditional_edges(
 workflow.set_entry_point("GetJoinRules")
 graph = workflow.compile()
 
+
 for s in graph.stream(
         {
             "messages": [
