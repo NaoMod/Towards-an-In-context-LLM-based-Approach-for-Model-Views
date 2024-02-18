@@ -27,22 +27,20 @@ class MetamodelRetrievalToolsCreator:
         -------
         list[Tool]
             A list of Tool objects representing the retrieval tools created for each document.
-        """
+        """  
 
-        # TODO: Read the user metamodels files
+        if documents is None:
+            # Read the example metamodels files
+            script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
+            meta1_rel_path = '../temp/Book.txt'
+            meta2_rel_path = '../temp/Publication.txt'
 
-        # Read the metamodels files and create retrieval tools for each
-        script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
-        meta1_rel_path = '../temp/Book.txt'
-        meta2_rel_path = '../temp/Publication.txt'
-
-        meta1_file = open(os.path.join(script_dir, meta1_rel_path), 'r')
-        meta2_file = open(os.path.join(script_dir, meta2_rel_path), 'r')
-
-        documents = [
-            {"name": "Book", "content": meta1_file.read()},
-            {"name": "Publication", "content": meta2_file.read()}
-        ]
+            meta1_file = open(os.path.join(script_dir, meta1_rel_path), 'r')
+            meta2_file = open(os.path.join(script_dir, meta2_rel_path), 'r')
+            documents = [
+                {"name": "Book", "content": meta1_file.read()},
+                {"name": "Publication", "content": meta2_file.read()}
+            ]
 
         # Split documents into chunks
         text_splitter = CharacterTextSplitter(chunk_size=20, chunk_overlap=5)

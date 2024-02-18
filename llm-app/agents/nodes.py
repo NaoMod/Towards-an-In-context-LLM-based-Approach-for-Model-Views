@@ -1,6 +1,6 @@
 import functools
 from langchain_core.messages import FunctionMessage, HumanMessage
-from agents.create import create_agent
+from agents.utils import create_agent
 
 class Nodes:
 
@@ -63,14 +63,14 @@ class Nodes:
         get_join_rules_agent = create_agent(
             self.llm, 
             [self.tools[0], self.tools[1]], 
-            system_message="You should provide which elements can be combined in the final View, according to the given task. \
-                            In a View, the elements are combined in pairs.\
-                            Combining two elements means that the View will include a single element representing the same domain object \
+            system_message="Your task is to  analyze the two provided metamodels and find out which elements can be combined in the final View, according to the given task. \
+                            In a View, the elements are combined in pairs to create a new virtual element, always according to the task.\
                             Your answer should be a list of elements.\
                             Each element of the list is a dictionary containing the name of this virtual relation and a tuple with the combined elements in the following format:\
                                     {{Relation_name: (Metamodel_Identifier.Class_name, Metamodel_Identifier.Class_name)}}\
                             Only use class names that actually exist in the metamodels; \
-                                don't try to invent new class names. The relation's name should combine these class names, always in camelCase."
+                                don't try to invent new class names. \
+                                The relation's name should combine these class names, always in camelCase."
         )
         return functools.partial(Nodes.agent_node, agent=get_join_rules_agent, name="GetJoinRules")
     

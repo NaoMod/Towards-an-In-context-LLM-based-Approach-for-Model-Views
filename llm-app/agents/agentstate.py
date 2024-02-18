@@ -16,4 +16,5 @@ class AgentState(TypedDict):
         Name of the sender agent.
     """
     messages: Sequence[BaseMessage]
+    view_info: str
     sender: str
