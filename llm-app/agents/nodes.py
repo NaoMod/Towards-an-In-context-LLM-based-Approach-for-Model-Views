@@ -62,7 +62,7 @@ class Nodes:
         """
         get_join_rules_agent = create_agent(
             self.llm, 
-            [self.tools[0], self.tools[1]], 
+            [self.tools[0], self.tools[1]],
             system_message="Your task is to  analyze the two provided metamodels and find out which elements can be combined in the final View, according to the given task. \
                             In a View, the elements are combined in pairs to create a new virtual element, always according to the task.\
                             Your answer should be a list of elements.\
@@ -86,10 +86,14 @@ class Nodes:
         filter_generator_agent = create_agent(
             self.llm,
             [self.tools[0], self.tools[1]],
-            system_message="You should provide which elements should be selected to be present in the final View.\
+            system_message="You should provide which class attributes should be selected to be present in the final View.\
                         Your answer should be a list of elements.\
-                        Each element is in the following format: Metamodel_Identifier.Class_name.\
+                        Each element is in the following format: Metamodel_Identifier.Class_name.Attribute_name\
+                            This means that each element of the list should come from one and exactly one metamodel element \
                         Only use class and attribute names that actually exist in the metamodels; don't try to invent new names.\
+                        To define which elements should be present in the final View, it's necessary to analyze the defined join rules.\
+                            If the join rule combines the element A and element B, it means that you should look for all attributes of A and all attributes of B,\
+                            paying attention that sometimes, the element in the join rule is contained in some other elements, so the container should also be included in the final View.\
                         Note that frequently, the metamodels can represent the same domain, so it's possible to get some overlap between them.\
                         This should be taken into account to avoid repeating information."
         )
