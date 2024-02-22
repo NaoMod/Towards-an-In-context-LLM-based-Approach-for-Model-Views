@@ -1,64 +1,64 @@
 @startuml
-class EnterpriseArchitecture [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//EnterpriseArchitecture]] {
+class EnterpriseArchitecture  {
 }
-abstract class Architecture [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Architecture]] {
+abstract class Architecture  {
 }
-class BusinessArchitecture [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//BusinessArchitecture]] {
+class BusinessArchitecture  {
 }
-class DataArchitecture [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//DataArchitecture]] {
+class DataArchitecture  {
 }
-class TechnologyArchitecture [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//TechnologyArchitecture]] {
+class TechnologyArchitecture  {
 }
-class Driver [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Driver]] {
+class Driver  {
 }
-class Goal [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Goal]] {
+class Goal  {
 }
-class Objective [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Objective]] {
+class Objective  {
 }
-class OrganizationUnit [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//OrganizationUnit]] {
+class OrganizationUnit  {
 	headcount: EString
 }
-class Actor [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Actor]] {
+class Actor  {
 	FTEs: EString
 	actorGoal: EString
 	actorTasks: EString
 }
-class Role [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Role]] {
+class Role  {
 	estimatedFTEs: EString
 }
-class DataEntity [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//DataEntity]] {
+class DataEntity  {
 	dataEntityCategory: DataEntityCategory
 	privacyClassification: EString
 	retentionClassification: EString
 }
-class LogicalApplicationComponent [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//LogicalApplicationComponent]] {
+class LogicalApplicationComponent  {
 }
-class Function [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Function]] {
+class Function  {
 }
-class BusinessService [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//BusinessService]] {
+class BusinessService  {
 }
-class Process [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Process]] {
+class Process  {
 	processCritiality: EString
 	isAutomated: EBoolean
 	processVolumetrics: EString
 }
-class PlatformService [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//PlatformService]] {
+class PlatformService  {
 	categoryTRM: EString
 }
-class PhysicalTechnologyComponent [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//PhysicalTechnologyComponent]] {
+class PhysicalTechnologyComponent  {
 	productName: EString
 	moduleName: EString
 	vendor: EString
 	version: EString
 	categoryTRM: EString
 }
-class Product [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Product]] {
+class Product  {
 }
-class Measure [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Measure]] {
+class Measure  {
 }
-class ServiceQuality [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//ServiceQuality]] {
+class ServiceQuality  {
 }
-class Contract [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Contract]] {
+class Contract  {
 	behaviorCharacteristics: EString
 	ServiceNameCaller: EString
 	ServiceNameCalled: EString
@@ -93,36 +93,36 @@ class Contract [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamod
 	peakProfileShortTerm: EString
 	peakProfileLongTerm: EString
 }
-class Event [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Event]] {
+class Event  {
 }
-class Control [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Control]] {
+class Control  {
 }
-class Element [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Element]] {
+class Element  {
 	name: EString
 	description: EString
 	sourceDescr: EString
 	ownerDescr: EString
 	ID: EString
 }
-class Container [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Container]] {
+class Container  {
 	name: EString
 	id: EString
 	description: EString
 }
-class Label [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Label]] {
+class Label  {
 	name: EString
 	id: EString
 	description: EString
 }
-class Location [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Location]] {
+class Location  {
 }
-class Capability [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Capability]] {
+class Capability  {
 	businessValue: EString
 	increments: EString
 }
-abstract class StrategicElement [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//StrategicElement]] {
+abstract class StrategicElement  {
 }
-class Principle [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Principle]] {
+class Principle  {
 	principleCategory: PrincipleCategory
 	priority: EString
 	statementOfPrinciple: EString
@@ -130,27 +130,27 @@ class Principle [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamo
 	implication: EString
 	metric: EString
 }
-class Constraint [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Constraint]] {
+class Constraint  {
 }
-class Assumption [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Assumption]] {
+class Assumption  {
 }
-class Requirement [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Requirement]] {
+class Requirement  {
 	statementOfRequirement: EString
 	rationale: EString
 	acceptanceCriteria: EString
 }
-class Gap [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Gap]] {
+class Gap  {
 }
-class WorkPackage [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//WorkPackage]] {
+class WorkPackage  {
 	workPackageCategory: WorkPackageCategory
 }
-class LogicalDataComponent [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//LogicalDataComponent]] {
+class LogicalDataComponent  {
 }
-class PhysicalDataComponent [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//PhysicalDataComponent]] {
+class PhysicalDataComponent  {
 }
-class ApplicationArchitecture [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//ApplicationArchitecture]] {
+class ApplicationArchitecture  {
 }
-class PhysicalApplicationComponent [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//PhysicalApplicationComponent]] {
+class PhysicalApplicationComponent  {
 	lifeCycleStatus: LifeCycleStatus
 	initialLiveDate: EDate
 	dateOfLastRelease: EDate
@@ -182,12 +182,12 @@ class PhysicalApplicationComponent [[marker:/org.eclipse.emf.ecore.diagnostic/EA
 	peakProfileShortTerm: EString
 	peakProfileLongTerm: EString
 }
-class LogicalTechnologyComponent [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//LogicalTechnologyComponent]] {
+class LogicalTechnologyComponent  {
 	categoryTRM: EString
 }
-class StrategicArchitecture [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//StrategicArchitecture]] {
+class StrategicArchitecture  {
 }
-enum PrincipleCategory [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//PrincipleCategory]] {
+enum PrincipleCategory  {
 	GuidingPrinciple: GuidingPrinciple
 	BusinessPrinciple: BusinessPrinciple
 	DataPrinciple: DataPrinciple
@@ -195,7 +195,7 @@ enum PrincipleCategory [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application
 	IntegrationPrinciple: IntegrationPrinciple
 	TechnologyPrinciple: TechnologyPrinciple
 }
-enum StandardsClass [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//StandardsClass]] {
+enum StandardsClass  {
 	NonStandard: NonStandard
 	Proposed: Proposed
 	Provisional: Provisional
@@ -203,35 +203,35 @@ enum StandardsClass [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/me
 	PhasingOut: PhasingOut
 	Retired: Retired
 }
-abstract class Standard [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Standard]] {
+abstract class Standard  {
 	standardClass: StandardsClass
 	standardCreationDate: EDate
 	lastStandardCreationDate: EDate
 	nextStandardCreationDate: EDate
 	retireDate: EDate
 }
-abstract class Service [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//Service]] {
+abstract class Service  {
 }
-abstract class ApplicationComponent [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//ApplicationComponent]] {
+abstract class ApplicationComponent  {
 }
-class InformationSystemService [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//InformationSystemService]] {
+class InformationSystemService  {
 }
-enum LifeCycleStatus [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//LifeCycleStatus]] {
+enum LifeCycleStatus  {
 	Proposed: Proposed
 	InDevelopment: InDevelopment
 	Live: Live
 	PhasingOut: PhasingOut
 	Retired: Retired
 }
-enum DataEntityCategory [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//DataEntityCategory]] {
+enum DataEntityCategory  {
 	Message: Message
 	InternallyStoredEntity: InternallyStoredEntity
 }
-abstract class DataComponent [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//DataComponent]] {
+abstract class DataComponent  {
 }
-abstract class TechnologyComponent [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//TechnologyComponent]] {
+abstract class TechnologyComponent  {
 }
-enum WorkPackageCategory [[marker:/org.eclipse.emf.ecore.diagnostic/EA_Application/metamodels/contentfwk.ecore?uri=platform:/resource/EA_Application/metamodels/contentfwk.ecore%23//WorkPackageCategory]] {
+enum WorkPackageCategory  {
 	WorkPackage: WorkPackage
 	WorkStream: WorkStream
 	Project: Project

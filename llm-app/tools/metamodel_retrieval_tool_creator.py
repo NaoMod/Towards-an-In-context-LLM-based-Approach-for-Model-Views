@@ -54,6 +54,6 @@ class MetamodelRetrievalToolCreator:
 
         return Tool(
                 name=document["name"],
-                description=f"useful when you want to analyze the PlantUML metamodel {document['name']}",
+                description=f"useful when you want to analyze or get information from the PlantUML metamodel {document['name']}",
                 func=RetrievalQA.from_chain_type(llm=self.llm, chain_type='stuff', retriever=retriever),
         )
