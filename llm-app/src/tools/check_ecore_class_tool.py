@@ -7,8 +7,7 @@ from langchain.callbacks.manager import (
     CallbackManagerForToolRun,
 )
 
-from ecore_utils.ecore_parser import EcoreParser
-
+from utils.ecore.ecore_parser import EcoreParser
 
 class CheckInput(BaseModel):
     ecore_path: str = Field(description="Path to get the ecore metamodel file")
