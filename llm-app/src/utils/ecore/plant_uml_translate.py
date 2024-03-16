@@ -2,11 +2,21 @@
 from pyecore.utils import dispatch
 import pyecore.ecore as ecore
 
-from pyecore.resources import ResourceSet
-
 class PlantUMLTranslate(object):
-    """_summary_"""
+    """Translate Ecore models to PlantUML syntax.
+
+    This class provides methods to generate PlantUML syntax for Ecore models.
+    It supports generating syntax for EPackage, EClass, EAttribute, EReference,
+    EEnum, and EDataType.
+
+    Attributes:
+        visited (set): A set to keep track of visited elements.
+        uml_string (str): The generated PlantUML syntax.
+
+    """
+
     def __init__(self):
+        """Initialize the PlantUMLTranslate object."""
         self.visited = set()
         self.uml_string = ""
 
@@ -14,7 +24,11 @@ class PlantUMLTranslate(object):
     def generate(self, obj):
         """Generate PlantUML syntax for the given object.
 
-        :param obj: The object to generate PlantUML
+        Args:
+            obj: The object to generate PlantUML syntax for.
+
+        Raises:
+            ValueError: If the object kind is unsupported.
 
         """
         raise ValueError('Object kind unsupported: ' + obj.eClass.name)
@@ -23,10 +37,11 @@ class PlantUMLTranslate(object):
     def epackage_switch(self, p):
         """Generate PlantUML syntax for the given EPackage.
 
-        :param p: ecore EPackage
+        Args:
+            p (ecore.EPackage): The EPackage to generate syntax for.
 
         """
-        self.uml_string += 'package "'+ p.name +  '" {\n'
+        self.uml_string += 'package "' + p.name + '" {\n'
         for classif in p.eClassifiers:
             self.generate(classif)
         self.uml_string += '}\n\n'
@@ -35,7 +50,8 @@ class PlantUMLTranslate(object):
     def eclass_switch(self, obj):
         """Generate PlantUML syntax for the given EClass.
 
-        :param obj: ecore EClass
+        Args:
+            obj (ecore.EClass): The EClass to generate syntax for.
 
         """
         kind = 'interface' if obj.interface else 'class '
@@ -55,16 +71,18 @@ class PlantUMLTranslate(object):
     def eattribute_switch(self, attr):
         """Generate PlantUML syntax for the given EAttribute.
 
-        :param attr: ecore EAttribute
+        Args:
+            attr (ecore.EAttribute): The EAttribute to generate syntax for.
 
         """
-        self.uml_string += '\t' +  attr.name +  ': ' +  attr.eType.name + "\n"
+        self.uml_string += '\t' + attr.name + ': ' + attr.eType.name + "\n"
 
     @generate.register(ecore.EReference)
     def ereference_switch(self, ref):
         """Generate PlantUML syntax for the given EReference.
 
-        :param ref: ecore EReference
+        Args:
+            ref (ecore.EReference): The EReference to generate syntax for.
 
         """
         if ref in self.visited:
@@ -90,7 +108,8 @@ class PlantUMLTranslate(object):
     def enum_switch(self, obj):
         """Generate PlantUML syntax for the given EEnum.
 
-        :param obj: ecore EEnum
+        Args:
+            obj (ecore.EEnum): The EEnum to generate syntax for.
 
         """
         self.uml_string += 'enum ' + obj.name + ' {\n'
@@ -102,7 +121,8 @@ class PlantUMLTranslate(object):
     def edatatype_switch(self, obj):
         """Generate PlantUML syntax for the given EDataType.
 
-        :param obj: ecore EDataType
+        Args:
+            obj (ecore.EDataType): The EDataType to generate syntax for.
 
         """
         self.uml_string += 'class ' + obj.name + ' << (D,orchid) EDataType>>'

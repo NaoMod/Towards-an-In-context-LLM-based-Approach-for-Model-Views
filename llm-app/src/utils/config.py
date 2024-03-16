@@ -8,6 +8,11 @@ class Config:
     """
     Configuration class for managing keys and settings.
 
+    Parameters
+    ----------
+    project_name : str, optional
+        The name of the project. Default is "MULTI-AGENT".
+
     Attributes
     ----------
     open_ai_key : str or None
@@ -16,6 +21,8 @@ class Config:
         The LangSmith key used for configuring the environment variables.
     llm : ChatOpenAI or None
         The LLM instance used for language translation.
+    project_name : str
+        The name of the project.
 
     Methods
     -------
@@ -29,10 +36,11 @@ class Config:
         Test the LLM functionality by sending messages to the LLM instance.
     """
 
-    def __init__(self):
+    def __init__(self, project_name: str = "MULTI-AGENT"):
         self.open_ai_key = None
         self.langsmith_key = None
         self.llm = None
+        self.project_name = project_name
 
     def load_keys(self):
         """

@@ -5,20 +5,42 @@ from pyecore.resources import ResourceSet, URI
 class EcoreParser:
     """
     The EcoreParser class is used to parse Ecore metamodels and check if a given class exists in the specified Ecore metamodel.
+
+    Attributes
+    ----------
+    resource_set : ResourceSet
+        The resource set used for managing Ecore resources.
+    classes_per_metamodel : dict
+        A dictionary that stores the list of classes per metamodel.
+
+    Methods
+    -------
+    __init__()
+        Initialize the EcoreParser class.
+    check_ecore_class(ecore_path, class_to_test)
+        Check if a given class exists in the specified Ecore metamodel.
+
     """
-    
 
     def __init__(self):
-        """Initialize the EcoreParser class.
+        """
+        Initialize the EcoreParser class.
 
-        :param None: 
+        Parameters
+        ----------
+        None
 
+        Returns
+        -------
+        None
         """
         self.resource_set = ResourceSet()
         self.classes_per_metamodel = {}
 
-    def check_ecore_class(self, ecore_path: str, class_to_test: str):
+    def check_ecore_class(self, ecore_path: str, class_to_test: str) -> bool:
         """
+        Check if a given class exists in the specified Ecore metamodel.
+
         Parameters
         ----------
         ecore_path : str
