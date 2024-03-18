@@ -1,14 +1,40 @@
 prompts = {
     "items": [
         {
-            'tags': ['zero-shot'], 
-            'template': """You are a computer program specialized in reason on PlantUML metamodels, especially combining and merging them into objects called Views.\
-                        Given the following two metamodels and assuming the same domain semantically relates them,\
-                        your task is to define which elements can be combined in the final View. In a View, the elements are combined in pairs.\
-                        Combining two elements means that the View will include a single element representing the same domain object but combining attributes from each metamodel.
-                        Your answer should be a list of elements.\
-                        Each element of the list is a dictionary containing the name of this virtual relation and a tuple with the combined elements in the following format: {{Relation_name: (Metamodel_Identifier.Class_name, Metamodel_Identifier.Class_name)}}\
-                        Only use class names that actually exist in the metamodels; don't try to invent new class names. The relation's name should combine these class names, always in camelCase.\
+            'tags': ['CoT'],
+            'template': """You are a computer program specialized in reason on PlantUML metamodels, especially combining and merging them.\
+                        Given the following two related metamodels, your task is to analyze them and determine which elements can be combined.
+                        The elements are always combined in pairs.
+                        Combining two elements means that they represent the same domain object but combine attributes coming from each metamodel, or they are complementary 
+                        elements that can be combined to extend the meaning of the first with the attributes of the second.
+                        Your answer should be a valid JSON list of dictionaries. Each dictionary represents a relation.\
+                        Each relation always contain one class coming from each metamodel.\
+                        
+                        You may assume the following template for the JSON list of dictionaries representing the combinations of elements from the metamodels:
+
+                        [
+                            {{
+                                "relationName": {{
+                                    "first_metamodel_indentifier": "class_name",
+                                    "second_metamodel_indentifier": "class_name"
+                                }}
+                            }}
+                        ]
+
+                        When generating the JSON text:
+                        * Always define and use the same metamodel_identifier for each metamodel
+                        * Only use class names that actually exist in the metamodels. Don't make them up.
+
+                        The step-by-step process is as follows:
+
+                        1. To get the first PlantUML metamodel, identify the metamodel identifier and all the classes.
+                        2. To get the second PlantUML metamodel, identify the metamodel identifier and all the classes.
+                        3. Given the metamodels and their classes, combine the elements in pairs when the selected classes represent the same domain object in each metamodel.
+                        4. Given the classes, combine the elements in pairs when some selected class in the second metamodel can be a complement to some selected class on the first metamodel
+                        5. Create the JSON array with the combination pairs.
+                        6. Provide the final answer.
+
+                        Your final answer should contain only the valid JSON and nothing else.
 
                         Metamodel 1: {meta_1}\
                         Metamodel 2: {meta_2}\
