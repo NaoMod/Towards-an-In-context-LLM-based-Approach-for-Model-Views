@@ -1,5 +1,4 @@
 from utils.config import Config
-from langchain.prompts import PromptTemplate
 from langchain.schema import StrOutputParser
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnablePassthrough
@@ -29,11 +28,15 @@ join_runnable = Join()
 join_chain = join_runnable.get_runnable(json_parser)
 join_cfg = {"tags": join_runnable.get_tags()}
 
-join_result = join_chain.invoke(
-    {"meta_1": meta_book, "meta_2": meta_publ},
-    config=join_cfg)
+# join_result = join_chain.invoke(
+#     {
+#         "user_input": "I want to combine the the two metamodels to have a single overview of the domain.",
+#         "meta_1": meta_book, 
+#         "meta_2": meta_publ
+#     },
+#     config=join_cfg)
 
-print(join_result)
+# print(join_result)
 
 select_runnable = Select()
 select_chain = select_runnable.get_runnable(text_parser)
@@ -56,10 +59,14 @@ cfg = {"tags": select_runnable.get_tags()}
 
 # print(where_result)
 
-full_chain = join_chain | {'classes_input': RunnablePassthrough(), 'meta_1': RunnablePassthrough(), 'meta_2': RunnablePassthrough()} | select_chain
+# full_chain = join_chain | {'classes_input': RunnablePassthrough(), 'meta_1': RunnablePassthrough(), 'meta_2': RunnablePassthrough()} | select_chain
 
-full_result = full_chain.invoke(
-    {"meta_1": meta_book, "meta_2": meta_publ},
-    config=join_cfg).split("\n")
+# full_result = full_chain.invoke(
+#     {
+    #     "user_input": "I want to combine the the two metamodels to have a single overview of the domain.",
+    #     "meta_1": meta_book, 
+    #     "meta_2": meta_publ
+    # },
+#     config=join_cfg).split("\n")
 
-print(full_result)
+# print(full_result)
