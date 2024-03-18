@@ -1,7 +1,8 @@
+from operator import itemgetter
+
 from utils.config import Config
 from langchain.schema import StrOutputParser
 from langchain_core.output_parsers import JsonOutputParser
-from langchain_core.runnables import RunnablePassthrough
 
 from runnables.select import Select
 from runnables.join import Join
@@ -39,7 +40,7 @@ join_cfg = {"tags": join_runnable.get_tags()}
 # print(join_result)
 
 select_runnable = Select()
-select_chain = select_runnable.get_runnable(text_parser)
+select_chain = select_runnable.get_runnable(json_parser)
 cfg = {"tags": select_runnable.get_tags()}
 
 # select_result = select_chain.invoke(
@@ -59,14 +60,19 @@ cfg = {"tags": select_runnable.get_tags()}
 
 # print(where_result)
 
-# full_chain = join_chain | {'classes_input': RunnablePassthrough(), 'meta_1': RunnablePassthrough(), 'meta_2': RunnablePassthrough()} | select_chain
+full_chain = {
+        "relations": join_chain,
+        "meta_1": itemgetter("meta_1"),
+        "meta_2": itemgetter("meta_2"),
+        "user_input": itemgetter("user_input"),
+        } | select_chain
 
-# full_result = full_chain.invoke(
-#     {
-    #     "user_input": "I want to combine the the two metamodels to have a single overview of the domain.",
-    #     "meta_1": meta_book, 
-    #     "meta_2": meta_publ
-    # },
-#     config=join_cfg).split("\n")
+full_result = full_chain.invoke(
+    {
+        "user_input": "I want to combine the the two metamodels to have a single overview of the domain.",
+        "meta_1": meta_book, 
+        "meta_2": meta_publ
+    },
+    config=join_cfg)
 
-# print(full_result)
+print(full_result)
