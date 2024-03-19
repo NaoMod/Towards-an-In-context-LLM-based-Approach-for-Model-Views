@@ -1,13 +1,15 @@
 from operator import itemgetter
+import json
 
 from langchain.schema import StrOutputParser
 from langchain_core.output_parsers import JsonOutputParser
-from langchain_core.runnables import RunnablePassthrough
+from langchain_core.runnables import RunnablePassthrough, RunnableLambda
 
 from utils.config import Config
 from runnables.select import Select
 from runnables.join import Join
 from runnables.where import Where
+from tools.check_ecore_class_tool import CheckEcoreClassTool
 
 from langchain_community.document_loaders import TextLoader
 
@@ -45,13 +47,33 @@ cfg['tags'] += where_runnable.get_tags()
 
 # print(where_result)
 
+# Define a function that uses the tool
+def your_tool(input_data):
+    r = json.dumps(input_data['relations'][0])
+    relations_to_check = json.loads(r)
+    check_ecore = CheckEcoreClassTool()
+    check_ecore_tool = check_ecore.get_tool()
+    print(relations_to_check)
+    for _, classes in relations_to_check:
+        meta_1_check = {
+            "metamodel_name": input_data["meta_1"][0].metadata["source"].replace(".txt", ".ecore"),
+            "class_to_test": classes[0]
+        }        
+        check_ecore_tool.invoke(meta_1_check)
+        meta_2_check = {
+            "metamodel_name": input_data["meta_2"][0].metadata["source"].replace(".txt", ".ecore"),
+            "class_to_test": classes[1]
+        }        
+        check_ecore_tool.invoke(meta_2_check)
+
+your_tool_runnable = RunnableLambda(your_tool)
 
 full_chain = RunnablePassthrough.assign(relations=join_chain) | {
         "meta_1": itemgetter("meta_1"),
         "meta_2": itemgetter("meta_2"),
         "user_input": itemgetter("user_input"),
         "relations": itemgetter("relations"),
-        "select": RunnablePassthrough.assign(select=select_chain) } | RunnablePassthrough.assign(combinations=where_chain)
+        "select": RunnablePassthrough.assign(select=select_chain) } | your_tool_runnable | RunnablePassthrough.assign(combinations=where_chain)
 
 full_result = full_chain.invoke(
     {

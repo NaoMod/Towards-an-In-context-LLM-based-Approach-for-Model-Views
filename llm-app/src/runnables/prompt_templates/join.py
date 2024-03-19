@@ -19,13 +19,13 @@ prompts = {
                         <relations>
                         [
                             {{
-                                "relationName": {{
-                                    "first_metamodel_name": "class_name",
-                                    "second_metamodel_name": "class_name"
-                                }}
+                                "relationName": ["class_name_of_first_metamodel", "class_name_of_second_metamodel"]
                             }}
                         ]
                         </relations>
+
+                        Each relation is in the following format: ["class_name_of_first_metamodel", "class_name_of_second_metamodel"] that is always a list with two strings. 
+                        The strings are always in order, and the first string is always a class from the first metamodel and the second string is always a class from the second metamodel.
 
                         When generating the JSON response, you should follow these rules:
                         Always define and use the same metamodel name for each metamodel. It should be unique and meaningful for each relation

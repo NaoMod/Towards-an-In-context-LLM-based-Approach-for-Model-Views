@@ -13,10 +13,7 @@ prompts = {
                     <relations>
                         [
                             {{
-                                "relationName": {{
-                                    "first_metamodel_name": "class_name",
-                                    "second_metamodel_name": "class_name"
-                                }}
+                                "relationName": ["class_name_of_first_metamodel", "class_name_of_second_metamodel"]
                             }}
                         ]
                     </relations>
@@ -40,11 +37,10 @@ prompts = {
 
                     The step-by-step process is as follows:
 
-                    1. For each relation in the list of relations, select the metamodels to be analyzed.
-                    2. For each metamodel, select the classes to be analyzed.
-                    3. For each class, select the attributes that should appear in the final response to meet the user's needs. 
-                    4. Create the JSON array with the selected attributes for each metamodel per relation.
-                    5. Provide the final answer.
+                    1. For each relation, select the classes to be analyzed. The classes are always combined in pairs. They are always in order and always contain one class from each metamodel.
+                    2. For each class, select the attributes that should appear in the final response to meet the user's needs. 
+                    3. Create the JSON array with the selected attributes for each metamodel per relation.
+                    4. Provide the final answer.
 
                     Your final answer should contain only the valid JSON and nothing else. Exclude any explanation or delimiter from the final response.
 

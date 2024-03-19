@@ -1,6 +1,5 @@
 from langchain.pydantic_v1 import BaseModel, Field
-
-from langchain.agents import tool
+from langchain.agents import tool, Tool
 
 from utils.ecore.parser import EcoreParser
 
@@ -15,9 +14,9 @@ class CheckEcoreClassTool():
 
     @staticmethod
     @tool("check_ecore_class", args_schema=CheckInput)
-    def check_ecore_class(metamodel_name: str, class_to_test: str) -> bool:
+    def check_ecore_class(metamodel_check: dict) -> bool:
         """
-        Run the tool synchronously.
+        Run the tool synchronously to verify if the class exists.
 
         Parameters
         ----------
@@ -32,7 +31,7 @@ class CheckEcoreClassTool():
             True if the Ecore class is found, False otherwise.
         """
         parser = EcoreParser()
-        return parser.check_ecore_class(metamodel_name, class_to_test)
+        return parser.check_ecore_class(metamodel_check["metamodel_name"], metamodel_check["class_to_test"])
     
     def get_tool(self) -> Tool:
         """
