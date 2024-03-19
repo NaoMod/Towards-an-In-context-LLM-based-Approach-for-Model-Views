@@ -1,6 +1,6 @@
 from langchain.prompts import PromptTemplate
 
-from .prompt_templates.join import prompts as where_templates
+from .prompt_templates.where import prompts as where_templates
 
 class Where():
     """
