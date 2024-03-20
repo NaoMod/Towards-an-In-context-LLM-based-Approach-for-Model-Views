@@ -1,5 +1,7 @@
 from operator import itemgetter
 import json
+import os
+import pathlib
 
 from langchain.schema import StrOutputParser
 from langchain_core.output_parsers import JsonOutputParser
@@ -9,7 +11,7 @@ from utils.config import Config
 from runnables.select import Select
 from runnables.join import Join
 from runnables.where import Where
-from tools.check_ecore_class_tool import CheckEcoreClassTool
+from utils.ecore.parser import EcoreParser
 
 from langchain_community.document_loaders import TextLoader
 
@@ -22,10 +24,10 @@ open_ai_key = config.get_open_ai_key()
 text_parser = llm | StrOutputParser()
 json_parser = llm | JsonOutputParser()
 
-meta_book_loader = TextLoader("../temp/Book.txt")
+meta_book_loader = TextLoader(os.path.join(pathlib.Path(__file__).parent.absolute(),"..", "temp", "Book.txt"))
 meta_book = meta_book_loader.load()
 
-meta_publ_loader = TextLoader("../temp/Publication.txt")
+meta_publ_loader = TextLoader(os.path.join(pathlib.Path(__file__).parent.absolute(),"..", "temp", "Publication.txt"))
 meta_publ = meta_publ_loader.load()
 
 join_runnable = Join()
@@ -41,39 +43,29 @@ where_runnable = Where()
 where_chain = where_runnable.get_runnable(text_parser)
 cfg['tags'] += where_runnable.get_tags()
 
-# where_result = where_chain.invoke(
-#     {"meta_1": meta_book, "meta_2": meta_publ},
-#     config=where_cfg).split("\n")
-
-# print(where_result)
-
-# Define a function that uses the tool
-def your_tool(input_data):
-    r = json.dumps(input_data['relations'][0])
+def check_if_classes_exists(relations):
+    r = json.dumps(relations)
     relations_to_check = json.loads(r)
-    check_ecore = CheckEcoreClassTool()
-    check_ecore_tool = check_ecore.get_tool()
-    print(relations_to_check)
-    for _, classes in relations_to_check:
-        meta_1_check = {
-            "metamodel_name": input_data["meta_1"][0].metadata["source"].replace(".txt", ".ecore"),
-            "class_to_test": classes[0]
-        }        
-        check_ecore_tool.invoke(meta_1_check)
-        meta_2_check = {
-            "metamodel_name": input_data["meta_2"][0].metadata["source"].replace(".txt", ".ecore"),
-            "class_to_test": classes[1]
-        }        
-        check_ecore_tool.invoke(meta_2_check)
+    parser = EcoreParser()
+    for relation in relations_to_check:
+        classes = list(relation.values())[0]
+        metamodel_name_1 = meta_book[0].metadata["source"].replace(".txt", ".ecore")
+        class_name_1 = classes[0]
+        meta_1_checked = parser.check_ecore_class(metamodel_name_1, class_name_1)
 
-your_tool_runnable = RunnableLambda(your_tool)
+        metamodel_name_2 = meta_publ[0].metadata["source"].replace(".txt", ".ecore")
+        class_name_2 = classes[1]
+        meta_2_checked = parser.check_ecore_class(metamodel_name_2, class_name_2)
+        if not meta_1_checked or not meta_2_checked:
+            return False
+    return True
 
 full_chain = RunnablePassthrough.assign(relations=join_chain) | {
         "meta_1": itemgetter("meta_1"),
         "meta_2": itemgetter("meta_2"),
         "user_input": itemgetter("user_input"),
         "relations": itemgetter("relations"),
-        "select": RunnablePassthrough.assign(select=select_chain) } | your_tool_runnable | RunnablePassthrough.assign(combinations=where_chain)
+        "select": RunnablePassthrough.assign(select=select_chain) } | RunnablePassthrough.assign(combinations=where_chain)
 
 full_result = full_chain.invoke(
     {
@@ -83,6 +75,12 @@ full_result = full_chain.invoke(
     },
     config=cfg)
 
-print(full_result['relations'])
-print(full_result['select']['select'])
-print(full_result['combinations'])
+if check_if_classes_exists(full_result['relations']):
+    print("Classes exists")
+    print(full_result['relations'])
+    print(full_result['select']['select'])
+    print(full_result['combinations'])
+else:  
+    print("Classes do not exist")
+
+

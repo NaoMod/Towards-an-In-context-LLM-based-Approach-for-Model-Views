@@ -1,3 +1,5 @@
+import json
+
 from langchain.pydantic_v1 import BaseModel, Field
 from langchain.agents import tool, Tool
 
@@ -13,8 +15,8 @@ class CheckEcoreClassTool():
     """
 
     @staticmethod
-    @tool("check_ecore_class", args_schema=CheckInput)
-    def check_ecore_class(metamodel_check: dict) -> bool:
+    @tool("check_ecore_class")
+    def check_ecore_class(metamodel_check: str) -> bool:
         """
         Run the tool synchronously to verify if the class exists.
 
@@ -31,7 +33,8 @@ class CheckEcoreClassTool():
             True if the Ecore class is found, False otherwise.
         """
         parser = EcoreParser()
-        return parser.check_ecore_class(metamodel_check["metamodel_name"], metamodel_check["class_to_test"])
+        metamodel_check_dict = json.loads(metamodel_check)
+        return parser.check_ecore_class(metamodel_check_dict["metamodel_name"], metamodel_check_dict["class_to_test"])
     
     def get_tool(self) -> Tool:
         """
@@ -45,5 +48,5 @@ class CheckEcoreClassTool():
         return Tool(
             func=CheckEcoreClassTool.check_ecore_class,
             name="check_ecore_class",
-            description="Useful for when you need to verify if a given class exists in a specific metamodel",
+            description="Useful for when you need to verify if a given class exists in a specific Ecore metamodel",
         )

@@ -60,19 +60,21 @@ class EcoreParser:
 
         # register metamodel
         resource_path = self.resource_set.get_resource(URI(ecore_path))
+        if resource_path is None or not resource_path.contents:
+            return False
+
         content = resource_path.contents[0]
-        if content is None:
+        if content is None or content.nsURI is None:
             return False
-        if content.nsURI is None:
-            return False
+
         if content.nsURI not in self.resource_set.metamodel_registry:
             self.resource_set.metamodel_registry[content.nsURI] = content
 
         # check class
-        for element in resource_path.contents.contents:
-            class_name = element.eClass.name
+        for element in resource_path.contents[0].eAllContents():
+            class_name = element.name
             if class_name == class_to_test:
-                if self.classes_per_metamodel[ecore_path] is None:
-                    self.classes_per_metamodel[ecore_path].append(class_name)
+                self.classes_per_metamodel[ecore_path].append(class_name)
                 return True
+
         return False
