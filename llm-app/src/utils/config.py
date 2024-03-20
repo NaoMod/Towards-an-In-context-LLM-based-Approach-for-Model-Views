@@ -73,7 +73,7 @@ class Config:
         if self.langsmith_key is not None:
             # Configure LangSmith
             os.environ["LANGCHAIN_TRACING_V2"] = "true"
-            os.environ["LANGCHAIN_PROJECT"] = "MULTI-AGENT"
+            os.environ["LANGCHAIN_PROJECT"] = self.project_name
             os.environ["LANGCHAIN_ENDPOINT"] = "https://api.smith.langchain.com"
             os.environ["LANGCHAIN_API_KEY"] = self.langsmith_key
 

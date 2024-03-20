@@ -1,0 +1,228 @@
+@startuml
+abstract class AccessControlledElement [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AccessControlledElement]] {
+	editable: EBoolean
+}
+abstract class Identifiable [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//Identifiable]] {
+	desc: EString
+	identifier: ID
+	lastChange: DateTime
+	longName: EString
+}
+class AttributeValueXHTML [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeValueXHTML]] {
+	simplified: EBoolean
+}
+abstract class AttributeValue [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeValue]] {
+}
+abstract class SpecElementWithAttributes [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//SpecElementWithAttributes]] {
+}
+class AttributeDefinitionXHTML [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeDefinitionXHTML]] {
+}
+abstract class AttributeDefinition [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeDefinition]] {
+}
+abstract class SpecType [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//SpecType]] {
+}
+class ReqIFContent [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//ReqIFContent]] {
+}
+class ReqIF [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//ReqIF]] {
+	lang: LangType
+}
+class ReqIFHeader [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//ReqIFHeader]] {
+	comment: EString
+	creationTime: DateTime
+	identifier: ID
+	repositoryId: EString
+	reqIFToolId: EString
+	reqIFVersion: EString
+	sourceToolId: EString
+	title: EString
+}
+class ReqIFToolExtension [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//ReqIFToolExtension]] {
+}
+class SpecObject [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//SpecObject]] {
+}
+class SpecObjectType [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//SpecObjectType]] {
+}
+class Specification [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//Specification]] {
+}
+class SpecificationType [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//SpecificationType]] {
+}
+class SpecHierarchy [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//SpecHierarchy]] {
+	tableInternal: EBoolean
+}
+abstract class DatatypeDefinition [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//DatatypeDefinition]] {
+}
+class SpecRelation [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//SpecRelation]] {
+}
+class SpecRelationType [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//SpecRelationType]] {
+}
+class RelationGroup [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//RelationGroup]] {
+}
+class RelationGroupType [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//RelationGroupType]] {
+}
+class DatatypeDefinitionXHTML [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//DatatypeDefinitionXHTML]] {
+}
+class AlternativeID [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AlternativeID]] {
+	identifier: EString
+}
+class AttributeDefinitionBoolean [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeDefinitionBoolean]] {
+}
+abstract class AttributeDefinitionSimple [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeDefinitionSimple]] {
+}
+class DatatypeDefinitionBoolean [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//DatatypeDefinitionBoolean]] {
+}
+abstract class DatatypeDefinitionSimple [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//DatatypeDefinitionSimple]] {
+}
+class AttributeValueBoolean [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeValueBoolean]] {
+	theValue: EBoolean
+}
+abstract class AttributeValueSimple [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeValueSimple]] {
+}
+class AttributeDefinitionDate [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeDefinitionDate]] {
+}
+class DatatypeDefinitionDate [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//DatatypeDefinitionDate]] {
+}
+class AttributeValueDate [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeValueDate]] {
+	theValue: DateTime
+}
+class AttributeDefinitionEnumeration [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeDefinitionEnumeration]] {
+	multiValued: EBoolean
+}
+class DatatypeDefinitionEnumeration [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//DatatypeDefinitionEnumeration]] {
+}
+class EnumValue [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//EnumValue]] {
+}
+class EmbeddedValue [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//EmbeddedValue]] {
+	key: EBigInteger
+	otherContent: EString
+}
+class AttributeValueEnumeration [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeValueEnumeration]] {
+}
+class AttributeDefinitionInteger [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeDefinitionInteger]] {
+}
+class DatatypeDefinitionInteger [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//DatatypeDefinitionInteger]] {
+	max: EBigInteger
+	min: EBigInteger
+}
+class AttributeValueInteger [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeValueInteger]] {
+	theValue: EBigInteger
+}
+class AttributeDefinitionReal [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeDefinitionReal]] {
+}
+class DatatypeDefinitionReal [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//DatatypeDefinitionReal]] {
+	accuracy: EBigInteger
+	max: EDouble
+	min: EDouble
+}
+class AttributeValueReal [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeValueReal]] {
+	theValue: EDouble
+}
+class AttributeDefinitionString [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeDefinitionString]] {
+}
+class DatatypeDefinitionString [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//DatatypeDefinitionString]] {
+	maxLength: EBigInteger
+}
+class AttributeValueString [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeValueString]] {
+	theValue: EString
+}
+class XhtmlContent [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//XhtmlContent]] {
+	/ xhtmlSource: EString
+}
+class DateTime [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//DateTime]] {
+	java.util.GregorianCalendar
+}
+class ID [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//ID]] {
+	java.lang.String
+}
+Identifiable <|-- AccessControlledElement
+AttributeValue <|-- AttributeValueXHTML
+Identifiable <|-- SpecElementWithAttributes
+AttributeDefinition <|-- AttributeDefinitionXHTML
+AccessControlledElement <|-- AttributeDefinition
+Identifiable <|-- SpecType
+SpecElementWithAttributes <|-- SpecObject
+SpecType <|-- SpecObjectType
+SpecElementWithAttributes <|-- Specification
+SpecType <|-- SpecificationType
+AccessControlledElement <|-- SpecHierarchy
+Identifiable <|-- DatatypeDefinition
+SpecElementWithAttributes <|-- SpecRelation
+SpecType <|-- SpecRelationType
+Identifiable <|-- RelationGroup
+SpecType <|-- RelationGroupType
+DatatypeDefinition <|-- DatatypeDefinitionXHTML
+AttributeDefinitionSimple <|-- AttributeDefinitionBoolean
+AttributeDefinition <|-- AttributeDefinitionSimple
+DatatypeDefinitionSimple <|-- DatatypeDefinitionBoolean
+DatatypeDefinition <|-- DatatypeDefinitionSimple
+AttributeValueSimple <|-- AttributeValueBoolean
+AttributeValue <|-- AttributeValueSimple
+AttributeDefinitionSimple <|-- AttributeDefinitionDate
+DatatypeDefinitionSimple <|-- DatatypeDefinitionDate
+AttributeValueSimple <|-- AttributeValueDate
+AttributeDefinition <|-- AttributeDefinitionEnumeration
+DatatypeDefinition <|-- DatatypeDefinitionEnumeration
+Identifiable <|-- EnumValue
+AttributeValue <|-- AttributeValueEnumeration
+AttributeDefinitionSimple <|-- AttributeDefinitionInteger
+DatatypeDefinitionSimple <|-- DatatypeDefinitionInteger
+AttributeValueSimple <|-- AttributeValueInteger
+AttributeDefinitionSimple <|-- AttributeDefinitionReal
+DatatypeDefinitionSimple <|-- DatatypeDefinitionReal
+AttributeValueSimple <|-- AttributeValueReal
+AttributeDefinitionSimple <|-- AttributeDefinitionString
+DatatypeDefinitionSimple <|-- DatatypeDefinitionString
+AttributeValueSimple <|-- AttributeValueString
+Identifiable *--> "alternativeID" AlternativeID
+AttributeValueXHTML --> "definition" AttributeDefinitionXHTML
+AttributeValueXHTML *--> "theOriginalValue" XhtmlContent
+AttributeValueXHTML *--> "theValue" XhtmlContent
+SpecElementWithAttributes *--> "values *" AttributeValue
+AttributeDefinitionXHTML --> "type" DatatypeDefinitionXHTML
+AttributeDefinitionXHTML *--> "defaultValue" AttributeValueXHTML
+SpecType *--> "specAttributes *" AttributeDefinition
+ReqIFContent *--> "datatypes *" DatatypeDefinition
+ReqIFContent *--> "specTypes *" SpecType
+ReqIFContent *--> "specObjects *" SpecObject
+ReqIFContent *--> "specRelations *" SpecRelation
+ReqIFContent *--> "specifications *" Specification
+ReqIFContent *--> "specRelationGroups *" RelationGroup
+ReqIF *--> "theHeader" ReqIFHeader
+ReqIF *--> "coreContent" ReqIFContent
+ReqIF *--> "toolExtensions *" ReqIFToolExtension
+ReqIFToolExtension *--> "extensions *" EObject
+SpecObject --> "type" SpecObjectType
+Specification --> "type" SpecificationType
+Specification *--> "children *" SpecHierarchy
+SpecHierarchy --> "object" SpecObject
+SpecHierarchy *--> "children *" SpecHierarchy
+SpecHierarchy --> "editableAtts *" AttributeDefinition
+SpecRelation --> "target" SpecObject
+SpecRelation --> "source" SpecObject
+SpecRelation --> "type" SpecRelationType
+RelationGroup --> "specRelations *" SpecRelation
+RelationGroup --> "type" RelationGroupType
+RelationGroup --> "sourceSpecification" Specification
+RelationGroup --> "targetSpecification" Specification
+AttributeDefinitionBoolean --> "type" DatatypeDefinitionBoolean
+AttributeDefinitionBoolean *--> "defaultValue" AttributeValueBoolean
+AttributeValueBoolean --> "definition" AttributeDefinitionBoolean
+AttributeDefinitionDate --> "type" DatatypeDefinitionDate
+AttributeDefinitionDate *--> "defaultValue" AttributeValueDate
+AttributeValueDate --> "definition" AttributeDefinitionDate
+AttributeDefinitionEnumeration --> "type" DatatypeDefinitionEnumeration
+AttributeDefinitionEnumeration *--> "defaultValue" AttributeValueEnumeration
+DatatypeDefinitionEnumeration *--> "specifiedValues *" EnumValue
+EnumValue *--> "properties" EmbeddedValue
+AttributeValueEnumeration --> "values *" EnumValue
+AttributeValueEnumeration --> "definition" AttributeDefinitionEnumeration
+AttributeDefinitionInteger --> "type" DatatypeDefinitionInteger
+AttributeDefinitionInteger *--> "defaultValue" AttributeValueInteger
+AttributeValueInteger --> "definition" AttributeDefinitionInteger
+AttributeDefinitionReal --> "type" DatatypeDefinitionReal
+AttributeDefinitionReal *--> "defaultValue" AttributeValueReal
+AttributeValueReal --> "definition" AttributeDefinitionReal
+AttributeDefinitionString --> "type" DatatypeDefinitionString
+AttributeDefinitionString *--> "defaultValue" AttributeValueString
+AttributeValueString --> "definition" AttributeDefinitionString
+XhtmlContent *--> "xhtml" EObject
+@enduml

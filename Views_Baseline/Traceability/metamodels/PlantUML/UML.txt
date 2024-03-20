@@ -1,0 +1,2111 @@
+@startuml
+interface ActivityContent [[http://www.eclipse.org/uml2/5.0.0/UML#//ActivityContent]] {
+	containingActivity(): Activity
+}
+class Activity [[http://www.eclipse.org/uml2/5.0.0/UML#//Activity]] {
+	isReadOnly: Boolean
+	isSingleExecution: Boolean
+	maximum_one_parameter_node(EDiagnosticChain diagnostics, EMap context): EBoolean
+	maximum_two_parameter_nodes(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+abstract class Behavior [[http://www.eclipse.org/uml2/5.0.0/UML#//Behavior]] {
+	isReentrant: Boolean
+	most_one_behavior(EDiagnosticChain diagnostics, EMap context): EBoolean
+	parameters_match(EDiagnosticChain diagnostics, EMap context): EBoolean
+	feature_of_context_classifier(EDiagnosticChain diagnostics, EMap context): EBoolean
+	getContext(): BehavioredClassifier
+	behavioredClassifier(Element from): BehavioredClassifier
+	inputParameters(): Parameter[]
+	outputParameters(): Parameter[]
+}
+class Class [[http://www.eclipse.org/uml2/5.0.0/UML#//Class]] {
+	isActive: Boolean
+	passive_class(EDiagnosticChain diagnostics, EMap context): EBoolean
+	createOwnedOperation(String name, String parameterNames, Type parameterTypes, Type returnType): Operation
+	isMetaclass(): Boolean
+	getExtensions(): Extension[]
+	getSuperClasses(): Class[]
+}
+abstract class BehavioredClassifier [[http://www.eclipse.org/uml2/5.0.0/UML#//BehavioredClassifier]] {
+	class_behavior(EDiagnosticChain diagnostics, EMap context): EBoolean
+	getAllImplementedInterfaces(): Interface[]
+	getImplementedInterfaces(): Interface[]
+}
+abstract class Classifier [[http://www.eclipse.org/uml2/5.0.0/UML#//Classifier]] {
+	isAbstract: Boolean
+	isFinalSpecialization: Boolean
+	specialize_type(EDiagnosticChain diagnostics, EMap context): EBoolean
+	maps_to_generalization_set(EDiagnosticChain diagnostics, EMap context): EBoolean
+	non_final_parents(EDiagnosticChain diagnostics, EMap context): EBoolean
+	no_cycles_in_generalization(EDiagnosticChain diagnostics, EMap context): EBoolean
+	getAllAttributes(): Property[]
+	getAllOperations(): Operation[]
+	getAllUsedInterfaces(): Interface[]
+	getOperation(String name, String parameterNames, Type parameterTypes): Operation
+	getOperation(String name, String parameterNames, Type parameterTypes, Boolean ignoreCase): Operation
+	getOperations(): Operation[]
+	getUsedInterfaces(): Interface[]
+	allFeatures(): Feature[]
+	allParents(): Classifier[]
+	getGenerals(): Classifier[]
+	hasVisibilityOf(NamedElement n): Boolean
+	inherit(NamedElement inhs): NamedElement[]
+	inheritableMembers(Classifier c): NamedElement[]
+	getInheritedMembers(): NamedElement[]
+	maySpecializeType(Classifier c): Boolean
+	parents(): Classifier[]
+	directlyRealizedInterfaces(): Interface[]
+	directlyUsedInterfaces(): Interface[]
+	allRealizedInterfaces(): Interface[]
+	allUsedInterfaces(): Interface[]
+	isSubstitutableFor(Classifier contract): Boolean
+	allAttributes(): Property[]
+	allSlottableFeatures(): StructuralFeature[]
+}
+abstract class Namespace [[http://www.eclipse.org/uml2/5.0.0/UML#//Namespace]] {
+	members_distinguishable(EDiagnosticChain diagnostics, EMap context): EBoolean
+	cannot_import_self(EDiagnosticChain diagnostics, EMap context): EBoolean
+	cannot_import_ownedMembers(EDiagnosticChain diagnostics, EMap context): EBoolean
+	createElementImport(PackageableElement element, VisibilityKind visibility): ElementImport
+	createPackageImport(Package package_, VisibilityKind visibility): PackageImport
+	getImportedElements(): PackageableElement[]
+	getImportedPackages(): Package[]
+	getOwnedMembers(): NamedElement[]
+	excludeCollisions(PackageableElement imps): PackageableElement[]
+	getNamesOfMember(NamedElement element): String[]
+	importMembers(PackageableElement imps): PackageableElement[]
+	getImportedMembers(): PackageableElement[]
+	membersAreDistinguishable(): Boolean
+}
+abstract class NamedElement [[http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement]] {
+	name: String
+	/ qualifiedName: String
+	visibility: VisibilityKind
+	visibility_needs_ownership(EDiagnosticChain diagnostics, EMap context): EBoolean
+	has_qualified_name(EDiagnosticChain diagnostics, EMap context): EBoolean
+	has_no_qualified_name(EDiagnosticChain diagnostics, EMap context): EBoolean
+	createDependency(NamedElement supplier): Dependency
+	createUsage(NamedElement supplier): Usage
+	getLabel(): String
+	getLabel(Boolean localize): String
+	getNamespace(): Namespace
+	allNamespaces(): Namespace[]
+	allOwningPackages(): Package[]
+	isDistinguishableFrom(NamedElement n, Namespace ns): Boolean
+	getQualifiedName(): String
+	separator(): String
+	getClientDependencies(): Dependency[]
+}
+abstract class Element [[http://www.eclipse.org/uml2/5.0.0/UML#//Element]] {
+	has_owner(EDiagnosticChain diagnostics, EMap context): EBoolean
+	not_own_self(EDiagnosticChain diagnostics, EMap context): EBoolean
+	addKeyword(String keyword): Boolean
+	applyStereotype(Stereotype stereotype): EObject
+	createEAnnotation(String source): EAnnotation
+	destroy(): void
+	getKeywords(): String[]
+	getApplicableStereotype(String qualifiedName): Stereotype
+	getApplicableStereotypes(): Stereotype[]
+	getAppliedStereotype(String qualifiedName): Stereotype
+	getAppliedStereotypes(): Stereotype[]
+	getAppliedSubstereotype(Stereotype stereotype, String qualifiedName): Stereotype
+	getAppliedSubstereotypes(Stereotype stereotype): Stereotype[]
+	getModel(): Model
+	getNearestPackage(): Package
+	getRelationships(): Relationship[]
+	getRelationships(EClass eClass): Relationship[]
+	getRequiredStereotype(String qualifiedName): Stereotype
+	getRequiredStereotypes(): Stereotype[]
+	getSourceDirectedRelationships(): DirectedRelationship[]
+	getSourceDirectedRelationships(EClass eClass): DirectedRelationship[]
+	getStereotypeApplication(Stereotype stereotype): EObject
+	getStereotypeApplications(): EObject[]
+	getTargetDirectedRelationships(): DirectedRelationship[]
+	getTargetDirectedRelationships(EClass eClass): DirectedRelationship[]
+	getValue(Stereotype stereotype, String propertyName): EJavaObject
+	hasKeyword(String keyword): Boolean
+	hasValue(Stereotype stereotype, String propertyName): Boolean
+	isStereotypeApplicable(Stereotype stereotype): Boolean
+	isStereotypeApplied(Stereotype stereotype): Boolean
+	isStereotypeRequired(Stereotype stereotype): Boolean
+	removeKeyword(String keyword): Boolean
+	setValue(Stereotype stereotype, String propertyName, EJavaObject newValue): void
+	unapplyStereotype(Stereotype stereotype): EObject
+	allOwnedElements(): Element[]
+	mustBeOwned(): Boolean
+}
+class Comment [[http://www.eclipse.org/uml2/5.0.0/UML#//Comment]] {
+	body: String
+}
+class Stereotype [[http://www.eclipse.org/uml2/5.0.0/UML#//Stereotype]] {
+	binaryAssociationsOnly(EDiagnosticChain diagnostics, EMap context): EBoolean
+	generalize(EDiagnosticChain diagnostics, EMap context): EBoolean
+	name_not_clash(EDiagnosticChain diagnostics, EMap context): EBoolean
+	associationEndOwnership(EDiagnosticChain diagnostics, EMap context): EBoolean
+	base_property_upper_bound(EDiagnosticChain diagnostics, EMap context): EBoolean
+	base_property_multiplicity_single_extension(EDiagnosticChain diagnostics, EMap context): EBoolean
+	base_property_multiplicity_multiple_extension(EDiagnosticChain diagnostics, EMap context): EBoolean
+	createExtension(Class metaclass, Boolean isRequired): Extension
+	createIcon(String location): Image
+	createIcon(String format, String content): Image
+	getAllExtendedMetaclasses(): Class[]
+	getDefinition(): EClass
+	getExtendedMetaclasses(): Class[]
+	getKeyword(): String
+	getKeyword(Boolean localize): String
+	containingProfile(): Profile
+	getProfile(): Profile
+}
+class Image [[http://www.eclipse.org/uml2/5.0.0/UML#//Image]] {
+	content: String
+	format: String
+	location: String
+}
+class Profile [[http://www.eclipse.org/uml2/5.0.0/UML#//Profile]] {
+	metaclass_reference_not_specialized(EDiagnosticChain diagnostics, EMap context): EBoolean
+	references_same_metamodel(EDiagnosticChain diagnostics, EMap context): EBoolean
+	create(Classifier classifier): EObject
+	define(): EPackage
+	define(EMap options, EDiagnosticChain diagnostics, EMap context): EPackage
+	getDefinition(): EPackage
+	getDefinition(NamedElement namedElement): ENamedElement
+	getOwnedExtensions(Boolean requiredOnly): Extension[]
+	getReferencedMetaclasses(): Class[]
+	getReferencedMetamodels(): Model[]
+	isDefined(): Boolean
+}
+class Package [[http://www.eclipse.org/uml2/5.0.0/UML#//Package]] {
+	URI: String
+	elements_public_or_private(EDiagnosticChain diagnostics, EMap context): EBoolean
+	applyProfile(Profile profile): EObject[]
+	createOwnedClass(String name, Boolean isAbstract): Class
+	createOwnedEnumeration(String name): Enumeration
+	createOwnedInterface(String name): Interface
+	createOwnedPrimitiveType(String name): PrimitiveType
+	createOwnedStereotype(String name, Boolean isAbstract): Stereotype
+	getAllAppliedProfiles(): Profile[]
+	getAllProfileApplications(): ProfileApplication[]
+	getAppliedProfile(String qualifiedName): Profile
+	getAppliedProfile(String qualifiedName, Boolean recurse): Profile
+	getAppliedProfiles(): Profile[]
+	getProfileApplication(Profile profile): ProfileApplication
+	getProfileApplication(Profile profile, Boolean recurse): ProfileApplication
+	isModelLibrary(): Boolean
+	isProfileApplied(Profile profile): Boolean
+	unapplyProfile(Profile profile): EObject[]
+	applyProfiles(Profile profiles): EObject[]
+	allApplicableStereotypes(): Stereotype[]
+	containingProfile(): Profile
+	makesVisible(NamedElement el): Boolean
+	getNestedPackages(): Package[]
+	getOwnedStereotypes(): Stereotype[]
+	getOwnedTypes(): Type[]
+	visibleMembers(): PackageableElement[]
+}
+abstract class PackageableElement [[http://www.eclipse.org/uml2/5.0.0/UML#//PackageableElement]] {
+	namespace_needs_visibility(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+abstract class ParameterableElement [[http://www.eclipse.org/uml2/5.0.0/UML#//ParameterableElement]] {
+	isCompatibleWith(ParameterableElement p): Boolean
+	isTemplateParameter(): Boolean
+}
+class TemplateParameter [[http://www.eclipse.org/uml2/5.0.0/UML#//TemplateParameter]] {
+	must_be_compatible(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class TemplateSignature [[http://www.eclipse.org/uml2/5.0.0/UML#//TemplateSignature]] {
+	own_elements(EDiagnosticChain diagnostics, EMap context): EBoolean
+	unique_parameters(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+abstract class TemplateableElement [[http://www.eclipse.org/uml2/5.0.0/UML#//TemplateableElement]] {
+	isTemplate(): Boolean
+	parameterableElements(): ParameterableElement[]
+}
+class TemplateBinding [[http://www.eclipse.org/uml2/5.0.0/UML#//TemplateBinding]] {
+	parameter_substitution_formal(EDiagnosticChain diagnostics, EMap context): EBoolean
+	one_parameter_substitution(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+abstract class DirectedRelationship [[http://www.eclipse.org/uml2/5.0.0/UML#//DirectedRelationship]] {
+}
+abstract class Relationship [[http://www.eclipse.org/uml2/5.0.0/UML#//Relationship]] {
+}
+class TemplateParameterSubstitution [[http://www.eclipse.org/uml2/5.0.0/UML#//TemplateParameterSubstitution]] {
+	must_be_compatible(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+enum VisibilityKind [[http://www.eclipse.org/uml2/5.0.0/UML#//VisibilityKind]] {
+	public: public
+	private: private
+	protected: protected
+	package: package
+}
+abstract class Type [[http://www.eclipse.org/uml2/5.0.0/UML#//Type]] {
+	createAssociation(Boolean end1IsNavigable, AggregationKind end1Aggregation, String end1Name, Integer end1Lower, UnlimitedNatural end1Upper, Type end1Type, Boolean end2IsNavigable, AggregationKind end2Aggregation, String end2Name, Integer end2Lower, UnlimitedNatural end2Upper): Association
+	getAssociations(): Association[]
+	conformsTo(Type other): Boolean
+}
+class Association [[http://www.eclipse.org/uml2/5.0.0/UML#//Association]] {
+	isDerived: Boolean
+	specialized_end_number(EDiagnosticChain diagnostics, EMap context): EBoolean
+	specialized_end_types(EDiagnosticChain diagnostics, EMap context): EBoolean
+	binary_associations(EDiagnosticChain diagnostics, EMap context): EBoolean
+	association_ends(EDiagnosticChain diagnostics, EMap context): EBoolean
+	ends_must_be_typed(EDiagnosticChain diagnostics, EMap context): EBoolean
+	isBinary(): Boolean
+	getEndTypes(): Type[]
+}
+class Property [[http://www.eclipse.org/uml2/5.0.0/UML#//Property]] {
+	/ default: String
+	aggregation: AggregationKind
+	/ isComposite: Boolean
+	isDerived: Boolean
+	isDerivedUnion: Boolean
+	isID: Boolean
+	subsetting_context_conforms(EDiagnosticChain diagnostics, EMap context): EBoolean
+	derived_union_is_read_only(EDiagnosticChain diagnostics, EMap context): EBoolean
+	multiplicity_of_composite(EDiagnosticChain diagnostics, EMap context): EBoolean
+	redefined_property_inherited(EDiagnosticChain diagnostics, EMap context): EBoolean
+	subsetting_rules(EDiagnosticChain diagnostics, EMap context): EBoolean
+	binding_to_attribute(EDiagnosticChain diagnostics, EMap context): EBoolean
+	derived_union_is_derived(EDiagnosticChain diagnostics, EMap context): EBoolean
+	deployment_target(EDiagnosticChain diagnostics, EMap context): EBoolean
+	subsetted_property_names(EDiagnosticChain diagnostics, EMap context): EBoolean
+	type_of_opposite_end(EDiagnosticChain diagnostics, EMap context): EBoolean
+	qualified_is_association_end(EDiagnosticChain diagnostics, EMap context): EBoolean
+	getDefault(): String
+	getOtherEnd(): Property
+	isSetDefault(): Boolean
+	setBooleanDefaultValue(Boolean value): void
+	setDefault(String newDefault): void
+	setIntegerDefaultValue(Integer value): void
+	setIsComposite(Boolean newIsComposite): void
+	setIsNavigable(Boolean isNavigable): void
+	setNullDefaultValue(): void
+	setOpposite(Property newOpposite): void
+	setRealDefaultValue(Real value): void
+	setStringDefaultValue(String value): void
+	setUnlimitedNaturalDefaultValue(UnlimitedNatural value): void
+	unsetDefault(): void
+	isAttribute(): Boolean
+	isComposite(): Boolean
+	isNavigable(): Boolean
+	getOpposite(): Property
+	subsettingContext(): Type[]
+}
+abstract class ConnectableElement [[http://www.eclipse.org/uml2/5.0.0/UML#//ConnectableElement]] {
+	getEnds(): ConnectorEnd[]
+}
+abstract class TypedElement [[http://www.eclipse.org/uml2/5.0.0/UML#//TypedElement]] {
+}
+class ConnectorEnd [[http://www.eclipse.org/uml2/5.0.0/UML#//ConnectorEnd]] {
+	role_and_part_with_port(EDiagnosticChain diagnostics, EMap context): EBoolean
+	part_with_port_empty(EDiagnosticChain diagnostics, EMap context): EBoolean
+	multiplicity(EDiagnosticChain diagnostics, EMap context): EBoolean
+	self_part_with_port(EDiagnosticChain diagnostics, EMap context): EBoolean
+	getDefiningEnd(): Property
+}
+abstract class MultiplicityElement [[http://www.eclipse.org/uml2/5.0.0/UML#//MultiplicityElement]] {
+	isOrdered: Boolean
+	isUnique: Boolean
+	/ lower: Integer
+	/ upper: UnlimitedNatural
+	upper_ge_lower(EDiagnosticChain diagnostics, EMap context): EBoolean
+	lower_ge_0(EDiagnosticChain diagnostics, EMap context): EBoolean
+	value_specification_no_side_effects(EDiagnosticChain diagnostics, EMap context): EBoolean
+	value_specification_constant(EDiagnosticChain diagnostics, EMap context): EBoolean
+	lower_is_integer(EDiagnosticChain diagnostics, EMap context): EBoolean
+	upper_is_unlimitedNatural(EDiagnosticChain diagnostics, EMap context): EBoolean
+	setLower(Integer newLower): void
+	setUpper(UnlimitedNatural newUpper): void
+	compatibleWith(MultiplicityElement other): Boolean
+	includesMultiplicity(MultiplicityElement M): Boolean
+	is(Integer lowerbound, UnlimitedNatural upperbound): Boolean
+	isMultivalued(): Boolean
+	getLower(): Integer
+	lowerBound(): Integer
+	getUpper(): UnlimitedNatural
+	upperBound(): UnlimitedNatural
+}
+abstract class ValueSpecification [[http://www.eclipse.org/uml2/5.0.0/UML#//ValueSpecification]] {
+	booleanValue(): Boolean
+	integerValue(): Integer
+	isComputable(): Boolean
+	isNull(): Boolean
+	realValue(): Real
+	stringValue(): String
+	unlimitedValue(): UnlimitedNatural
+}
+class ConnectableElementTemplateParameter [[http://www.eclipse.org/uml2/5.0.0/UML#//ConnectableElementTemplateParameter]] {
+}
+abstract class DeploymentTarget [[http://www.eclipse.org/uml2/5.0.0/UML#//DeploymentTarget]] {
+	getDeployedElements(): PackageableElement[]
+}
+class Deployment [[http://www.eclipse.org/uml2/5.0.0/UML#//Deployment]] {
+}
+class Dependency [[http://www.eclipse.org/uml2/5.0.0/UML#//Dependency]] {
+}
+class DeploymentSpecification [[http://www.eclipse.org/uml2/5.0.0/UML#//DeploymentSpecification]] {
+	deploymentLocation: String
+	executionLocation: String
+	deployment_target(EDiagnosticChain diagnostics, EMap context): EBoolean
+	deployed_elements(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class Artifact [[http://www.eclipse.org/uml2/5.0.0/UML#//Artifact]] {
+	fileName: String
+	createOwnedAttribute(String name, Type type, Integer lower, UnlimitedNatural upper): Property
+	createOwnedOperation(String name, String parameterNames, Type parameterTypes, Type returnType): Operation
+}
+abstract class DeployedArtifact [[http://www.eclipse.org/uml2/5.0.0/UML#//DeployedArtifact]] {
+}
+class Manifestation [[http://www.eclipse.org/uml2/5.0.0/UML#//Manifestation]] {
+}
+class Abstraction [[http://www.eclipse.org/uml2/5.0.0/UML#//Abstraction]] {
+}
+class OpaqueExpression [[http://www.eclipse.org/uml2/5.0.0/UML#//OpaqueExpression]] {
+	body: String[]
+	language: String[]
+	language_body_size(EDiagnosticChain diagnostics, EMap context): EBoolean
+	one_return_result_parameter(EDiagnosticChain diagnostics, EMap context): EBoolean
+	only_return_result_parameters(EDiagnosticChain diagnostics, EMap context): EBoolean
+	isIntegral(): Boolean
+	isNonNegative(): Boolean
+	isPositive(): Boolean
+	getResult(): Parameter
+	value(): Integer
+}
+class Parameter [[http://www.eclipse.org/uml2/5.0.0/UML#//Parameter]] {
+	/ default: String
+	direction: ParameterDirectionKind
+	effect: ParameterEffectKind
+	isException: Boolean
+	isStream: Boolean
+	in_and_out(EDiagnosticChain diagnostics, EMap context): EBoolean
+	not_exception(EDiagnosticChain diagnostics, EMap context): EBoolean
+	connector_end(EDiagnosticChain diagnostics, EMap context): EBoolean
+	reentrant_behaviors(EDiagnosticChain diagnostics, EMap context): EBoolean
+	stream_and_exception(EDiagnosticChain diagnostics, EMap context): EBoolean
+	object_effect(EDiagnosticChain diagnostics, EMap context): EBoolean
+	isSetDefault(): Boolean
+	setBooleanDefaultValue(Boolean value): void
+	setDefault(String newDefault): void
+	setIntegerDefaultValue(Integer value): void
+	setNullDefaultValue(): void
+	setRealDefaultValue(Real value): void
+	setStringDefaultValue(String value): void
+	setUnlimitedNaturalDefaultValue(UnlimitedNatural value): void
+	unsetDefault(): void
+	getDefault(): String
+}
+enum ParameterDirectionKind [[http://www.eclipse.org/uml2/5.0.0/UML#//ParameterDirectionKind]] {
+	in: in
+	inout: inout
+	out: out
+	return: return
+}
+enum ParameterEffectKind [[http://www.eclipse.org/uml2/5.0.0/UML#//ParameterEffectKind]] {
+	create: create
+	read: read
+	update: update
+	delete: delete
+}
+class Operation [[http://www.eclipse.org/uml2/5.0.0/UML#//Operation]] {
+	/ isOrdered: Boolean
+	isQuery: Boolean
+	/ isUnique: Boolean
+	/ lower: Integer
+	/ upper: UnlimitedNatural
+	at_most_one_return(EDiagnosticChain diagnostics, EMap context): EBoolean
+	only_body_for_query(EDiagnosticChain diagnostics, EMap context): EBoolean
+	getReturnResult(): Parameter
+	setIsOrdered(Boolean newIsOrdered): void
+	setIsUnique(Boolean newIsUnique): void
+	setLower(Integer newLower): void
+	setType(Type newType): void
+	setUpper(UnlimitedNatural newUpper): void
+	isOrdered(): Boolean
+	isUnique(): Boolean
+	getLower(): Integer
+	returnResult(): Parameter[]
+	getType(): Type
+	getUpper(): UnlimitedNatural
+}
+abstract class BehavioralFeature [[http://www.eclipse.org/uml2/5.0.0/UML#//BehavioralFeature]] {
+	concurrency: CallConcurrencyKind
+	isAbstract: Boolean
+	abstract_no_method(EDiagnosticChain diagnostics, EMap context): EBoolean
+	createReturnResult(String name, Type type): Parameter
+	inputParameters(): Parameter[]
+	outputParameters(): Parameter[]
+}
+abstract class Feature [[http://www.eclipse.org/uml2/5.0.0/UML#//Feature]] {
+	isStatic: Boolean
+}
+abstract class RedefinableElement [[http://www.eclipse.org/uml2/5.0.0/UML#//RedefinableElement]] {
+	isLeaf: Boolean
+	redefinition_consistent(EDiagnosticChain diagnostics, EMap context): EBoolean
+	non_leaf_redefinition(EDiagnosticChain diagnostics, EMap context): EBoolean
+	redefinition_context_valid(EDiagnosticChain diagnostics, EMap context): EBoolean
+	isConsistentWith(RedefinableElement redefiningElement): Boolean
+	isRedefinitionContextValid(RedefinableElement redefinedElement): Boolean
+}
+enum CallConcurrencyKind [[http://www.eclipse.org/uml2/5.0.0/UML#//CallConcurrencyKind]] {
+	sequential: sequential
+	guarded: guarded
+	concurrent: concurrent
+}
+class ParameterSet [[http://www.eclipse.org/uml2/5.0.0/UML#//ParameterSet]] {
+	same_parameterized_entity(EDiagnosticChain diagnostics, EMap context): EBoolean
+	input(EDiagnosticChain diagnostics, EMap context): EBoolean
+	two_parameter_sets(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class Constraint [[http://www.eclipse.org/uml2/5.0.0/UML#//Constraint]] {
+	boolean_value(EDiagnosticChain diagnostics, EMap context): EBoolean
+	no_side_effects(EDiagnosticChain diagnostics, EMap context): EBoolean
+	not_apply_to_self(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class DataType [[http://www.eclipse.org/uml2/5.0.0/UML#//DataType]] {
+	createOwnedAttribute(String name, Type type, Integer lower, UnlimitedNatural upper): Property
+	createOwnedOperation(String name, String parameterNames, Type parameterTypes, Type returnType): Operation
+}
+class Interface [[http://www.eclipse.org/uml2/5.0.0/UML#//Interface]] {
+	visibility(EDiagnosticChain diagnostics, EMap context): EBoolean
+	createOwnedAttribute(String name, Type type, Integer lower, UnlimitedNatural upper): Property
+	createOwnedOperation(String name, String parameterNames, Type parameterTypes, Type returnType): Operation
+}
+class Reception [[http://www.eclipse.org/uml2/5.0.0/UML#//Reception]] {
+	same_name_as_signal(EDiagnosticChain diagnostics, EMap context): EBoolean
+	same_structure_as_signal(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class Signal [[http://www.eclipse.org/uml2/5.0.0/UML#//Signal]] {
+	createOwnedAttribute(String name, Type type, Integer lower, UnlimitedNatural upper): Property
+}
+class ProtocolStateMachine [[http://www.eclipse.org/uml2/5.0.0/UML#//ProtocolStateMachine]] {
+	deep_or_shallow_history(EDiagnosticChain diagnostics, EMap context): EBoolean
+	entry_exit_do(EDiagnosticChain diagnostics, EMap context): EBoolean
+	protocol_transitions(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class StateMachine [[http://www.eclipse.org/uml2/5.0.0/UML#//StateMachine]] {
+	connection_points(EDiagnosticChain diagnostics, EMap context): EBoolean
+	classifier_context(EDiagnosticChain diagnostics, EMap context): EBoolean
+	method(EDiagnosticChain diagnostics, EMap context): EBoolean
+	context_classifier(EDiagnosticChain diagnostics, EMap context): EBoolean
+	LCA(Vertex s1, Vertex s2): Region
+	ancestor(Vertex s1, Vertex s2): Boolean
+	LCAState(Vertex v1, Vertex v2): State
+}
+class Pseudostate [[http://www.eclipse.org/uml2/5.0.0/UML#//Pseudostate]] {
+	kind: PseudostateKind
+	transitions_outgoing(EDiagnosticChain diagnostics, EMap context): EBoolean
+	choice_vertex(EDiagnosticChain diagnostics, EMap context): EBoolean
+	outgoing_from_initial(EDiagnosticChain diagnostics, EMap context): EBoolean
+	join_vertex(EDiagnosticChain diagnostics, EMap context): EBoolean
+	junction_vertex(EDiagnosticChain diagnostics, EMap context): EBoolean
+	history_vertices(EDiagnosticChain diagnostics, EMap context): EBoolean
+	initial_vertex(EDiagnosticChain diagnostics, EMap context): EBoolean
+	fork_vertex(EDiagnosticChain diagnostics, EMap context): EBoolean
+	transitions_incoming(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+abstract class Vertex [[http://www.eclipse.org/uml2/5.0.0/UML#//Vertex]] {
+	containingStateMachine(): StateMachine
+	getIncomings(): Transition[]
+	getOutgoings(): Transition[]
+	isContainedInState(State s): Boolean
+	isContainedInRegion(Region r): Boolean
+}
+class Region [[http://www.eclipse.org/uml2/5.0.0/UML#//Region]] {
+	deep_history_vertex(EDiagnosticChain diagnostics, EMap context): EBoolean
+	shallow_history_vertex(EDiagnosticChain diagnostics, EMap context): EBoolean
+	owned(EDiagnosticChain diagnostics, EMap context): EBoolean
+	initial_vertex(EDiagnosticChain diagnostics, EMap context): EBoolean
+	belongsToPSM(): Boolean
+	containingStateMachine(): StateMachine
+	redefinitionContext(): Classifier
+}
+class State [[http://www.eclipse.org/uml2/5.0.0/UML#//State]] {
+	/ isComposite: Boolean
+	/ isOrthogonal: Boolean
+	/ isSimple: Boolean
+	/ isSubmachineState: Boolean
+	entry_or_exit(EDiagnosticChain diagnostics, EMap context): EBoolean
+	submachine_states(EDiagnosticChain diagnostics, EMap context): EBoolean
+	composite_states(EDiagnosticChain diagnostics, EMap context): EBoolean
+	destinations_or_sources_of_transitions(EDiagnosticChain diagnostics, EMap context): EBoolean
+	submachine_or_regions(EDiagnosticChain diagnostics, EMap context): EBoolean
+	isComposite(): Boolean
+	isOrthogonal(): Boolean
+	isSimple(): Boolean
+	isSubmachineState(): Boolean
+	redefinitionContext(): Classifier
+}
+class ConnectionPointReference [[http://www.eclipse.org/uml2/5.0.0/UML#//ConnectionPointReference]] {
+	exit_pseudostates(EDiagnosticChain diagnostics, EMap context): EBoolean
+	entry_pseudostates(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class Trigger [[http://www.eclipse.org/uml2/5.0.0/UML#//Trigger]] {
+	trigger_with_ports(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+abstract class Event [[http://www.eclipse.org/uml2/5.0.0/UML#//Event]] {
+}
+class Port [[http://www.eclipse.org/uml2/5.0.0/UML#//Port]] {
+	isBehavior: Boolean
+	isConjugated: Boolean
+	isService: Boolean
+	port_aggregation(EDiagnosticChain diagnostics, EMap context): EBoolean
+	default_value(EDiagnosticChain diagnostics, EMap context): EBoolean
+	encapsulated_owner(EDiagnosticChain diagnostics, EMap context): EBoolean
+	getProvideds(): Interface[]
+	getRequireds(): Interface[]
+	basicProvided(): Interface[]
+	basicRequired(): Interface[]
+}
+class Transition [[http://www.eclipse.org/uml2/5.0.0/UML#//Transition]] {
+	kind: TransitionKind
+	state_is_external(EDiagnosticChain diagnostics, EMap context): EBoolean
+	join_segment_guards(EDiagnosticChain diagnostics, EMap context): EBoolean
+	state_is_internal(EDiagnosticChain diagnostics, EMap context): EBoolean
+	outgoing_pseudostates(EDiagnosticChain diagnostics, EMap context): EBoolean
+	join_segment_state(EDiagnosticChain diagnostics, EMap context): EBoolean
+	fork_segment_state(EDiagnosticChain diagnostics, EMap context): EBoolean
+	state_is_local(EDiagnosticChain diagnostics, EMap context): EBoolean
+	initial_transition(EDiagnosticChain diagnostics, EMap context): EBoolean
+	fork_segment_guards(EDiagnosticChain diagnostics, EMap context): EBoolean
+	containingStateMachine(): StateMachine
+	redefinitionContext(): Classifier
+}
+enum TransitionKind [[http://www.eclipse.org/uml2/5.0.0/UML#//TransitionKind]] {
+	internal: internal
+	local: local
+	external: external
+}
+enum PseudostateKind [[http://www.eclipse.org/uml2/5.0.0/UML#//PseudostateKind]] {
+	initial: initial
+	deepHistory: deepHistory
+	shallowHistory: shallowHistory
+	join: join
+	fork: fork
+	junction: junction
+	choice: choice
+	entryPoint: entryPoint
+	exitPoint: exitPoint
+	terminate: terminate
+}
+class ProtocolConformance [[http://www.eclipse.org/uml2/5.0.0/UML#//ProtocolConformance]] {
+}
+class OperationTemplateParameter [[http://www.eclipse.org/uml2/5.0.0/UML#//OperationTemplateParameter]] {
+	match_default_signature(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+abstract class StructuralFeature [[http://www.eclipse.org/uml2/5.0.0/UML#//StructuralFeature]] {
+	isReadOnly: Boolean
+}
+enum AggregationKind [[http://www.eclipse.org/uml2/5.0.0/UML#//AggregationKind]] {
+	none: none
+	shared: shared
+	composite: composite
+}
+class PackageMerge [[http://www.eclipse.org/uml2/5.0.0/UML#//PackageMerge]] {
+}
+class ProfileApplication [[http://www.eclipse.org/uml2/5.0.0/UML#//ProfileApplication]] {
+	isStrict: Boolean
+	getAppliedDefinition(): EPackage
+	getAppliedDefinition(NamedElement namedElement): ENamedElement
+}
+class Enumeration [[http://www.eclipse.org/uml2/5.0.0/UML#//Enumeration]] {
+	immutable(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class EnumerationLiteral [[http://www.eclipse.org/uml2/5.0.0/UML#//EnumerationLiteral]] {
+	getClassifiers(): Classifier[]
+	getClassifier(): Enumeration
+}
+class InstanceSpecification [[http://www.eclipse.org/uml2/5.0.0/UML#//InstanceSpecification]] {
+	deployment_artifact(EDiagnosticChain diagnostics, EMap context): EBoolean
+	structural_feature(EDiagnosticChain diagnostics, EMap context): EBoolean
+	defining_feature(EDiagnosticChain diagnostics, EMap context): EBoolean
+	deployment_target(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class Slot [[http://www.eclipse.org/uml2/5.0.0/UML#//Slot]] {
+}
+class PrimitiveType [[http://www.eclipse.org/uml2/5.0.0/UML#//PrimitiveType]] {
+}
+class ElementImport [[http://www.eclipse.org/uml2/5.0.0/UML#//ElementImport]] {
+	alias: String
+	visibility: VisibilityKind
+	imported_element_is_public(EDiagnosticChain diagnostics, EMap context): EBoolean
+	visibility_public_or_private(EDiagnosticChain diagnostics, EMap context): EBoolean
+	getName(): String
+}
+class PackageImport [[http://www.eclipse.org/uml2/5.0.0/UML#//PackageImport]] {
+	visibility: VisibilityKind
+	public_or_private(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class Extension [[http://www.eclipse.org/uml2/5.0.0/UML#//Extension]] {
+	/ isRequired: Boolean
+	non_owned_end(EDiagnosticChain diagnostics, EMap context): EBoolean
+	is_binary(EDiagnosticChain diagnostics, EMap context): EBoolean
+	getStereotype(): Stereotype
+	getStereotypeEnd(): Property
+	isRequired(): Boolean
+	getMetaclass(): Class
+	metaclassEnd(): Property
+}
+class ExtensionEnd [[http://www.eclipse.org/uml2/5.0.0/UML#//ExtensionEnd]] {
+	multiplicity(EDiagnosticChain diagnostics, EMap context): EBoolean
+	aggregation(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class Model [[http://www.eclipse.org/uml2/5.0.0/UML#//Model]] {
+	viewpoint: String
+	isMetamodel(): Boolean
+}
+class StringExpression [[http://www.eclipse.org/uml2/5.0.0/UML#//StringExpression]] {
+	operands(EDiagnosticChain diagnostics, EMap context): EBoolean
+	subexpressions(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class Expression [[http://www.eclipse.org/uml2/5.0.0/UML#//Expression]] {
+	symbol: String
+}
+class Usage [[http://www.eclipse.org/uml2/5.0.0/UML#//Usage]] {
+}
+class CollaborationUse [[http://www.eclipse.org/uml2/5.0.0/UML#//CollaborationUse]] {
+	client_elements(EDiagnosticChain diagnostics, EMap context): EBoolean
+	every_role(EDiagnosticChain diagnostics, EMap context): EBoolean
+	connectors(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class Collaboration [[http://www.eclipse.org/uml2/5.0.0/UML#//Collaboration]] {
+}
+abstract class StructuredClassifier [[http://www.eclipse.org/uml2/5.0.0/UML#//StructuredClassifier]] {
+	createOwnedAttribute(String name, Type type, Integer lower, UnlimitedNatural upper): Property
+	getParts(): Property[]
+	allRoles(): ConnectableElement[]
+}
+class Connector [[http://www.eclipse.org/uml2/5.0.0/UML#//Connector]] {
+	/ kind: ConnectorKind
+	types(EDiagnosticChain diagnostics, EMap context): EBoolean
+	roles(EDiagnosticChain diagnostics, EMap context): EBoolean
+	getKind(): ConnectorKind
+}
+enum ConnectorKind [[http://www.eclipse.org/uml2/5.0.0/UML#//ConnectorKind]] {
+	assembly: assembly
+	delegation: delegation
+}
+class Generalization [[http://www.eclipse.org/uml2/5.0.0/UML#//Generalization]] {
+	isSubstitutable: Boolean
+}
+class GeneralizationSet [[http://www.eclipse.org/uml2/5.0.0/UML#//GeneralizationSet]] {
+	isCovering: Boolean
+	isDisjoint: Boolean
+	generalization_same_classifier(EDiagnosticChain diagnostics, EMap context): EBoolean
+	maps_to_generalization_set(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class RedefinableTemplateSignature [[http://www.eclipse.org/uml2/5.0.0/UML#//RedefinableTemplateSignature]] {
+	redefines_parents(EDiagnosticChain diagnostics, EMap context): EBoolean
+	getInheritedParameters(): TemplateParameter[]
+}
+class UseCase [[http://www.eclipse.org/uml2/5.0.0/UML#//UseCase]] {
+	binary_associations(EDiagnosticChain diagnostics, EMap context): EBoolean
+	no_association_to_use_case(EDiagnosticChain diagnostics, EMap context): EBoolean
+	cannot_include_self(EDiagnosticChain diagnostics, EMap context): EBoolean
+	must_have_name(EDiagnosticChain diagnostics, EMap context): EBoolean
+	allIncludedUseCases(): UseCase[]
+}
+class Extend [[http://www.eclipse.org/uml2/5.0.0/UML#//Extend]] {
+	extension_points(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class ExtensionPoint [[http://www.eclipse.org/uml2/5.0.0/UML#//ExtensionPoint]] {
+	must_have_name(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class Include [[http://www.eclipse.org/uml2/5.0.0/UML#//Include]] {
+}
+class Substitution [[http://www.eclipse.org/uml2/5.0.0/UML#//Substitution]] {
+}
+class Realization [[http://www.eclipse.org/uml2/5.0.0/UML#//Realization]] {
+}
+class ClassifierTemplateParameter [[http://www.eclipse.org/uml2/5.0.0/UML#//ClassifierTemplateParameter]] {
+	allowSubstitutable: Boolean
+	has_constraining_classifier(EDiagnosticChain diagnostics, EMap context): EBoolean
+	parametered_element_no_features(EDiagnosticChain diagnostics, EMap context): EBoolean
+	matching_abstract(EDiagnosticChain diagnostics, EMap context): EBoolean
+	actual_is_classifier(EDiagnosticChain diagnostics, EMap context): EBoolean
+	constraining_classifiers_constrain_args(EDiagnosticChain diagnostics, EMap context): EBoolean
+	constraining_classifiers_constrain_parametered_element(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class InterfaceRealization [[http://www.eclipse.org/uml2/5.0.0/UML#//InterfaceRealization]] {
+}
+abstract class EncapsulatedClassifier [[http://www.eclipse.org/uml2/5.0.0/UML#//EncapsulatedClassifier]] {
+	getOwnedPorts(): Port[]
+}
+abstract class ActivityGroup [[http://www.eclipse.org/uml2/5.0.0/UML#//ActivityGroup]] {
+	nodes_and_edges(EDiagnosticChain diagnostics, EMap context): EBoolean
+	not_contained(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+abstract class ActivityEdge [[http://www.eclipse.org/uml2/5.0.0/UML#//ActivityEdge]] {
+	source_and_target(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class ActivityPartition [[http://www.eclipse.org/uml2/5.0.0/UML#//ActivityPartition]] {
+	isDimension: Boolean
+	isExternal: Boolean
+	represents_classifier(EDiagnosticChain diagnostics, EMap context): EBoolean
+	represents_property_and_is_contained(EDiagnosticChain diagnostics, EMap context): EBoolean
+	represents_property(EDiagnosticChain diagnostics, EMap context): EBoolean
+	dimension_not_contained(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+abstract class ActivityNode [[http://www.eclipse.org/uml2/5.0.0/UML#//ActivityNode]] {
+}
+class InterruptibleActivityRegion [[http://www.eclipse.org/uml2/5.0.0/UML#//InterruptibleActivityRegion]] {
+	interrupting_edges(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class StructuredActivityNode [[http://www.eclipse.org/uml2/5.0.0/UML#//StructuredActivityNode]] {
+	mustIsolate: Boolean
+	output_pin_edges(EDiagnosticChain diagnostics, EMap context): EBoolean
+	edges(EDiagnosticChain diagnostics, EMap context): EBoolean
+	input_pin_edges(EDiagnosticChain diagnostics, EMap context): EBoolean
+	sourceNodes(): ActivityNode[]
+	targetNodes(): ActivityNode[]
+}
+abstract class Action [[http://www.eclipse.org/uml2/5.0.0/UML#//Action]] {
+	isLocallyReentrant: Boolean
+	getContext(): Classifier
+	allActions(): Action[]
+	allOwnedNodes(): ActivityNode[]
+	containingBehavior(): Behavior
+}
+abstract class ExecutableNode [[http://www.eclipse.org/uml2/5.0.0/UML#//ExecutableNode]] {
+}
+class ExceptionHandler [[http://www.eclipse.org/uml2/5.0.0/UML#//ExceptionHandler]] {
+	handler_body_edges(EDiagnosticChain diagnostics, EMap context): EBoolean
+	output_pins(EDiagnosticChain diagnostics, EMap context): EBoolean
+	one_input(EDiagnosticChain diagnostics, EMap context): EBoolean
+	edge_source_target(EDiagnosticChain diagnostics, EMap context): EBoolean
+	handler_body_owner(EDiagnosticChain diagnostics, EMap context): EBoolean
+	exception_input_type(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+abstract class ObjectNode [[http://www.eclipse.org/uml2/5.0.0/UML#//ObjectNode]] {
+	isControlType: Boolean
+	ordering: ObjectNodeOrderingKind
+	input_output_parameter(EDiagnosticChain diagnostics, EMap context): EBoolean
+	selection_behavior(EDiagnosticChain diagnostics, EMap context): EBoolean
+	object_flow_edges(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+enum ObjectNodeOrderingKind [[http://www.eclipse.org/uml2/5.0.0/UML#//ObjectNodeOrderingKind]] {
+	unordered: unordered
+	ordered: ordered
+	LIFO: LIFO
+	FIFO: FIFO
+}
+class InputPin [[http://www.eclipse.org/uml2/5.0.0/UML#//InputPin]] {
+	outgoing_edges_structured_only(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+abstract class Pin [[http://www.eclipse.org/uml2/5.0.0/UML#//Pin]] {
+	isControl: Boolean
+	control_pins(EDiagnosticChain diagnostics, EMap context): EBoolean
+	not_unique(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class OutputPin [[http://www.eclipse.org/uml2/5.0.0/UML#//OutputPin]] {
+	incoming_edges_structured_only(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class Variable [[http://www.eclipse.org/uml2/5.0.0/UML#//Variable]] {
+	isAccessibleBy(Action a): Boolean
+}
+class ValueSpecificationAction [[http://www.eclipse.org/uml2/5.0.0/UML#//ValueSpecificationAction]] {
+	multiplicity(EDiagnosticChain diagnostics, EMap context): EBoolean
+	compatible_type(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+abstract class VariableAction [[http://www.eclipse.org/uml2/5.0.0/UML#//VariableAction]] {
+	scope_of_variable(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+abstract class WriteLinkAction [[http://www.eclipse.org/uml2/5.0.0/UML#//WriteLinkAction]] {
+	allow_access(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+abstract class LinkAction [[http://www.eclipse.org/uml2/5.0.0/UML#//LinkAction]] {
+	same_pins(EDiagnosticChain diagnostics, EMap context): EBoolean
+	same_association(EDiagnosticChain diagnostics, EMap context): EBoolean
+	not_static(EDiagnosticChain diagnostics, EMap context): EBoolean
+	association(): Association
+}
+class LinkEndData [[http://www.eclipse.org/uml2/5.0.0/UML#//LinkEndData]] {
+	same_type(EDiagnosticChain diagnostics, EMap context): EBoolean
+	multiplicity(EDiagnosticChain diagnostics, EMap context): EBoolean
+	end_object_input_pin(EDiagnosticChain diagnostics, EMap context): EBoolean
+	property_is_association_end(EDiagnosticChain diagnostics, EMap context): EBoolean
+	qualifiers(EDiagnosticChain diagnostics, EMap context): EBoolean
+	allPins(): InputPin[]
+}
+class QualifierValue [[http://www.eclipse.org/uml2/5.0.0/UML#//QualifierValue]] {
+	multiplicity_of_qualifier(EDiagnosticChain diagnostics, EMap context): EBoolean
+	type_of_qualifier(EDiagnosticChain diagnostics, EMap context): EBoolean
+	qualifier_attribute(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+abstract class WriteStructuralFeatureAction [[http://www.eclipse.org/uml2/5.0.0/UML#//WriteStructuralFeatureAction]] {
+	multiplicity_of_result(EDiagnosticChain diagnostics, EMap context): EBoolean
+	type_of_value(EDiagnosticChain diagnostics, EMap context): EBoolean
+	multiplicity_of_value(EDiagnosticChain diagnostics, EMap context): EBoolean
+	type_of_result(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+abstract class StructuralFeatureAction [[http://www.eclipse.org/uml2/5.0.0/UML#//StructuralFeatureAction]] {
+	multiplicity(EDiagnosticChain diagnostics, EMap context): EBoolean
+	object_type(EDiagnosticChain diagnostics, EMap context): EBoolean
+	visibility(EDiagnosticChain diagnostics, EMap context): EBoolean
+	not_static(EDiagnosticChain diagnostics, EMap context): EBoolean
+	one_featuring_classifier(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+abstract class WriteVariableAction [[http://www.eclipse.org/uml2/5.0.0/UML#//WriteVariableAction]] {
+	value_type(EDiagnosticChain diagnostics, EMap context): EBoolean
+	multiplicity(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+enum ExpansionKind [[http://www.eclipse.org/uml2/5.0.0/UML#//ExpansionKind]] {
+	parallel: parallel
+	iterative: iterative
+	stream: stream
+}
+class AcceptCallAction [[http://www.eclipse.org/uml2/5.0.0/UML#//AcceptCallAction]] {
+	result_pins(EDiagnosticChain diagnostics, EMap context): EBoolean
+	trigger_call_event(EDiagnosticChain diagnostics, EMap context): EBoolean
+	unmarshall(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class AcceptEventAction [[http://www.eclipse.org/uml2/5.0.0/UML#//AcceptEventAction]] {
+	isUnmarshall: Boolean
+	one_output_pin(EDiagnosticChain diagnostics, EMap context): EBoolean
+	no_input_pins(EDiagnosticChain diagnostics, EMap context): EBoolean
+	no_output_pins(EDiagnosticChain diagnostics, EMap context): EBoolean
+	unmarshall_signal_events(EDiagnosticChain diagnostics, EMap context): EBoolean
+	conforming_type(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class ActionInputPin [[http://www.eclipse.org/uml2/5.0.0/UML#//ActionInputPin]] {
+	input_pin(EDiagnosticChain diagnostics, EMap context): EBoolean
+	one_output_pin(EDiagnosticChain diagnostics, EMap context): EBoolean
+	no_control_or_object_flow(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class AddStructuralFeatureValueAction [[http://www.eclipse.org/uml2/5.0.0/UML#//AddStructuralFeatureValueAction]] {
+	isReplaceAll: Boolean
+	required_value(EDiagnosticChain diagnostics, EMap context): EBoolean
+	insertAt_pin(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class AddVariableValueAction [[http://www.eclipse.org/uml2/5.0.0/UML#//AddVariableValueAction]] {
+	isReplaceAll: Boolean
+	required_value(EDiagnosticChain diagnostics, EMap context): EBoolean
+	insertAt_pin(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class BroadcastSignalAction [[http://www.eclipse.org/uml2/5.0.0/UML#//BroadcastSignalAction]] {
+	number_of_arguments(EDiagnosticChain diagnostics, EMap context): EBoolean
+	type_ordering_multiplicity(EDiagnosticChain diagnostics, EMap context): EBoolean
+	no_onport(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+abstract class InvocationAction [[http://www.eclipse.org/uml2/5.0.0/UML#//InvocationAction]] {
+}
+abstract class CallAction [[http://www.eclipse.org/uml2/5.0.0/UML#//CallAction]] {
+	isSynchronous: Boolean
+	argument_pins(EDiagnosticChain diagnostics, EMap context): EBoolean
+	result_pins(EDiagnosticChain diagnostics, EMap context): EBoolean
+	synchronous_call(EDiagnosticChain diagnostics, EMap context): EBoolean
+	inputParameters(): Parameter[]
+	outputParameters(): Parameter[]
+}
+class CallBehaviorAction [[http://www.eclipse.org/uml2/5.0.0/UML#//CallBehaviorAction]] {
+	no_onport(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class CallOperationAction [[http://www.eclipse.org/uml2/5.0.0/UML#//CallOperationAction]] {
+	type_target_pin(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class Clause [[http://www.eclipse.org/uml2/5.0.0/UML#//Clause]] {
+	body_output_pins(EDiagnosticChain diagnostics, EMap context): EBoolean
+	decider_output(EDiagnosticChain diagnostics, EMap context): EBoolean
+	test_and_body(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class ClearAssociationAction [[http://www.eclipse.org/uml2/5.0.0/UML#//ClearAssociationAction]] {
+	multiplicity(EDiagnosticChain diagnostics, EMap context): EBoolean
+	same_type(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class ClearStructuralFeatureAction [[http://www.eclipse.org/uml2/5.0.0/UML#//ClearStructuralFeatureAction]] {
+	type_of_result(EDiagnosticChain diagnostics, EMap context): EBoolean
+	multiplicity_of_result(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class ClearVariableAction [[http://www.eclipse.org/uml2/5.0.0/UML#//ClearVariableAction]] {
+}
+class ConditionalNode [[http://www.eclipse.org/uml2/5.0.0/UML#//ConditionalNode]] {
+	isAssured: Boolean
+	isDeterminate: Boolean
+	result_no_incoming(EDiagnosticChain diagnostics, EMap context): EBoolean
+	no_input_pins(EDiagnosticChain diagnostics, EMap context): EBoolean
+	one_clause_with_executable_node(EDiagnosticChain diagnostics, EMap context): EBoolean
+	matching_output_pins(EDiagnosticChain diagnostics, EMap context): EBoolean
+	executable_nodes(EDiagnosticChain diagnostics, EMap context): EBoolean
+	clause_no_predecessor(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class CreateLinkAction [[http://www.eclipse.org/uml2/5.0.0/UML#//CreateLinkAction]] {
+	association_not_abstract(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class LinkEndCreationData [[http://www.eclipse.org/uml2/5.0.0/UML#//LinkEndCreationData]] {
+	isReplaceAll: Boolean
+	insertAt_pin(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class CreateLinkObjectAction [[http://www.eclipse.org/uml2/5.0.0/UML#//CreateLinkObjectAction]] {
+	multiplicity(EDiagnosticChain diagnostics, EMap context): EBoolean
+	type_of_result(EDiagnosticChain diagnostics, EMap context): EBoolean
+	association_class(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class CreateObjectAction [[http://www.eclipse.org/uml2/5.0.0/UML#//CreateObjectAction]] {
+	classifier_not_abstract(EDiagnosticChain diagnostics, EMap context): EBoolean
+	multiplicity(EDiagnosticChain diagnostics, EMap context): EBoolean
+	classifier_not_association_class(EDiagnosticChain diagnostics, EMap context): EBoolean
+	same_type(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class DestroyLinkAction [[http://www.eclipse.org/uml2/5.0.0/UML#//DestroyLinkAction]] {
+}
+class LinkEndDestructionData [[http://www.eclipse.org/uml2/5.0.0/UML#//LinkEndDestructionData]] {
+	isDestroyDuplicates: Boolean
+	destroyAt_pin(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class DestroyObjectAction [[http://www.eclipse.org/uml2/5.0.0/UML#//DestroyObjectAction]] {
+	isDestroyLinks: Boolean
+	isDestroyOwnedObjects: Boolean
+	multiplicity(EDiagnosticChain diagnostics, EMap context): EBoolean
+	no_type(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class ExpansionNode [[http://www.eclipse.org/uml2/5.0.0/UML#//ExpansionNode]] {
+	region_as_input_or_output(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class ExpansionRegion [[http://www.eclipse.org/uml2/5.0.0/UML#//ExpansionRegion]] {
+	mode: ExpansionKind
+}
+class LoopNode [[http://www.eclipse.org/uml2/5.0.0/UML#//LoopNode]] {
+	isTestedFirst: Boolean
+	result_no_incoming(EDiagnosticChain diagnostics, EMap context): EBoolean
+	input_edges(EDiagnosticChain diagnostics, EMap context): EBoolean
+	executable_nodes(EDiagnosticChain diagnostics, EMap context): EBoolean
+	body_output_pins(EDiagnosticChain diagnostics, EMap context): EBoolean
+	setup_test_and_body(EDiagnosticChain diagnostics, EMap context): EBoolean
+	matching_output_pins(EDiagnosticChain diagnostics, EMap context): EBoolean
+	matching_loop_variables(EDiagnosticChain diagnostics, EMap context): EBoolean
+	matching_result_pins(EDiagnosticChain diagnostics, EMap context): EBoolean
+	loop_variable_outgoing(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class OpaqueAction [[http://www.eclipse.org/uml2/5.0.0/UML#//OpaqueAction]] {
+	body: String[]
+	language: String[]
+	language_body_size(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class RaiseExceptionAction [[http://www.eclipse.org/uml2/5.0.0/UML#//RaiseExceptionAction]] {
+}
+class ReadExtentAction [[http://www.eclipse.org/uml2/5.0.0/UML#//ReadExtentAction]] {
+	type_is_classifier(EDiagnosticChain diagnostics, EMap context): EBoolean
+	multiplicity_of_result(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class ReadIsClassifiedObjectAction [[http://www.eclipse.org/uml2/5.0.0/UML#//ReadIsClassifiedObjectAction]] {
+	isDirect: Boolean
+	no_type(EDiagnosticChain diagnostics, EMap context): EBoolean
+	multiplicity_of_output(EDiagnosticChain diagnostics, EMap context): EBoolean
+	boolean_result(EDiagnosticChain diagnostics, EMap context): EBoolean
+	multiplicity_of_input(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class ReadLinkAction [[http://www.eclipse.org/uml2/5.0.0/UML#//ReadLinkAction]] {
+	type_and_ordering(EDiagnosticChain diagnostics, EMap context): EBoolean
+	compatible_multiplicity(EDiagnosticChain diagnostics, EMap context): EBoolean
+	visibility(EDiagnosticChain diagnostics, EMap context): EBoolean
+	one_open_end(EDiagnosticChain diagnostics, EMap context): EBoolean
+	navigable_open_end(EDiagnosticChain diagnostics, EMap context): EBoolean
+	openEnd(): Property[]
+}
+class ReadLinkObjectEndAction [[http://www.eclipse.org/uml2/5.0.0/UML#//ReadLinkObjectEndAction]] {
+	property(EDiagnosticChain diagnostics, EMap context): EBoolean
+	multiplicity_of_object(EDiagnosticChain diagnostics, EMap context): EBoolean
+	ends_of_association(EDiagnosticChain diagnostics, EMap context): EBoolean
+	type_of_result(EDiagnosticChain diagnostics, EMap context): EBoolean
+	multiplicity_of_result(EDiagnosticChain diagnostics, EMap context): EBoolean
+	type_of_object(EDiagnosticChain diagnostics, EMap context): EBoolean
+	association_of_association(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class ReadLinkObjectEndQualifierAction [[http://www.eclipse.org/uml2/5.0.0/UML#//ReadLinkObjectEndQualifierAction]] {
+	multiplicity_of_object(EDiagnosticChain diagnostics, EMap context): EBoolean
+	type_of_object(EDiagnosticChain diagnostics, EMap context): EBoolean
+	multiplicity_of_qualifier(EDiagnosticChain diagnostics, EMap context): EBoolean
+	ends_of_association(EDiagnosticChain diagnostics, EMap context): EBoolean
+	multiplicity_of_result(EDiagnosticChain diagnostics, EMap context): EBoolean
+	same_type(EDiagnosticChain diagnostics, EMap context): EBoolean
+	association_of_association(EDiagnosticChain diagnostics, EMap context): EBoolean
+	qualifier_attribute(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class ReadSelfAction [[http://www.eclipse.org/uml2/5.0.0/UML#//ReadSelfAction]] {
+	contained(EDiagnosticChain diagnostics, EMap context): EBoolean
+	multiplicity(EDiagnosticChain diagnostics, EMap context): EBoolean
+	not_static(EDiagnosticChain diagnostics, EMap context): EBoolean
+	type(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class ReadStructuralFeatureAction [[http://www.eclipse.org/uml2/5.0.0/UML#//ReadStructuralFeatureAction]] {
+	type_and_ordering(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class ReadVariableAction [[http://www.eclipse.org/uml2/5.0.0/UML#//ReadVariableAction]] {
+	type_and_ordering(EDiagnosticChain diagnostics, EMap context): EBoolean
+	compatible_multiplicity(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class ReclassifyObjectAction [[http://www.eclipse.org/uml2/5.0.0/UML#//ReclassifyObjectAction]] {
+	isReplaceAll: Boolean
+	input_pin(EDiagnosticChain diagnostics, EMap context): EBoolean
+	classifier_not_abstract(EDiagnosticChain diagnostics, EMap context): EBoolean
+	multiplicity(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class ReduceAction [[http://www.eclipse.org/uml2/5.0.0/UML#//ReduceAction]] {
+	isOrdered: Boolean
+	reducer_inputs_output(EDiagnosticChain diagnostics, EMap context): EBoolean
+	input_type_is_collection(EDiagnosticChain diagnostics, EMap context): EBoolean
+	output_types_are_compatible(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class RemoveStructuralFeatureValueAction [[http://www.eclipse.org/uml2/5.0.0/UML#//RemoveStructuralFeatureValueAction]] {
+	isRemoveDuplicates: Boolean
+	removeAt_and_value(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class RemoveVariableValueAction [[http://www.eclipse.org/uml2/5.0.0/UML#//RemoveVariableValueAction]] {
+	isRemoveDuplicates: Boolean
+	removeAt_and_value(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class ReplyAction [[http://www.eclipse.org/uml2/5.0.0/UML#//ReplyAction]] {
+	pins_match_parameter(EDiagnosticChain diagnostics, EMap context): EBoolean
+	event_on_reply_to_call_trigger(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class SendObjectAction [[http://www.eclipse.org/uml2/5.0.0/UML#//SendObjectAction]] {
+	type_target_pin(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class SendSignalAction [[http://www.eclipse.org/uml2/5.0.0/UML#//SendSignalAction]] {
+	type_ordering_multiplicity(EDiagnosticChain diagnostics, EMap context): EBoolean
+	number_order(EDiagnosticChain diagnostics, EMap context): EBoolean
+	type_target_pin(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class SequenceNode [[http://www.eclipse.org/uml2/5.0.0/UML#//SequenceNode]] {
+}
+class StartClassifierBehaviorAction [[http://www.eclipse.org/uml2/5.0.0/UML#//StartClassifierBehaviorAction]] {
+	multiplicity(EDiagnosticChain diagnostics, EMap context): EBoolean
+	type_has_classifier(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class StartObjectBehaviorAction [[http://www.eclipse.org/uml2/5.0.0/UML#//StartObjectBehaviorAction]] {
+	multiplicity_of_object(EDiagnosticChain diagnostics, EMap context): EBoolean
+	type_of_object(EDiagnosticChain diagnostics, EMap context): EBoolean
+	no_onport(EDiagnosticChain diagnostics, EMap context): EBoolean
+	behavior(): Behavior
+}
+class TestIdentityAction [[http://www.eclipse.org/uml2/5.0.0/UML#//TestIdentityAction]] {
+	multiplicity(EDiagnosticChain diagnostics, EMap context): EBoolean
+	no_type(EDiagnosticChain diagnostics, EMap context): EBoolean
+	result_is_boolean(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class UnmarshallAction [[http://www.eclipse.org/uml2/5.0.0/UML#//UnmarshallAction]] {
+	structural_feature(EDiagnosticChain diagnostics, EMap context): EBoolean
+	number_of_result(EDiagnosticChain diagnostics, EMap context): EBoolean
+	type_ordering_and_multiplicity(EDiagnosticChain diagnostics, EMap context): EBoolean
+	multiplicity_of_object(EDiagnosticChain diagnostics, EMap context): EBoolean
+	object_type(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class ValuePin [[http://www.eclipse.org/uml2/5.0.0/UML#//ValuePin]] {
+	no_incoming_edges(EDiagnosticChain diagnostics, EMap context): EBoolean
+	compatible_type(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class ActivityFinalNode [[http://www.eclipse.org/uml2/5.0.0/UML#//ActivityFinalNode]] {
+}
+abstract class FinalNode [[http://www.eclipse.org/uml2/5.0.0/UML#//FinalNode]] {
+	no_outgoing_edges(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+abstract class ControlNode [[http://www.eclipse.org/uml2/5.0.0/UML#//ControlNode]] {
+}
+class ActivityParameterNode [[http://www.eclipse.org/uml2/5.0.0/UML#//ActivityParameterNode]] {
+	no_outgoing_edges(EDiagnosticChain diagnostics, EMap context): EBoolean
+	has_parameters(EDiagnosticChain diagnostics, EMap context): EBoolean
+	same_type(EDiagnosticChain diagnostics, EMap context): EBoolean
+	no_incoming_edges(EDiagnosticChain diagnostics, EMap context): EBoolean
+	no_edges(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class CentralBufferNode [[http://www.eclipse.org/uml2/5.0.0/UML#//CentralBufferNode]] {
+}
+class ControlFlow [[http://www.eclipse.org/uml2/5.0.0/UML#//ControlFlow]] {
+	object_nodes(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class DataStoreNode [[http://www.eclipse.org/uml2/5.0.0/UML#//DataStoreNode]] {
+}
+class DecisionNode [[http://www.eclipse.org/uml2/5.0.0/UML#//DecisionNode]] {
+	zero_input_parameters(EDiagnosticChain diagnostics, EMap context): EBoolean
+	edges(EDiagnosticChain diagnostics, EMap context): EBoolean
+	decision_input_flow_incoming(EDiagnosticChain diagnostics, EMap context): EBoolean
+	two_input_parameters(EDiagnosticChain diagnostics, EMap context): EBoolean
+	incoming_outgoing_edges(EDiagnosticChain diagnostics, EMap context): EBoolean
+	incoming_control_one_input_parameter(EDiagnosticChain diagnostics, EMap context): EBoolean
+	parameters(EDiagnosticChain diagnostics, EMap context): EBoolean
+	incoming_object_one_input_parameter(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class ObjectFlow [[http://www.eclipse.org/uml2/5.0.0/UML#//ObjectFlow]] {
+	isMulticast: Boolean
+	isMultireceive: Boolean
+	input_and_output_parameter(EDiagnosticChain diagnostics, EMap context): EBoolean
+	no_executable_nodes(EDiagnosticChain diagnostics, EMap context): EBoolean
+	transformation_behavior(EDiagnosticChain diagnostics, EMap context): EBoolean
+	selection_behavior(EDiagnosticChain diagnostics, EMap context): EBoolean
+	compatible_types(EDiagnosticChain diagnostics, EMap context): EBoolean
+	same_upper_bounds(EDiagnosticChain diagnostics, EMap context): EBoolean
+	target(EDiagnosticChain diagnostics, EMap context): EBoolean
+	is_multicast_or_is_multireceive(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class FlowFinalNode [[http://www.eclipse.org/uml2/5.0.0/UML#//FlowFinalNode]] {
+}
+class ForkNode [[http://www.eclipse.org/uml2/5.0.0/UML#//ForkNode]] {
+	edges(EDiagnosticChain diagnostics, EMap context): EBoolean
+	one_incoming_edge(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class InitialNode [[http://www.eclipse.org/uml2/5.0.0/UML#//InitialNode]] {
+	no_incoming_edges(EDiagnosticChain diagnostics, EMap context): EBoolean
+	control_edges(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class JoinNode [[http://www.eclipse.org/uml2/5.0.0/UML#//JoinNode]] {
+	isCombineDuplicate: Boolean
+	one_outgoing_edge(EDiagnosticChain diagnostics, EMap context): EBoolean
+	incoming_object_flow(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class MergeNode [[http://www.eclipse.org/uml2/5.0.0/UML#//MergeNode]] {
+	one_outgoing_edge(EDiagnosticChain diagnostics, EMap context): EBoolean
+	edges(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class InstanceValue [[http://www.eclipse.org/uml2/5.0.0/UML#//InstanceValue]] {
+}
+class AnyReceiveEvent [[http://www.eclipse.org/uml2/5.0.0/UML#//AnyReceiveEvent]] {
+}
+abstract class MessageEvent [[http://www.eclipse.org/uml2/5.0.0/UML#//MessageEvent]] {
+}
+class CallEvent [[http://www.eclipse.org/uml2/5.0.0/UML#//CallEvent]] {
+}
+class ChangeEvent [[http://www.eclipse.org/uml2/5.0.0/UML#//ChangeEvent]] {
+}
+class FunctionBehavior [[http://www.eclipse.org/uml2/5.0.0/UML#//FunctionBehavior]] {
+	one_output_parameter(EDiagnosticChain diagnostics, EMap context): EBoolean
+	types_of_parameters(EDiagnosticChain diagnostics, EMap context): EBoolean
+	hasAllDataTypeAttributes(DataType d): Boolean
+}
+class OpaqueBehavior [[http://www.eclipse.org/uml2/5.0.0/UML#//OpaqueBehavior]] {
+	body: String[]
+	language: String[]
+}
+class SignalEvent [[http://www.eclipse.org/uml2/5.0.0/UML#//SignalEvent]] {
+}
+class TimeEvent [[http://www.eclipse.org/uml2/5.0.0/UML#//TimeEvent]] {
+	isRelative: Boolean
+	when_non_negative(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class TimeExpression [[http://www.eclipse.org/uml2/5.0.0/UML#//TimeExpression]] {
+	no_expr_requires_observation(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+abstract class Observation [[http://www.eclipse.org/uml2/5.0.0/UML#//Observation]] {
+}
+class CommunicationPath [[http://www.eclipse.org/uml2/5.0.0/UML#//CommunicationPath]] {
+}
+class Device [[http://www.eclipse.org/uml2/5.0.0/UML#//Device]] {
+}
+class Node [[http://www.eclipse.org/uml2/5.0.0/UML#//Node]] {
+	internal_structure(EDiagnosticChain diagnostics, EMap context): EBoolean
+	createCommunicationPath(Boolean end1IsNavigable, AggregationKind end1Aggregation, String end1Name, Integer end1Lower, UnlimitedNatural end1Upper, Node end1Node, Boolean end2IsNavigable, AggregationKind end2Aggregation, String end2Name, Integer end2Lower, UnlimitedNatural end2Upper): CommunicationPath
+	getCommunicationPaths(): CommunicationPath[]
+}
+class ExecutionEnvironment [[http://www.eclipse.org/uml2/5.0.0/UML#//ExecutionEnvironment]] {
+}
+class InformationFlow [[http://www.eclipse.org/uml2/5.0.0/UML#//InformationFlow]] {
+	must_conform(EDiagnosticChain diagnostics, EMap context): EBoolean
+	sources_and_targets_kind(EDiagnosticChain diagnostics, EMap context): EBoolean
+	convey_classifiers(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class Message [[http://www.eclipse.org/uml2/5.0.0/UML#//Message]] {
+	/ messageKind: MessageKind
+	messageSort: MessageSort
+	sending_receiving_message_event(EDiagnosticChain diagnostics, EMap context): EBoolean
+	arguments(EDiagnosticChain diagnostics, EMap context): EBoolean
+	cannot_cross_boundaries(EDiagnosticChain diagnostics, EMap context): EBoolean
+	signature_is_signal(EDiagnosticChain diagnostics, EMap context): EBoolean
+	occurrence_specifications(EDiagnosticChain diagnostics, EMap context): EBoolean
+	signature_refer_to(EDiagnosticChain diagnostics, EMap context): EBoolean
+	signature_is_operation_request(EDiagnosticChain diagnostics, EMap context): EBoolean
+	signature_is_operation_reply(EDiagnosticChain diagnostics, EMap context): EBoolean
+	getMessageKind(): MessageKind
+}
+class Interaction [[http://www.eclipse.org/uml2/5.0.0/UML#//Interaction]] {
+	not_contained(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+abstract class InteractionFragment [[http://www.eclipse.org/uml2/5.0.0/UML#//InteractionFragment]] {
+}
+class Lifeline [[http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline]] {
+	selector_specified(EDiagnosticChain diagnostics, EMap context): EBoolean
+	interaction_uses_share_lifeline(EDiagnosticChain diagnostics, EMap context): EBoolean
+	same_classifier(EDiagnosticChain diagnostics, EMap context): EBoolean
+	selector_int_or_string(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class PartDecomposition [[http://www.eclipse.org/uml2/5.0.0/UML#//PartDecomposition]] {
+	commutativity_of_decomposition(EDiagnosticChain diagnostics, EMap context): EBoolean
+	assume(EDiagnosticChain diagnostics, EMap context): EBoolean
+	parts_of_internal_structures(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class InteractionUse [[http://www.eclipse.org/uml2/5.0.0/UML#//InteractionUse]] {
+	gates_match(EDiagnosticChain diagnostics, EMap context): EBoolean
+	arguments_are_constants(EDiagnosticChain diagnostics, EMap context): EBoolean
+	returnValueRecipient_coverage(EDiagnosticChain diagnostics, EMap context): EBoolean
+	arguments_correspond_to_parameters(EDiagnosticChain diagnostics, EMap context): EBoolean
+	returnValue_type_recipient_correspondence(EDiagnosticChain diagnostics, EMap context): EBoolean
+	all_lifelines(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class Gate [[http://www.eclipse.org/uml2/5.0.0/UML#//Gate]] {
+	actual_gate_matched(EDiagnosticChain diagnostics, EMap context): EBoolean
+	inside_cf_matched(EDiagnosticChain diagnostics, EMap context): EBoolean
+	outside_cf_matched(EDiagnosticChain diagnostics, EMap context): EBoolean
+	formal_gate_distinguishable(EDiagnosticChain diagnostics, EMap context): EBoolean
+	actual_gate_distinguishable(EDiagnosticChain diagnostics, EMap context): EBoolean
+	outside_cf_gate_distinguishable(EDiagnosticChain diagnostics, EMap context): EBoolean
+	inside_cf_gate_distinguishable(EDiagnosticChain diagnostics, EMap context): EBoolean
+	isOutsideCF(): Boolean
+	isInsideCF(): Boolean
+	isActual(): Boolean
+	isFormal(): Boolean
+	getName(): String
+	matches(Gate gateToMatch): Boolean
+	getOperand(): InteractionOperand
+}
+abstract class MessageEnd [[http://www.eclipse.org/uml2/5.0.0/UML#//MessageEnd]] {
+	oppositeEnd(): MessageEnd[]
+	isSend(): Boolean
+	isReceive(): Boolean
+	enclosingFragment(): InteractionFragment[]
+}
+class InteractionOperand [[http://www.eclipse.org/uml2/5.0.0/UML#//InteractionOperand]] {
+	guard_contain_references(EDiagnosticChain diagnostics, EMap context): EBoolean
+	guard_directly_prior(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class InteractionConstraint [[http://www.eclipse.org/uml2/5.0.0/UML#//InteractionConstraint]] {
+	minint_maxint(EDiagnosticChain diagnostics, EMap context): EBoolean
+	minint_non_negative(EDiagnosticChain diagnostics, EMap context): EBoolean
+	maxint_positive(EDiagnosticChain diagnostics, EMap context): EBoolean
+	dynamic_variables(EDiagnosticChain diagnostics, EMap context): EBoolean
+	global_data(EDiagnosticChain diagnostics, EMap context): EBoolean
+	maxint_greater_equal_minint(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class GeneralOrdering [[http://www.eclipse.org/uml2/5.0.0/UML#//GeneralOrdering]] {
+	irreflexive_transitive_closure(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class OccurrenceSpecification [[http://www.eclipse.org/uml2/5.0.0/UML#//OccurrenceSpecification]] {
+	getCovered(): Lifeline
+	setCovered(Lifeline value): void
+}
+enum MessageKind [[http://www.eclipse.org/uml2/5.0.0/UML#//MessageKind]] {
+	complete: complete
+	lost: lost
+	found: found
+	unknown: unknown
+}
+enum MessageSort [[http://www.eclipse.org/uml2/5.0.0/UML#//MessageSort]] {
+	synchCall: synchCall
+	asynchCall: asynchCall
+	asynchSignal: asynchSignal
+	createMessage: createMessage
+	deleteMessage: deleteMessage
+	reply: reply
+}
+class InformationItem [[http://www.eclipse.org/uml2/5.0.0/UML#//InformationItem]] {
+	sources_and_targets(EDiagnosticChain diagnostics, EMap context): EBoolean
+	has_no(EDiagnosticChain diagnostics, EMap context): EBoolean
+	not_instantiable(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class ActionExecutionSpecification [[http://www.eclipse.org/uml2/5.0.0/UML#//ActionExecutionSpecification]] {
+	action_referenced(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+abstract class ExecutionSpecification [[http://www.eclipse.org/uml2/5.0.0/UML#//ExecutionSpecification]] {
+	same_lifeline(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class BehaviorExecutionSpecification [[http://www.eclipse.org/uml2/5.0.0/UML#//BehaviorExecutionSpecification]] {
+}
+class CombinedFragment [[http://www.eclipse.org/uml2/5.0.0/UML#//CombinedFragment]] {
+	interactionOperator: InteractionOperatorKind
+	break(EDiagnosticChain diagnostics, EMap context): EBoolean
+	consider_and_ignore(EDiagnosticChain diagnostics, EMap context): EBoolean
+	opt_loop_break_neg(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+enum InteractionOperatorKind [[http://www.eclipse.org/uml2/5.0.0/UML#//InteractionOperatorKind]] {
+	seq: seq
+	alt: alt
+	opt: opt
+	break: break
+	par: par
+	strict: strict
+	loop: loop
+	critical: critical
+	neg: neg
+	assert: assert
+	ignore: ignore
+	consider: consider
+}
+class ConsiderIgnoreFragment [[http://www.eclipse.org/uml2/5.0.0/UML#//ConsiderIgnoreFragment]] {
+	consider_or_ignore(EDiagnosticChain diagnostics, EMap context): EBoolean
+	type(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class Continuation [[http://www.eclipse.org/uml2/5.0.0/UML#//Continuation]] {
+	setting: Boolean
+	first_or_last_interaction_fragment(EDiagnosticChain diagnostics, EMap context): EBoolean
+	same_name(EDiagnosticChain diagnostics, EMap context): EBoolean
+	global(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class DestructionOccurrenceSpecification [[http://www.eclipse.org/uml2/5.0.0/UML#//DestructionOccurrenceSpecification]] {
+	no_occurrence_specifications_below(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class MessageOccurrenceSpecification [[http://www.eclipse.org/uml2/5.0.0/UML#//MessageOccurrenceSpecification]] {
+}
+class ExecutionOccurrenceSpecification [[http://www.eclipse.org/uml2/5.0.0/UML#//ExecutionOccurrenceSpecification]] {
+}
+class StateInvariant [[http://www.eclipse.org/uml2/5.0.0/UML#//StateInvariant]] {
+}
+class FinalState [[http://www.eclipse.org/uml2/5.0.0/UML#//FinalState]] {
+	no_exit_behavior(EDiagnosticChain diagnostics, EMap context): EBoolean
+	no_outgoing_transitions(EDiagnosticChain diagnostics, EMap context): EBoolean
+	no_regions(EDiagnosticChain diagnostics, EMap context): EBoolean
+	cannot_reference_submachine(EDiagnosticChain diagnostics, EMap context): EBoolean
+	no_entry_behavior(EDiagnosticChain diagnostics, EMap context): EBoolean
+	no_state_behavior(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class ProtocolTransition [[http://www.eclipse.org/uml2/5.0.0/UML#//ProtocolTransition]] {
+	refers_to_operation(EDiagnosticChain diagnostics, EMap context): EBoolean
+	associated_actions(EDiagnosticChain diagnostics, EMap context): EBoolean
+	belongs_to_psm(EDiagnosticChain diagnostics, EMap context): EBoolean
+	getReferreds(): Operation[]
+}
+class AssociationClass [[http://www.eclipse.org/uml2/5.0.0/UML#//AssociationClass]] {
+	cannot_be_defined(EDiagnosticChain diagnostics, EMap context): EBoolean
+	disjoint_attributes_ends(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class Component [[http://www.eclipse.org/uml2/5.0.0/UML#//Component]] {
+	isIndirectlyInstantiated: Boolean
+	no_nested_classifiers(EDiagnosticChain diagnostics, EMap context): EBoolean
+	no_packaged_elements(EDiagnosticChain diagnostics, EMap context): EBoolean
+	createOwnedClass(String name, Boolean isAbstract): Class
+	createOwnedEnumeration(String name): Enumeration
+	createOwnedInterface(String name): Interface
+	createOwnedPrimitiveType(String name): PrimitiveType
+	getProvideds(): Interface[]
+	getRequireds(): Interface[]
+}
+class ComponentRealization [[http://www.eclipse.org/uml2/5.0.0/UML#//ComponentRealization]] {
+}
+class Actor [[http://www.eclipse.org/uml2/5.0.0/UML#//Actor]] {
+	associations(EDiagnosticChain diagnostics, EMap context): EBoolean
+	must_have_name(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class Duration [[http://www.eclipse.org/uml2/5.0.0/UML#//Duration]] {
+	no_expr_requires_observation(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class DurationConstraint [[http://www.eclipse.org/uml2/5.0.0/UML#//DurationConstraint]] {
+	firstEvent: Boolean[]
+	first_event_multiplicity(EDiagnosticChain diagnostics, EMap context): EBoolean
+	has_one_or_two_constrainedElements(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class IntervalConstraint [[http://www.eclipse.org/uml2/5.0.0/UML#//IntervalConstraint]] {
+}
+class Interval [[http://www.eclipse.org/uml2/5.0.0/UML#//Interval]] {
+}
+class DurationInterval [[http://www.eclipse.org/uml2/5.0.0/UML#//DurationInterval]] {
+}
+class DurationObservation [[http://www.eclipse.org/uml2/5.0.0/UML#//DurationObservation]] {
+	firstEvent: Boolean[]
+	first_event_multiplicity(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class LiteralBoolean [[http://www.eclipse.org/uml2/5.0.0/UML#//LiteralBoolean]] {
+	value: Boolean
+}
+abstract class LiteralSpecification [[http://www.eclipse.org/uml2/5.0.0/UML#//LiteralSpecification]] {
+}
+class LiteralInteger [[http://www.eclipse.org/uml2/5.0.0/UML#//LiteralInteger]] {
+	value: Integer
+}
+class LiteralNull [[http://www.eclipse.org/uml2/5.0.0/UML#//LiteralNull]] {
+}
+class LiteralReal [[http://www.eclipse.org/uml2/5.0.0/UML#//LiteralReal]] {
+	value: Real
+}
+class LiteralString [[http://www.eclipse.org/uml2/5.0.0/UML#//LiteralString]] {
+	value: String
+}
+class LiteralUnlimitedNatural [[http://www.eclipse.org/uml2/5.0.0/UML#//LiteralUnlimitedNatural]] {
+	value: UnlimitedNatural
+}
+class TimeConstraint [[http://www.eclipse.org/uml2/5.0.0/UML#//TimeConstraint]] {
+	firstEvent: Boolean
+	has_one_constrainedElement(EDiagnosticChain diagnostics, EMap context): EBoolean
+}
+class TimeInterval [[http://www.eclipse.org/uml2/5.0.0/UML#//TimeInterval]] {
+}
+class TimeObservation [[http://www.eclipse.org/uml2/5.0.0/UML#//TimeObservation]] {
+	firstEvent: Boolean
+}
+Behavior <|-- Activity
+Class <|-- Behavior
+EncapsulatedClassifier <|-- Class
+BehavioredClassifier <|-- Class
+Classifier <|-- BehavioredClassifier
+Namespace <|-- Classifier
+RedefinableElement <|-- Classifier
+Type <|-- Classifier
+TemplateableElement <|-- Classifier
+NamedElement <|-- Namespace
+Element <|-- NamedElement
+EModelElement <|-- Element
+Element <|-- Comment
+Class <|-- Stereotype
+Element <|-- Image
+Package <|-- Profile
+Namespace <|-- Package
+PackageableElement <|-- Package
+TemplateableElement <|-- Package
+NamedElement <|-- PackageableElement
+ParameterableElement <|-- PackageableElement
+Element <|-- ParameterableElement
+Element <|-- TemplateParameter
+Element <|-- TemplateSignature
+Element <|-- TemplateableElement
+DirectedRelationship <|-- TemplateBinding
+Relationship <|-- DirectedRelationship
+Element <|-- Relationship
+Element <|-- TemplateParameterSubstitution
+PackageableElement <|-- Type
+Classifier <|-- Association
+Relationship <|-- Association
+StructuralFeature <|-- Property
+ConnectableElement <|-- Property
+DeploymentTarget <|-- Property
+TypedElement <|-- ConnectableElement
+ParameterableElement <|-- ConnectableElement
+NamedElement <|-- TypedElement
+MultiplicityElement <|-- ConnectorEnd
+Element <|-- MultiplicityElement
+PackageableElement <|-- ValueSpecification
+TypedElement <|-- ValueSpecification
+TemplateParameter <|-- ConnectableElementTemplateParameter
+NamedElement <|-- DeploymentTarget
+Dependency <|-- Deployment
+PackageableElement <|-- Dependency
+DirectedRelationship <|-- Dependency
+Artifact <|-- DeploymentSpecification
+Classifier <|-- Artifact
+DeployedArtifact <|-- Artifact
+NamedElement <|-- DeployedArtifact
+Abstraction <|-- Manifestation
+Dependency <|-- Abstraction
+ValueSpecification <|-- OpaqueExpression
+ConnectableElement <|-- Parameter
+MultiplicityElement <|-- Parameter
+BehavioralFeature <|-- Operation
+ParameterableElement <|-- Operation
+TemplateableElement <|-- Operation
+Namespace <|-- BehavioralFeature
+Feature <|-- BehavioralFeature
+RedefinableElement <|-- Feature
+NamedElement <|-- RedefinableElement
+NamedElement <|-- ParameterSet
+PackageableElement <|-- Constraint
+Classifier <|-- DataType
+Classifier <|-- Interface
+BehavioralFeature <|-- Reception
+Classifier <|-- Signal
+StateMachine <|-- ProtocolStateMachine
+Behavior <|-- StateMachine
+Vertex <|-- Pseudostate
+NamedElement <|-- Vertex
+Namespace <|-- Region
+RedefinableElement <|-- Region
+Namespace <|-- State
+RedefinableElement <|-- State
+Vertex <|-- State
+Vertex <|-- ConnectionPointReference
+NamedElement <|-- Trigger
+PackageableElement <|-- Event
+Property <|-- Port
+Namespace <|-- Transition
+RedefinableElement <|-- Transition
+DirectedRelationship <|-- ProtocolConformance
+TemplateParameter <|-- OperationTemplateParameter
+Feature <|-- StructuralFeature
+TypedElement <|-- StructuralFeature
+MultiplicityElement <|-- StructuralFeature
+DirectedRelationship <|-- PackageMerge
+DirectedRelationship <|-- ProfileApplication
+DataType <|-- Enumeration
+InstanceSpecification <|-- EnumerationLiteral
+DeploymentTarget <|-- InstanceSpecification
+PackageableElement <|-- InstanceSpecification
+DeployedArtifact <|-- InstanceSpecification
+Element <|-- Slot
+DataType <|-- PrimitiveType
+DirectedRelationship <|-- ElementImport
+DirectedRelationship <|-- PackageImport
+Association <|-- Extension
+Property <|-- ExtensionEnd
+Package <|-- Model
+Expression <|-- StringExpression
+TemplateableElement <|-- StringExpression
+ValueSpecification <|-- Expression
+Dependency <|-- Usage
+NamedElement <|-- CollaborationUse
+StructuredClassifier <|-- Collaboration
+BehavioredClassifier <|-- Collaboration
+Classifier <|-- StructuredClassifier
+Feature <|-- Connector
+DirectedRelationship <|-- Generalization
+PackageableElement <|-- GeneralizationSet
+RedefinableElement <|-- RedefinableTemplateSignature
+TemplateSignature <|-- RedefinableTemplateSignature
+BehavioredClassifier <|-- UseCase
+NamedElement <|-- Extend
+DirectedRelationship <|-- Extend
+RedefinableElement <|-- ExtensionPoint
+NamedElement <|-- Include
+DirectedRelationship <|-- Include
+Realization <|-- Substitution
+Abstraction <|-- Realization
+TemplateParameter <|-- ClassifierTemplateParameter
+Realization <|-- InterfaceRealization
+StructuredClassifier <|-- EncapsulatedClassifier
+NamedElement <|-- ActivityGroup
+ActivityContent <|.. ActivityGroup
+RedefinableElement <|-- ActivityEdge
+ActivityGroup <|-- ActivityPartition
+RedefinableElement <|-- ActivityNode
+ActivityContent <|.. ActivityNode
+ActivityGroup <|-- InterruptibleActivityRegion
+Action <|-- StructuredActivityNode
+Namespace <|-- StructuredActivityNode
+ActivityGroup <|-- StructuredActivityNode
+ExecutableNode <|-- Action
+ActivityNode <|-- ExecutableNode
+Element <|-- ExceptionHandler
+ActivityNode <|-- ObjectNode
+TypedElement <|-- ObjectNode
+Pin <|-- InputPin
+ObjectNode <|-- Pin
+MultiplicityElement <|-- Pin
+Pin <|-- OutputPin
+ConnectableElement <|-- Variable
+MultiplicityElement <|-- Variable
+Action <|-- ValueSpecificationAction
+Action <|-- VariableAction
+LinkAction <|-- WriteLinkAction
+Action <|-- LinkAction
+Element <|-- LinkEndData
+Element <|-- QualifierValue
+StructuralFeatureAction <|-- WriteStructuralFeatureAction
+Action <|-- StructuralFeatureAction
+VariableAction <|-- WriteVariableAction
+AcceptEventAction <|-- AcceptCallAction
+Action <|-- AcceptEventAction
+InputPin <|-- ActionInputPin
+WriteStructuralFeatureAction <|-- AddStructuralFeatureValueAction
+WriteVariableAction <|-- AddVariableValueAction
+InvocationAction <|-- BroadcastSignalAction
+Action <|-- InvocationAction
+InvocationAction <|-- CallAction
+CallAction <|-- CallBehaviorAction
+CallAction <|-- CallOperationAction
+Element <|-- Clause
+Action <|-- ClearAssociationAction
+StructuralFeatureAction <|-- ClearStructuralFeatureAction
+VariableAction <|-- ClearVariableAction
+StructuredActivityNode <|-- ConditionalNode
+WriteLinkAction <|-- CreateLinkAction
+LinkEndData <|-- LinkEndCreationData
+CreateLinkAction <|-- CreateLinkObjectAction
+Action <|-- CreateObjectAction
+WriteLinkAction <|-- DestroyLinkAction
+LinkEndData <|-- LinkEndDestructionData
+Action <|-- DestroyObjectAction
+ObjectNode <|-- ExpansionNode
+StructuredActivityNode <|-- ExpansionRegion
+StructuredActivityNode <|-- LoopNode
+Action <|-- OpaqueAction
+Action <|-- RaiseExceptionAction
+Action <|-- ReadExtentAction
+Action <|-- ReadIsClassifiedObjectAction
+LinkAction <|-- ReadLinkAction
+Action <|-- ReadLinkObjectEndAction
+Action <|-- ReadLinkObjectEndQualifierAction
+Action <|-- ReadSelfAction
+StructuralFeatureAction <|-- ReadStructuralFeatureAction
+VariableAction <|-- ReadVariableAction
+Action <|-- ReclassifyObjectAction
+Action <|-- ReduceAction
+WriteStructuralFeatureAction <|-- RemoveStructuralFeatureValueAction
+WriteVariableAction <|-- RemoveVariableValueAction
+Action <|-- ReplyAction
+InvocationAction <|-- SendObjectAction
+InvocationAction <|-- SendSignalAction
+StructuredActivityNode <|-- SequenceNode
+Action <|-- StartClassifierBehaviorAction
+CallAction <|-- StartObjectBehaviorAction
+Action <|-- TestIdentityAction
+Action <|-- UnmarshallAction
+InputPin <|-- ValuePin
+FinalNode <|-- ActivityFinalNode
+ControlNode <|-- FinalNode
+ActivityNode <|-- ControlNode
+ObjectNode <|-- ActivityParameterNode
+ObjectNode <|-- CentralBufferNode
+ActivityEdge <|-- ControlFlow
+CentralBufferNode <|-- DataStoreNode
+ControlNode <|-- DecisionNode
+ActivityEdge <|-- ObjectFlow
+FinalNode <|-- FlowFinalNode
+ControlNode <|-- ForkNode
+ControlNode <|-- InitialNode
+ControlNode <|-- JoinNode
+ControlNode <|-- MergeNode
+ValueSpecification <|-- InstanceValue
+MessageEvent <|-- AnyReceiveEvent
+Event <|-- MessageEvent
+MessageEvent <|-- CallEvent
+Event <|-- ChangeEvent
+OpaqueBehavior <|-- FunctionBehavior
+Behavior <|-- OpaqueBehavior
+MessageEvent <|-- SignalEvent
+Event <|-- TimeEvent
+ValueSpecification <|-- TimeExpression
+PackageableElement <|-- Observation
+Association <|-- CommunicationPath
+Node <|-- Device
+Class <|-- Node
+DeploymentTarget <|-- Node
+Node <|-- ExecutionEnvironment
+PackageableElement <|-- InformationFlow
+DirectedRelationship <|-- InformationFlow
+NamedElement <|-- Message
+Behavior <|-- Interaction
+InteractionFragment <|-- Interaction
+NamedElement <|-- InteractionFragment
+NamedElement <|-- Lifeline
+InteractionUse <|-- PartDecomposition
+InteractionFragment <|-- InteractionUse
+MessageEnd <|-- Gate
+NamedElement <|-- MessageEnd
+Namespace <|-- InteractionOperand
+InteractionFragment <|-- InteractionOperand
+Constraint <|-- InteractionConstraint
+NamedElement <|-- GeneralOrdering
+InteractionFragment <|-- OccurrenceSpecification
+Classifier <|-- InformationItem
+ExecutionSpecification <|-- ActionExecutionSpecification
+InteractionFragment <|-- ExecutionSpecification
+ExecutionSpecification <|-- BehaviorExecutionSpecification
+InteractionFragment <|-- CombinedFragment
+CombinedFragment <|-- ConsiderIgnoreFragment
+InteractionFragment <|-- Continuation
+MessageOccurrenceSpecification <|-- DestructionOccurrenceSpecification
+OccurrenceSpecification <|-- MessageOccurrenceSpecification
+MessageEnd <|-- MessageOccurrenceSpecification
+OccurrenceSpecification <|-- ExecutionOccurrenceSpecification
+InteractionFragment <|-- StateInvariant
+State <|-- FinalState
+Transition <|-- ProtocolTransition
+Class <|-- AssociationClass
+Association <|-- AssociationClass
+Class <|-- Component
+Realization <|-- ComponentRealization
+BehavioredClassifier <|-- Actor
+ValueSpecification <|-- Duration
+IntervalConstraint <|-- DurationConstraint
+Constraint <|-- IntervalConstraint
+ValueSpecification <|-- Interval
+Interval <|-- DurationInterval
+Observation <|-- DurationObservation
+LiteralSpecification <|-- LiteralBoolean
+ValueSpecification <|-- LiteralSpecification
+LiteralSpecification <|-- LiteralInteger
+LiteralSpecification <|-- LiteralNull
+LiteralSpecification <|-- LiteralReal
+LiteralSpecification <|-- LiteralString
+LiteralSpecification <|-- LiteralUnlimitedNatural
+IntervalConstraint <|-- TimeConstraint
+Interval <|-- TimeInterval
+Observation <|-- TimeObservation
+Activity *--> "ownedGroup *" ActivityGroup
+Activity "activity" *-- "edge *" ActivityEdge
+Activity "/ activity" -- "/ node *" ActivityNode
+Activity "activityScope" *-- "variable *" Variable
+Activity "/ inActivity" -- "/ group *" ActivityGroup
+Activity *--> "ownedNode *" ActivityNode
+Activity --> "partition *" ActivityPartition
+Activity *--> "structuredNode *" StructuredActivityNode
+Behavior "method *" -- "specification" BehavioralFeature
+Behavior --> "/ context" BehavioredClassifier
+Behavior *--> "ownedParameter *" Parameter
+Behavior *--> "ownedParameterSet *" ParameterSet
+Behavior --> "postcondition *" Constraint
+Behavior --> "precondition *" Constraint
+Behavior --> "redefinedBehavior *" Behavior
+Class "class" *-- "ownedOperation *" Operation
+Class "/ metaclass" -- "/ extension *" Extension
+Class *--> "nestedClassifier *" Classifier
+Class *--> "ownedReception *" Reception
+Class --> "/ superClass *" Class
+BehavioredClassifier --> "classifierBehavior" Behavior
+BehavioredClassifier "implementingClassifier" *-- "interfaceRealization *" InterfaceRealization
+BehavioredClassifier *--> "ownedBehavior *" Behavior
+Classifier "/ featuringClassifier *" -- "/ feature *" Feature
+Classifier --> "/ attribute *" Property
+Classifier *--> "collaborationUse *" CollaborationUse
+Classifier --> "/ general *" Classifier
+Classifier "specific" *-- "generalization *" Generalization
+Classifier "powertype" -- "powertypeExtent *" GeneralizationSet
+Classifier --> "/ inheritedMember *" NamedElement
+Classifier *--> "ownedUseCase *" UseCase
+Classifier "subject *" -- "useCase *" UseCase
+Classifier --> "redefinedClassifier *" Classifier
+Classifier --> "representation" CollaborationUse
+Classifier "substitutingClassifier" *-- "substitution *" Substitution
+Namespace "context" *-- "ownedRule *" Constraint
+Namespace "importingNamespace" *-- "elementImport *" ElementImport
+Namespace "importingNamespace" *-- "packageImport *" PackageImport
+Namespace "/ namespace" -- "/ ownedMember *" NamedElement
+Namespace --> "/ importedMember *" PackageableElement
+Namespace --> "/ member *" NamedElement
+NamedElement --> "/ clientDependency *" Dependency
+NamedElement *--> "nameExpression" StringExpression
+Element *--> "ownedComment *" Comment
+Comment --> "annotatedElement *" Element
+Stereotype *--> "icon *" Image
+Stereotype --> "/ profile" Profile
+Profile --> "metaclassReference *" ElementImport
+Profile --> "metamodelReference *" PackageImport
+Package --> "/ ownedStereotype *" Stereotype
+Package "/ package" -- "/ ownedType *" Type
+Package "receivingPackage" *-- "packageMerge *" PackageMerge
+Package *--> "packagedElement *" PackageableElement
+Package "applyingPackage" *-- "profileApplication *" ProfileApplication
+ParameterableElement "ownedParameteredElement" --* "owningTemplateParameter" TemplateParameter
+ParameterableElement "parameteredElement" -- "templateParameter" TemplateParameter
+TemplateParameter --> "default" ParameterableElement
+TemplateParameter *--> "ownedDefault" ParameterableElement
+TemplateParameter "ownedParameter *" --* "signature" TemplateSignature
+TemplateSignature --> "parameter *" TemplateParameter
+TemplateSignature "ownedTemplateSignature" --* "template" TemplateableElement
+TemplateableElement "boundElement" *-- "templateBinding *" TemplateBinding
+TemplateBinding "templateBinding" *-- "parameterSubstitution *" TemplateParameterSubstitution
+TemplateBinding --> "signature" TemplateSignature
+DirectedRelationship --> "/ source *" Element
+DirectedRelationship --> "/ target *" Element
+Relationship --> "/ relatedElement *" Element
+TemplateParameterSubstitution --> "actual" ParameterableElement
+TemplateParameterSubstitution --> "formal" TemplateParameter
+TemplateParameterSubstitution *--> "ownedActual" ParameterableElement
+Association --> "/ endType *" Type
+Association "association" -- "memberEnd *" Property
+Association "owningAssociation" *-- "ownedEnd *" Property
+Association --> "navigableOwnedEnd *" Property
+Property "ownedAttribute *" --* "datatype" DataType
+Property "ownedAttribute *" --* "interface" Interface
+Property --> "class" Class
+Property *--> "defaultValue" ValueSpecification
+Property --> "/ opposite" Property
+Property --> "redefinedProperty *" Property
+Property --> "subsettedProperty *" Property
+ConnectableElement --> "/ end *" ConnectorEnd
+TypedElement --> "type" Type
+ConnectorEnd --> "/ definingEnd" Property
+ConnectorEnd --> "partWithPort" Property
+ConnectorEnd --> "role" ConnectableElement
+MultiplicityElement *--> "lowerValue" ValueSpecification
+MultiplicityElement *--> "upperValue" ValueSpecification
+DeploymentTarget --> "/ deployedElement *" PackageableElement
+DeploymentTarget "location" *-- "deployment *" Deployment
+Deployment "deployment" *-- "configuration *" DeploymentSpecification
+Deployment --> "deployedArtifact *" DeployedArtifact
+Dependency --> "client *" NamedElement
+Dependency --> "supplier *" NamedElement
+Artifact *--> "manifestation *" Manifestation
+Artifact *--> "nestedArtifact *" Artifact
+Artifact *--> "ownedAttribute *" Property
+Artifact *--> "ownedOperation *" Operation
+Manifestation --> "utilizedElement" PackageableElement
+Abstraction *--> "mapping" OpaqueExpression
+OpaqueExpression --> "behavior" Behavior
+OpaqueExpression --> "/ result" Parameter
+Parameter *--> "defaultValue" ValueSpecification
+Parameter --> "operation" Operation
+Parameter "parameter *" -- "parameterSet *" ParameterSet
+Operation --> "bodyCondition" Constraint
+Operation "ownedOperation *" --* "datatype" DataType
+Operation "ownedOperation *" --* "interface" Interface
+Operation --> "postcondition *" Constraint
+Operation --> "precondition *" Constraint
+Operation --> "redefinedOperation *" Operation
+Operation --> "/ type" Type
+BehavioralFeature *--> "ownedParameter *" Parameter
+BehavioralFeature *--> "ownedParameterSet *" ParameterSet
+BehavioralFeature --> "raisedException *" Type
+RedefinableElement --> "/ redefinedElement *" RedefinableElement
+RedefinableElement --> "/ redefinitionContext *" Classifier
+ParameterSet *--> "condition *" Constraint
+Constraint --> "constrainedElement *" Element
+Constraint *--> "specification" ValueSpecification
+Interface *--> "nestedClassifier *" Classifier
+Interface *--> "ownedReception *" Reception
+Interface *--> "protocol" ProtocolStateMachine
+Interface --> "redefinedInterface *" Interface
+Reception --> "signal" Signal
+Signal *--> "ownedAttribute *" Property
+ProtocolStateMachine "specificMachine" *-- "conformance *" ProtocolConformance
+StateMachine "stateMachine" *-- "connectionPoint *" Pseudostate
+StateMachine "submachine" -- "submachineState *" State
+StateMachine "stateMachine" *-- "region *" Region
+StateMachine --> "extendedStateMachine *" StateMachine
+Pseudostate "connectionPoint *" --* "state" State
+Vertex "subvertex *" --* "container" Region
+Vertex --> "/ incoming *" Transition
+Vertex --> "/ outgoing *" Transition
+Region --> "extendedRegion" Region
+Region "region *" --* "state" State
+Region "container" *-- "transition *" Transition
+State "state" *-- "connection *" ConnectionPointReference
+State *--> "deferrableTrigger *" Trigger
+State *--> "doActivity" Behavior
+State *--> "entry" Behavior
+State *--> "exit" Behavior
+State --> "redefinedState" State
+State --> "stateInvariant" Constraint
+ConnectionPointReference --> "entry *" Pseudostate
+ConnectionPointReference --> "exit *" Pseudostate
+Trigger --> "event" Event
+Trigger --> "port *" Port
+Port --> "protocol" ProtocolStateMachine
+Port --> "/ provided *" Interface
+Port --> "redefinedPort *" Port
+Port --> "/ required *" Interface
+Transition *--> "effect" Behavior
+Transition --> "guard" Constraint
+Transition --> "redefinedTransition" Transition
+Transition --> "source" Vertex
+Transition --> "target" Vertex
+Transition *--> "trigger *" Trigger
+ProtocolConformance --> "generalMachine" ProtocolStateMachine
+PackageMerge --> "mergedPackage" Package
+ProfileApplication --> "appliedProfile" Profile
+Enumeration "enumeration" *-- "ownedLiteral *" EnumerationLiteral
+InstanceSpecification --> "classifier *" Classifier
+InstanceSpecification "owningInstance" *-- "slot *" Slot
+InstanceSpecification *--> "specification" ValueSpecification
+Slot --> "definingFeature" StructuralFeature
+Slot *--> "value *" ValueSpecification
+ElementImport --> "importedElement" PackageableElement
+PackageImport --> "importedPackage" Package
+Expression *--> "operand *" ValueSpecification
+CollaborationUse *--> "roleBinding *" Dependency
+CollaborationUse --> "type" Collaboration
+Collaboration --> "collaborationRole *" ConnectableElement
+StructuredClassifier *--> "ownedAttribute *" Property
+StructuredClassifier *--> "ownedConnector *" Connector
+StructuredClassifier --> "/ part *" Property
+StructuredClassifier --> "/ role *" ConnectableElement
+Connector --> "contract *" Behavior
+Connector *--> "end *" ConnectorEnd
+Connector --> "redefinedConnector *" Connector
+Connector --> "type" Association
+Generalization --> "general" Classifier
+Generalization "generalization *" -- "generalizationSet *" GeneralizationSet
+RedefinableTemplateSignature --> "extendedSignature *" RedefinableTemplateSignature
+RedefinableTemplateSignature --> "/ inheritedParameter *" TemplateParameter
+RedefinableTemplateSignature --> "classifier" Classifier
+UseCase "extension" *-- "extend *" Extend
+UseCase "useCase" *-- "extensionPoint *" ExtensionPoint
+UseCase "includingCase" *-- "include *" Include
+Extend *--> "condition" Constraint
+Extend --> "extendedCase" UseCase
+Extend --> "extensionLocation *" ExtensionPoint
+Include --> "addition" UseCase
+Substitution --> "contract" Classifier
+ClassifierTemplateParameter --> "constrainingClassifier *" Classifier
+InterfaceRealization --> "contract" Interface
+EncapsulatedClassifier --> "/ ownedPort *" Port
+ActivityGroup "/ inGroup *" -- "/ containedEdge *" ActivityEdge
+ActivityGroup "/ inGroup *" -- "/ containedNode *" ActivityNode
+ActivityEdge *--> "guard" ValueSpecification
+ActivityEdge "edge *" -- "inPartition *" ActivityPartition
+ActivityEdge "interruptingEdge *" -- "interrupts" InterruptibleActivityRegion
+ActivityEdge "edge *" --* "inStructuredNode" StructuredActivityNode
+ActivityEdge "incoming *" -- "target" ActivityNode
+ActivityEdge "outgoing *" -- "source" ActivityNode
+ActivityEdge --> "redefinedEdge *" ActivityEdge
+ActivityEdge *--> "weight" ValueSpecification
+ActivityPartition "inPartition *" -- "node *" ActivityNode
+ActivityPartition --> "represents" Element
+ActivityNode "node *" -- "inInterruptibleRegion *" InterruptibleActivityRegion
+ActivityNode "node *" --* "inStructuredNode" StructuredActivityNode
+ActivityNode --> "redefinedNode *" ActivityNode
+StructuredActivityNode *--> "structuredNodeInput *" InputPin
+StructuredActivityNode *--> "structuredNodeOutput *" OutputPin
+StructuredActivityNode "scope" *-- "variable *" Variable
+Action --> "/ context" Classifier
+Action --> "/ input *" InputPin
+Action *--> "localPostcondition *" Constraint
+Action *--> "localPrecondition *" Constraint
+Action --> "/ output *" OutputPin
+ExecutableNode "protectedNode" *-- "handler *" ExceptionHandler
+ExceptionHandler --> "exceptionInput" ObjectNode
+ExceptionHandler --> "exceptionType *" Classifier
+ExceptionHandler --> "handlerBody" ExecutableNode
+ObjectNode --> "inState *" State
+ObjectNode --> "selection" Behavior
+ObjectNode *--> "upperBound" ValueSpecification
+ValueSpecificationAction *--> "result" OutputPin
+ValueSpecificationAction *--> "value" ValueSpecification
+VariableAction --> "variable" Variable
+LinkAction *--> "endData *" LinkEndData
+LinkAction *--> "inputValue *" InputPin
+LinkEndData --> "end" Property
+LinkEndData *--> "qualifier *" QualifierValue
+LinkEndData --> "value" InputPin
+QualifierValue --> "qualifier" Property
+QualifierValue --> "value" InputPin
+WriteStructuralFeatureAction *--> "result" OutputPin
+WriteStructuralFeatureAction *--> "value" InputPin
+StructuralFeatureAction *--> "object" InputPin
+StructuralFeatureAction --> "structuralFeature" StructuralFeature
+WriteVariableAction *--> "value" InputPin
+AcceptCallAction *--> "returnInformation" OutputPin
+AcceptEventAction *--> "result *" OutputPin
+AcceptEventAction *--> "trigger *" Trigger
+ActionInputPin *--> "fromAction" Action
+AddStructuralFeatureValueAction *--> "insertAt" InputPin
+AddVariableValueAction *--> "insertAt" InputPin
+BroadcastSignalAction --> "signal" Signal
+InvocationAction *--> "argument *" InputPin
+InvocationAction --> "onPort" Port
+CallAction *--> "result *" OutputPin
+CallBehaviorAction --> "behavior" Behavior
+CallOperationAction --> "operation" Operation
+CallOperationAction *--> "target" InputPin
+Clause --> "body *" ExecutableNode
+Clause --> "bodyOutput *" OutputPin
+Clause --> "decider" OutputPin
+Clause --> "test *" ExecutableNode
+ClearAssociationAction --> "association" Association
+ClearAssociationAction *--> "object" InputPin
+ClearStructuralFeatureAction *--> "result" OutputPin
+ConditionalNode *--> "clause *" Clause
+ConditionalNode *--> "result *" OutputPin
+LinkEndCreationData --> "insertAt" InputPin
+CreateLinkObjectAction *--> "result" OutputPin
+CreateObjectAction --> "classifier" Classifier
+CreateObjectAction *--> "result" OutputPin
+LinkEndDestructionData --> "destroyAt" InputPin
+DestroyObjectAction *--> "target" InputPin
+ExpansionNode "inputElement *" -- "regionAsInput" ExpansionRegion
+ExpansionNode "outputElement *" -- "regionAsOutput" ExpansionRegion
+LoopNode --> "bodyOutput *" OutputPin
+LoopNode --> "bodyPart *" ExecutableNode
+LoopNode --> "decider" OutputPin
+LoopNode *--> "loopVariable *" OutputPin
+LoopNode *--> "loopVariableInput *" InputPin
+LoopNode *--> "result *" OutputPin
+LoopNode --> "setupPart *" ExecutableNode
+LoopNode --> "test *" ExecutableNode
+OpaqueAction *--> "inputValue *" InputPin
+OpaqueAction *--> "outputValue *" OutputPin
+RaiseExceptionAction *--> "exception" InputPin
+ReadExtentAction --> "classifier" Classifier
+ReadExtentAction *--> "result" OutputPin
+ReadIsClassifiedObjectAction --> "classifier" Classifier
+ReadIsClassifiedObjectAction *--> "object" InputPin
+ReadIsClassifiedObjectAction *--> "result" OutputPin
+ReadLinkAction *--> "result" OutputPin
+ReadLinkObjectEndAction --> "end" Property
+ReadLinkObjectEndAction *--> "object" InputPin
+ReadLinkObjectEndAction *--> "result" OutputPin
+ReadLinkObjectEndQualifierAction *--> "object" InputPin
+ReadLinkObjectEndQualifierAction --> "qualifier" Property
+ReadLinkObjectEndQualifierAction *--> "result" OutputPin
+ReadSelfAction *--> "result" OutputPin
+ReadStructuralFeatureAction *--> "result" OutputPin
+ReadVariableAction *--> "result" OutputPin
+ReclassifyObjectAction --> "newClassifier *" Classifier
+ReclassifyObjectAction *--> "object" InputPin
+ReclassifyObjectAction --> "oldClassifier *" Classifier
+ReduceAction *--> "collection" InputPin
+ReduceAction --> "reducer" Behavior
+ReduceAction *--> "result" OutputPin
+RemoveStructuralFeatureValueAction *--> "removeAt" InputPin
+RemoveVariableValueAction *--> "removeAt" InputPin
+ReplyAction --> "replyToCall" Trigger
+ReplyAction *--> "replyValue *" InputPin
+ReplyAction *--> "returnInformation" InputPin
+SendObjectAction *--> "request" InputPin
+SendObjectAction *--> "target" InputPin
+SendSignalAction --> "signal" Signal
+SendSignalAction *--> "target" InputPin
+SequenceNode *--> "executableNode *" ExecutableNode
+StartClassifierBehaviorAction *--> "object" InputPin
+StartObjectBehaviorAction *--> "object" InputPin
+TestIdentityAction *--> "first" InputPin
+TestIdentityAction *--> "result" OutputPin
+TestIdentityAction *--> "second" InputPin
+UnmarshallAction *--> "object" InputPin
+UnmarshallAction *--> "result *" OutputPin
+UnmarshallAction --> "unmarshallType" Classifier
+ValuePin *--> "value" ValueSpecification
+ActivityParameterNode --> "parameter" Parameter
+DecisionNode --> "decisionInput" Behavior
+DecisionNode --> "decisionInputFlow" ObjectFlow
+ObjectFlow --> "selection" Behavior
+ObjectFlow --> "transformation" Behavior
+JoinNode *--> "joinSpec" ValueSpecification
+InstanceValue --> "instance" InstanceSpecification
+CallEvent --> "operation" Operation
+ChangeEvent *--> "changeExpression" ValueSpecification
+SignalEvent --> "signal" Signal
+TimeEvent *--> "when" TimeExpression
+TimeExpression *--> "expr" ValueSpecification
+TimeExpression --> "observation *" Observation
+Node *--> "nestedNode *" Node
+InformationFlow --> "conveyed *" Classifier
+InformationFlow --> "informationSource *" NamedElement
+InformationFlow --> "informationTarget *" NamedElement
+InformationFlow --> "realization *" Relationship
+InformationFlow --> "realizingActivityEdge *" ActivityEdge
+InformationFlow --> "realizingConnector *" Connector
+InformationFlow --> "realizingMessage *" Message
+Message *--> "argument *" ValueSpecification
+Message --> "connector" Connector
+Message "message *" --* "interaction" Interaction
+Message --> "receiveEvent" MessageEnd
+Message --> "sendEvent" MessageEnd
+Message --> "signature" NamedElement
+Interaction "interaction" *-- "lifeline *" Lifeline
+Interaction "enclosingInteraction" *-- "fragment *" InteractionFragment
+Interaction *--> "action *" Action
+Interaction *--> "formalGate *" Gate
+InteractionFragment "coveredBy *" -- "covered *" Lifeline
+InteractionFragment "fragment *" --* "enclosingOperand" InteractionOperand
+InteractionFragment *--> "generalOrdering *" GeneralOrdering
+Lifeline --> "decomposedAs" PartDecomposition
+Lifeline --> "represents" ConnectableElement
+Lifeline *--> "selector" ValueSpecification
+InteractionUse *--> "actualGate *" Gate
+InteractionUse *--> "argument *" ValueSpecification
+InteractionUse --> "refersTo" Interaction
+InteractionUse *--> "returnValue" ValueSpecification
+InteractionUse --> "returnValueRecipient" Property
+MessageEnd --> "message" Message
+InteractionOperand *--> "guard" InteractionConstraint
+InteractionConstraint *--> "maxint" ValueSpecification
+InteractionConstraint *--> "minint" ValueSpecification
+GeneralOrdering "toBefore *" -- "after" OccurrenceSpecification
+GeneralOrdering "toAfter *" -- "before" OccurrenceSpecification
+InformationItem --> "represented *" Classifier
+ActionExecutionSpecification --> "action" Action
+ExecutionSpecification --> "finish" OccurrenceSpecification
+ExecutionSpecification --> "start" OccurrenceSpecification
+BehaviorExecutionSpecification --> "behavior" Behavior
+CombinedFragment *--> "cfragmentGate *" Gate
+CombinedFragment *--> "operand *" InteractionOperand
+ConsiderIgnoreFragment --> "message *" NamedElement
+ExecutionOccurrenceSpecification --> "execution" ExecutionSpecification
+StateInvariant *--> "invariant" Constraint
+ProtocolTransition --> "postCondition" Constraint
+ProtocolTransition --> "preCondition" Constraint
+ProtocolTransition --> "/ referred *" Operation
+Component *--> "packagedElement *" PackageableElement
+Component --> "/ provided *" Interface
+Component "abstraction" *-- "realization *" ComponentRealization
+Component --> "/ required *" Interface
+ComponentRealization --> "realizingClassifier *" Classifier
+Duration *--> "expr" ValueSpecification
+Duration --> "observation *" Observation
+Interval --> "max" ValueSpecification
+Interval --> "min" ValueSpecification
+DurationObservation --> "event *" NamedElement
+TimeObservation --> "event" NamedElement
+@enduml

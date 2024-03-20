@@ -1,0 +1,3 @@
+I want to follow the evolution of a engineering system.
+It shows to different versions of the same system modeled using the CAEX metamodel.
+Based on the changes performed in the models, the changes are captured into a model that conforms to a Traces metamodel.
