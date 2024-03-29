@@ -1,16 +1,16 @@
 @startuml
-class Trace [[marker:/org.eclipse.emf.ecore.diagnostic/Traceability/metamodels/trace.ecore?uri=platform:/resource/Traceability/metamodels/trace.ecore%23//Trace]] {
+class Trace  {
 }
-class Log [[marker:/org.eclipse.emf.ecore.diagnostic/Traceability/metamodels/trace.ecore?uri=platform:/resource/Traceability/metamodels/trace.ecore%23//Log]] {
+class Log  {
 	message: EString
 	source: EString
 	timestamp: EDate
 	level: LogLevel
 }
-class Exception [[marker:/org.eclipse.emf.ecore.diagnostic/Traceability/metamodels/trace.ecore?uri=platform:/resource/Traceability/metamodels/trace.ecore%23//Exception]] {
+class Exception  {
 	message: EString
 }
-enum LogLevel [[marker:/org.eclipse.emf.ecore.diagnostic/Traceability/metamodels/trace.ecore?uri=platform:/resource/Traceability/metamodels/trace.ecore%23//LogLevel]] {
+enum LogLevel  {
 	SEVERE: SEVERE
 	WARNING: WARNING
 	INFO: INFO

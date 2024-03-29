@@ -1,20 +1,20 @@
 @startuml
-class TraceabilityModel [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/TraceabilityMetamodel.ecore?uri=platform:/resource/Safety/metamodels/TraceabilityMetamodel.ecore%23/0/TraceabilityModel]] {
+class TraceabilityModel  {
 	name: String
 }
-class TraceabilityLink [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/TraceabilityMetamodel.ecore?uri=platform:/resource/Safety/metamodels/TraceabilityMetamodel.ecore%23/0/TraceabilityLink]] {
+class TraceabilityLink  {
 	id: Integer
 	name: String
 	description: String
 }
-class TraceabilityLinkEnd [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/TraceabilityMetamodel.ecore?uri=platform:/resource/Safety/metamodels/TraceabilityMetamodel.ecore%23/0/TraceabilityLinkEnd]] {
+class TraceabilityLinkEnd  {
 	name: String
 }
-class TraceabilityContext [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/TraceabilityMetamodel.ecore?uri=platform:/resource/Safety/metamodels/TraceabilityMetamodel.ecore%23/0/TraceabilityContext]] {
+class TraceabilityContext  {
 	name: String
 	description: String
 }
-class TraceabilityContextData [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/TraceabilityMetamodel.ecore?uri=platform:/resource/Safety/metamodels/TraceabilityMetamodel.ecore%23/0/TraceabilityContextData]] {
+class TraceabilityContextData  {
 	name: String
 	value: String
 }

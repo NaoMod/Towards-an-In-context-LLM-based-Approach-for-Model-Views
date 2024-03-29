@@ -1,29 +1,29 @@
 @startuml
-class Dependency [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/SimpleUMLComponents.ecore?uri=platform:/resource/Safety/metamodels/SimpleUMLComponents.ecore%23//Dependency]] {
+class Dependency  {
 	name: EString
 }
-abstract class Classifier [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/SimpleUMLComponents.ecore?uri=platform:/resource/Safety/metamodels/SimpleUMLComponents.ecore%23//Classifier]] {
+abstract class Classifier  {
 	name: EString
 }
-class Operation [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/SimpleUMLComponents.ecore?uri=platform:/resource/Safety/metamodels/SimpleUMLComponents.ecore%23//Operation]] {
+class Operation  {
 	name: EString
 }
-class Interface [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/SimpleUMLComponents.ecore?uri=platform:/resource/Safety/metamodels/SimpleUMLComponents.ecore%23//Interface]] {
+class Interface  {
 }
-class InterfaceRealization [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/SimpleUMLComponents.ecore?uri=platform:/resource/Safety/metamodels/SimpleUMLComponents.ecore%23//InterfaceRealization]] {
+class InterfaceRealization  {
 }
-class Component [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/SimpleUMLComponents.ecore?uri=platform:/resource/Safety/metamodels/SimpleUMLComponents.ecore%23//Component]] {
+class Component  {
 }
-class ComponentRealization [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/SimpleUMLComponents.ecore?uri=platform:/resource/Safety/metamodels/SimpleUMLComponents.ecore%23//ComponentRealization]] {
+class ComponentRealization  {
 }
-class Model [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/SimpleUMLComponents.ecore?uri=platform:/resource/Safety/metamodels/SimpleUMLComponents.ecore%23//Model]] {
+class Model  {
 }
-class Usage [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/SimpleUMLComponents.ecore?uri=platform:/resource/Safety/metamodels/SimpleUMLComponents.ecore%23//Usage]] {
+class Usage  {
 }
-class Property [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/SimpleUMLComponents.ecore?uri=platform:/resource/Safety/metamodels/SimpleUMLComponents.ecore%23//Property]] {
+class Property  {
 	name: EString
 }
-class Port [[marker:/org.eclipse.emf.ecore.diagnostic/Safety/metamodels/SimpleUMLComponents.ecore?uri=platform:/resource/Safety/metamodels/SimpleUMLComponents.ecore%23//Port]] {
+class Port  {
 }
 Classifier <|-- Interface
 Dependency <|-- InterfaceRealization

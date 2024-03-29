@@ -1,99 +1,99 @@
 @startuml
-class AttributeDataType [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//AttributeDataType]] {
+class AttributeDataType  {
 	java.lang.String
 }
-class AttributeFamily [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//AttributeFamily]] {
+class AttributeFamily  {
 }
-class AttributeNameMapping [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//AttributeNameMapping]] {
+class AttributeNameMapping  {
 	roleAttributeName: String
 	systemUnitAttributeName: String
 }
-class Attribute [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//Attribute]] {
+class Attribute  {
 	defaultValue: String
 	value: String
 	attributeDataType: AttributeDataType
 	refAttributeType: String
 	unit: String
 }
-class AttributeLib [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//AttributeLib]] {
+class AttributeLib  {
 }
-class AttributeValueRequirement [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//AttributeValueRequirement]] {
+class AttributeValueRequirement  {
 	name: String
 }
-class CAEXBasicObject [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//CAEXBasicObject]] {
+class CAEXBasicObject  {
 	changeMode: ChangeMode
 }
-class CAEXFile [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//CAEXFile]] {
+class CAEXFile  {
 	superiorStandardVersion: String[]
 	fileName: String
 	schemaVersion: String
 }
-class CAEXObject [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//CAEXObject]] {
+class CAEXObject  {
 	iD: String
 	name: String
 }
-enum ChangeMode [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//ChangeMode]] {
+enum ChangeMode  {
 	state: state
 	create: create
 	delete: delete
 	change: change
 }
-class ChangeModeObject [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//ChangeModeObject]] {
+class ChangeModeObject  {
 	org.eclipse.emf.common.util.Enumerator
 }
-class DocumentRoot [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//DocumentRoot]] {
+class DocumentRoot  {
 	mixed: EFeatureMapEntry[]
 }
-class ExternalInterface [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//ExternalInterface]] {
+class ExternalInterface  {
 }
-class ExternalReference [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//ExternalReference]] {
+class ExternalReference  {
 	alias: String
 	path: String
 }
-class InstanceHierarchy [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//InstanceHierarchy]] {
+class InstanceHierarchy  {
 }
-class InterfaceClassLib [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//InterfaceClassLib]] {
+class InterfaceClassLib  {
 }
-class InterfaceClass [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//InterfaceClass]] {
+class InterfaceClass  {
 	refBaseClassPath: String
 }
-class InterfaceFamily [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//InterfaceFamily]] {
+class InterfaceFamily  {
 }
-class InterfaceIDMapping [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//InterfaceIDMapping]] {
+class InterfaceIDMapping  {
 	roleInterfaceID: String
 	systemUnitInterfaceID: String
 }
-class InternalElement [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//InternalElement]] {
+class InternalElement  {
 	refBaseSystemUnitPath: String
 }
-class InternalLink [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//InternalLink]] {
+class InternalLink  {
 	refPartnerSideA: String
 	refPartnerSideB: String
 }
-class Mapping [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//Mapping]] {
+class Mapping  {
 }
-class NominalScaled [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//NominalScaled]] {
+class NominalScaled  {
 	requiredValue: String[]
 }
-class OrdinalScaled [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//OrdinalScaled]] {
+class OrdinalScaled  {
 	requiredMaxValue: String
 	requiredValue: String
 	requiredMinValue: String
 }
-class RefSemantic [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//RefSemantic]] {
+class RefSemantic  {
 	correspondingAttributePath: String
 }
-class RoleClassLib [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//RoleClassLib]] {
+class RoleClassLib  {
 }
-class RoleClass [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//RoleClass]] {
+class RoleClass  {
 	refBaseClassPath: String
 }
-class RoleFamily [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//RoleFamily]] {
+class RoleFamily  {
 }
-class RoleRequirements [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//RoleRequirements]] {
+class RoleRequirements  {
 	refBaseRoleClassPath: String
 }
-class SourceDocumentInformation [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//SourceDocumentInformation]] {
+class SourceDocumentInformation  {
 	lastWritingDateTime: DateTime
 	originID: String
 	originName: String
@@ -104,39 +104,39 @@ class SourceDocumentInformation [[marker:/org.eclipse.emf.ecore.diagnostic/Evolu
 	originVendorURL: String
 	originVersion: String
 }
-class SupportedRoleClass [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//SupportedRoleClass]] {
+class SupportedRoleClass  {
 	refRoleClassPath: String
 }
-class SystemUnitClassLib [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//SystemUnitClassLib]] {
+class SystemUnitClassLib  {
 }
-class SystemUnitClass [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//SystemUnitClass]] {
+class SystemUnitClass  {
 	refBaseClassPath: String
 }
-class SystemUnitFamily [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//SystemUnitFamily]] {
+class SystemUnitFamily  {
 }
-class UnknownType [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//UnknownType]] {
+class UnknownType  {
 	requirements: String
 }
-class Copyright [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//Copyright]] {
+class Copyright  {
 	value: String
 	changeMode: ChangeMode
 }
-class Description [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//Description]] {
+class Description  {
 	value: String
 	changeMode: ChangeMode
 }
-class Revision [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//Revision]] {
+class Revision  {
 	revisionDate: DateTime
 	oldVersion: String
 	newVersion: String
 	authorName: String
 	comment: String
 }
-class Version [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//Version]] {
+class Version  {
 	value: String
 	changeMode: ChangeMode
 }
-class AdditionalInformation [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/caex.ecore?uri=platform:/resource/Evolution/metamodels/caex.ecore%23//AdditionalInformation]] {
+class AdditionalInformation  {
 }
 Attribute <|-- AttributeFamily
 CAEXBasicObject <|-- AttributeNameMapping

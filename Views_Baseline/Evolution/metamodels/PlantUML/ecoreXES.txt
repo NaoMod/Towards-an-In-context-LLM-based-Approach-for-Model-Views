@@ -1,27 +1,27 @@
 @startuml
-class Event [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/ecoreXES.ecore?uri=platform:/resource/Evolution/metamodels/ecoreXES.ecore%23//Event]] {
+class Event  {
 	set: EBoolean
 	timestamp: EDate
 	dataValue: EString
 	eventType: EventType
 }
-class Log [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/ecoreXES.ecore?uri=platform:/resource/Evolution/metamodels/ecoreXES.ecore%23//Log]] {
+class Log  {
 	resource: EString
 }
-abstract class Attributes [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/ecoreXES.ecore?uri=platform:/resource/Evolution/metamodels/ecoreXES.ecore%23//Attributes]] {
+abstract class Attributes  {
 	name: EString
 }
-class FeatureAndClass [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/ecoreXES.ecore?uri=platform:/resource/Evolution/metamodels/ecoreXES.ecore%23//FeatureAndClass]] {
+class FeatureAndClass  {
 }
-class Feature [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/ecoreXES.ecore?uri=platform:/resource/Evolution/metamodels/ecoreXES.ecore%23//Feature]] {
+class Feature  {
 }
-class JavaClass [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/ecoreXES.ecore?uri=platform:/resource/Evolution/metamodels/ecoreXES.ecore%23//JavaClass]] {
+class JavaClass  {
 }
-class ID [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/ecoreXES.ecore?uri=platform:/resource/Evolution/metamodels/ecoreXES.ecore%23//ID]] {
+class ID  {
 }
-class ReferenceValue [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/ecoreXES.ecore?uri=platform:/resource/Evolution/metamodels/ecoreXES.ecore%23//ReferenceValue]] {
+class ReferenceValue  {
 }
-enum EventType [[marker:/org.eclipse.emf.ecore.diagnostic/Evolution/metamodels/ecoreXES.ecore?uri=platform:/resource/Evolution/metamodels/ecoreXES.ecore%23//EventType]] {
+enum EventType  {
 	SET: SET
 	UNSET: UNSET
 	ADD: ADD

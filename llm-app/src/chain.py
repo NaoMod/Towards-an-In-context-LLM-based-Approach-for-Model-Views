@@ -100,7 +100,7 @@ for folder in os.listdir(VIEWS_DIRECTORY):
             if file.endswith(".txt"):
                 plant_uml_files.append(os.path.join(plant_uml_folder, file))
                 print(os.path.join(plant_uml_folder, file))
-                if len(plant_uml_files) >= 2:
+                if len(plant_uml_files) == 2:
                     # try:
                     execute_chain(llm, user_input, plant_uml_files[0], plant_uml_files[1])
                     print("Finished processing chain")
