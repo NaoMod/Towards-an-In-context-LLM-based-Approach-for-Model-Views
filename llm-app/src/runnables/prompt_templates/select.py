@@ -6,7 +6,7 @@ prompts = {
                     
                     Given two metamodels, a list of relations that contains classes from each one and a user input, your task is to select a set of attributes for each class in the list to meet the user's needs.
                     
-                    An attrribute should be selected if it is unique among the two metamodels or if it is a collection that contains the classes in the initial given class list.
+                    An attribute should be selected if it is unique among the two metamodels or if it is a collection that contains the classes in the initial given class list.
 
                     For the input relations list, you may assume the following template between the delimiter <relations>:
 
@@ -22,14 +22,14 @@ prompts = {
                     For the output, you should provide a JSON array with the selected attributes for each metamodel following the template:
 
                     <filters>
-                        [
-                            {{
-                                "relationName": {{
-                                    "first_metamodel_name": {{ "class1": ["attribute1", "attribute2", ...], class2: ["attribute1", "attribute2", ...], ...}},
-                                    "second_metamodel_name": {{ "class1": ["attribute1", "attribute2", ...], class2: ["attribute1", "attribute2", ...], ...}}
-                                }}
+                    [
+                        {{
+                            "relationName": {{
+                                "first_metamodel_name": {{ "class1": ["attribute1", "attribute2", ...], class2: ["attribute1", "attribute2", ...], ...}},
+                                "second_metamodel_name": {{ "class1": ["attribute1", "attribute2", ...], class2: ["attribute1", "attribute2", ...], ...}}
                             }}
-                        ]
+                        }}
+                    ]
                     </filters>
 
                     When generating the JSON text:

@@ -101,10 +101,11 @@ for folder in os.listdir(VIEWS_DIRECTORY):
                 plant_uml_files.append(os.path.join(plant_uml_folder, file))
                 print(os.path.join(plant_uml_folder, file))
                 if len(plant_uml_files) >= 2:
-                    try:
-                        execute_chain(llm, user_input, plant_uml_files[0], plant_uml_files[1])
-                        print("Finished processing chain")
-                    except Exception:
-                        print("Error processing chain")
-        # if folder_quantity >= 1:
-        #     break
+                    # try:
+                    execute_chain(llm, user_input, plant_uml_files[0], plant_uml_files[1])
+                    print("Finished processing chain")
+                    # except Exception as e:
+                    #     print("Error processing chain")
+                    #     print(e)
+        if folder_quantity >= 1:
+            break

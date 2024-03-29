@@ -23,13 +23,13 @@ prompts = {
                         For the output, you should provide a JSON array with the combination rules per relation following the template:
 
                         <combinations>
-                            [
-                                {{
-                                    "relationName": {{
-                                        "rule": "Metamodel_Identifier.Class_name.Attributte {{combination_rule}} Metamodel_Identifier.Class_name.Attributte"
-                                    }}
+                        [
+                            {{
+                                "relationName": {{
+                                    "rule": "Metamodel_Identifier.Class_name.Attributte {{combination_rule}} Metamodel_Identifier.Class_name.Attributte"
                                 }}
-                            ]
+                            }}
+                        ]
                         </combinations>
                         
                         Each rule is in the following format: Metamodel_Name.Class_name.Attributte {{combination_rule}} Metamodel_Name.Class_name.Attributte

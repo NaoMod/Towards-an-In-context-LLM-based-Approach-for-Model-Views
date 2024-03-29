@@ -1,4 +1,5 @@
 from langchain.prompts import PromptTemplate
+from langchain import hub
 
 from .prompt_templates.select import prompts as select_templates
 
@@ -12,7 +13,7 @@ class Select():
         Initialize the Select class.
         """
         self.tags = select_templates["items"][0]["tags"]
-        self.template = select_templates["items"][0]["template"]
+        self.template = hub.pull("james-mir/select-for-vpdl")
 
     def get_template(self):
         """
@@ -21,7 +22,7 @@ class Select():
         Returns:
             PromptTemplate: The prompt template.
         """
-        return PromptTemplate.from_template(self.template)
+        return self.template
 
     def get_runnable(self, parser):
         """
