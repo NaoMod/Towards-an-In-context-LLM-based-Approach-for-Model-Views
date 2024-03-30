@@ -8,6 +8,8 @@ CSV_FILE = "join_dataset.csv"
 with open(CSV_FILE, mode='w', newline='') as csv_file:
     writer1 = writer(csv_file)
 
+    writer1.writerow(['user_input', 'meta_1', 'meta_2', 'relations'])
+
     for folder in os.listdir(VIEWS_DIRECTORY):
         folder_path = os.path.join(VIEWS_DIRECTORY, folder)
         if os.path.isdir(folder_path):

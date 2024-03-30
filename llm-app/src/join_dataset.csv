@@ -1,0 +1,1548 @@
+user_input,meta_1,meta_2,relations
+I want to combine the the two metamodels to have a overview of the domain.,"'@startuml
+class Book {
+	title: EString
+	authorName: EString
+}
+class Chapter {
+	title: EString
+	nbPages: EInt
+}
+Book *--> ""chapters *"" Chapter
+@enduml'","'@startuml
+class Publication {
+	title: EString
+	author: EString
+	publisher: EString
+	year: EInt
+}
+@enduml'"
+"I want to show a combination of 3 different metamodels that were created around the same application, a Trip-planning app.
+The 3 metamodels are:
+The TOGAF metamodel from the Enterprise Application is used by models representing the entire application architecture.
+The ReqIF metamodel for the requirements of my application.
+The BPMN model is used to represent the application processes.
+The combination should represent all the most relevant information from each metamodel, considering the type of application.","'@startuml
+abstract class AccessControlledElement [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AccessControlledElement]] {
+	editable: EBoolean
+}
+abstract class Identifiable [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//Identifiable]] {
+	desc: EString
+	identifier: ID
+	lastChange: DateTime
+	longName: EString
+}
+class AttributeValueXHTML [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeValueXHTML]] {
+	simplified: EBoolean
+}
+abstract class AttributeValue [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeValue]] {
+}
+abstract class SpecElementWithAttributes [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//SpecElementWithAttributes]] {
+}
+class AttributeDefinitionXHTML [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeDefinitionXHTML]] {
+}
+abstract class AttributeDefinition [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeDefinition]] {
+}
+abstract class SpecType [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//SpecType]] {
+}
+class ReqIFContent [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//ReqIFContent]] {
+}
+class ReqIF [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//ReqIF]] {
+	lang: LangType
+}
+class ReqIFHeader [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//ReqIFHeader]] {
+	comment: EString
+	creationTime: DateTime
+	identifier: ID
+	repositoryId: EString
+	reqIFToolId: EString
+	reqIFVersion: EString
+	sourceToolId: EString
+	title: EString
+}
+class ReqIFToolExtension [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//ReqIFToolExtension]] {
+}
+class SpecObject [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//SpecObject]] {
+}
+class SpecObjectType [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//SpecObjectType]] {
+}
+class Specification [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//Specification]] {
+}
+class SpecificationType [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//SpecificationType]] {
+}
+class SpecHierarchy [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//SpecHierarchy]] {
+	tableInternal: EBoolean
+}
+abstract class DatatypeDefinition [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//DatatypeDefinition]] {
+}
+class SpecRelation [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//SpecRelation]] {
+}
+class SpecRelationType [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//SpecRelationType]] {
+}
+class RelationGroup [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//RelationGroup]] {
+}
+class RelationGroupType [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//RelationGroupType]] {
+}
+class DatatypeDefinitionXHTML [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//DatatypeDefinitionXHTML]] {
+}
+class AlternativeID [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AlternativeID]] {
+	identifier: EString
+}
+class AttributeDefinitionBoolean [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeDefinitionBoolean]] {
+}
+abstract class AttributeDefinitionSimple [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeDefinitionSimple]] {
+}
+class DatatypeDefinitionBoolean [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//DatatypeDefinitionBoolean]] {
+}
+abstract class DatatypeDefinitionSimple [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//DatatypeDefinitionSimple]] {
+}
+class AttributeValueBoolean [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeValueBoolean]] {
+	theValue: EBoolean
+}
+abstract class AttributeValueSimple [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeValueSimple]] {
+}
+class AttributeDefinitionDate [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeDefinitionDate]] {
+}
+class DatatypeDefinitionDate [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//DatatypeDefinitionDate]] {
+}
+class AttributeValueDate [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeValueDate]] {
+	theValue: DateTime
+}
+class AttributeDefinitionEnumeration [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeDefinitionEnumeration]] {
+	multiValued: EBoolean
+}
+class DatatypeDefinitionEnumeration [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//DatatypeDefinitionEnumeration]] {
+}
+class EnumValue [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//EnumValue]] {
+}
+class EmbeddedValue [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//EmbeddedValue]] {
+	key: EBigInteger
+	otherContent: EString
+}
+class AttributeValueEnumeration [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeValueEnumeration]] {
+}
+class AttributeDefinitionInteger [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeDefinitionInteger]] {
+}
+class DatatypeDefinitionInteger [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//DatatypeDefinitionInteger]] {
+	max: EBigInteger
+	min: EBigInteger
+}
+class AttributeValueInteger [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeValueInteger]] {
+	theValue: EBigInteger
+}
+class AttributeDefinitionReal [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeDefinitionReal]] {
+}
+class DatatypeDefinitionReal [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//DatatypeDefinitionReal]] {
+	accuracy: EBigInteger
+	max: EDouble
+	min: EDouble
+}
+class AttributeValueReal [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeValueReal]] {
+	theValue: EDouble
+}
+class AttributeDefinitionString [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeDefinitionString]] {
+}
+class DatatypeDefinitionString [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//DatatypeDefinitionString]] {
+	maxLength: EBigInteger
+}
+class AttributeValueString [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeValueString]] {
+	theValue: EString
+}
+class XhtmlContent [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//XhtmlContent]] {
+	/ xhtmlSource: EString
+}
+class DateTime [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//DateTime]] {
+	java.util.GregorianCalendar
+}
+class ID [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//ID]] {
+	java.lang.String
+}
+Identifiable <|-- AccessControlledElement
+AttributeValue <|-- AttributeValueXHTML
+Identifiable <|-- SpecElementWithAttributes
+AttributeDefinition <|-- AttributeDefinitionXHTML
+AccessControlledElement <|-- AttributeDefinition
+Identifiable <|-- SpecType
+SpecElementWithAttributes <|-- SpecObject
+SpecType <|-- SpecObjectType
+SpecElementWithAttributes <|-- Specification
+SpecType <|-- SpecificationType
+AccessControlledElement <|-- SpecHierarchy
+Identifiable <|-- DatatypeDefinition
+SpecElementWithAttributes <|-- SpecRelation
+SpecType <|-- SpecRelationType
+Identifiable <|-- RelationGroup
+SpecType <|-- RelationGroupType
+DatatypeDefinition <|-- DatatypeDefinitionXHTML
+AttributeDefinitionSimple <|-- AttributeDefinitionBoolean
+AttributeDefinition <|-- AttributeDefinitionSimple
+DatatypeDefinitionSimple <|-- DatatypeDefinitionBoolean
+DatatypeDefinition <|-- DatatypeDefinitionSimple
+AttributeValueSimple <|-- AttributeValueBoolean
+AttributeValue <|-- AttributeValueSimple
+AttributeDefinitionSimple <|-- AttributeDefinitionDate
+DatatypeDefinitionSimple <|-- DatatypeDefinitionDate
+AttributeValueSimple <|-- AttributeValueDate
+AttributeDefinition <|-- AttributeDefinitionEnumeration
+DatatypeDefinition <|-- DatatypeDefinitionEnumeration
+Identifiable <|-- EnumValue
+AttributeValue <|-- AttributeValueEnumeration
+AttributeDefinitionSimple <|-- AttributeDefinitionInteger
+DatatypeDefinitionSimple <|-- DatatypeDefinitionInteger
+AttributeValueSimple <|-- AttributeValueInteger
+AttributeDefinitionSimple <|-- AttributeDefinitionReal
+DatatypeDefinitionSimple <|-- DatatypeDefinitionReal
+AttributeValueSimple <|-- AttributeValueReal
+AttributeDefinitionSimple <|-- AttributeDefinitionString
+DatatypeDefinitionSimple <|-- DatatypeDefinitionString
+AttributeValueSimple <|-- AttributeValueString
+Identifiable *--> ""alternativeID"" AlternativeID
+AttributeValueXHTML --> ""definition"" AttributeDefinitionXHTML
+AttributeValueXHTML *--> ""theOriginalValue"" XhtmlContent
+AttributeValueXHTML *--> ""theValue"" XhtmlContent
+SpecElementWithAttributes *--> ""values *"" AttributeValue
+AttributeDefinitionXHTML --> ""type"" DatatypeDefinitionXHTML
+AttributeDefinitionXHTML *--> ""defaultValue"" AttributeValueXHTML
+SpecType *--> ""specAttributes *"" AttributeDefinition
+ReqIFContent *--> ""datatypes *"" DatatypeDefinition
+ReqIFContent *--> ""specTypes *"" SpecType
+ReqIFContent *--> ""specObjects *"" SpecObject
+ReqIFContent *--> ""specRelations *"" SpecRelation
+ReqIFContent *--> ""specifications *"" Specification
+ReqIFContent *--> ""specRelationGroups *"" RelationGroup
+ReqIF *--> ""theHeader"" ReqIFHeader
+ReqIF *--> ""coreContent"" ReqIFContent
+ReqIF *--> ""toolExtensions *"" ReqIFToolExtension
+ReqIFToolExtension *--> ""extensions *"" EObject
+SpecObject --> ""type"" SpecObjectType
+Specification --> ""type"" SpecificationType
+Specification *--> ""children *"" SpecHierarchy
+SpecHierarchy --> ""object"" SpecObject
+SpecHierarchy *--> ""children *"" SpecHierarchy
+SpecHierarchy --> ""editableAtts *"" AttributeDefinition
+SpecRelation --> ""target"" SpecObject
+SpecRelation --> ""source"" SpecObject
+SpecRelation --> ""type"" SpecRelationType
+RelationGroup --> ""specRelations *"" SpecRelation
+RelationGroup --> ""type"" RelationGroupType
+RelationGroup --> ""sourceSpecification"" Specification
+RelationGroup --> ""targetSpecification"" Specification
+AttributeDefinitionBoolean --> ""type"" DatatypeDefinitionBoolean
+AttributeDefinitionBoolean *--> ""defaultValue"" AttributeValueBoolean
+AttributeValueBoolean --> ""definition"" AttributeDefinitionBoolean
+AttributeDefinitionDate --> ""type"" DatatypeDefinitionDate
+AttributeDefinitionDate *--> ""defaultValue"" AttributeValueDate
+AttributeValueDate --> ""definition"" AttributeDefinitionDate
+AttributeDefinitionEnumeration --> ""type"" DatatypeDefinitionEnumeration
+AttributeDefinitionEnumeration *--> ""defaultValue"" AttributeValueEnumeration
+DatatypeDefinitionEnumeration *--> ""specifiedValues *"" EnumValue
+EnumValue *--> ""properties"" EmbeddedValue
+AttributeValueEnumeration --> ""values *"" EnumValue
+AttributeValueEnumeration --> ""definition"" AttributeDefinitionEnumeration
+AttributeDefinitionInteger --> ""type"" DatatypeDefinitionInteger
+AttributeDefinitionInteger *--> ""defaultValue"" AttributeValueInteger
+AttributeValueInteger --> ""definition"" AttributeDefinitionInteger
+AttributeDefinitionReal --> ""type"" DatatypeDefinitionReal
+AttributeDefinitionReal *--> ""defaultValue"" AttributeValueReal
+AttributeValueReal --> ""definition"" AttributeDefinitionReal
+AttributeDefinitionString --> ""type"" DatatypeDefinitionString
+AttributeDefinitionString *--> ""defaultValue"" AttributeValueString
+AttributeValueString --> ""definition"" AttributeDefinitionString
+XhtmlContent *--> ""xhtml"" EObject
+@enduml'","'@startuml
+class EnterpriseArchitecture  {
+}
+abstract class Architecture  {
+}
+class BusinessArchitecture  {
+}
+class DataArchitecture  {
+}
+class TechnologyArchitecture  {
+}
+class Driver  {
+}
+class Goal  {
+}
+class Objective  {
+}
+class OrganizationUnit  {
+	headcount: EString
+}
+class Actor  {
+	FTEs: EString
+	actorGoal: EString
+	actorTasks: EString
+}
+class Role  {
+	estimatedFTEs: EString
+}
+class DataEntity  {
+	dataEntityCategory: DataEntityCategory
+	privacyClassification: EString
+	retentionClassification: EString
+}
+class LogicalApplicationComponent  {
+}
+class Function  {
+}
+class BusinessService  {
+}
+class Process  {
+	processCritiality: EString
+	isAutomated: EBoolean
+	processVolumetrics: EString
+}
+class PlatformService  {
+	categoryTRM: EString
+}
+class PhysicalTechnologyComponent  {
+	productName: EString
+	moduleName: EString
+	vendor: EString
+	version: EString
+	categoryTRM: EString
+}
+class Product  {
+}
+class Measure  {
+}
+class ServiceQuality  {
+}
+class Contract  {
+	behaviorCharacteristics: EString
+	ServiceNameCaller: EString
+	ServiceNameCalled: EString
+	serviceQualityCharacteristics: EString
+	availabilityQualityCharacteristics: EString
+	servicesTimes: EString
+	manageabilityCharacteristics: EString
+	serviceabilityCharacteristics: EString
+	performanceCharacteristics: EString
+	responseCharacteristics: EString
+	reliabilityCharacteristics: EString
+	qualityOfInformationRequired: EString
+	contractControlRequirements: EString
+	resultControlRequirements: EString
+	recoverabilityCharacteristics: EString
+	locatabilityCharacteristics: EString
+	securityCharacteristics: EString
+	privacyCharacteristics: EString
+	integrityCharacteristics: EString
+	credibilityCharacteristics: EString
+	localizationCharacteristics: EString
+	internationalizationCharacteristics: EString
+	interoperabilityCharacteristics: EString
+	scalabilityCharacteristics: EString
+	portabilityCharacteristics: EString
+	extensibilityCharacteristics: EString
+	capacityCharacteristics: EString
+	throughput: EString
+	throughputPeriod: EString
+	growth: EString
+	growthPeriod: EString
+	peakProfileShortTerm: EString
+	peakProfileLongTerm: EString
+}
+class Event  {
+}
+class Control  {
+}
+class Element  {
+	name: EString
+	description: EString
+	sourceDescr: EString
+	ownerDescr: EString
+	ID: EString
+}
+class Container  {
+	name: EString
+	id: EString
+	description: EString
+}
+class Label  {
+	name: EString
+	id: EString
+	description: EString
+}
+class Location  {
+}
+class Capability  {
+	businessValue: EString
+	increments: EString
+}
+abstract class StrategicElement  {
+}
+class Principle  {
+	principleCategory: PrincipleCategory
+	priority: EString
+	statementOfPrinciple: EString
+	rationale: EString
+	implication: EString
+	metric: EString
+}
+class Constraint  {
+}
+class Assumption  {
+}
+class Requirement  {
+	statementOfRequirement: EString
+	rationale: EString
+	acceptanceCriteria: EString
+}
+class Gap  {
+}
+class WorkPackage  {
+	workPackageCategory: WorkPackageCategory
+}
+class LogicalDataComponent  {
+}
+class PhysicalDataComponent  {
+}
+class ApplicationArchitecture  {
+}
+class PhysicalApplicationComponent  {
+	lifeCycleStatus: LifeCycleStatus
+	initialLiveDate: EDate
+	dateOfLastRelease: EDate
+	dateOfNextRelease: EDate
+	retirementDate: EDate
+	availabilityQualityCharacteristics: EString
+	servicesTimes: EString
+	manageabilityCharacteristics: EString
+	serviceabilityCharacteristics: EString
+	performanceCharacteristics: EString
+	reliabilityCharacteristics: EString
+	recoverabilityCharacteristics: EString
+	locatabilityCharacteristics: EString
+	securityCharacteristics: EString
+	privacyCharacteristics: EString
+	integrityCharacteristics: EString
+	credibilityCharacteristics: EString
+	localizationCharacteristics: EString
+	internationalizationCharacteristics: EString
+	interoperabilityCharacteristics: EString
+	scalabilityCharacteristics: EString
+	portabilityCharacteristics: EString
+	extensibilityCharacteristics: EString
+	capacityCharacteristics: EString
+	throughput: EString
+	throughputPeriod: EString
+	growth: EString
+	growthPeriod: EString
+	peakProfileShortTerm: EString
+	peakProfileLongTerm: EString
+}
+class LogicalTechnologyComponent  {
+	categoryTRM: EString
+}
+class StrategicArchitecture  {
+}
+enum PrincipleCategory  {
+	GuidingPrinciple: GuidingPrinciple
+	BusinessPrinciple: BusinessPrinciple
+	DataPrinciple: DataPrinciple
+	ApplicationPrinciple: ApplicationPrinciple
+	IntegrationPrinciple: IntegrationPrinciple
+	TechnologyPrinciple: TechnologyPrinciple
+}
+enum StandardsClass  {
+	NonStandard: NonStandard
+	Proposed: Proposed
+	Provisional: Provisional
+	Standard: Standard
+	PhasingOut: PhasingOut
+	Retired: Retired
+}
+abstract class Standard  {
+	standardClass: StandardsClass
+	standardCreationDate: EDate
+	lastStandardCreationDate: EDate
+	nextStandardCreationDate: EDate
+	retireDate: EDate
+}
+abstract class Service  {
+}
+abstract class ApplicationComponent  {
+}
+class InformationSystemService  {
+}
+enum LifeCycleStatus  {
+	Proposed: Proposed
+	InDevelopment: InDevelopment
+	Live: Live
+	PhasingOut: PhasingOut
+	Retired: Retired
+}
+enum DataEntityCategory  {
+	Message: Message
+	InternallyStoredEntity: InternallyStoredEntity
+}
+abstract class DataComponent  {
+}
+abstract class TechnologyComponent  {
+}
+enum WorkPackageCategory  {
+	WorkPackage: WorkPackage
+	WorkStream: WorkStream
+	Project: Project
+	Program: Program
+	Portofolio: Portofolio
+}
+Architecture <|-- BusinessArchitecture
+Architecture <|-- DataArchitecture
+Architecture <|-- TechnologyArchitecture
+Element <|-- Driver
+Element <|-- Goal
+Element <|-- Objective
+Element <|-- OrganizationUnit
+Element <|-- Actor
+Element <|-- Role
+Element <|-- DataEntity
+Element <|-- LogicalApplicationComponent
+ApplicationComponent <|-- LogicalApplicationComponent
+Element <|-- Function
+Standard <|-- Function
+Element <|-- BusinessService
+Service <|-- BusinessService
+Element <|-- Process
+Standard <|-- Process
+Element <|-- PlatformService
+Service <|-- PlatformService
+Element <|-- PhysicalTechnologyComponent
+TechnologyComponent <|-- PhysicalTechnologyComponent
+Element <|-- Product
+Element <|-- Measure
+Element <|-- ServiceQuality
+Element <|-- Contract
+Element <|-- Event
+Element <|-- Control
+Element <|-- Location
+Element <|-- Capability
+Element <|-- StrategicElement
+StrategicElement <|-- Principle
+StrategicElement <|-- Constraint
+StrategicElement <|-- Assumption
+StrategicElement <|-- Requirement
+StrategicElement <|-- Gap
+StrategicElement <|-- WorkPackage
+Element <|-- LogicalDataComponent
+DataComponent <|-- LogicalDataComponent
+Element <|-- PhysicalDataComponent
+DataComponent <|-- PhysicalDataComponent
+Architecture <|-- ApplicationArchitecture
+Element <|-- PhysicalApplicationComponent
+ApplicationComponent <|-- PhysicalApplicationComponent
+Element <|-- LogicalTechnologyComponent
+TechnologyComponent <|-- LogicalTechnologyComponent
+Architecture <|-- StrategicArchitecture
+Standard <|-- Service
+Standard <|-- ApplicationComponent
+Service <|-- InformationSystemService
+Element <|-- InformationSystemService
+Standard <|-- DataComponent
+Standard <|-- TechnologyComponent
+EnterpriseArchitecture *--> ""architectures *"" Architecture
+EnterpriseArchitecture *--> ""containers *"" Container
+EnterpriseArchitecture *--> ""labels *"" Label
+BusinessArchitecture *--> ""drivers *"" Driver
+BusinessArchitecture *--> ""goals *"" Goal
+BusinessArchitecture *--> ""objectives *"" Objective
+BusinessArchitecture *--> ""units *"" OrganizationUnit
+BusinessArchitecture *--> ""actors *"" Actor
+BusinessArchitecture *--> ""roles *"" Role
+BusinessArchitecture *--> ""functions *"" Function
+BusinessArchitecture *--> ""services *"" BusinessService
+BusinessArchitecture *--> ""processes *"" Process
+BusinessArchitecture *--> ""controls *"" Control
+BusinessArchitecture *--> ""events *"" Event
+BusinessArchitecture *--> ""locations *"" Location
+BusinessArchitecture *--> ""products *"" Product
+BusinessArchitecture *--> ""contracts *"" Contract
+BusinessArchitecture *--> ""measures *"" Measure
+BusinessArchitecture *--> ""servicesQuality *"" ServiceQuality
+DataArchitecture *--> ""entities *"" DataEntity
+DataArchitecture *--> ""logicalComponents *"" LogicalDataComponent
+DataArchitecture *--> ""physicalComponents *"" PhysicalDataComponent
+TechnologyArchitecture *--> ""platformServices *"" PlatformService
+TechnologyArchitecture *--> ""physicalComponents *"" PhysicalTechnologyComponent
+TechnologyArchitecture *--> ""logicalComponents *"" LogicalTechnologyComponent
+Driver ""addressesDrivers *"" -- ""createsGoals *"" Goal
+Driver ""isMotivatedByDrivers *"" -- ""motivatesOrganizationUnits *"" OrganizationUnit
+Driver --> ""decomposesDriver"" Driver
+Goal ""realizesGoals *"" -- ""isRealizedThroughObjectives *"" Objective
+Goal --> ""decomposesGoal"" Goal
+Objective ""setsPerformanceCriteriaForObjectives *"" -- ""isTrackedAgainstMeasures *"" Measure
+Objective --> ""decomposesObjective"" Objective
+OrganizationUnit ""isOwnedAndGovernedByOrganizationUnits *"" -- ""ownsAndGovernsServices *"" Service
+OrganizationUnit ""belongsTo"" -- ""containsActors *"" Actor
+OrganizationUnit ""isOwnedByUnit"" -- ""ownsFunctions *"" Function
+OrganizationUnit ""involvesOrganizationUnits *"" -- ""participatesInProcesses *"" Process
+OrganizationUnit ""isProducedByOrganizationUnits *"" -- ""producesProducts *"" Product
+OrganizationUnit ""containsOrganizationUnits *"" -- ""operatesInLocation"" Location
+Actor ""isSuppliedByActors *"" -- ""suppliesEntities *"" DataEntity
+Actor ""isConsumedByActors *"" -- ""consumesEntities *"" DataEntity
+Actor ""supportsActors *"" -- ""interactsWithFunctions *"" Function
+Actor ""isAssumedByActors *"" -- ""performsTaskInRoles *"" Role
+Actor ""involvesActors *"" -- ""participatesInProcesses *"" Process
+Actor --> ""consumesServices *"" Service
+Actor ""isResolvedByActors *"" -- ""resolvesEvents *"" Event
+Actor ""isGeneratedByActors"" -- ""generatesEvents *"" Event
+Actor ""containsActors *"" -- ""operatesInLocation"" Location
+Actor ""isPerformedByActors *"" -- ""performsFunctions *"" Function
+Actor --> ""decomposesActors *"" Actor
+Role ""canBeAccessedByRoles *"" -- ""accessesFunctions *"" Function
+Role --> ""decomposesRole"" Role
+DataEntity ""consumesEntities *"" -- ""isAccessedByServices *"" Service
+DataEntity ""providesEntities *"" -- ""isUpdatedThroughServices *"" Service
+DataEntity ""encapsulatesDataEntities *"" -- ""residesWithinLogicalDataComponent"" LogicalDataComponent
+DataEntity ""operatesOnDataEntities *"" -- ""isProcessesByLogicalApplicationComponents *"" LogicalApplicationComponent
+DataEntity --> ""decomposeEntity"" DataEntity
+DataEntity --> ""relatesTo *"" DataEntity
+LogicalApplicationComponent ""isRealizedThroughLogicalApplicationComponent *"" -- ""implementsServices *"" Service
+LogicalApplicationComponent ""extendsLogicalApplicationComponents *"" -- ""isExtendedByPhysicalApplicationComponents *"" PhysicalApplicationComponent
+LogicalApplicationComponent --> ""communicatesWith *"" LogicalApplicationComponent
+LogicalApplicationComponent --> ""decomposesLogicalApplicationComponent"" LogicalApplicationComponent
+Function ""providesGovernedInterfaceToAccessFunctions *"" -- ""isBoundedByServices *"" Service
+Function ""decomposesFunctions *"" -- ""supportsProcesses *"" Process
+Function ""orchestratesFunctions *"" -- ""isRealizedByProcesses *"" Process
+Function --> ""decomposesFunction"" Function
+Function --> ""communicatedWithFunctions *"" Function
+BusinessService --> ""supportsObjective *"" Objective
+Process ""isRealizedByProcesses *"" -- ""orchestratesServices *"" Service
+Process ""supportsProcesses *"" -- ""decomposesServices *"" Service
+Process ""ensuresCorrectOperationOfProcesses *"" -- ""isGuidedByControls *"" Control
+Process ""isResolvedByProcesses *"" -- ""resolvesEvents *"" Event
+Process ""isGeneratedByProcesses *"" -- ""generatesEvents *"" Event
+Process ""isProducedByProcesses *"" -- ""producesProducts *"" Product
+Process --> ""decomposesProcess"" Process
+PlatformService ""suppliesPlatformServices *"" -- ""isSuppliedByLogicalTechnologyComponents *"" LogicalTechnologyComponent
+PhysicalTechnologyComponent --> ""realizesApplicationComponents *"" PhysicalApplicationComponent
+PhysicalTechnologyComponent ""isRealizedByPhysicalTechnologyComponents *"" -- ""extendsLogicalTechnologyComponents *"" LogicalTechnologyComponent
+PhysicalTechnologyComponent ""containsPhysicalTechnologyComponents *"" -- ""isHostedInLocation *"" Location
+PhysicalTechnologyComponent --> ""decomposesPhysicalTechnologyComponent"" PhysicalTechnologyComponent
+PhysicalTechnologyComponent --> ""isDependentOnPhysicalTechnologyComponents *"" PhysicalTechnologyComponent
+Measure ""isTrackedAgainstMeasures *"" -- ""setsPerformanceCriteriaForServices *"" Service
+Measure --> ""decomposesMeasure"" Measure
+ServiceQuality ""meetsQualities *"" -- ""appliesToServices *"" Service
+ServiceQuality ""meetsServiceQuality *"" -- ""appliesToContracts *"" Contract
+Contract ""isGovernedAndMeasuredByContracts *"" -- ""governsAndMeasuresBusinessServices *"" Service
+Event ""resolvesEvents *"" -- ""isResolvedByBusinessServices *"" Service
+Element ""ownedElements *"" -- ""category *"" Label
+Container *--> ""subContainers *"" Container
+Container ""containers *"" -- ""labels *"" Label
+Label *--> ""subLabels *"" Label
+Location ""isHotedInLocation"" -- ""containsPhysicalDataComponents *"" PhysicalDataComponent
+Location ""isHostedInLocation *"" -- ""containsPhysicalApplicationComponents *"" PhysicalApplicationComponent
+Location --> ""decomposesLocation"" Location
+Capability ""deliversCapabilities *"" -- ""isDeliveredBy"" WorkPackage
+LogicalDataComponent ""extendsLogicalDataComponents *"" -- ""isExtendedByPhysicalDataComponents *"" PhysicalDataComponent
+PhysicalDataComponent --> ""decomposesPhysicalDataComponent"" PhysicalDataComponent
+PhysicalDataComponent --> ""encapsulatesPhysicalApplicationComponents *"" PhysicalApplicationComponent
+ApplicationArchitecture *--> ""logicalApplicationComponents *"" LogicalApplicationComponent
+ApplicationArchitecture *--> ""physicalApplicationComponents *"" PhysicalApplicationComponent
+ApplicationArchitecture *--> ""informationSystemServices *"" InformationSystemService
+PhysicalApplicationComponent --> ""communicatesWith *"" PhysicalApplicationComponent
+PhysicalApplicationComponent --> ""encapsulatesPhysicalDataComponents *"" PhysicalDataComponent
+PhysicalApplicationComponent --> ""isRealizedByPhysicalTechnologyComponents *"" PhysicalTechnologyComponent
+PhysicalApplicationComponent --> ""decomposesPhysicalApplicationComponent"" PhysicalApplicationComponent
+LogicalTechnologyComponent ""isImplementedOnLogicalTechnologyComponents *"" -- ""providesPlatformForServices *"" Service
+LogicalTechnologyComponent --> ""decomposesLogicalTechnologyComponent"" LogicalTechnologyComponent
+LogicalTechnologyComponent --> ""isDependentOnLogicalTechnologyComponents *"" LogicalTechnologyComponent
+StrategicArchitecture *--> ""capabilities *"" Capability
+StrategicArchitecture *--> ""strategicElements *"" StrategicElement
+Service --> ""isProvidedToActors *"" Actor
+Service --> ""consumesServices *"" Service
+Service --> ""decomposesServices *"" Service
+@enduml'"
+"I want to follow the evolution of a engineering system.
+It shows to different versions of the same system modeled using the CAEX metamodel.
+Based on the changes performed in the models, the changes are captured into a model that conforms to a Traces metamodel.
+","'@startuml
+class AttributeDataType  {
+	java.lang.String
+}
+class AttributeFamily  {
+}
+class AttributeNameMapping  {
+	roleAttributeName: String
+	systemUnitAttributeName: String
+}
+class Attribute  {
+	defaultValue: String
+	value: String
+	attributeDataType: AttributeDataType
+	refAttributeType: String
+	unit: String
+}
+class AttributeLib  {
+}
+class AttributeValueRequirement  {
+	name: String
+}
+class CAEXBasicObject  {
+	changeMode: ChangeMode
+}
+class CAEXFile  {
+	superiorStandardVersion: String[]
+	fileName: String
+	schemaVersion: String
+}
+class CAEXObject  {
+	iD: String
+	name: String
+}
+enum ChangeMode  {
+	state: state
+	create: create
+	delete: delete
+	change: change
+}
+class ChangeModeObject  {
+	org.eclipse.emf.common.util.Enumerator
+}
+class DocumentRoot  {
+	mixed: EFeatureMapEntry[]
+}
+class ExternalInterface  {
+}
+class ExternalReference  {
+	alias: String
+	path: String
+}
+class InstanceHierarchy  {
+}
+class InterfaceClassLib  {
+}
+class InterfaceClass  {
+	refBaseClassPath: String
+}
+class InterfaceFamily  {
+}
+class InterfaceIDMapping  {
+	roleInterfaceID: String
+	systemUnitInterfaceID: String
+}
+class InternalElement  {
+	refBaseSystemUnitPath: String
+}
+class InternalLink  {
+	refPartnerSideA: String
+	refPartnerSideB: String
+}
+class Mapping  {
+}
+class NominalScaled  {
+	requiredValue: String[]
+}
+class OrdinalScaled  {
+	requiredMaxValue: String
+	requiredValue: String
+	requiredMinValue: String
+}
+class RefSemantic  {
+	correspondingAttributePath: String
+}
+class RoleClassLib  {
+}
+class RoleClass  {
+	refBaseClassPath: String
+}
+class RoleFamily  {
+}
+class RoleRequirements  {
+	refBaseRoleClassPath: String
+}
+class SourceDocumentInformation  {
+	lastWritingDateTime: DateTime
+	originID: String
+	originName: String
+	originProjectID: String
+	originProjectTitle: String
+	originRelease: String
+	originVendor: String
+	originVendorURL: String
+	originVersion: String
+}
+class SupportedRoleClass  {
+	refRoleClassPath: String
+}
+class SystemUnitClassLib  {
+}
+class SystemUnitClass  {
+	refBaseClassPath: String
+}
+class SystemUnitFamily  {
+}
+class UnknownType  {
+	requirements: String
+}
+class Copyright  {
+	value: String
+	changeMode: ChangeMode
+}
+class Description  {
+	value: String
+	changeMode: ChangeMode
+}
+class Revision  {
+	revisionDate: DateTime
+	oldVersion: String
+	newVersion: String
+	authorName: String
+	comment: String
+}
+class Version  {
+	value: String
+	changeMode: ChangeMode
+}
+class AdditionalInformation  {
+}
+Attribute <|-- AttributeFamily
+CAEXBasicObject <|-- AttributeNameMapping
+CAEXObject <|-- Attribute
+CAEXObject <|-- AttributeLib
+CAEXBasicObject <|-- AttributeValueRequirement
+CAEXBasicObject <|-- CAEXFile
+CAEXBasicObject <|-- CAEXObject
+InterfaceClass <|-- ExternalInterface
+CAEXBasicObject <|-- ExternalReference
+CAEXObject <|-- InstanceHierarchy
+CAEXObject <|-- InterfaceClassLib
+CAEXObject <|-- InterfaceClass
+InterfaceClass <|-- InterfaceFamily
+CAEXBasicObject <|-- InterfaceIDMapping
+SystemUnitClass <|-- InternalElement
+CAEXObject <|-- InternalLink
+CAEXBasicObject <|-- Mapping
+CAEXBasicObject <|-- RefSemantic
+CAEXObject <|-- RoleClassLib
+CAEXObject <|-- RoleClass
+RoleClass <|-- RoleFamily
+CAEXBasicObject <|-- RoleRequirements
+CAEXBasicObject <|-- SupportedRoleClass
+CAEXObject <|-- SystemUnitClassLib
+CAEXObject <|-- SystemUnitClass
+SystemUnitClass <|-- SystemUnitFamily
+CAEXBasicObject <|-- Revision
+GenericElement <|-- AdditionalInformation
+AttributeNameMapping --> ""roleAttribute"" Attribute
+AttributeNameMapping --> ""systemUnitAttribute"" Attribute
+Attribute *--> ""refSemantic *"" RefSemantic
+Attribute *--> ""constraint *"" AttributeValueRequirement
+Attribute *--> ""attribute *"" Attribute
+Attribute --> ""referenceAttribute"" Attribute
+AttributeLib *--> ""attributeType *"" Attribute
+AttributeValueRequirement *--> ""ordinalScaledType"" OrdinalScaled
+AttributeValueRequirement *--> ""nominalScaledType"" NominalScaled
+AttributeValueRequirement *--> ""unknownType"" UnknownType
+CAEXBasicObject *--> ""description"" Description
+CAEXBasicObject *--> ""version"" Version
+CAEXBasicObject *--> ""revision *"" Revision
+CAEXBasicObject *--> ""copyright"" Copyright
+CAEXBasicObject *--> ""additionalInformation *"" AdditionalInformation
+CAEXFile *--> ""sourceDocumentInformation *"" SourceDocumentInformation
+CAEXFile *--> ""externalReference *"" ExternalReference
+CAEXFile *--> ""instanceHierarchy *"" InstanceHierarchy
+CAEXFile *--> ""interfaceClassLib *"" InterfaceClassLib
+CAEXFile *--> ""roleClassLib *"" RoleClassLib
+CAEXFile *--> ""systemUnitClassLib *"" SystemUnitClassLib
+CAEXFile *--> ""attributeTypeLib *"" AttributeLib
+DocumentRoot *--> ""xMLNSPrefixMap *"" EStringToStringMapEntry
+DocumentRoot *--> ""xSISchemaLocation *"" EStringToStringMapEntry
+DocumentRoot *--> ""/ cAEXFile"" CAEXFile
+InstanceHierarchy *--> ""internalElement *"" InternalElement
+InterfaceClassLib *--> ""interfaceClass *"" InterfaceClass
+InterfaceClass *--> ""attribute *"" Attribute
+InterfaceClass --> ""baseClass"" InterfaceClass
+InterfaceClass *--> ""interfaceClass *"" InterfaceClass
+InterfaceClass *--> ""externalInterface *"" InterfaceClass
+InterfaceIDMapping --> ""roleInterface"" ExternalInterface
+InterfaceIDMapping --> ""systemUnitInterface"" ExternalInterface
+InternalElement *--> ""roleRequirements *"" RoleRequirements
+InternalElement --> ""baseSystemUnit"" SystemUnitClass
+InternalLink --> ""partnerSideA"" InterfaceClass
+InternalLink --> ""partnerSideB"" InterfaceClass
+Mapping *--> ""attributeNameMapping *"" AttributeNameMapping
+Mapping *--> ""interfaceIDMapping *"" InterfaceIDMapping
+RoleClassLib *--> ""roleClass *"" RoleClass
+RoleClass *--> ""attribute *"" Attribute
+RoleClass *--> ""externalInterface *"" ExternalInterface
+RoleClass --> ""baseClass"" RoleClass
+RoleClass *--> ""roleClass *"" RoleClass
+RoleRequirements *--> ""attribute *"" Attribute
+RoleRequirements *--> ""externalInterface *"" InterfaceClass
+RoleRequirements *--> ""mappingObject"" Mapping
+RoleRequirements --> ""roleClass"" RoleClass
+SupportedRoleClass *--> ""mappingObject"" Mapping
+SupportedRoleClass --> ""roleClass"" RoleClass
+SystemUnitClassLib *--> ""systemUnitClass *"" SystemUnitClass
+SystemUnitClass *--> ""attribute *"" Attribute
+SystemUnitClass *--> ""externalInterface *"" InterfaceClass
+SystemUnitClass *--> ""internalElement *"" InternalElement
+SystemUnitClass *--> ""supportedRoleClass *"" SupportedRoleClass
+SystemUnitClass *--> ""internalLink *"" InternalLink
+SystemUnitClass --> ""baseClass"" SystemUnitClass
+SystemUnitClass *--> ""systemUnitClass *"" SystemUnitClass
+@enduml'","'@startuml
+class Event  {
+	set: EBoolean
+	timestamp: EDate
+	dataValue: EString
+	eventType: EventType
+}
+class Log  {
+	resource: EString
+}
+abstract class Attributes  {
+	name: EString
+}
+class FeatureAndClass  {
+}
+class Feature  {
+}
+class JavaClass  {
+}
+class ID  {
+}
+class ReferenceValue  {
+}
+enum EventType  {
+	SET: SET
+	UNSET: UNSET
+	ADD: ADD
+	REMOVE: REMOVE
+	ADD_MANY: ADD_MANY
+	REMOVE_MANY: REMOVE_MANY
+	MOVE: MOVE
+	RESOLVE: RESOLVE
+}
+Attributes <|-- FeatureAndClass
+Attributes <|-- Feature
+Attributes <|-- JavaClass
+Attributes <|-- ID
+Attributes <|-- ReferenceValue
+Event --> ""fatureAndClass"" FeatureAndClass
+Event --> ""id"" ID
+Event --> ""referencevalue"" ReferenceValue
+Log *--> ""event *"" Event
+Log *--> ""attributes *"" Attributes
+FeatureAndClass --> ""class"" JavaClass
+FeatureAndClass --> ""feature"" Feature
+@enduml'"
+How can I use the metamodels to represent the safety attributes of a system?,"'@startuml
+class Abstraction  {
+	name: EString
+}
+class Machine  {
+}
+class Implementation  {
+}
+class Sees  {
+}
+class Imports  {
+}
+class Values  {
+}
+class ValueExpr  {
+	value: EString
+}
+class ConcreteVariables  {
+}
+class Variable  {
+	name: EString
+}
+class ConcreteConstants  {
+}
+class Invariant  {
+}
+class InvariantExpr  {
+}
+class Type  {
+}
+enum PrimitiveTypeEnum  {
+	BOOL: BOOL
+	INT: INT
+	NAT: NAT
+	NAT1: NAT1
+	STRING: STRING
+}
+class Initialisation  {
+}
+class InitialisationExpr  {
+}
+class Properties  {
+}
+class PropertyExpr  {
+}
+class Range  {
+	lowerBound: EInt
+}
+class Assertions  {
+}
+class AssertionExpr  {
+}
+class Definitions  {
+}
+class Definition  {
+	name: EString
+}
+class LogicalExpr  {
+}
+enum InequalityOp  {
+	<: LESS
+	<=: LESS_EQ
+	>: GREATER
+	>=: GREATER_EQ
+}
+class DefinitionCall  {
+}
+class IntLiteral  {
+	value: EInt
+}
+enum BoolLiteralEnum  {
+	TRUE: TRUE
+	FALSE: FALSE
+}
+class Sets  {
+}
+class Set  {
+}
+class Operations  {
+}
+class Operation  {
+	name: EString
+}
+class Body  {
+}
+class Expr  {
+}
+class Skip  {
+}
+class Statement  {
+}
+class If  {
+}
+class IfCond  {
+}
+class Condition  {
+}
+class Pre  {
+}
+class PreExpr  {
+}
+class Var  {
+}
+class Begin  {
+}
+class BeginBody  {
+}
+class Assign  {
+}
+class Return  {
+}
+class ReturnTypeExpr  {
+}
+class ReturnExpr  {
+}
+class Case  {
+}
+class CaseExpr  {
+}
+class Seq  {
+}
+class FinalExpr  {
+}
+class Call  {
+}
+class SimpleCall  {
+}
+class Arg  {
+}
+class LocalOperations  {
+}
+class PrimitiveType  {
+	type: PrimitiveTypeEnum
+}
+class Ref  {
+}
+class PropertyTyped  {
+}
+class PropertyRange  {
+}
+class AndExpr  {
+}
+class ImplyExpr  {
+}
+class InequalityExpr  {
+	op: InequalityOp
+}
+class EqualExpr  {
+}
+class NegExpr  {
+}
+class BoolTest  {
+}
+class TypeConstraint  {
+}
+class ConstantExpr  {
+	constant: BoolLiteralEnum
+}
+class CondAnd  {
+}
+class CondEq  {
+}
+class CondLessThan  {
+}
+class CondMinus  {
+}
+class CondNeg  {
+}
+class BoolLiteral  {
+	value: BoolLiteralEnum
+	constant: BoolLiteralEnum
+}
+class ReturnTuple  {
+}
+class ReturnOr  {
+}
+class Neg  {
+}
+class ArgMinus  {
+}
+class StringLiteral  {
+	value: EString
+}
+Abstraction <|-- Machine
+Abstraction <|-- Implementation
+LogicalExpr <|-- DefinitionCall
+LogicalExpr <|-- IntLiteral
+Condition <|-- IntLiteral
+Arg <|-- IntLiteral
+Body <|-- Skip
+Expr <|-- Skip
+Body <|-- If
+Expr <|-- If
+FinalExpr <|-- If
+Body <|-- Pre
+Body <|-- Var
+Expr <|-- Var
+FinalExpr <|-- Var
+Body <|-- Begin
+Expr <|-- Assign
+Statement <|-- Assign
+Expr <|-- Return
+FinalExpr <|-- Return
+Return <|-- ReturnTypeExpr
+Expr <|-- Case
+FinalExpr <|-- Case
+Body <|-- Seq
+BeginBody <|-- Seq
+BeginBody <|-- FinalExpr
+Expr <|-- Call
+Statement <|-- Call
+Type <|-- PrimitiveType
+Type <|-- Ref
+LogicalExpr <|-- Ref
+Condition <|-- Ref
+ReturnExpr <|-- Ref
+Arg <|-- Ref
+PropertyExpr <|-- PropertyTyped
+PropertyExpr <|-- PropertyRange
+LogicalExpr <|-- AndExpr
+LogicalExpr <|-- ImplyExpr
+LogicalExpr <|-- InequalityExpr
+LogicalExpr <|-- EqualExpr
+LogicalExpr <|-- NegExpr
+LogicalExpr <|-- BoolTest
+ReturnExpr <|-- BoolTest
+LogicalExpr <|-- TypeConstraint
+LogicalExpr <|-- ConstantExpr
+Condition <|-- CondAnd
+Condition <|-- CondEq
+Condition <|-- CondLessThan
+Condition <|-- CondMinus
+Condition <|-- CondNeg
+Condition <|-- BoolLiteral
+ReturnExpr <|-- BoolLiteral
+Arg <|-- BoolLiteral
+Return <|-- ReturnTuple
+ReturnTypeExpr <|-- ReturnOr
+ReturnExpr <|-- Neg
+Arg <|-- ArgMinus
+Arg <|-- StringLiteral
+Abstraction *--> ""sees"" Sees
+Abstraction *--> ""concreteConstants"" ConcreteConstants
+Abstraction *--> ""definitions"" Definitions
+Abstraction *--> ""properties"" Properties
+Abstraction *--> ""operations"" Operations
+Machine *--> ""concreteVariables"" ConcreteVariables
+Machine *--> ""invariant"" Invariant
+Machine *--> ""initialisation"" Initialisation
+Machine *--> ""assertions"" Assertions
+Machine *--> ""sets"" Sets
+Implementation --> ""refine"" Machine
+Implementation *--> ""imports"" Imports
+Implementation *--> ""values"" Values
+Implementation *--> ""localOperations"" LocalOperations
+Sees --> ""seens *"" Abstraction
+Imports --> ""imports *"" Abstraction
+Values *--> ""exprs *"" ValueExpr
+ValueExpr --> ""constant"" Variable
+ConcreteVariables *--> ""variables *"" Variable
+ConcreteConstants *--> ""constants *"" Variable
+Invariant *--> ""exprs *"" InvariantExpr
+InvariantExpr --> ""variable"" Variable
+InvariantExpr *--> ""type"" Type
+Initialisation *--> ""exprs *"" InitialisationExpr
+InitialisationExpr --> ""variable"" Variable
+InitialisationExpr *--> ""type"" Type
+Properties *--> ""exprs *"" PropertyExpr
+Properties *--> ""expr *"" PropertyExpr
+PropertyExpr --> ""constant"" Variable
+Range --> ""upperBound"" Variable
+Assertions *--> ""exprs *"" AssertionExpr
+AssertionExpr --> ""constant"" Variable
+AssertionExpr *--> ""type"" Type
+Definitions *--> ""exprs *"" Definition
+Definition *--> ""args *"" Variable
+Definition *--> ""expr"" LogicalExpr
+DefinitionCall --> ""def"" Definition
+DefinitionCall *--> ""args *"" Arg
+Sets *--> ""exprs *"" Set
+Set *--> ""name"" Variable
+Set *--> ""elems *"" Variable
+Operations *--> ""operations *"" Operation
+Operation *--> ""outputs *"" Variable
+Operation *--> ""args *"" Variable
+Operation *--> ""body"" Body
+If *--> ""exprs *"" IfCond
+If *--> ""else"" Expr
+IfCond *--> ""condition"" Condition
+IfCond *--> ""then"" Expr
+Pre *--> ""exprs *"" PreExpr
+Pre *--> ""expr"" Expr
+PreExpr --> ""var"" Variable
+PreExpr *--> ""type"" Type
+Var *--> ""vars *"" Variable
+Var *--> ""in"" Seq
+Begin *--> ""expr"" BeginBody
+Assign --> ""var"" Variable
+Assign *--> ""value"" ReturnExpr
+ReturnTypeExpr --> ""var"" Variable
+ReturnTypeExpr *--> ""type"" Type
+Case --> ""var"" Variable
+Case *--> ""cases *"" CaseExpr
+CaseExpr --> ""test"" Variable
+CaseExpr *--> ""expr"" Expr
+Seq *--> ""exprs *"" EObject
+Call --> ""rets *"" Variable
+Call --> ""op"" Operation
+Call *--> ""args *"" Arg
+SimpleCall --> ""op"" Operation
+SimpleCall *--> ""args *"" Arg
+LocalOperations *--> ""operations *"" Operation
+Ref --> ""type"" Variable
+Ref --> ""var"" Variable
+PropertyTyped *--> ""type"" Type
+PropertyRange *--> ""range"" Range
+AndExpr *--> ""exprs *"" LogicalExpr
+ImplyExpr *--> ""left"" LogicalExpr
+ImplyExpr *--> ""right"" LogicalExpr
+InequalityExpr *--> ""left"" LogicalExpr
+InequalityExpr *--> ""right"" LogicalExpr
+EqualExpr *--> ""left"" LogicalExpr
+EqualExpr *--> ""right"" LogicalExpr
+NegExpr *--> ""expr"" LogicalExpr
+BoolTest *--> ""expr"" LogicalExpr
+TypeConstraint --> ""var"" Variable
+TypeConstraint *--> ""type"" Type
+CondAnd *--> ""exprs *"" Condition
+CondEq *--> ""left"" Condition
+CondEq *--> ""right"" Condition
+CondLessThan *--> ""left"" Condition
+CondLessThan *--> ""right"" Condition
+CondMinus *--> ""left"" Condition
+CondMinus *--> ""right"" Condition
+CondNeg *--> ""expr"" Condition
+ReturnTuple --> ""vars *"" Variable
+ReturnTuple *--> ""value"" LogicalExpr
+ReturnOr *--> ""exprs *"" ReturnTypeExpr
+Neg *--> ""expr"" ReturnExpr
+ArgMinus *--> ""left"" Arg
+ArgMinus *--> ""right"" Arg
+@enduml'","'@startuml
+class Log  {
+	name: EString
+}
+class Trace  {
+	automata: EString
+	component: EString
+	variable: EString
+	sensor: EString
+	value: EString
+	name: EString
+	type: VarType
+}
+class Event  {
+	name: EString
+	timestamp: EString
+}
+enum VarType  {
+	IN: IN
+	OUT: OUT
+}
+Log *--> ""events *"" Event
+Event *--> ""traces *"" Trace
+@enduml'"
+I want to show a chain among different metamodels related with the same software system.,"'@startuml
+abstract class AccessControlledElement [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AccessControlledElement]] {
+	editable: EBoolean
+}
+abstract class Identifiable [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//Identifiable]] {
+	desc: EString
+	identifier: ID
+	lastChange: DateTime
+	longName: EString
+}
+class AttributeValueXHTML [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeValueXHTML]] {
+	simplified: EBoolean
+}
+abstract class AttributeValue [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeValue]] {
+}
+abstract class SpecElementWithAttributes [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//SpecElementWithAttributes]] {
+}
+class AttributeDefinitionXHTML [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeDefinitionXHTML]] {
+}
+abstract class AttributeDefinition [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeDefinition]] {
+}
+abstract class SpecType [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//SpecType]] {
+}
+class ReqIFContent [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//ReqIFContent]] {
+}
+class ReqIF [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//ReqIF]] {
+	lang: LangType
+}
+class ReqIFHeader [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//ReqIFHeader]] {
+	comment: EString
+	creationTime: DateTime
+	identifier: ID
+	repositoryId: EString
+	reqIFToolId: EString
+	reqIFVersion: EString
+	sourceToolId: EString
+	title: EString
+}
+class ReqIFToolExtension [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//ReqIFToolExtension]] {
+}
+class SpecObject [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//SpecObject]] {
+}
+class SpecObjectType [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//SpecObjectType]] {
+}
+class Specification [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//Specification]] {
+}
+class SpecificationType [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//SpecificationType]] {
+}
+class SpecHierarchy [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//SpecHierarchy]] {
+	tableInternal: EBoolean
+}
+abstract class DatatypeDefinition [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//DatatypeDefinition]] {
+}
+class SpecRelation [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//SpecRelation]] {
+}
+class SpecRelationType [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//SpecRelationType]] {
+}
+class RelationGroup [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//RelationGroup]] {
+}
+class RelationGroupType [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//RelationGroupType]] {
+}
+class DatatypeDefinitionXHTML [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//DatatypeDefinitionXHTML]] {
+}
+class AlternativeID [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AlternativeID]] {
+	identifier: EString
+}
+class AttributeDefinitionBoolean [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeDefinitionBoolean]] {
+}
+abstract class AttributeDefinitionSimple [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeDefinitionSimple]] {
+}
+class DatatypeDefinitionBoolean [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//DatatypeDefinitionBoolean]] {
+}
+abstract class DatatypeDefinitionSimple [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//DatatypeDefinitionSimple]] {
+}
+class AttributeValueBoolean [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeValueBoolean]] {
+	theValue: EBoolean
+}
+abstract class AttributeValueSimple [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeValueSimple]] {
+}
+class AttributeDefinitionDate [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeDefinitionDate]] {
+}
+class DatatypeDefinitionDate [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//DatatypeDefinitionDate]] {
+}
+class AttributeValueDate [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeValueDate]] {
+	theValue: DateTime
+}
+class AttributeDefinitionEnumeration [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeDefinitionEnumeration]] {
+	multiValued: EBoolean
+}
+class DatatypeDefinitionEnumeration [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//DatatypeDefinitionEnumeration]] {
+}
+class EnumValue [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//EnumValue]] {
+}
+class EmbeddedValue [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//EmbeddedValue]] {
+	key: EBigInteger
+	otherContent: EString
+}
+class AttributeValueEnumeration [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeValueEnumeration]] {
+}
+class AttributeDefinitionInteger [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeDefinitionInteger]] {
+}
+class DatatypeDefinitionInteger [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//DatatypeDefinitionInteger]] {
+	max: EBigInteger
+	min: EBigInteger
+}
+class AttributeValueInteger [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeValueInteger]] {
+	theValue: EBigInteger
+}
+class AttributeDefinitionReal [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeDefinitionReal]] {
+}
+class DatatypeDefinitionReal [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//DatatypeDefinitionReal]] {
+	accuracy: EBigInteger
+	max: EDouble
+	min: EDouble
+}
+class AttributeValueReal [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeValueReal]] {
+	theValue: EDouble
+}
+class AttributeDefinitionString [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeDefinitionString]] {
+}
+class DatatypeDefinitionString [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//DatatypeDefinitionString]] {
+	maxLength: EBigInteger
+}
+class AttributeValueString [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//AttributeValueString]] {
+	theValue: EString
+}
+class XhtmlContent [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//XhtmlContent]] {
+	/ xhtmlSource: EString
+}
+class DateTime [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//DateTime]] {
+	java.util.GregorianCalendar
+}
+class ID [[http://www.omg.org/spec/ReqIF/20110401/reqif.xsd#//ID]] {
+	java.lang.String
+}
+Identifiable <|-- AccessControlledElement
+AttributeValue <|-- AttributeValueXHTML
+Identifiable <|-- SpecElementWithAttributes
+AttributeDefinition <|-- AttributeDefinitionXHTML
+AccessControlledElement <|-- AttributeDefinition
+Identifiable <|-- SpecType
+SpecElementWithAttributes <|-- SpecObject
+SpecType <|-- SpecObjectType
+SpecElementWithAttributes <|-- Specification
+SpecType <|-- SpecificationType
+AccessControlledElement <|-- SpecHierarchy
+Identifiable <|-- DatatypeDefinition
+SpecElementWithAttributes <|-- SpecRelation
+SpecType <|-- SpecRelationType
+Identifiable <|-- RelationGroup
+SpecType <|-- RelationGroupType
+DatatypeDefinition <|-- DatatypeDefinitionXHTML
+AttributeDefinitionSimple <|-- AttributeDefinitionBoolean
+AttributeDefinition <|-- AttributeDefinitionSimple
+DatatypeDefinitionSimple <|-- DatatypeDefinitionBoolean
+DatatypeDefinition <|-- DatatypeDefinitionSimple
+AttributeValueSimple <|-- AttributeValueBoolean
+AttributeValue <|-- AttributeValueSimple
+AttributeDefinitionSimple <|-- AttributeDefinitionDate
+DatatypeDefinitionSimple <|-- DatatypeDefinitionDate
+AttributeValueSimple <|-- AttributeValueDate
+AttributeDefinition <|-- AttributeDefinitionEnumeration
+DatatypeDefinition <|-- DatatypeDefinitionEnumeration
+Identifiable <|-- EnumValue
+AttributeValue <|-- AttributeValueEnumeration
+AttributeDefinitionSimple <|-- AttributeDefinitionInteger
+DatatypeDefinitionSimple <|-- DatatypeDefinitionInteger
+AttributeValueSimple <|-- AttributeValueInteger
+AttributeDefinitionSimple <|-- AttributeDefinitionReal
+DatatypeDefinitionSimple <|-- DatatypeDefinitionReal
+AttributeValueSimple <|-- AttributeValueReal
+AttributeDefinitionSimple <|-- AttributeDefinitionString
+DatatypeDefinitionSimple <|-- DatatypeDefinitionString
+AttributeValueSimple <|-- AttributeValueString
+Identifiable *--> ""alternativeID"" AlternativeID
+AttributeValueXHTML --> ""definition"" AttributeDefinitionXHTML
+AttributeValueXHTML *--> ""theOriginalValue"" XhtmlContent
+AttributeValueXHTML *--> ""theValue"" XhtmlContent
+SpecElementWithAttributes *--> ""values *"" AttributeValue
+AttributeDefinitionXHTML --> ""type"" DatatypeDefinitionXHTML
+AttributeDefinitionXHTML *--> ""defaultValue"" AttributeValueXHTML
+SpecType *--> ""specAttributes *"" AttributeDefinition
+ReqIFContent *--> ""datatypes *"" DatatypeDefinition
+ReqIFContent *--> ""specTypes *"" SpecType
+ReqIFContent *--> ""specObjects *"" SpecObject
+ReqIFContent *--> ""specRelations *"" SpecRelation
+ReqIFContent *--> ""specifications *"" Specification
+ReqIFContent *--> ""specRelationGroups *"" RelationGroup
+ReqIF *--> ""theHeader"" ReqIFHeader
+ReqIF *--> ""coreContent"" ReqIFContent
+ReqIF *--> ""toolExtensions *"" ReqIFToolExtension
+ReqIFToolExtension *--> ""extensions *"" EObject
+SpecObject --> ""type"" SpecObjectType
+Specification --> ""type"" SpecificationType
+Specification *--> ""children *"" SpecHierarchy
+SpecHierarchy --> ""object"" SpecObject
+SpecHierarchy *--> ""children *"" SpecHierarchy
+SpecHierarchy --> ""editableAtts *"" AttributeDefinition
+SpecRelation --> ""target"" SpecObject
+SpecRelation --> ""source"" SpecObject
+SpecRelation --> ""type"" SpecRelationType
+RelationGroup --> ""specRelations *"" SpecRelation
+RelationGroup --> ""type"" RelationGroupType
+RelationGroup --> ""sourceSpecification"" Specification
+RelationGroup --> ""targetSpecification"" Specification
+AttributeDefinitionBoolean --> ""type"" DatatypeDefinitionBoolean
+AttributeDefinitionBoolean *--> ""defaultValue"" AttributeValueBoolean
+AttributeValueBoolean --> ""definition"" AttributeDefinitionBoolean
+AttributeDefinitionDate --> ""type"" DatatypeDefinitionDate
+AttributeDefinitionDate *--> ""defaultValue"" AttributeValueDate
+AttributeValueDate --> ""definition"" AttributeDefinitionDate
+AttributeDefinitionEnumeration --> ""type"" DatatypeDefinitionEnumeration
+AttributeDefinitionEnumeration *--> ""defaultValue"" AttributeValueEnumeration
+DatatypeDefinitionEnumeration *--> ""specifiedValues *"" EnumValue
+EnumValue *--> ""properties"" EmbeddedValue
+AttributeValueEnumeration --> ""values *"" EnumValue
+AttributeValueEnumeration --> ""definition"" AttributeDefinitionEnumeration
+AttributeDefinitionInteger --> ""type"" DatatypeDefinitionInteger
+AttributeDefinitionInteger *--> ""defaultValue"" AttributeValueInteger
+AttributeValueInteger --> ""definition"" AttributeDefinitionInteger
+AttributeDefinitionReal --> ""type"" DatatypeDefinitionReal
+AttributeDefinitionReal *--> ""defaultValue"" AttributeValueReal
+AttributeValueReal --> ""definition"" AttributeDefinitionReal
+AttributeDefinitionString --> ""type"" DatatypeDefinitionString
+AttributeDefinitionString *--> ""defaultValue"" AttributeValueString
+AttributeValueString --> ""definition"" AttributeDefinitionString
+XhtmlContent *--> ""xhtml"" EObject
+@enduml'","'@startuml
+class Trace  {
+}
+class Log  {
+	message: EString
+	source: EString
+	timestamp: EDate
+	level: LogLevel
+}
+class Exception  {
+	message: EString
+}
+enum LogLevel  {
+	SEVERE: SEVERE
+	WARNING: WARNING
+	INFO: INFO
+	CONFIG: CONFIG
+	FINE: FINE
+	FINER: FINER
+	FINEST: FINEST
+}
+Trace *--> ""logs *"" Log
+Log *--> ""exceptions *"" Exception
+@enduml'"

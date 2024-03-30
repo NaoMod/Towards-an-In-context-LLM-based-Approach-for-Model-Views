@@ -23,11 +23,11 @@ def check_if_classes_exists(relations, meta_1_document, meta_2_document):
     parser = EcoreParser()
     for relation in relations_to_check:
         classes = list(relation.values())[0]
-        metamodel_name_1 = meta_1_document[0].metadata["source"].replace(".txt", ".ecore").replace("PlantUML\\", "")
+        metamodel_name_1 = meta_1_document[0].metadata["source"].replace(".txt", ".ecore").replace("PlantUML\\", "").replace("1_", "").replace("2_", "")
         class_name_1 = classes[0]
         meta_1_checked = parser.check_ecore_class(metamodel_name_1, class_name_1)
 
-        metamodel_name_2 = meta_2_document[0].metadata["source"].replace(".txt", ".ecore").replace("PlantUML\\", "")
+        metamodel_name_2 = meta_2_document[0].metadata["source"].replace(".txt", ".ecore").replace("PlantUML\\", "").replace("1_", "").replace("2_", "")
         class_name_2 = classes[1]
         meta_2_checked = parser.check_ecore_class(metamodel_name_2, class_name_2)
         if not meta_1_checked or not meta_2_checked:
