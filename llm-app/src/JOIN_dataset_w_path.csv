@@ -1,0 +1,14 @@
+user_input,meta_1,meta_2,relations
+I want to combine the the two metamodels to have a overview of the domain.,1_Book.txt,2_Publication.txt,
+"I want to show a combination of 3 different metamodels that were created around the same application, a Trip-planning app.
+The 3 metamodels are:
+The TOGAF metamodel from the Enterprise Application is used by models representing the entire application architecture.
+The ReqIF metamodel for the requirements of my application.
+The BPMN model is used to represent the application processes.
+The combination should represent all the most relevant information from each metamodel, considering the type of application.",1_ReqIF.txt,2_contentfwk.txt,
+"I want to follow the evolution of a engineering system.
+It shows to different versions of the same system modeled using the CAEX metamodel.
+Based on the changes performed in the models, the changes are captured into a model that conforms to a Traces metamodel.
+",1_caex.txt,2_ecoreXES.txt,
+How can I use the metamodels to represent the safety attributes of a system?,1_B.txt,2_Log.txt,
+I want to show a chain among different metamodels related with the same software system.,1_ReqIF.txt,2_trace.txt,
