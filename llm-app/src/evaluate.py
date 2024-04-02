@@ -3,6 +3,8 @@ import pathlib
 
 from langchain.schema import StrOutputParser
 from langchain_core.output_parsers import JsonOutputParser
+from typing import Optional
+from langchain.evaluation import StringEvaluator
 
 from utils.config import Config
 from runnables.select import Select
@@ -61,11 +63,35 @@ llm = config.get_llm()
 open_ai_key = config.get_open_ai_key()
 
 client = langsmith.Client()
-dataset_name = "JOIN_dataset_w_path_2"
+dataset_name = "ds-loyal-elimination-67"
+
+
+
+class MyStringEvaluator(ExactMatchStringEvaluator):
+
+    @property
+    def requires_input(self) -> bool:
+        return False
+
+    @property
+    def requires_reference(self) -> bool:
+        return True
+
+    @property
+    def evaluation_name(self) -> str:
+        return "exact_match"
+
+    def _evaluate_strings(self, prediction, reference=None, input=None, **kwargs) -> dict:
+        return {"score": prediction == reference}
+    
+exact_evaluator = MyStringEvaluator(
+    ignore_case=True,
+    reference_key="relations"
+)
 
 eval_config = RunEvalConfig(
-    evaluators=["exact_match"],
-    custom_evaluators=[compare_label],
+    evaluators=["json_validity"],
+    custom_evaluators=[compare_label, MyStringEvaluator()],
 )
 
 client.run_on_dataset(

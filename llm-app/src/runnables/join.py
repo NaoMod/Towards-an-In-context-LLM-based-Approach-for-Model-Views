@@ -1,4 +1,5 @@
 from langchain.prompts import PromptTemplate
+from langchain import hub
 
 from .prompt_templates.join import prompts as join_templates
 
@@ -12,7 +13,7 @@ class Join():
         Initialize the Join class.
         """
         self.tags = join_templates["items"][0]["tags"]
-        self.template = join_templates["items"][0]["template"]
+        self.template = hub.pull("james-mir/join-for-vpdl")
 
     def get_template(self):
         """
@@ -21,7 +22,7 @@ class Join():
         Returns:
             PromptTemplate: The prompt template.
         """
-        return PromptTemplate.from_template(self.template)
+        return  self.template
 
     def get_runnable(self, parser):
         """

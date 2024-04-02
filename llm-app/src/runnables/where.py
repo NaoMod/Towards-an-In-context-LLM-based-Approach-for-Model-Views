@@ -1,4 +1,5 @@
 from langchain.prompts import PromptTemplate
+from langchain import hub
 
 from .prompt_templates.where import prompts as where_templates
 
@@ -12,7 +13,7 @@ class Where():
         Initialize the Where class.
         """
         self.tags = where_templates["items"][0]["tags"]
-        self.template = where_templates["items"][0]["template"]
+        self.template = hub.pull("james-mir/where-for-vpdl")
 
     def get_template(self):
         """
@@ -21,7 +22,7 @@ class Where():
         Returns:
             PromptTemplate: The prompt template.
         """
-        return PromptTemplate.from_template(self.template)
+        return self.template
 
     def get_runnable(self, parser):
         """
