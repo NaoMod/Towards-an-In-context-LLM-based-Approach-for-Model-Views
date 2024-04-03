@@ -4,7 +4,7 @@ import os
 import pathlib
 
 from langchain.schema import StrOutputParser
-from langchain_core.output_parsers import JsonOutputParser
+from langchain_core.output_parsers import JsonOutputParser, RetryOutputParser
 from langchain_core.runnables import RunnablePassthrough, RunnableLambda
 
 from utils.config import Config
