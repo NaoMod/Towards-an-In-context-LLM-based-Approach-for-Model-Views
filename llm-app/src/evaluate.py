@@ -65,8 +65,6 @@ open_ai_key = config.get_open_ai_key()
 client = langsmith.Client()
 dataset_name = "ds-loyal-elimination-67"
 
-
-
 class MyStringEvaluator(ExactMatchStringEvaluator):
 
     @property

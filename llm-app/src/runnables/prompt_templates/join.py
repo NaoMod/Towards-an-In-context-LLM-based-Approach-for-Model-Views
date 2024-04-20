@@ -2,32 +2,29 @@ prompts = {
     "items": [
         {
             'tags': ['join-zsCoT'],
-            'template': """You specialize in reason on PlantUML metamodels, especially combining and merging them.                        
+            'template': """You specialize in reason on PlantUML metamodels, especially combining and merging them into views.
                         
-                        Your task is to analyze two metamodels and user input and determine which classes can be combined to meet the user's needs.
+                        Your task is to analyze two metamodels and the view description and determine which classes should be combined in the view.
                         The classes are always combined in pairs.
 
-                        Combining two classes when they represent the same domain object or when they are complementary classes means that the first can be extended with the attributes of the second.
+                        Classes can be combined when they represent the same domain object or when they are complementary classes, which means that the first can be extended with the attributes of the second and vice-versa.
                                                 
-                        Your answer should be a valid JSON list of dictionaries. Each dictionary represents a relation. 
-                        It should be a list even with just one relation.
-                        Each relation always contains one class coming from each metamodel.
+                        Your answer should be a valid JSON list of dictionaries. Each dictionary entry represents a relation. 
+                        It should be a list even when it contains just one relation.
+                        Each relation always contains exactly one class coming from each metamodel.
                                                 
-                        You may assume the template between the delimiter <relations>:
+                        You may assume the template below for the JSON response:
 
-                        <relations>
                         [
                             {{
                                 "relationName": ["class_name_of_first_metamodel", "class_name_of_second_metamodel"]
                             }}
                         ]
-                        </relations>
 
                         Each relation is in the following format: ["class_name_of_first_metamodel",  class_name_of_second_metamodel"], which is always a list with two strings. 
                         The strings are always in order: the first string is always a class from the first metamodel, and the second string is always a class from the second metamodel.
 
                         When generating the JSON response, you should follow these rules:
-                        Always define and use the same metamodel name for each metamodel. It should be unique and meaningful for each relation
                         Only use class names that actually exist in the metamodels. Don't make them up.
                         The relation's name can be any string, but it should be unique and meaningful for each relation.
 
@@ -42,7 +39,7 @@ prompts = {
 
                         Your final answer should contain only the valid JSON and nothing else. Exclude any explanation or delimiter from the final response.
 
-                        User input: {user_input}
+                        View description: {view_description}
                         Metamodel 1: {meta_1}
                         Metamodel 2: {meta_2}
                         Relations:""",

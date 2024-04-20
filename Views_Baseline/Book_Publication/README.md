@@ -8,3 +8,7 @@ It was adapted from the manual since it includes two Virtual Relations in the sa
 Below is a screenshot of the final View in the MoDisco browser.
 
 <img title="View in the MoDisco browser" alt="Book Publication View in the MoDisco browser" src="img/Book_Publication_modisco.png">
+
+View description (extracted from the User's manual):
+
+> The Book metamodel has details about each chapter, while the Publication has more information about the publisher and publishing date. This is a simple example of two metamodels with overlapping and complementary information. The view we will create will bring all this information under a single (virtual) metamodel.

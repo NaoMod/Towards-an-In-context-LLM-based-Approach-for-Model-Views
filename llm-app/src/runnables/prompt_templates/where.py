@@ -1,7 +1,54 @@
 prompts = {
     "items": [
          {
-            'tags': ['where-zsCot'], 
+            'tags': ['where-zsCot'],
+            'template': """You specialize in reason on PlantUML metamodels, especially combining and merging them.
+                        
+                        Given two metamodels, a list of relations containing classes' pairs, and a view description, your task is to define how to combine the given classes.
+                                                
+                        It means you must define the combination rules to combine classes from both metamodels.
+                                                
+                        For the input relations list, you may assume the following template:
+
+                        [
+                            {{
+                                "relationName": ["class_name_of_first_metamodel", "class_name_of_second_metamodel"]
+                            }}
+                        ]
+                                                
+                        Your final answer will be a JSON array representing a list of combination rules.
+                                                
+                        For the output, you should provide a JSON array with the combination rules per relation following the template:
+
+                        [
+                            {{
+                                "relationName": {{
+                                    "rule": ["Metamodel_Name.Class_name.Attributte, {{combination_rule}}, Metamodel_Name.Class_name.Attributte"]
+                                }}
+                            }}
+                        ]
+                                                                    
+                        When generating the JSON text:
+                        Only use class and attribute names that actually exist in the metamodels. Don't make them up.
+                        The combination_rule should be a string explaining how the classes can be connected according to the domain's semantics. It means explaining what kind of comparisons can be used to connect the classes in the relation.
+                                                
+                        The step-by-step process is as follows:
+
+                        1. Select the metamodels to be analyzed for each relation in the list of relations.
+                        2. For each pair of metamodel classes, analyze the domain considering the view description and elaborate a possible combination to relate both classes.
+                        3. Create the JSON array with the combination for each relation.
+                        5. Provide the final answer.
+
+                        Your final answer should contain only the valid JSON and nothing else. Exclude any explanation or delimiter from the final response.
+
+                        View description: {view_description}
+                        Metamodel 1: {meta_1}
+                        Metamodel 2: {meta_2}
+                        List of relations: {relations}
+                        Combination rules:""",
+         },
+         {
+            'tags': ['where-zsCot1'], 
             'template': """You specialize in reason on PlantUML metamodels, especially combining and merging them.
                         
                         Given two metamodels, a list of relations that contains classes from each one, and a user input, your task is to define how to combine them.
