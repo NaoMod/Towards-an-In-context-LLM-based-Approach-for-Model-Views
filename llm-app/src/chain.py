@@ -49,40 +49,50 @@ def execute_chain(llm, view_description , meta_1_path, meta_2_path):
     meta_2 = meta_2_loader.load()
 
     join_runnable = Join()
-    join_chain = join_runnable.get_runnable(json_parser)
+    join_chain = join_runnable.get_runnable(llm)
     cfg = {"tags": join_runnable.get_tags()}
 
-    select_runnable = Select()
-    select_chain = select_runnable.get_runnable(json_parser)
-    cfg['tags'] += select_runnable.get_tags()
-
-    where_runnable = Where()
-    where_chain = where_runnable.get_runnable(text_parser)
-    cfg['tags'] += where_runnable.get_tags()
-
-    full_chain = RunnablePassthrough.assign(relations=join_chain) | {
-            "meta_1": itemgetter("meta_1"),
-            "meta_2": itemgetter("meta_2"),
-            "view_description": itemgetter("view_description"),
-            "relations": itemgetter("relations"),
-            } | RunnablePassthrough.assign(select=select_chain) | RunnablePassthrough.assign(combinations=where_chain)
-
-    full_result = full_chain.invoke(
+    join_result = join_chain.invoke(
         {
-            "view_description": view_description ,
-            "meta_1": meta_1, 
+            "view_description": view_description,
+            "meta_1": meta_1,
             "meta_2": meta_2
         },
         config=cfg)
+    
+    print(join_result)
 
-    # if check_if_classes_exists(full_result['relations'], meta_1, meta_2):
-    #     print("Classes exists")
-    # else:  
-    #     print("Classes do not exist")
+    # select_runnable = Select()
+    # select_chain = select_runnable.get_runnable(json_parser)
+    # cfg['tags'] += select_runnable.get_tags()
 
-    print(full_result['relations'])
-    print(full_result['select'])
-    print(full_result['combinations'])
+    # where_runnable = Where()
+    # where_chain = where_runnable.get_runnable(text_parser)
+    # cfg['tags'] += where_runnable.get_tags()
+
+    # full_chain = RunnablePassthrough.assign(relations=join_chain) | {
+    #         "meta_1": itemgetter("meta_1"),
+    #         "meta_2": itemgetter("meta_2"),
+    #         "view_description": itemgetter("view_description"),
+    #         "relations": itemgetter("relations"),
+    #         } | RunnablePassthrough.assign(select=select_chain) | RunnablePassthrough.assign(combinations=where_chain)
+
+    # full_result = full_chain.invoke(
+    #     {
+    #         "view_description": view_description ,
+    #         "meta_1": meta_1, 
+    #         "meta_2": meta_2
+    #     },
+    #     config=cfg)
+
+    # # if check_if_classes_exists(full_result['relations'], meta_1, meta_2):
+    # #     print("Classes exists")
+    # # else:  
+    # #     print("Classes do not exist")
+
+    # print(full_result['relations'])
+    # print(full_result['select'])
+    # print(full_result['combinations'])
 
 # Configure everything
 config = Config("FULL-CHAIN")

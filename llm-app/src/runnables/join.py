@@ -1,5 +1,6 @@
-from langchain.prompts import PromptTemplate
+from langchain.output_parsers import PydanticOutputParser
 from langchain import hub
+from langchain_core.pydantic_v1 import BaseModel, Field
 
 from .prompt_templates.join import prompts as join_templates
 
@@ -24,7 +25,7 @@ class Join():
         """
         return  self.template
 
-    def get_runnable(self, parser):
+    def get_runnable(self, llm, parser=None):
         """
         Get the runnable object.
 
@@ -34,7 +35,9 @@ class Join():
         Returns:
             Runnable: The runnable object.
         """
-        return self.get_template() | parser
+        if parser is None:
+            parser = PydanticOutputParser(pydantic_object=Relations)
+        return self.get_template() | llm | parser
 
     def get_tags(self):
         """
@@ -44,3 +47,11 @@ class Join():
             list[str]: The tags.
         """
         return self.tags
+    
+
+class Relation(BaseModel):
+    class_name_of_first_metamodel: str = Field(..., description="The class name selected from the first metamodel.")
+    class_name_of_second_metamodel: str = Field(..., description="The class name selected from the second metamodel.")
+
+class Relations(BaseModel):
+    relations: list[Relation] = Field(..., description="The list of relations.")
