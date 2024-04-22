@@ -1,6 +1,6 @@
 ### Traceability View
 
-This is a adapted view from the extra example of the report section in the [EMF Views manual](https://www.atlanmod.org/emfviews/manual/user.html#creating-an-html-report-from-a-view).
+This is a adapted view from the extra example of the programmatically view creation section in the [EMF Views manual](https://www.atlanmod.org/emfviews/manual/user.html#creating-a-view-programmatically).
 
 It is used to show a chain among 3 different models related with the same software system.
 The 3 models are a ReqIF model for the requirements, a Log model for the logs and finally a Java model represents the PetStore app developed in Java.

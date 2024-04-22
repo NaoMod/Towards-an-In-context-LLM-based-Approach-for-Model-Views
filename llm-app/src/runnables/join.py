@@ -25,7 +25,7 @@ class Join():
         """
         return  self.template
 
-    def get_runnable(self, llm, parser=None):
+    def get_runnable(self, parser=None):
         """
         Get the runnable object.
 
@@ -37,8 +37,7 @@ class Join():
         """
         if parser is None:
             parser = PydanticOutputParser(pydantic_object=Relations)
-        return self.get_template() | llm | parser
-
+        return self.get_template() | parser
     def get_tags(self):
         """
         Get the tags.

@@ -1,0 +1,5 @@
+We propose to build a view that aggregates together all the models seen so far. This allows the system engineer to transparently point to the relevant information (spread in different models) while also allowing him/her to have a better vision of the full picture.
+
+We add a new bidirectional association designComponent, between Trace and Component, which allows the system engineer to navigate from a runtime trace back to the component that emitted it, and from a component to all its emitted traces.
+
+We also rename the features leftLinkEnd (which holds references to B variables) and rightLinkEnd (references to events and traces) to specification and events, making the view more useful to the engineer. We perform such a renaming by filtering the existing features and creating new associations;

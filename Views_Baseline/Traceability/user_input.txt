@@ -1,1 +1,0 @@
-I want to show a chain among different metamodels related with the same software system.

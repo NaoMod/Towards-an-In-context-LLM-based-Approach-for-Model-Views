@@ -1,6 +1,0 @@
-I want to show a combination of 3 different metamodels that were created around the same application, a Trip-planning app.
-The 3 metamodels are:
-The TOGAF metamodel from the Enterprise Application is used by models representing the entire application architecture.
-The ReqIF metamodel for the requirements of my application.
-The BPMN model is used to represent the application processes.
-The combination should represent all the most relevant information from each metamodel, considering the type of application.
