@@ -49,7 +49,7 @@ def execute_chain(llm, view_description , meta_1_path, meta_2_path):
     meta_2 = meta_2_loader.load()
 
     join_runnable = Join()
-    join_chain = join_runnable.get_runnable(json_parser)
+    join_chain = join_runnable.get_runnable(llm)
     cfg = {"tags": join_runnable.get_tags()}
 
     join_result = join_chain.invoke(
