@@ -1,6 +1,6 @@
-from langchain.output_parsers import PydanticOutputParser
-from langchain import hub
 from langchain_core.pydantic_v1 import BaseModel, Field
+from langchain.prompts import PromptTemplate
+from langchain_core.output_parsers import JsonOutputParser
 
 from .prompt_templates.join import prompts as join_templates
 
@@ -9,23 +9,26 @@ class Join():
     Join class for managing the Join prompt templates.
     """
 
-    def __init__(self,):
+    def __init__(self, llm, parser = None):
         """
         Initialize the Join class.
         """
         self.tags = join_templates["items"][0]["tags"]
-        self.template = hub.pull("james-mir/join-for-vpdl")
+        self.prompt = PromptTemplate.from_template(join_templates["items"][0]["template"])
+        self.model = llm
+        if parser is None:
+            self.parser = JsonOutputParser()
 
-    def get_template(self):
+    def get_promtp(self):
         """
         Get the prompt template.
 
         Returns:
             PromptTemplate: The prompt template.
         """
-        return  self.template
+        return  self.prompt
 
-    def get_runnable(self, llm, parser=None):
+    def get_runnable(self,):
         """
         Get the runnable object.
 
@@ -35,10 +38,8 @@ class Join():
         Returns:
             Runnable: The runnable object.
         """
-        if parser is None:
-            parser = PydanticOutputParser(pydantic_object=Relations)
-
-        return self.get_template() | llm| parser
+        return self.get_promtp() | self.model | self.parser
+    
     def get_tags(self):
         """
         Get the tags.
