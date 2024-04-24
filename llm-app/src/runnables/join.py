@@ -1,6 +1,7 @@
 from langchain_core.pydantic_v1 import BaseModel, Field
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
+from langchain.output_parsers import OutputFixingParser
 
 from .prompt_templates.join import prompts as join_templates
 
@@ -17,7 +18,8 @@ class Join():
         self.prompt = PromptTemplate.from_template(join_templates["items"][0]["template"])
         self.model = llm
         if parser is None:
-            self.parser = JsonOutputParser()
+            basic_parser = JsonOutputParser()
+            self.parser = OutputFixingParser.from_llm(parser=basic_parser, llm=llm)
 
     def get_promtp(self):
         """

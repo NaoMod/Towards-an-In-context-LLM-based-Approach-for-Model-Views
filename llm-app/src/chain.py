@@ -15,10 +15,11 @@ from langchain_community.document_loaders import TextLoader
 
 VIEWS_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..", "Views_Baseline")
 
+parser = EcoreParser()
+
 def check_if_classes_exists(relations, meta_1, meta_2):
     r = json.dumps(relations)
     relations_to_check = json.loads(r)
-    parser = EcoreParser()
     for relation in relations_to_check:
         classes = list(relation.values())[0]
         metamodel_name_1 = meta_1[0].metadata["source"].replace(".txt", ".ecore").replace("PlantUML\\", "").replace("1_", "").replace("2_", "")
@@ -33,7 +34,7 @@ def check_if_classes_exists(relations, meta_1, meta_2):
     return relations
 
 def check_if_classes_exists_wrapper(input_:dict):
-    check_if_classes_exists(input_['relations'], input_['meta_1'], input_['meta_2'])
+    return check_if_classes_exists(input_['relations'], input_['meta_1'], input_['meta_2'])
 
 def execute_chain(llm, view_description , meta_1_path, meta_2_path):
 
@@ -60,7 +61,8 @@ def execute_chain(llm, view_description , meta_1_path, meta_2_path):
             "meta_2": itemgetter("meta_2"),
             "view_description": itemgetter("view_description"),
             "relations": itemgetter("relations"),
-            } | RunnablePassthrough.assign(select=select_chain) | RunnablePassthrough.assign(combinations=where_chain)
+            } | RunnablePassthrough.assign(relations=check_if_classes_exists_wrapper) | RunnablePassthrough.assign(select=select_chain) | RunnablePassthrough.assign(combinations=where_chain)
+    
 
     full_result = full_chain.invoke(
         {
@@ -69,11 +71,6 @@ def execute_chain(llm, view_description , meta_1_path, meta_2_path):
             "meta_2": meta_2
         },
         config=cfg)
-
-    # # if check_if_classes_exists(full_result['relations'], meta_1, meta_2):
-    # #     print("Classes exists")
-    # # else:  
-    # #     print("Classes do not exist")
 
     print(full_result['relations'])
     print(full_result['select'])
