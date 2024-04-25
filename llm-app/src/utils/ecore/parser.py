@@ -1,4 +1,5 @@
 # PyEcore
+from typing import Tuple
 from pyecore.resources import ResourceSet, URI
 
 
@@ -19,6 +20,10 @@ class EcoreParser:
         Initialize the EcoreParser class.
     check_ecore_class(ecore_path, class_to_test)
         Check if a given class exists in the specified Ecore metamodel.
+    check_ecore_attribute(ecore_path, class_to_test, attr_to_test)
+        Check if a given attribute exists in the specified class of the Ecore metamodel.
+    get_metamodel_uri(ecore_path)
+        Get the URI of the metamodel.
 
     """
 
@@ -128,4 +133,28 @@ class EcoreParser:
 
         # Attribute not found in the specified class
         return False
+    
+    def get_metamodel_uri(self, ecore_path: str) -> Tuple[str, str]:
+        """
+        Get the URI of the metamodel.
+
+        Parameters
+        ----------
+        ecore_path : str
+            The path to the Ecore metamodel file.
+
+        Returns
+        -------
+        Tuple[str, str]
+            The URI of the metamodel and its prefix.
+        """
+        resource_path = self.resource_set.get_resource(URI(ecore_path))
+        if resource_path is None or not resource_path.contents:
+            return None
+
+        content = resource_path.contents[0]
+        if content is None or content.nsURI is None:
+            return None
+
+        return content.nsURI, content.nsPrefix
 

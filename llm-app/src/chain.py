@@ -17,7 +17,7 @@ VIEWS_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "
 
 parser = EcoreParser()
 
-def check_if_classes_exists(relations, meta_1, meta_2):
+def check_if_classes_exist(relations, meta_1, meta_2):
     r = json.dumps(relations)
     relations_to_check = json.loads(r)
     metamodel_name_1 = meta_1[0].metadata["source"].replace(".txt", ".ecore").replace("PlantUML\\", "").replace("1_", "").replace("2_", "")
@@ -55,11 +55,59 @@ def check_if_attributtes_exists(select, meta_1, meta_2):
                     return False            
     return True
 
-def check_if_classes_exists_wrapper(input_:dict):
-    return check_if_classes_exists(input_['relations'], input_['meta_1'], input_['meta_2'])
+def check_if_classes_exist_wrapper(input_:dict):
+    return check_if_classes_exist(input_['relations'], input_['meta_1'], input_['meta_2'])
 
 def check_if_attributtes_exists_wrapper(input_:dict):
     return check_if_attributtes_exists(input_['select'], input_['meta_1'], input_['meta_2'])
+
+def generate_vpdl_skeleton_wrapper(input_:dict):
+    return generate_vpdl_skeleton(input_, input_['meta_1'], input_['meta_2'])
+
+def generate_vpdl_skeleton(input_vpdl, meta_1, meta_2):
+
+    metamodel_name_1 = meta_1[0].metadata["source"].replace(".txt", ".ecore").replace("PlantUML\\", "").replace("1_", "").replace("2_", "")
+    metamodel_name_2 = meta_2[0].metadata["source"].replace(".txt", ".ecore").replace("PlantUML\\", "").replace("1_", "").replace("2_", "")
+
+    meta_1_uri, meta_1_prefix = parser.get_metamodel_uri(metamodel_name_1)
+    meta_2_uri, meta_2_prefix = parser.get_metamodel_uri(metamodel_name_2)
+
+    vpdl_skeleton = "create view NAME as\n\nselect "
+    
+    # FILTERS
+    if input_vpdl['classes_exist'] != False and input_vpdl['filters_exist'] != False:
+        filters_for_meta_1 = input_vpdl['select'][0]
+        filters_for_meta_2 = input_vpdl['select'][1]
+        for _, filters_1 in filters_for_meta_1.items():
+            for class_to_include, attributes in filters_1.items():
+                for attr in attributes:
+                    vpdl_skeleton += f"{meta_1_prefix}.{class_to_include}.{attr},\n"
+        for _, filters_2 in filters_for_meta_2.items():
+            for class_to_include, attributes in filters_2.items():
+                for attr in attributes:
+                    vpdl_skeleton += f"{meta_2_prefix}.{class_to_include}.{attr},\n"
+    
+    
+    # JOIN
+    for relation in input_vpdl['relations']:
+        classes = list(relation.values())[0]        
+        class_name_1 = classes[0]
+        class_name_2 = classes[1]
+
+        vpdl_skeleton += f"{meta_1_prefix}.{class_name_1} join {meta_2_prefix}.{class_name_2},\n"
+    
+    # including the metamodels and its identifiers
+    vpdl_skeleton += f"\n\nfrom '{meta_1_uri}' as {meta_1_prefix},\n     {meta_2_uri}' as {meta_2_prefix},\n\nwhere "
+    
+    # Adding join conditions
+    for combination in input_vpdl['combinations']:
+        for relation_name, relation_rules in combination.items():
+            rules = ""
+            for _ , r in relation_rules.items():
+                rules += f"{r} and\n      "
+            vpdl_skeleton += f"{rules} for {relation_name}\n"
+        
+    return vpdl_skeleton
 
 def execute_chain(llm, view_description , meta_1_path, meta_2_path):
 
@@ -86,10 +134,11 @@ def execute_chain(llm, view_description , meta_1_path, meta_2_path):
             "meta_2": itemgetter("meta_2"),
             "view_description": itemgetter("view_description"),
             "relations": itemgetter("relations"),
-            } | RunnablePassthrough.assign(classes_exists=check_if_classes_exists_wrapper) | \
+            } | RunnablePassthrough.assign(classes_exist=check_if_classes_exist_wrapper) | \
                 RunnablePassthrough.assign(select=select_chain) | \
-                RunnablePassthrough.assign(filters_exists=check_if_attributtes_exists_wrapper) | \
-                RunnablePassthrough.assign(combinations=where_chain)
+                RunnablePassthrough.assign(filters_exist=check_if_attributtes_exists_wrapper) | \
+                RunnablePassthrough.assign(combinations=where_chain) | \
+                RunnablePassthrough.assign(vpdl_skeleton=generate_vpdl_skeleton_wrapper)
     
 
     full_result = full_chain.invoke(
@@ -103,8 +152,9 @@ def execute_chain(llm, view_description , meta_1_path, meta_2_path):
     print(full_result['relations'])
     print(full_result['select'])
     print(full_result['combinations'])
-    print(full_result['classes_exists'])
-    print(full_result['filters_exists'])
+    print(full_result['classes_exist'])
+    print(full_result['filters_exist'])
+    print(full_result['vpdl_skeleton'])
 
 # Configure everything
 config = Config("FULL-CHAIN")
