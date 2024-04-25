@@ -3,7 +3,7 @@ import json
 import os
 import pathlib
 
-from langchain_core.runnables import RunnablePassthrough, RunnableLambda
+from langchain_core.runnables import RunnablePassthrough
 
 from utils.config import Config
 from runnables.select import Select
@@ -20,21 +20,46 @@ parser = EcoreParser()
 def check_if_classes_exists(relations, meta_1, meta_2):
     r = json.dumps(relations)
     relations_to_check = json.loads(r)
+    metamodel_name_1 = meta_1[0].metadata["source"].replace(".txt", ".ecore").replace("PlantUML\\", "").replace("1_", "").replace("2_", "")
+    metamodel_name_2 = meta_2[0].metadata["source"].replace(".txt", ".ecore").replace("PlantUML\\", "").replace("1_", "").replace("2_", "")
     for relation in relations_to_check:
-        classes = list(relation.values())[0]
-        metamodel_name_1 = meta_1[0].metadata["source"].replace(".txt", ".ecore").replace("PlantUML\\", "").replace("1_", "").replace("2_", "")
+        classes = list(relation.values())[0]        
         class_name_1 = classes[0]
         meta_1_checked = parser.check_ecore_class(metamodel_name_1, class_name_1)
-
-        metamodel_name_2 = meta_2[0].metadata["source"].replace(".txt", ".ecore").replace("PlantUML\\", "").replace("1_", "").replace("2_", "")
+        
         class_name_2 = classes[1]
         meta_2_checked = parser.check_ecore_class(metamodel_name_2, class_name_2)
         if not meta_1_checked or not meta_2_checked:
             return False
-    return relations
+    return True
+
+def check_if_attributtes_exists(select, meta_1, meta_2):
+    r = json.dumps(select)
+    filters_to_check = json.loads(r)
+    metamodel_name_1 = meta_1[0].metadata["source"].replace(".txt", ".ecore").replace("PlantUML\\", "").replace("1_", "").replace("2_", "")
+    metamodel_name_2 = meta_2[0].metadata["source"].replace(".txt", ".ecore").replace("PlantUML\\", "").replace("1_", "").replace("2_", "")
+    filters_for_meta_1 = filters_to_check[0]
+    filters_for_meta_2 = filters_to_check[1]
+    for _, filters_1 in filters_for_meta_1.items():
+        for class_to_test, attributes in filters_1.items():
+            for attr in attributes:
+                attr_checked = parser.check_ecore_attribute(metamodel_name_1, class_to_test, attr)
+                if not attr_checked:
+                    return False
+
+    for _, filters_2 in filters_for_meta_2.items():
+        for class_to_test, attributes in filters_2.items():
+            for attr in attributes:
+                attr_checked = parser.check_ecore_attribute(metamodel_name_2, class_to_test, attr)
+                if not attr_checked:
+                    return False            
+    return True
 
 def check_if_classes_exists_wrapper(input_:dict):
     return check_if_classes_exists(input_['relations'], input_['meta_1'], input_['meta_2'])
+
+def check_if_attributtes_exists_wrapper(input_:dict):
+    return check_if_attributtes_exists(input_['select'], input_['meta_1'], input_['meta_2'])
 
 def execute_chain(llm, view_description , meta_1_path, meta_2_path):
 
@@ -61,7 +86,10 @@ def execute_chain(llm, view_description , meta_1_path, meta_2_path):
             "meta_2": itemgetter("meta_2"),
             "view_description": itemgetter("view_description"),
             "relations": itemgetter("relations"),
-            } | RunnablePassthrough.assign(relations=check_if_classes_exists_wrapper) | RunnablePassthrough.assign(select=select_chain) | RunnablePassthrough.assign(combinations=where_chain)
+            } | RunnablePassthrough.assign(classes_exists=check_if_classes_exists_wrapper) | \
+                RunnablePassthrough.assign(select=select_chain) | \
+                RunnablePassthrough.assign(filters_exists=check_if_attributtes_exists_wrapper) | \
+                RunnablePassthrough.assign(combinations=where_chain)
     
 
     full_result = full_chain.invoke(
@@ -75,6 +103,8 @@ def execute_chain(llm, view_description , meta_1_path, meta_2_path):
     print(full_result['relations'])
     print(full_result['select'])
     print(full_result['combinations'])
+    print(full_result['classes_exists'])
+    print(full_result['filters_exists'])
 
 # Configure everything
 config = Config("FULL-CHAIN")

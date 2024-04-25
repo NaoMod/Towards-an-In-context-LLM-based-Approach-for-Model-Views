@@ -99,15 +99,12 @@ class EcoreParser:
             True if the attribute exists in the specified class of the metamodel, False otherwise.
         """
 
-        if ecore_path not in self.classes_per_metamodel:
-            self.classes_per_metamodel[ecore_path] = []
-
         # Check if the class containing the attribute exists in the metamodel
         if class_to_test not in self.classes_per_metamodel[ecore_path]:
             # Class doesn't exist, return False
             return False
 
-        # register metamodel
+        
         resource_path = self.resource_set.get_resource(URI(ecore_path))
         if resource_path is None or not resource_path.contents:
             return False
@@ -116,6 +113,7 @@ class EcoreParser:
         if content is None or content.nsURI is None:
             return False
 
+        # register metamodel
         if content.nsURI not in self.resource_set.metamodel_registry:
             self.resource_set.metamodel_registry[content.nsURI] = content
 
@@ -128,6 +126,6 @@ class EcoreParser:
                         # Attribute found, return True
                         return True
 
-        # Attribute not found in the specified class, return False
+        # Attribute not found in the specified class
         return False
 
