@@ -1,0 +1,129 @@
+view_description,meta_1,meta_2,vpdl_skeleton
+"The Book metamodel has details about each chapter, while the Publication has more information about the publisher and publishing date. This is a simple example of two metamodels with overlapping and complementary information. The view we will create will bring all this information under a single (virtual) metamodel.",1_Book.txt,2_Publication.txt,"create view publicationsAndBooks as
+
+select publication.Publication.*,
+       book.Book.*,
+       book.Book.title,
+       book.Chapter.title,
+       publication.Publication join book.Chapter as firstChapter,
+       publication.Publication join book.Chapter as bookChapters,
+
+from 'http://publication' as publication,
+     'http://book' as book,
+
+where s.title = t.eContainer().title
+      and t = t.eContainer().eContents().first()
+      for firstChapter,
+      s.title = t.eContainer().title
+      for bookChapters"
+"The considered view combines a Runtime Log model (that conforms to a simple trace metamodel), a Source Code model (that conforms to the Java metamodel from MoDisco [8]), a Component model (thatconforms to OMG UML [38]) and a Requirements model (specified in a CSV file, that can be opened in a spreadsheet such as Excel).",1_contentfwk.txt,2_ReqIF.txt,"create view EAView as
+
+select EnterpriseArchitecture.EnterpriseArchitecture.architectures,
+       EnterpriseArchitecture.BusinessArchitecture.processes,
+       EnterpriseArchitecture.StrategicArchitecture.strategicElements,
+       EnterpriseArchitecture.Process.name,
+       BPMN.Process.*,
+       ReqIf.ReqIF.coreContent,
+       ReqIf.ReqIFContent.specObjects,
+       ReqIf.SpecObject.values,
+       ReqIf.AttributeValueString.theValue,
+       EnterpriseArchitecture.Process join BPMN.Process as detailedProcess,
+       EnterpriseArchitecture.Requirement join ReqIf.SpecObject as detailedRequirement,
+       EnterpriseArchitecture.Process join BPMN.Process as detailedProcess2,
+
+from 'http://www.obeonetwork.org/dsl/togaf/contentfwk/9.0.0' as EnterpriseArchitecture,
+     'http://www.omg.org/spec/ReqIF/20110401/reqif.xsd' as ReqIf,
+     'http://www.omg.org/spec/BPMN/20100524/MODEL-XMI' as BPMN
+
+where s.name = t.name
+      for detailedProcess,
+      t.values.exists(v | v.theValue=s.name)
+      for detailedRequirement,
+      s.detailedProcess  = t for detailedProcess2"
+"I want to follow the evolution of a engineering system.
+It shows to different versions of the same system modeled using the CAEX metamodel.
+Based on the changes performed in the models, the changes are captured into a model that conforms to a Traces metamodel.
+",1_caex.txt,2_ecoreXES.txt,"create view evolution as
+
+select CAEX_Original.CAEXFile.*,
+       CAEX_Original.InstanceHierarchy.*,
+	   CAEX_Original.InternalElement[name,attribute],
+	   CAEX_New.CAEXFile.*,
+       CAEX_New.InstanceHierarchy.*,
+	   CAEX_New.InternalElement.*,
+	   Traces.Log.*,
+	   Traces.Event[fatureAndClass,id],
+	   Traces.FeatureAndClass.*,
+	   CAEX_Original.InternalElement join CAEX_New.InternalElement as old_to_new,
+	   CAEX_Original.InternalElement join Traces.Event as traces
+
+from 'http://www.dke.de/CAEX/300' as CAEX_Original,
+     'http://www.dke.de/CAEX/300' as CAEX_New,
+     'http://www.example.org/ecoreXES' as Traces,
+
+
+where s.name = t.name for old_to_new,
+      s.name = s.eResource().getEObject(t.id.name).name for traces"
+"We propose to build a view that aggregates together all the models seen so far. This allows the system engineer to transparently point to the relevant information (spread in different models) while also allowing him/her to have a better vision of the full picture.
+
+We add a new bidirectional association designComponent, between Trace and Component, which allows the system engineer to navigate from a runtime trace back to the component that emitted it, and from a component to all its emitted traces.
+
+We also rename the features leftLinkEnd (which holds references to B variables) and rightLinkEnd (references to events and traces) to specification and events, making the view more useful to the engineer. We perform such a renaming by filtering the existing features and creating new associations;",1_TraceabilityMetamodel.txt,2_B.txt,"create view safety as
+
+select Trace.TraceabilityModel.traceabilityLinks,
+       Trace.TraceabilityLink.*,
+       B.Program.machines,
+       B.Machine.sets,
+       B.Sets.exprs,
+       B.Set.elems,
+       B.Variable.*,
+       Log.Log.events,
+       Log.Event.*,
+       Log.Trace.*,
+       UML.Model.elements,
+       UML.Component.*,
+       Trace.TraceabilityLink join B.Variable as specification,
+       Trace.TraceabilityLink join Log.Event as events,
+       Trace.TraceabilityLink join Log.Event as events2,
+       Log.Trace join UML.Component as designComponent
+       
+
+from 'http://www.clearsy.com/B-extended' as B,
+     'http://SimpleUMLComponents' as UML,
+     'http://log' as Log,
+     'http://TraceabilityMetamodel' as Trace
+     
+where s.rightLinkEnd.traceableArtefact.includes(t) for specification,
+      s.leftLinkEnd.traceableArtefact.includes(t) for events,
+      s.leftLinkEnd.traceableArtefact.includes(t) for events2,
+      t.name.startsWith(s.sensor) for designComponent
+      
+      
+      "
+"The view is used to show a chain among different models related with the same software system.
+The 3 models are a ReqIF model for the requirements, a Log model for the logs and finally a Java model represents the PetStore app developed in Java.",1_UML.txt,2_ReqIF.txt,"create view traceability as
+
+select Trace.Trace.logs,
+       Trace.Log.*,
+       Java.ClassDeclaration[name,package],
+       Java.Package.name,
+       UML.Component.name,
+       ReqIf.ReqIF.coreContent,
+       ReqIf.ReqIFContent.specObjects,
+       ReqIf.SpecObject.values,
+       ReqIf.AttributeValueString.theValue,
+       Trace.Log join Java.ClassDeclaration as javaClass,
+       Java.Package join UML.Component as component,
+       UML.Component join ReqIf.SpecObject as requirements
+
+from 'http://www.omg.org/spec/ReqIF/20110401/reqif.xsd' as ReqIf,
+     'http://www.eclipse.org/uml2/5.0.0/UML' as UML,
+     'http://www.eclipse.org/MoDisco/Java/0.2.incubation/java' as Java,
+     'http://trace' as Trace
+
+where ""s.source.split('\\.')[0] = t.name""
+      for javaClass,
+      s.name = t.name.toLowerCase() for component,
+      's.name.toLowerCase().isSubstringOf(t.values[0].theValue.toLowerCase())'
+      for requirements
+      "
