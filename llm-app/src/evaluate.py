@@ -7,6 +7,7 @@ from typing import Optional
 from langchain.evaluation import StringEvaluator
 
 from utils.config import Config
+from chain import execute_chain
 from runnables.select import Select
 from runnables.join import Join
 from runnables.where import Where
@@ -49,6 +50,7 @@ def execute_join(input_: dict):
 
     return response
 
+
 @run_evaluator
 def compare_label(run, example) -> EvaluationResult:
     prediction = run.outputs.get("relations") or ""
@@ -62,39 +64,46 @@ config.load_keys()
 llm = config.get_llm()
 open_ai_key = config.get_open_ai_key()
 
+def execute_chain_wrapper(input_: dict):
+    meta_1_path = find(input_["meta_1"])
+    meta_2_path = find(input_["meta_2"])
+
+    response = execute_chain(llm, input_["view_description"], meta_1_path, meta_2_path)
+    return response
+
 client = langsmith.Client()
-dataset_name = "ds-loyal-elimination-67"
+dataset_name = "VPDL"
 
-class MyStringEvaluator(ExactMatchStringEvaluator):
+# class MyStringEvaluator(ExactMatchStringEvaluator):
 
-    @property
-    def requires_input(self) -> bool:
-        return False
+#     @property
+#     def requires_input(self) -> bool:
+#         return False
 
-    @property
-    def requires_reference(self) -> bool:
-        return True
+#     @property
+#     def requires_reference(self) -> bool:
+#         return True
 
-    @property
-    def evaluation_name(self) -> str:
-        return "exact_match"
+#     @property
+#     def evaluation_name(self) -> str:
+#         return "exact_match"
 
-    def _evaluate_strings(self, prediction, reference=None, input=None, **kwargs) -> dict:
-        return {"score": prediction == reference}
+#     def _evaluate_strings(self, prediction, reference=None, input=None, **kwargs) -> dict:
+#         return {"score": prediction == reference}
     
-exact_evaluator = MyStringEvaluator(
-    ignore_case=True,
-    reference_key="relations"
-)
+# exact_evaluator = MyStringEvaluator(
+#     ignore_case=True,
+#     reference_key="relations"
+# )
 
 eval_config = RunEvalConfig(
-    evaluators=["json_validity"],
-    custom_evaluators=[compare_label, MyStringEvaluator()],
+    evaluators=["exact_match"],
+    # custom_evaluators=[compare_label, MyStringEvaluator()],
 )
 
 client.run_on_dataset(
     dataset_name=dataset_name,
-    llm_or_chain_factory=execute_join,
+    llm_or_chain_factory=execute_chain_wrapper,
     evaluation=eval_config,
     verbose=True,
     project_metadata={"version": "1.0.0", "model": llm},
