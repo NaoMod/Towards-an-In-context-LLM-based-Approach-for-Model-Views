@@ -8,6 +8,8 @@ from langchain.evaluation import StringEvaluator
 
 from utils.config import Config
 from chain import execute_chain
+from evaluators.vpdl_evaluator import VpdlEvaluator
+
 from runnables.select import Select
 from runnables.join import Join
 from runnables.where import Where
@@ -72,33 +74,11 @@ def execute_chain_wrapper(input_: dict):
     return response
 
 client = langsmith.Client()
-dataset_name = "VPDL"
-
-# class MyStringEvaluator(ExactMatchStringEvaluator):
-
-#     @property
-#     def requires_input(self) -> bool:
-#         return False
-
-#     @property
-#     def requires_reference(self) -> bool:
-#         return True
-
-#     @property
-#     def evaluation_name(self) -> str:
-#         return "exact_match"
-
-#     def _evaluate_strings(self, prediction, reference=None, input=None, **kwargs) -> dict:
-#         return {"score": prediction == reference}
-    
-# exact_evaluator = MyStringEvaluator(
-#     ignore_case=True,
-#     reference_key="relations"
-# )
+dataset_name = "VPDL_OneEx"
 
 eval_config = RunEvalConfig(
     evaluators=["exact_match"],
-    # custom_evaluators=[compare_label, MyStringEvaluator()],
+    custom_evaluators=[VpdlEvaluator()],
 )
 
 client.run_on_dataset(
