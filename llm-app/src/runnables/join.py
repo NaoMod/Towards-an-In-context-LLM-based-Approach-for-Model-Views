@@ -4,8 +4,9 @@ from langchain_core.output_parsers import JsonOutputParser
 from langchain.output_parsers import OutputFixingParser
 
 from .prompt_templates.join import prompts as join_templates
+from .runnable_interface import RunnableInterface
 
-class Join():
+class Join(RunnableInterface):
     """
     Join class for managing the Join prompt templates.
     """
@@ -30,7 +31,7 @@ class Join():
         """
         return  self.prompt
 
-    def get_runnable(self,):
+    def get_runnable(self):
         """
         Get the runnable object.
 

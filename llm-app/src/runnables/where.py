@@ -2,8 +2,9 @@ from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 
 from .prompt_templates.where import prompts as where_templates
+from .runnable_interface import RunnableInterface
 
-class Where():
+class Where(RunnableInterface):
     """
     Where class for managing the Where prompt templates.
     """
