@@ -7,8 +7,7 @@ class VpdlEvaluator():
     
     def __call__(self, run: Run, example: Example | None = None) -> dict:
         vpdl_output = run.outputs["output"]
-        reference_output = example.outputs["vpdl_skeleton"]
-        
+        reference_output = example.outputs["vpdl_skeleton"]        
         # Perform comparison logic here
         # For example, you can check if the program output matches the reference output
         
