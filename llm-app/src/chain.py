@@ -12,6 +12,7 @@ from runnables.where import Where
 from utils.ecore.parser import EcoreParser
 
 from langchain_community.document_loaders import TextLoader
+from loaders.ecore_loader import EcoreLoader
 
 VIEWS_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..", "Views_Baseline")
 
@@ -112,10 +113,10 @@ def generate_vpdl_skeleton(input_vpdl, meta_1, meta_2):
 def execute_chain(llm, view_description , meta_1_path, meta_2_path):
 
     # LOADERS
-    meta_1_loader = TextLoader(meta_1_path)
+    meta_1_loader = EcoreLoader(meta_1_path)
     meta_1 = meta_1_loader.load()
 
-    meta_2_loader = TextLoader(meta_2_path)
+    meta_2_loader = EcoreLoader(meta_2_path)
     meta_2 = meta_2_loader.load()
 
     join_runnable = Join(llm)
@@ -167,21 +168,37 @@ for folder in os.listdir(VIEWS_DIRECTORY):
     folder_path = os.path.join(VIEWS_DIRECTORY, folder)
     folder_quantity = 0
     if os.path.isdir(folder_path):
-        plant_uml_folder = os.path.join(folder_path, "metamodels", "PlantUML")
+        metamodels_folder = os.path.join(folder_path, "metamodels")
         view_description_file = os.path.join(folder_path, "view_description.txt")
         view_description = open(view_description_file, "r").read()
         folder_quantity += 1
-        plant_uml_files =[]
-        for file in os.listdir(plant_uml_folder):
-            if file.endswith(".txt"):
-                plant_uml_files.append(os.path.join(plant_uml_folder, file))
-                print(os.path.join(plant_uml_folder, file))
-                if len(plant_uml_files) == 2:
+        ecore_files = []
+        for file in os.listdir(metamodels_folder):
+            if file.endswith(".ecore"):
+                ecore_files.append(os.path.join(metamodels_folder, file))
+                print(os.path.join(metamodels_folder, file))
+                if len(ecore_files) == 2:
                     try:
-                        execute_chain(llm, view_description, plant_uml_files[0], plant_uml_files[1])
+                        execute_chain(llm, view_description, ecore_files[0], ecore_files[1])
                         print("Finished processing chain")
                     except Exception as e:
                         print("Error processing chain")
                         print(e)
+        # plant_uml_folder = os.path.join(folder_path, "metamodels", "PlantUML")
+        # view_description_file = os.path.join(folder_path, "view_description.txt")
+        # view_description = open(view_description_file, "r").read()
+        # folder_quantity += 1
+        # plant_uml_files = []
+        # for file in os.listdir(plant_uml_folder):
+        #     if file.endswith(".txt"):
+        #         plant_uml_files.append(os.path.join(plant_uml_folder, file))
+        #         print(os.path.join(plant_uml_folder, file))
+        #         if len(plant_uml_files) == 2:
+        #             try:
+        #                 execute_chain(llm, view_description, plant_uml_files[0], plant_uml_files[1])
+        #                 print("Finished processing chain")
+        #             except Exception as e:
+        #                 print("Error processing chain")
+        #                 print(e)
         if folder_quantity >= 1:
             break

@@ -3,35 +3,40 @@ from pyecore.utils import dispatch
 import pyecore.ecore as ecore
 
 class PlantUMLTranslate(object):
-    """Translate Ecore models to PlantUML syntax.
+    """
+    A class to translate Ecore models to PlantUML syntax.
 
-    This class provides methods to generate PlantUML syntax for Ecore models.
-    It supports generating syntax for EPackage, EClass, EAttribute, EReference,
-    EEnum, and EDataType.
-
-    Attributes:
-        visited (set): A set to keep track of visited elements.
-        uml_string (str): The generated PlantUML syntax.
-
+    Attributes
+    ----------
+    visited : set
+        A set to keep track of visited elements.
+    uml_string : str
+        The generated PlantUML syntax.
     """
 
     def __init__(self):
-        """Initialize the PlantUMLTranslate object."""
+        """
+        Initialize the PlantUMLTranslate object.
+        """
         self.visited = set()
         self.uml_string = ""
 
     @dispatch
     def generate(self, obj):
-        """Generate PlantUML syntax for the given object.
+       """
+        Generate PlantUML syntax for the given object.
 
-        Args:
-            obj: The object to generate PlantUML syntax for.
+        Parameters
+        ----------
+        obj : object
+            The object to generate PlantUML syntax for.
 
-        Raises:
-            ValueError: If the object kind is unsupported.
-
+        Raises
+        ------
+        ValueError
+            If the object kind is unsupported.
         """
-        raise ValueError('Object kind unsupported: ' + obj.eClass.name)
+       raise ValueError('Object kind unsupported: ' + obj.eClass.name)
 
     @generate.register(ecore.EPackage)
     def epackage_switch(self, p):

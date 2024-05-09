@@ -2,8 +2,9 @@ from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 
 from .prompt_templates.select import prompts as select_templates
+from .runnable_interface import RunnableInterface
 
-class Select():
+class Select(RunnableInterface):
     """
     Select class for managing the select prompt templates.
     """

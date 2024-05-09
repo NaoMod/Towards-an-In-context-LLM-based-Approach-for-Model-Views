@@ -22,7 +22,7 @@ class Join(RunnableInterface):
             basic_parser = JsonOutputParser()
             self.parser = OutputFixingParser.from_llm(parser=basic_parser, llm=llm)
 
-    def get_promtp(self):
+    def get_prompt(self):
         """
         Get the prompt template.
 
@@ -41,7 +41,7 @@ class Join(RunnableInterface):
         Returns:
             Runnable: The runnable object.
         """
-        return self.get_promtp() | self.model | self.parser
+        return self.get_prompt() | self.model | self.parser
     
     def get_tags(self):
         """

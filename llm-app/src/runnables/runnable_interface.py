@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 class RunnableInterface(ABC):
     @abstractmethod
-    def get_promtp(self):
+    def get_prompt(self):
         pass
 
     @abstractmethod

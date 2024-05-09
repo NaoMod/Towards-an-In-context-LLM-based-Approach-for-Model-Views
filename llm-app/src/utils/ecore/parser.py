@@ -42,6 +42,50 @@ class EcoreParser:
         self.resource_set = ResourceSet()
         self.classes_per_metamodel = {}
 
+    def register_metamodel(self, ecore_path: str) -> None:
+        """
+        Register the specified Ecore metamodel.
+
+        Parameters
+        ----------
+        ecore_path : str
+            The path to the Ecore metamodel file.
+
+        Returns
+        -------
+        None
+        """
+        resource_path = self.resource_set.get_resource(URI(ecore_path))
+        if resource_path is None or not resource_path.contents:
+            return
+
+        content = resource_path.contents[0]
+        if content is None or content.nsURI is None:
+            return
+
+        if content.nsURI not in self.resource_set.metamodel_registry:
+            self.resource_set.metamodel_registry[content.nsURI] = content
+
+    def get_metamodel_contents(self, ecore_path: str):
+        """
+        Get the contents of the specified Ecore metamodel.
+
+        Parameters
+        ----------
+        ecore_path : str
+            The path to the Ecore metamodel file.
+
+        Returns
+        -------
+        object
+            The contents of the metamodel.
+        """
+        resource_path = self.resource_set.get_resource(URI(ecore_path))
+        if resource_path is None or not resource_path.contents:
+            return None
+
+        return resource_path.contents[0]
+
     def check_ecore_class(self, ecore_path: str, class_to_test: str) -> bool:
         """
         Check if a given class exists in the specified Ecore metamodel.
