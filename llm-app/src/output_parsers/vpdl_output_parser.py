@@ -8,7 +8,7 @@ from utils.ecore.parser import EcoreParser
 
 VIEWS_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..", "Views_Baseline")
 
-class VPDLOutputParser(BaseOutputParser[str]]):
+class VPDLOutputParser(BaseOutputParser[str]):
 
     def __init__(self, meta_1, meta_2):
         self.meta_1 = meta_1

@@ -2,8 +2,16 @@
 from typing import Tuple
 from pyecore.resources import ResourceSet, URI
 
+class Singleton(type):
+    def __init__(self, name, bases, mmbs):
+        super(Singleton, self).__init__(name, bases, mmbs)
+        self._instance = super(Singleton, self).__call__()
 
-class EcoreParser:
+    def __call__(self, *args, **kw):
+        return self._instance
+
+
+class EcoreParser(metaclass=Singleton):
     """
     The EcoreParser class is used to parse Ecore metamodels and check if a given class exists in the specified Ecore metamodel.
 
@@ -57,7 +65,7 @@ class EcoreParser:
         """
         resource_path = self.resource_set.get_resource(URI(ecore_path))
         if resource_path is None or not resource_path.contents:
-            return
+                return
 
         content = resource_path.contents[0]
         if content is None or content.nsURI is None:
@@ -82,7 +90,11 @@ class EcoreParser:
         """
         resource_path = self.resource_set.get_resource(URI(ecore_path))
         if resource_path is None or not resource_path.contents:
-            return None
+            #try to register
+            try:
+                self.register_metamodel(ecore_path)
+            except:
+                return
 
         return resource_path.contents[0]
 
@@ -108,20 +120,10 @@ class EcoreParser:
         if class_to_test in self.classes_per_metamodel[ecore_path]:
             return True
 
-        # register metamodel
-        resource_path = self.resource_set.get_resource(URI(ecore_path))
-        if resource_path is None or not resource_path.contents:
-            return False
-
-        content = resource_path.contents[0]
-        if content is None or content.nsURI is None:
-            return False
-
-        if content.nsURI not in self.resource_set.metamodel_registry:
-            self.resource_set.metamodel_registry[content.nsURI] = content
+        metamodel_contents = self.get_metamodel_contents(ecore_path)
 
         # check class
-        for element in resource_path.contents[0].eAllContents():
+        for element in metamodel_contents.eAllContents():
             class_name = element.name
             if class_name == class_to_test:
                 self.classes_per_metamodel[ecore_path].append(class_name)

@@ -6,30 +6,31 @@ from langchain.output_parsers import OutputFixingParser
 from .prompt_templates.join import prompts as join_templates
 from .runnable_interface import RunnableInterface
 
+from output_parsers.ecore_classes_parser import EcoreClassesParser
+
 class Join(RunnableInterface):
     """
     Join class for managing the Join prompt templates.
     """
 
-    def __init__(self, llm, parser = None):
+    def __init__(self):
         """
         Initialize the Join class.
         """
         self.tags = join_templates["items"][0]["tags"]
         self.prompt = PromptTemplate.from_template(join_templates["items"][0]["template"])
-        self.model = llm
-        if parser is None:
-            basic_parser = JsonOutputParser()
-            self.parser = OutputFixingParser.from_llm(parser=basic_parser, llm=llm)
+        
 
-    def get_prompt(self):
-        """
-        Get the prompt template.
+    def set_model(self, llm):
+        self.model = llm        
 
-        Returns:
-            PromptTemplate: The prompt template.
-        """
-        return  self.prompt
+    def set_parser(self, meta_1 = None, meta_2 = None):
+        
+        # raise error if some of the parameters are missing
+        if meta_1 is None or meta_2 is None:
+            raise ValueError("Metamodels are required to parse the output using Ecore checkers.")
+        basic_parser = EcoreClassesParser(meta_1=meta_1, meta_2=meta_2)
+        self.parser = OutputFixingParser.from_llm(parser=basic_parser, llm=self.model)
 
     def get_runnable(self):
         """
@@ -41,7 +42,7 @@ class Join(RunnableInterface):
         Returns:
             Runnable: The runnable object.
         """
-        return self.get_prompt() | self.model | self.parser
+        return self.prompt | self.model | self.parser
     
     def get_tags(self):
         """
@@ -51,11 +52,3 @@ class Join(RunnableInterface):
             list[str]: The tags.
         """
         return self.tags
-    
-
-class Relation(BaseModel):
-    class_name_of_first_metamodel: str = Field(..., description="The class name selected from the first metamodel.")
-    class_name_of_second_metamodel: str = Field(..., description="The class name selected from the second metamodel.")
-
-class Relations(BaseModel):
-    relations: list[Relation] = Field(..., description="The list of relations.")
