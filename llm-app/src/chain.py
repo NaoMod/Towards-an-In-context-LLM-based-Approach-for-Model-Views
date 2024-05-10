@@ -155,7 +155,6 @@ def execute_chain(llm, view_description , meta_1_path, meta_2_path):
     print(full_result['relations'])
     print(full_result['select'])
     print(full_result['combinations'])
-    print(full_result['classes_exist'])
     print(full_result['filters_exist'])
     print(full_result['vpdl_skeleton'])
 

@@ -24,8 +24,7 @@ class Join(RunnableInterface):
     def set_model(self, llm):
         self.model = llm        
 
-    def set_parser(self, meta_1 = None, meta_2 = None):
-        
+    def set_parser(self, meta_1 = None, meta_2 = None):        
         # raise error if some of the parameters are missing
         if meta_1 is None or meta_2 is None:
             raise ValueError("Metamodels are required to parse the output using Ecore checkers.")
