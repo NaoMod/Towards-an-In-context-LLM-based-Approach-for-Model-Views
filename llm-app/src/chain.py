@@ -17,50 +17,6 @@ VIEWS_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "
 
 ecore_parser = EcoreParser()
 
-# def check_if_classes_exist(relations, meta_1, meta_2):
-#     r = json.dumps(relations)
-#     relations_to_check = json.loads(r)
-#     metamodel_name_1 = meta_1[0].metadata["source"].replace(".txt", ".ecore").replace("PlantUML\\", "").replace("1_", "").replace("2_", "")
-#     metamodel_name_2 = meta_2[0].metadata["source"].replace(".txt", ".ecore").replace("PlantUML\\", "").replace("1_", "").replace("2_", "")
-#     for relation in relations_to_check:
-#         classes = list(relation.values())[0]        
-#         class_name_1 = classes[0]
-#         meta_1_checked = ecore_parser.check_ecore_class(metamodel_name_1, class_name_1)
-        
-#         class_name_2 = classes[1]
-#         meta_2_checked = ecore_parser.check_ecore_class(metamodel_name_2, class_name_2)
-#         if not meta_1_checked or not meta_2_checked:
-#             return False
-#     return True
-
-# def check_if_attributtes_exists(select, meta_1, meta_2):
-#     r = json.dumps(select)
-#     filters_to_check = json.loads(r)
-#     metamodel_name_1 = meta_1[0].metadata["source"]
-#     metamodel_name_2 = meta_2[0].metadata["source"]
-#     filters_for_meta_1 = filters_to_check[0]
-#     filters_for_meta_2 = filters_to_check[1]
-#     for _, filters_1 in filters_for_meta_1.items():
-#         for class_to_test, attributes in filters_1.items():
-#             for attr in attributes:
-#                 attr_checked = ecore_parser.check_ecore_attribute(metamodel_name_1, class_to_test, attr)
-#                 if not attr_checked:
-#                     return False
-
-#     for _, filters_2 in filters_for_meta_2.items():
-#         for class_to_test, attributes in filters_2.items():
-#             for attr in attributes:
-#                 attr_checked = ecore_parser.check_ecore_attribute(metamodel_name_2, class_to_test, attr)
-#                 if not attr_checked:
-#                     return False            
-#     return True
-
-# def check_if_classes_exist_wrapper(input_:dict):
-#     return check_if_classes_exist(input_['relations'], input_['meta_1'], input_['meta_2'])
-
-# def check_if_attributtes_exists_wrapper(input_:dict):
-#     return check_if_attributtes_exists(input_['select'], input_['meta_1'], input_['meta_2'])
-
 def generate_vpdl_skeleton_wrapper(input_:dict):
     return generate_vpdl_skeleton(input_, input_['meta_1'], input_['meta_2'])
 

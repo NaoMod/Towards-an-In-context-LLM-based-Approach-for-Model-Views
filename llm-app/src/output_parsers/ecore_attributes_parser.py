@@ -2,6 +2,7 @@ from langchain_core.exceptions import OutputParserException
 from langchain_core.outputs import Generation
 from langchain_core.output_parsers import BaseCumulativeTransformOutputParser
 from langchain_core.output_parsers.json import parse_json_markdown
+
 from typing import Any, List, Optional
 
 import os
@@ -14,14 +15,22 @@ from utils.ecore.parser import EcoreParser
 VIEWS_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..", "Views_Baseline")
 
 class EcoreAttributesParser(BaseCumulativeTransformOutputParser[Any]):
-
+    """	
+    EcoreAttributesParser class for managing the ecore attributes parser.
+    """
     meta_1: str = None
     meta_2: str = None
 
     def _diff(self, prev: Optional[Any], next: Any) -> Any:
+        """"
+        Return the difference between the previous and the next output.
+        """
         return jsonpatch.make_patch(prev, next).patch
     
     def parse_result(self, result: List[Generation], *, partial: bool = False) -> Any:
+        """
+        Parse the result of the output.
+        """
         text = result[0].text
         text = text.strip()
         if partial:
@@ -38,6 +47,9 @@ class EcoreAttributesParser(BaseCumulativeTransformOutputParser[Any]):
         
 
     def parse(self, output: str) -> dict:
+        """
+        Parse the output.
+        """
         ecore_parser = EcoreParser()
         try:
             filters_to_check = self.parse_result([Generation(text=output)])
@@ -69,9 +81,15 @@ class EcoreAttributesParser(BaseCumulativeTransformOutputParser[Any]):
         return filters_to_check
     
     def get_format_instructions(self) -> str:
+        """
+        Return the format instructions.
+        """
         #TODO: Not using this method. Needs change if used
         return "Return a JSON object."
     
     @property
     def _type(self) -> str:
+        """"
+        Return the type of the parser.
+        """
         return "ecore_attributes_parser"
