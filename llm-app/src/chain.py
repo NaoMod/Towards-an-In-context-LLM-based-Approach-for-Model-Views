@@ -11,7 +11,6 @@ from runnables.join import Join
 from runnables.where import Where
 from utils.ecore.parser import EcoreParser
 
-from langchain_community.document_loaders import TextLoader
 from loaders.ecore_loader import EcoreLoader
 
 VIEWS_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..", "Views_Baseline")
@@ -34,33 +33,33 @@ ecore_parser = EcoreParser()
 #             return False
 #     return True
 
-def check_if_attributtes_exists(select, meta_1, meta_2):
-    r = json.dumps(select)
-    filters_to_check = json.loads(r)
-    metamodel_name_1 = meta_1[0].metadata["source"]
-    metamodel_name_2 = meta_2[0].metadata["source"]
-    filters_for_meta_1 = filters_to_check[0]
-    # filters_for_meta_2 = filters_to_check[1]
-    for _, filters_1 in filters_for_meta_1.items():
-        for class_to_test, attributes in filters_1.items():
-            for attr in attributes:
-                attr_checked = ecore_parser.check_ecore_attribute(metamodel_name_1, class_to_test, attr)
-                if not attr_checked:
-                    return False
+# def check_if_attributtes_exists(select, meta_1, meta_2):
+#     r = json.dumps(select)
+#     filters_to_check = json.loads(r)
+#     metamodel_name_1 = meta_1[0].metadata["source"]
+#     metamodel_name_2 = meta_2[0].metadata["source"]
+#     filters_for_meta_1 = filters_to_check[0]
+#     filters_for_meta_2 = filters_to_check[1]
+#     for _, filters_1 in filters_for_meta_1.items():
+#         for class_to_test, attributes in filters_1.items():
+#             for attr in attributes:
+#                 attr_checked = ecore_parser.check_ecore_attribute(metamodel_name_1, class_to_test, attr)
+#                 if not attr_checked:
+#                     return False
 
-    # for _, filters_2 in filters_for_meta_2.items():
-    #     for class_to_test, attributes in filters_2.items():
-    #         for attr in attributes:
-    #             attr_checked = ecore_parser.check_ecore_attribute(metamodel_name_2, class_to_test, attr)
-    #             if not attr_checked:
-    #                 return False            
-    return True
+#     for _, filters_2 in filters_for_meta_2.items():
+#         for class_to_test, attributes in filters_2.items():
+#             for attr in attributes:
+#                 attr_checked = ecore_parser.check_ecore_attribute(metamodel_name_2, class_to_test, attr)
+#                 if not attr_checked:
+#                     return False            
+#     return True
 
 # def check_if_classes_exist_wrapper(input_:dict):
 #     return check_if_classes_exist(input_['relations'], input_['meta_1'], input_['meta_2'])
 
-def check_if_attributtes_exists_wrapper(input_:dict):
-    return check_if_attributtes_exists(input_['select'], input_['meta_1'], input_['meta_2'])
+# def check_if_attributtes_exists_wrapper(input_:dict):
+#     return check_if_attributtes_exists(input_['select'], input_['meta_1'], input_['meta_2'])
 
 def generate_vpdl_skeleton_wrapper(input_:dict):
     return generate_vpdl_skeleton(input_, input_['meta_1'], input_['meta_2'])
@@ -76,17 +75,16 @@ def generate_vpdl_skeleton(input_vpdl, meta_1, meta_2):
     vpdl_skeleton = "create view NAME as\n\nselect "
     
     # FILTERS
-    if input_vpdl['classes_exist'] != False and input_vpdl['filters_exist'] != False:
-        filters_for_meta_1 = input_vpdl['select'][0]
-        filters_for_meta_2 = input_vpdl['select'][1]
-        for _, filters_1 in filters_for_meta_1.items():
-            for class_to_include, attributes in filters_1.items():
-                for attr in attributes:
-                    vpdl_skeleton += f"{meta_1_prefix}.{class_to_include}.{attr},\n"
-        for _, filters_2 in filters_for_meta_2.items():
-            for class_to_include, attributes in filters_2.items():
-                for attr in attributes:
-                    vpdl_skeleton += f"{meta_2_prefix}.{class_to_include}.{attr},\n"
+    filters_for_meta_1 = input_vpdl['select'][0]
+    filters_for_meta_2 = input_vpdl['select'][1]
+    for _, filters_1 in filters_for_meta_1.items():
+        for class_to_include, attributes in filters_1.items():
+            for attr in attributes:
+                vpdl_skeleton += f"{meta_1_prefix}.{class_to_include}.{attr},\n"
+    for _, filters_2 in filters_for_meta_2.items():
+        for class_to_include, attributes in filters_2.items():
+            for attr in attributes:
+                vpdl_skeleton += f"{meta_2_prefix}.{class_to_include}.{attr},\n"
     
     
     # JOIN
@@ -125,7 +123,9 @@ def execute_chain(llm, view_description , meta_1_path, meta_2_path):
     join_chain = join_runnable.get_runnable()
     cfg = {"tags": join_runnable.get_tags()}
 
-    select_runnable = Select(llm)
+    select_runnable = Select()
+    select_runnable.set_model(llm)
+    select_runnable.set_parser(meta_1=meta_1_path, meta_2=meta_2_path)
     select_chain = select_runnable.get_runnable()
     cfg['tags'] += select_runnable.get_tags()
 
@@ -139,7 +139,6 @@ def execute_chain(llm, view_description , meta_1_path, meta_2_path):
             "view_description": itemgetter("view_description"),
             "relations": itemgetter("relations"),
             } | RunnablePassthrough.assign(select=select_chain) | \
-                RunnablePassthrough.assign(filters_exist=check_if_attributtes_exists_wrapper) | \
                 RunnablePassthrough.assign(combinations=where_chain) | \
                 RunnablePassthrough.assign(vpdl_skeleton=generate_vpdl_skeleton_wrapper)
     
@@ -155,7 +154,6 @@ def execute_chain(llm, view_description , meta_1_path, meta_2_path):
     print(full_result['relations'])
     print(full_result['select'])
     print(full_result['combinations'])
-    print(full_result['filters_exist'])
     print(full_result['vpdl_skeleton'])
 
 # Configure everything

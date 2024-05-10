@@ -13,7 +13,7 @@ from utils.ecore.parser import EcoreParser
 
 VIEWS_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..", "Views_Baseline")
 
-class EcoreClassesParser(BaseCumulativeTransformOutputParser[Any]):
+class EcoreAttributesParser(BaseCumulativeTransformOutputParser[Any]):
 
     meta_1: str = None
     meta_2: str = None
@@ -40,25 +40,33 @@ class EcoreClassesParser(BaseCumulativeTransformOutputParser[Any]):
     def parse(self, output: str) -> dict:
         ecore_parser = EcoreParser()
         try:
-            relations_to_check = self.parse_result([Generation(text=output)])
-            if relations_to_check is None:
+            filters_to_check = self.parse_result([Generation(text=output)])
+            if filters_to_check is None:
                 raise OutputParserException(
                     f"Error parsing JSON output: {e}"
                 )
         except Exception as e:
-           raise e
-        for relation in relations_to_check:
-            classes = list(relation.values())[0]        
-            class_name_1 = classes[0]
-            meta_1_checked = ecore_parser.check_ecore_class(self.meta_1, class_name_1)
-            
-            class_name_2 = classes[1]
-            meta_2_checked = ecore_parser.check_ecore_class(self.meta_2, class_name_2)
-            if not meta_1_checked or not meta_2_checked:
-                raise OutputParserException(
-                    f"The output contains an invalid class: {class_name_1 if not meta_1_checked else class_name_2}"
-                )
-        return relations_to_check
+            raise e
+        filters_for_meta_1 = filters_to_check[0]
+        filters_for_meta_2 = filters_to_check[1]
+        for _, filters_1 in filters_for_meta_1.items():
+            for class_to_test, attributes in filters_1.items():
+                for attr in attributes:
+                    attr_checked = ecore_parser.check_ecore_attribute(self.meta_1, class_to_test, attr)
+                    if not attr_checked:
+                        raise OutputParserException(
+                            f"The output contains an invalid attribute: {attr}"
+                        )
+
+        for _, filters_2 in filters_for_meta_2.items():
+            for class_to_test, attributes in filters_2.items():
+                for attr in attributes:
+                    attr_checked = ecore_parser.check_ecore_attribute(self.meta_2, class_to_test, attr)
+                    if not attr_checked:
+                        raise OutputParserException(
+                            f"The output contains an invalid attribute: {attr}"
+                        )            
+        return filters_to_check
     
     def get_format_instructions(self) -> str:
         #TODO: Not using this method. Needs change if used
@@ -66,4 +74,4 @@ class EcoreClassesParser(BaseCumulativeTransformOutputParser[Any]):
     
     @property
     def _type(self) -> str:
-        return "ecore_classes_parser"
+        return "ecore_attributes_parser"
