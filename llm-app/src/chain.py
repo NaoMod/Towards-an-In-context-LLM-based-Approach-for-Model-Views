@@ -18,15 +18,12 @@ VIEWS_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "
 ecore_parser = EcoreParser()
 
 def generate_vpdl_skeleton_wrapper(input_:dict):
-    return generate_vpdl_skeleton(input_, input_['meta_1'], input_['meta_2'])
+    return generate_vpdl_skeleton(input_, input_['meta_1_path'], input_['meta_2_path'])
 
 def generate_vpdl_skeleton(input_vpdl, meta_1, meta_2):
 
-    metamodel_name_1 = meta_1[0].metadata["source"].replace(".txt", ".ecore").replace("PlantUML\\", "").replace("1_", "").replace("2_", "")
-    metamodel_name_2 = meta_2[0].metadata["source"].replace(".txt", ".ecore").replace("PlantUML\\", "").replace("1_", "").replace("2_", "")
-
-    meta_1_uri, meta_1_prefix = ecore_parser.get_metamodel_uri(metamodel_name_1)
-    meta_2_uri, meta_2_prefix = ecore_parser.get_metamodel_uri(metamodel_name_2)
+    meta_1_uri, meta_1_prefix = ecore_parser.get_metamodel_uri(meta_1)
+    meta_2_uri, meta_2_prefix = ecore_parser.get_metamodel_uri(meta_2)
 
     vpdl_skeleton = "create view NAME as\n\nselect "
     
@@ -69,9 +66,11 @@ def execute_chain(llm, view_description , meta_1_path, meta_2_path):
     # LOADERS
     meta_1_loader = EcoreLoader(meta_1_path)    
     meta_1 = meta_1_loader.load()
+    meta_1_content = meta_1[0].page_content
 
     meta_2_loader = EcoreLoader(meta_2_path)
     meta_2 = meta_2_loader.load()
+    meta_2_content = meta_2[0].page_content
 
     join_runnable = Join()
     join_runnable.set_model(llm)
@@ -92,6 +91,8 @@ def execute_chain(llm, view_description , meta_1_path, meta_2_path):
     full_chain = RunnablePassthrough.assign(relations=join_chain) | {
             "meta_1": itemgetter("meta_1"),
             "meta_2": itemgetter("meta_2"),
+            "meta_1_path": itemgetter("meta_1_path"),
+            "meta_2_path": itemgetter("meta_2_path"),
             "view_description": itemgetter("view_description"),
             "relations": itemgetter("relations"),
             } | RunnablePassthrough.assign(select=select_chain) | \
@@ -102,8 +103,10 @@ def execute_chain(llm, view_description , meta_1_path, meta_2_path):
     full_result = full_chain.invoke(
         {
             "view_description": view_description ,
-            "meta_1": meta_1, 
-            "meta_2": meta_2
+            "meta_1": meta_1_content, 
+            "meta_2": meta_2_content,
+            "meta_1_path": meta_1_path,
+            "meta_2_path": meta_2_path
         },
         config=cfg)
 
@@ -132,11 +135,11 @@ for folder in os.listdir(VIEWS_DIRECTORY):
                 ecore_files.append(os.path.join(metamodels_folder, file))
                 print(os.path.join(metamodels_folder, file))
                 if len(ecore_files) == 2:
-                    # try:
+                    try:
                         execute_chain(llm, view_description, ecore_files[0], ecore_files[1])
                         print("Finished processing chain")
-                    # except Exception as e:
-                    #     print("Error processing chain")
-                    #     print(e)
-        if folder_quantity >= 1:
-            break
+                    except Exception as e:
+                        print("Error processing chain")
+                        print(e)
+        # if folder_quantity >= 1:
+        #     break

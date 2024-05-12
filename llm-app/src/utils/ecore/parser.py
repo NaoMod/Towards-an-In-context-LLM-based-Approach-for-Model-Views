@@ -196,7 +196,11 @@ class EcoreParser(metaclass=Singleton):
         """
         resource_path = self.resource_set.get_resource(URI(ecore_path))
         if resource_path is None or not resource_path.contents:
-            return None
+            #try to register
+            try:
+                self.register_metamodel(ecore_path)
+            except:
+                return None
 
         content = resource_path.contents[0]
         if content is None or content.nsURI is None:
