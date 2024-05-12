@@ -1,5 +1,4 @@
 from operator import itemgetter
-import json
 import os
 import pathlib
 
@@ -9,6 +8,7 @@ from utils.config import Config
 from runnables.select import Select
 from runnables.join import Join
 from runnables.where import Where
+
 from utils.ecore.parser import EcoreParser
 
 from loaders.ecore_loader import EcoreLoader
@@ -122,6 +122,9 @@ llm = config.get_llm()
 open_ai_key = config.get_open_ai_key()
 
 for folder in os.listdir(VIEWS_DIRECTORY):
+    # ignore traceability folder (too long metamodels)
+    if folder == "Traceability":
+        continue
     folder_path = os.path.join(VIEWS_DIRECTORY, folder)
     folder_quantity = 0
     if os.path.isdir(folder_path):

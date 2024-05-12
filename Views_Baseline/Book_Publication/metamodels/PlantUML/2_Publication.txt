@@ -1,8 +1,0 @@
-@startuml
-class Publication {
-	title: EString
-	author: EString
-	publisher: EString
-	year: EInt
-}
-@enduml

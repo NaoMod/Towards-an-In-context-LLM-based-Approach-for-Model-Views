@@ -12,8 +12,6 @@ import jsonpatch  # type: ignore[import]
 
 from utils.ecore.parser import EcoreParser
 
-VIEWS_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..", "Views_Baseline")
-
 class EcoreAttributesParser(BaseCumulativeTransformOutputParser[Any]):
     """	
     EcoreAttributesParser class for managing the ecore attributes parser.
