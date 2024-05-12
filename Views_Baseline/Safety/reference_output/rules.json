@@ -1,0 +1,22 @@
+[
+    {
+        "specification": [
+            "The traceability link should be related to a variable in the B program."
+        ]
+    },
+    {
+        "events": [
+            "The traceability link should be related to an event in the log."
+        ]
+    },
+    {
+        "events2": [
+            "The traceability link should be related to another event in the log."
+        ]
+    },
+    {
+        "designComponent": [
+            "The name of the trace in the log should start with the sensor specified in the traceability link, and it should correspond to a component in the UML model."
+        ]
+    }
+]

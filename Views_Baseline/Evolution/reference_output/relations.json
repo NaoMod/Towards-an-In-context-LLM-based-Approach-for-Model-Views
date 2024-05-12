@@ -1,0 +1,14 @@
+[
+    {
+        "old_to_new": [
+            "CAEX_Original.InternalElement",
+            "CAEX_New.InternalElement"
+        ]
+    },
+    {
+        "traces": [
+            "CAEX_Original.InternalElement",
+            "Traces.Event"
+        ]
+    }
+]

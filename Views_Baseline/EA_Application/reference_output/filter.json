@@ -1,0 +1,37 @@
+[
+    {
+        "BPMN.Process": {
+            "Process": [
+                "*"
+            ]
+        },
+        "EnterpriseArchitecture": {
+            "EnterpriseArchitecture": [
+                "architectures"
+            ],
+            "BusinessArchitecture": [
+                "processes"
+            ],
+            "StrategicArchitecture": [
+                "strategicElements"
+            ],
+            "Process": [
+                "name"
+            ]
+        },
+        "ReqIf": {
+            "ReqIF": [
+                "coreContent"
+            ],
+            "ReqIFContent": [
+                "specObjects"
+            ],
+            "SpecObject": [
+                "values"
+            ],
+            "AttributeValueString": [
+                "theValue"
+            ]
+        }
+    }
+]

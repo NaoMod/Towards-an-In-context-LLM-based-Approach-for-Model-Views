@@ -1,0 +1,17 @@
+[
+    {
+        "Book": {
+            "Book": [
+                "title"
+            ],
+            "Chapter": [
+                "title"
+            ]
+        },
+        "Publication": {
+            "Publication": [
+                "*"
+            ]
+        }
+    }
+]

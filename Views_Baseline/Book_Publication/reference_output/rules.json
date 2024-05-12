@@ -1,0 +1,12 @@
+[
+    {
+        "firstChapter": [
+            "The title of the book should be the same of the title of the publication and it should include only the first chapter of the publication."
+        ]
+    },
+    {
+        "bookChapters": [
+            "The title of the book should be the same of the title of the publication"
+        ]
+    }
+]

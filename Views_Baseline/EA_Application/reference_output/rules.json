@@ -1,0 +1,17 @@
+[
+    {
+        "detailedProcess": [
+            "The name of the BPMN process should match the name of the enterprise architecture process."
+        ]
+    },
+    {
+        "detailedRequirement": [
+            "The values of the detailed requirement should contain the name of the enterprise architecture process."
+        ]
+    },
+    {
+        "detailedProcess2": [
+            "The detailed process should match the enterprise architecture process."
+        ]
+    }
+]
