@@ -27,31 +27,24 @@ def generate_vpdl_skeleton(input_vpdl, meta_1, meta_2):
 
     vpdl_skeleton = "create view NAME as\n\nselect "
     
-    # FILTERS
-    filters_for_meta_1 = input_vpdl['select'][0]
-    filters_for_meta_2 = input_vpdl['select'][1]
-    for _, filters_1 in filters_for_meta_1.items():
-        for class_to_include, attributes in filters_1.items():
-            for attr in attributes:
-                vpdl_skeleton += f"{meta_1_prefix}.{class_to_include}.{attr},\n"
-    for _, filters_2 in filters_for_meta_2.items():
-        for class_to_include, attributes in filters_2.items():
-            for attr in attributes:
-                vpdl_skeleton += f"{meta_2_prefix}.{class_to_include}.{attr},\n"
-    
+    # FILTERS (SELECT clause)
+    for filters_per_relation in input_vpdl['select']:        
+        for _, attributes_per_class in filters_per_relation.items():           
+            for class_to_include, attr_lst in attributes_per_class.items():
+                for attr in attr_lst:
+                    vpdl_skeleton += f"{meta_1_prefix}.{class_to_include}.{attr},\n"
     
     # JOIN
     for relation in input_vpdl['relations']:
-        classes = list(relation.values())[0]        
-        class_name_1 = classes[0]
-        class_name_2 = classes[1]
-
-        vpdl_skeleton += f"{meta_1_prefix}.{class_name_1} join {meta_2_prefix}.{class_name_2},\n"
+        for relation_name, classes in relation.items():
+            class_name_1 = classes[0]
+            class_name_2 = classes[1]
+            vpdl_skeleton += f"{meta_1_prefix}.{class_name_1}, {meta_2_prefix}.{class_name_2} as {relation_name},\n"
     
     # including the metamodels and its identifiers
     vpdl_skeleton += f"\n\nfrom '{meta_1_uri}' as {meta_1_prefix},\n     {meta_2_uri}' as {meta_2_prefix},\n\nwhere "
     
-    # Adding join conditions
+    # Adding join conditions (WHERE clause)
     for combination in input_vpdl['combinations']:
         for relation_name, relation_rules in combination.items():
             rules = ""
@@ -124,6 +117,8 @@ open_ai_key = config.get_open_ai_key()
 for folder in os.listdir(VIEWS_DIRECTORY):
     # ignore traceability folder (too long metamodels)
     if folder == "Traceability":
+        continue
+    if folder != "EA_Application":
         continue
     folder_path = os.path.join(VIEWS_DIRECTORY, folder)
     folder_quantity = 0

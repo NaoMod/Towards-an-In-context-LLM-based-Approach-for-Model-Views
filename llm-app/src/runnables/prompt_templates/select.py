@@ -2,7 +2,7 @@ prompts = {
     "items": [
         {
             'tags': ['select-zsCot'], 
-            'template': """You specialize in reason on PlantUML metamodels, especially selecting and filtering each class's attributes for a view.
+            'template': """You specialize in reason on PlantUML metamodels, especially selecting and filtering each class's attributes.
                     
                         Given two metamodels and a list of relations containing classes' pairs, your task is to select a set of attributes for the metamodels' classes.
                                             
@@ -12,17 +12,20 @@ prompts = {
 
                         [
                             {{
-                                "relationName": ["class_name_of_first_metamodel", "class_name_of_second_metamodel"]
+                                "relationName": ["class_name_from_first_metamodel", "class_name_from_second_metamodel"]
                             }}
                         ]
 
-                        Your final answer will be a JSON array representing the list of attributes for each selected class in the metamodel following the template:
+                        Your final answer will be a JSON dictionary representing the list of attributes for each selected class in each metamodel per relation, following the template:
                                         
                         [
                             {{
-                                "first_metamodel_name": {{ "class1": ["attribute1", "attribute2", ...], class2: ["attribute1", "attribute2", ...], ...}},
-                                "second_metamodel_name": {{ "class1": ["attribute1", "attribute2", ...], class2: ["attribute1", "attribute2", ...], ...}}
+                                "relationName": 
+                                {{
+                                    "class_name_from_first_metamodel": ["attribute1", "attribute2", ...],
+                                    "class_name_from_second_metamodel": ["attribute1", "attribute2", ...]
                                 }}
+                            }}
                         ]
 
                         When generating the JSON text:

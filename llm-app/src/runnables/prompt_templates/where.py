@@ -12,7 +12,7 @@ prompts = {
 
                         [
                             {{
-                                "relationName": ["class_name_of_first_metamodel", "class_name_of_second_metamodel"]
+                                "relationName": ["class_name_from_first_metamodel", "class_name_from_second_metamodel"]
                             }}
                         ]
                                                 

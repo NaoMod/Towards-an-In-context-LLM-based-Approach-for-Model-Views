@@ -15,4 +15,4 @@ The following video shows the view creation in the old version
 
 [![EMF Views video for ER](https://img.youtube.com/vi/TabEjn4Jr4Q/0.jpg)](https://www.youtube.com/watch?v=TabEjn4Jr4Q)
 
-[1] H. Bruneliere, J. G. Perez, M. Wimmer, and J. Cabot, “EMF Views: A View Mechanism for Integrating Heterogeneous Models,” presented at the 34th International Conference on Conceptual Modeling (ER 2015), Oct. 2015. doi: 10.1007/978-3-319-25264-3_23.
+[1] H. Bruneliere, J. G. Perez, M. Wimmer, and J. Cabot, EMF Views: A View Mechanism for Integrating Heterogeneous Models,ï¿½ presented at the 34th International Conference on Conceptual Modeling (ER 2015), Oct. 2015. doi: 10.1007/978-3-319-25264-3_23.
