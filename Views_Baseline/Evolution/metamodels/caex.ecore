@@ -1138,5 +1138,5 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AdditionalInformation" eSuperTypes="./GenericAnyType.ecore#//GenericElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AdditionalInformation" eSuperTypes="http://caex/anytype#//GenericElement"/>
 </ecore:EPackage>

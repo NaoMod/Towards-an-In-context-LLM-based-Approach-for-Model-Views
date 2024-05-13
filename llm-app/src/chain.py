@@ -119,12 +119,12 @@ for folder in os.listdir(VIEWS_DIRECTORY):
     if folder == "Traceability":
         continue
     #TODO temporary if to process only one view
-    if folder != "EA_Application":
+    if folder != "Evolution":
         continue
     folder_path = os.path.join(VIEWS_DIRECTORY, folder)
     if os.path.isdir(folder_path):
         metamodels_folder = os.path.join(folder_path, "metamodels")
-        # check if the metamodels folder contains a folder named extra. If so, get the paths from there and call the method to register them
+        # check for extra folder for complementary metamodels
         extra_folder = os.path.join(metamodels_folder, "extra")
         if os.path.isdir(extra_folder):
             for extra_ecore_file in os.listdir(extra_folder):

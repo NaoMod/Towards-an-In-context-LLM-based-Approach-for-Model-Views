@@ -124,10 +124,11 @@ class EcoreParser(metaclass=Singleton):
 
         # check class
         for element in metamodel_contents.eAllContents():
-            class_name = element.name
-            if class_name == class_to_test:
-                self.classes_per_metamodel[ecore_path].append(class_name)
-                return True
+            if element.eClass.name == 'EClass':
+                class_name = element.name
+                if class_name == class_to_test:
+                    self.classes_per_metamodel[ecore_path].append(class_name)
+                    return True
 
         return False
     
