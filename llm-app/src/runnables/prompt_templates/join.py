@@ -2,9 +2,9 @@ prompts = {
     "items": [
         {
             'tags': ['join-zsCoT'],
-            'template': """You specialize in reason on PlantUML metamodels, especially finding relations between different metamodels.
+            'template': """You specialize in reason on PlantUML metamodels, especially finding relations between different metamodels to create model views.
                         
-                        Given two metamodels, your task is to analyze them and the task description and determine which classes can be related.
+                        Given two metamodels, your task is to analyze them and the view description and determine which classes can be related.
                         The classes are always combined in pairs.
 
                         Classes can be combined when they represent the same domain object or are complementary classes, which means that one can be extended with the attributes of the other.
@@ -13,15 +13,8 @@ prompts = {
                         It should be a list even when it contains just one relation.
                         Each relation always contains precisely one class coming from each metamodel.
                                                 
-                        You may assume the template below for the JSON response:
+                        {format_instructions}                        
 
-                        [
-                            {{
-                                "relationName": ["class_name_from_first_metamodel", "class_name_from_second_metamodel"]
-                            }}
-                        ]
-
-                        Each relation is in the following format: ["class_name_from_first_metamodel", class_name_from_second_metamodel"], which is always a list with two strings. 
                         The strings are always in order: the first string is a class from the first metamodel, and the second string is always a class from the second metamodel.
 
                         When generating the JSON response, you should follow these rules:

@@ -18,7 +18,7 @@ class Join(RunnableInterface):
         Initialize the Join class.
         """
         self.tags = join_templates["items"][0]["tags"]
-        self.prompt = PromptTemplate.from_template(join_templates["items"][0]["template"])
+        # self.prompt = PromptTemplate.from_template(join_templates["items"][0]["template"])
         
 
     def set_model(self, llm):
@@ -30,6 +30,12 @@ class Join(RunnableInterface):
             raise ValueError("Metamodels are required to parse the output using Ecore checkers.")
         basic_parser = EcoreClassesParser(meta_1=meta_1, meta_2=meta_2)
         self.parser = OutputFixingParser.from_llm(parser=basic_parser, llm=self.model)
+
+        self.prompt = PromptTemplate(
+            template=join_templates["items"][0]["template"],
+            input_variables=["view_description", "meta_1", "meta_2"],
+            partial_variables={"format_instructions":  self.parser.get_format_instructions()},
+        )
 
     def get_runnable(self):
         """

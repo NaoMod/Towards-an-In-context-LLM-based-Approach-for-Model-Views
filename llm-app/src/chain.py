@@ -35,11 +35,12 @@ def generate_vpdl_skeleton(input_vpdl, meta_1, meta_2):
                     vpdl_skeleton += f"{meta_1_prefix}.{class_to_include}.{attr},\n"
     
     # JOIN
-    for relation in input_vpdl['relations']:
-        for relation_name, classes in relation.items():
-            class_name_1 = classes[0]
-            class_name_2 = classes[1]
-            vpdl_skeleton += f"{meta_1_prefix}.{class_name_1}, {meta_2_prefix}.{class_name_2} as {relation_name},\n"
+    for relation in input_vpdl['relations']['relations']:
+                   
+        class_name_1 = relation['classes'][0]
+        class_name_2 = relation['classes'][0]
+    
+        vpdl_skeleton += f"{meta_1_prefix}.{class_name_1}, {meta_2_prefix}.{class_name_2} as {relation['name']},\n"
     
     # including the metamodels and its identifiers
     vpdl_skeleton += f"\n\nfrom '{meta_1_uri}' as {meta_1_prefix},\n     {meta_2_uri}' as {meta_2_prefix},\n\nwhere "
@@ -119,7 +120,7 @@ for folder in os.listdir(VIEWS_DIRECTORY):
     if folder == "Traceability":
         continue
     #TODO temporary if to process only one view
-    if folder != "Evolution":
+    if folder != "Safety":
         continue
     folder_path = os.path.join(VIEWS_DIRECTORY, folder)
     if os.path.isdir(folder_path):
