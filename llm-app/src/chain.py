@@ -28,11 +28,18 @@ def generate_vpdl_skeleton(input_vpdl, meta_1, meta_2):
     vpdl_skeleton = "create view NAME as\n\nselect "
     
     # FILTERS (SELECT clause)
-    for filters_per_relation in input_vpdl['select']:        
-        for _, attributes_per_class in filters_per_relation.items():           
-            for class_to_include, attr_lst in attributes_per_class.items():
-                for attr in attr_lst:
-                    vpdl_skeleton += f"{meta_1_prefix}.{class_to_include}.{attr},\n"
+    for filter_per_relation in input_vpdl['select']['filters']:
+
+        # relation_name = filter_per_relation['name'] # not used
+        class_attributes = filter_per_relation['classAttributes']
+        for class_to_include, attributes in class_attributes.items():
+            for attr in attributes:
+                vpdl_skeleton += f"{meta_1_prefix}.{class_to_include}.{attr},\n"
+    # for filters_per_relation in input_vpdl['select']:        
+    #     for _, attributes_per_class in filters_per_relation.items():           
+    #         for class_to_include, attr_lst in attributes_per_class.items():
+    #             for attr in attr_lst:
+    #                 vpdl_skeleton += f"{meta_1_prefix}.{class_to_include}.{attr},\n"
     
     # JOIN
     for relation in input_vpdl['relations']['relations']:
@@ -69,12 +76,14 @@ def execute_chain(llm, view_description , meta_1_path, meta_2_path):
     join_runnable = Join()
     join_runnable.set_model(llm)
     join_runnable.set_parser(meta_1=meta_1_path, meta_2=meta_2_path)
+    join_runnable.set_prompt()
     join_chain = join_runnable.get_runnable()
     cfg = {"tags": join_runnable.get_tags()}
 
     select_runnable = Select()
     select_runnable.set_model(llm)
     select_runnable.set_parser(meta_1=meta_1_path, meta_2=meta_2_path)
+    select_runnable.set_prompt()
     select_chain = select_runnable.get_runnable()
     cfg['tags'] += select_runnable.get_tags()
 
@@ -120,7 +129,7 @@ for folder in os.listdir(VIEWS_DIRECTORY):
     if folder == "Traceability":
         continue
     #TODO temporary if to process only one view
-    if folder != "Safety":
+    if folder != "Book_Publication":
         continue
     folder_path = os.path.join(VIEWS_DIRECTORY, folder)
     if os.path.isdir(folder_path):

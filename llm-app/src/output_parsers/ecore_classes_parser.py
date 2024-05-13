@@ -70,8 +70,7 @@ class EcoreClassesParser(BaseCumulativeTransformOutputParser[Any]):
         return relations_to_check
     
     def get_format_instructions(self) -> str:
-        #TODO: Not using this method. Needs change if used
-        # return f"Format the output as a {self.pydantic_object.__name__} instance."
+        # The code below was adapted from the Pydantic output parser in LangChain library.
         # Copy schema to avoid altering original Pydantic schema.
         schema = {k: v for k, v in self.pydantic_object.schema().items()}
 

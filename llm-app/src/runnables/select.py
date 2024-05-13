@@ -16,7 +16,6 @@ class Select(RunnableInterface):
         Initialize the Select class.
         """
         self.tags = select_templates["items"][0]["tags"]
-        self.prompt = PromptTemplate.from_template(select_templates["items"][0]["template"])
 
     def set_model(self, llm):
         self.model = llm        
@@ -26,6 +25,14 @@ class Select(RunnableInterface):
         if meta_1 is None or meta_2 is None:
             raise ValueError("Metamodels are required to parse the output using Ecore checkers.")
         self.parser = EcoreAttributesParser(meta_1=meta_1, meta_2=meta_2)
+
+    def set_prompt(self, template = None):
+        if template is None:
+            self.prompt = PromptTemplate(
+                template=select_templates["items"][0]["template"],
+                input_variables=["view_description", "meta_1", "meta_2", "relations"],
+                partial_variables={"format_instructions":  self.parser.get_format_instructions()},
+            )
 
     def get_runnable(self):
         """

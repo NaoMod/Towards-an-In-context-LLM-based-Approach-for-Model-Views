@@ -10,25 +10,19 @@ prompts = {
 
                         For the input relations list, you may assume the following template:
 
-                        [
-                            {{
-                                "relationName": ["class_name_from_first_metamodel", "class_name_from_second_metamodel"]
-                            }}
-                        ]
-
-                        Your final answer will be a JSON dictionary representing the list of attributes for each selected class in each metamodel per relation, following the template:
-                                        
-                        [
-                            {{
-                                "relationName": 
+                        {{
+                            "relations": [
                                 {{
-                                    "class_name_from_first_metamodel": ["attribute1", "attribute2", ...],
-                                    "class_name_from_second_metamodel": ["attribute1", "attribute2", ...]
+                                    "name": "relationName",
+                                    "classes": ["class_name_from_first_metamodel", "class_name_from_second_metamodel"]
                                 }}
-                            }}
-                        ]
+                            ]
+                        }}
 
-                        When generating the JSON text:
+                                                                
+                        {format_instructions}
+
+                        When generating the response, you should follow these rules:
                         Only use class and attribute names that actually exist in the metamodels. Don't make them up.
 
                         The step-by-step process is as follows:
