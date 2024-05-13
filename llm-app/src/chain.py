@@ -118,26 +118,29 @@ for folder in os.listdir(VIEWS_DIRECTORY):
     # ignore traceability folder (too long metamodels)
     if folder == "Traceability":
         continue
+    #TODO temporary if to process only one view
     if folder != "EA_Application":
         continue
     folder_path = os.path.join(VIEWS_DIRECTORY, folder)
-    folder_quantity = 0
     if os.path.isdir(folder_path):
         metamodels_folder = os.path.join(folder_path, "metamodels")
+        # check if the metamodels folder contains a folder named extra. If so, get the paths from there and call the method to register them
+        extra_folder = os.path.join(metamodels_folder, "extra")
+        if os.path.isdir(extra_folder):
+            for extra_ecore_file in os.listdir(extra_folder):
+                if extra_ecore_file.endswith(".ecore"):
+                    ecore_parser.register_metamodel(os.path.join(extra_folder, extra_ecore_file))
         view_description_file = os.path.join(folder_path, "view_description.txt")
         view_description = open(view_description_file, "r").read()
-        folder_quantity += 1
         ecore_files = []
         for file in os.listdir(metamodels_folder):
             if file.endswith(".ecore"):
                 ecore_files.append(os.path.join(metamodels_folder, file))
                 print(os.path.join(metamodels_folder, file))
                 if len(ecore_files) == 2:
-                    try:
+                    # try:
                         execute_chain(llm, view_description, ecore_files[0], ecore_files[1])
                         print("Finished processing chain")
-                    except Exception as e:
-                        print("Error processing chain")
-                        print(e)
-        # if folder_quantity >= 1:
-        #     break
+                    # except Exception as e:
+                    #     print("Error processing chain")
+                    #     print(e)

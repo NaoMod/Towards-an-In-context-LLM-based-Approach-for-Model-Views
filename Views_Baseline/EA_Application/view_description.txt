@@ -1,1 +1,2 @@
-The considered view combines a Runtime Log model (that conforms to a simple trace metamodel), a Source Code model (that conforms to the Java metamodel from MoDisco [8]), a Component model (thatconforms to OMG UML [38]) and a Requirements model (specified in a CSV file, that can be opened in a spreadsheet such as Excel).
+The considered view combines an Enterprise Architecture model and a Requirements model (specified in a CSV file that can be opened in a spreadsheet such as Excel).
+We want to use Requirements to comprehend the enterprise elements better.
