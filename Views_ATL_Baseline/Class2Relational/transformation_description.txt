@@ -1,0 +1,1 @@
+The Class to Relational example describes the simplified transformation of a class schema model to a relational database model.
