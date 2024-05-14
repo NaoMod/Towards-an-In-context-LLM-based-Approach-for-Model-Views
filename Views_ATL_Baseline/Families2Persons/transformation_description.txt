@@ -1,0 +1,1 @@
+This is the source code of the ATL Use Case: "Families to Persons". This use case describes a very simple model transformation example, some kind of ATL "hello world". 

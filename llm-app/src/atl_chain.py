@@ -66,7 +66,7 @@ open_ai_key = config.get_open_ai_key()
 
 for folder in os.listdir(VIEWS_DIRECTORY):
     #TODO temporary if to process only one view
-    if folder != "BibTex2DocBlock":
+    if folder != "Families2Persons":
         continue
     folder_path = os.path.join(VIEWS_DIRECTORY, folder)
     if os.path.isdir(folder_path):

@@ -26,6 +26,8 @@ prompts = {
 
                         Exclude any explanation or delimiter from the final response.
 
+                        {format_instructions}
+
                         Transformation description: {transformation_description}
                         Metamodel 1: {meta_1}
                         Metamodel 2: {meta_2}
