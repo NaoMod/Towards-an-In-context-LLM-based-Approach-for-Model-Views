@@ -1,21 +1,22 @@
 from langchain.prompts import PromptTemplate
-from langchain_core.output_parsers import JsonOutputParser
+from langchain.output_parsers import OutputFixingParser
 
-from .prompt_templates.select import prompts as select_templates
+from .prompt_templates.join import prompts as join_templates
 from interfaces.runnable_interface import RunnableInterface
 
-from output_parsers.ecore_attributes_parser import EcoreAttributesParser
+from output_parsers.ecore_classes_parser import EcoreClassesParser
 
-class Select(RunnableInterface):
+class Join(RunnableInterface):
     """
-    Select class for managing the select prompt templates.
+    Join class for managing the Join prompt templates.
     """
 
     def __init__(self):
         """
-        Initialize the Select class.
+        Initialize the Join class.
         """
-        self.tags = select_templates["items"][0]["tags"]
+        self.tags = join_templates["items"][0]["tags"]
+        
 
     def set_model(self, llm):
         self.model = llm        
@@ -24,14 +25,16 @@ class Select(RunnableInterface):
         # raise error if some of the parameters are missing
         if meta_1 is None or meta_2 is None:
             raise ValueError("Metamodels are required to parse the output using Ecore checkers.")
-        self.parser = EcoreAttributesParser(meta_1=meta_1, meta_2=meta_2)
+        basic_parser = EcoreClassesParser(meta_1=meta_1, meta_2=meta_2)
+        self.parser = OutputFixingParser.from_llm(parser=basic_parser, llm=self.model)
+        
 
     def set_prompt(self, template = None):
         if template is None:
             self.prompt = PromptTemplate(
-                template=select_templates["items"][0]["template"],
-                input_variables=["view_description", "meta_1", "meta_2", "relations"],
-                partial_variables={"format_instructions":  self.parser.get_format_instructions()},
+                template=join_templates["items"][0]["template"],
+                input_variables=["transformation_description", "meta_1", "meta_2"],
+                partial_variables={"format_instructions": self.parser.get_format_instructions()},
             )
 
     def get_runnable(self):
@@ -45,7 +48,7 @@ class Select(RunnableInterface):
             Runnable: The runnable object.
         """
         return self.prompt | self.model | self.parser
-
+    
     def get_tags(self):
         """
         Get the tags.

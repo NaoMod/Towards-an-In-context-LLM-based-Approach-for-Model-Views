@@ -1,10 +1,8 @@
-from langchain_core.pydantic_v1 import BaseModel, Field
 from langchain.prompts import PromptTemplate
-from langchain_core.output_parsers import JsonOutputParser
 from langchain.output_parsers import OutputFixingParser
 
 from .prompt_templates.join import prompts as join_templates
-from runnable_interface import RunnableInterface
+from interfaces.runnable_interface import RunnableInterface
 
 from output_parsers.ecore_classes_parser import EcoreClassesParser
 
