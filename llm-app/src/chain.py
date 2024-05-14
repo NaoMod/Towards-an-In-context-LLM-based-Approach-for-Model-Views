@@ -5,9 +5,9 @@ import pathlib
 from langchain_core.runnables import RunnablePassthrough
 
 from utils.config import Config
-from runnables.select import Select
-from runnables.join import Join
-from runnables.where import Where
+from runnables.views.select import Select
+from runnables.views.join import Join
+from runnables.views.where import Where
 
 from utils.ecore.parser import EcoreParser
 
@@ -35,11 +35,6 @@ def generate_vpdl_skeleton(input_vpdl, meta_1, meta_2):
         for class_to_include, attributes in class_attributes.items():
             for attr in attributes:
                 vpdl_skeleton += f"{meta_1_prefix}.{class_to_include}.{attr},\n"
-    # for filters_per_relation in input_vpdl['select']:        
-    #     for _, attributes_per_class in filters_per_relation.items():           
-    #         for class_to_include, attr_lst in attributes_per_class.items():
-    #             for attr in attr_lst:
-    #                 vpdl_skeleton += f"{meta_1_prefix}.{class_to_include}.{attr},\n"
     
     # JOIN
     for relation in input_vpdl['relations']['relations']:

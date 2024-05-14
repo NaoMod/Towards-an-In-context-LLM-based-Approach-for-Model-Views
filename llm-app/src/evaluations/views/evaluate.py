@@ -10,9 +10,9 @@ from utils.config import Config
 from chain import execute_chain
 from evaluators.vpdl_evaluator import VpdlEvaluator
 
-from runnables.select import Select
-from runnables.join import Join
-from runnables.where import Where
+from runnables.views.select import Select
+from runnables.views.join import Join
+from runnables.views.where import Where
 
 from langchain_community.document_loaders import TextLoader
 from langchain.evaluation import ExactMatchStringEvaluator
