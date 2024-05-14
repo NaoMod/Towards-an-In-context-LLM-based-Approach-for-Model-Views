@@ -10,25 +10,18 @@ prompts = {
                                                 
                         For the input relations list, you may assume the following template:
 
-                        [
-                            {{
-                                "relationName": ["class_name_from_first_metamodel", "class_name_from_second_metamodel"]
-                            }}
-                        ]
-                                                
-                        Your final answer will be a JSON array representing a list of combination rules.
-                                                
-                        For the output, you should provide a JSON array with the combination rules per relation following the template:
-
-                        [
-                            {{
-                                "relationName": {{
-                                    "rule": ["Metamodel_Name.Class_name.Attributte, {{combination_rule}}, Metamodel_Name.Class_name.Attributte"]
+                        {{
+                            "relations": [
+                                {{
+                                    "name": "relationName",
+                                    "classes": ["class_name_from_first_metamodel", "class_name_from_second_metamodel"]
                                 }}
-                            }}
-                        ]
+                            ]
+                        }}
+                                                                                               
+                        {format_instructions}
                                                                     
-                        When generating the JSON text:
+                        When generating the response text you should follow these rules:
                         Only use class and attribute names that actually exist in the metamodels. Don't make them up.
                         The combination_rule should be a string explaining how the classes can be connected according to the domain's semantics. It means explaining what kind of comparisons can be used to connect the classes in the relation.
                                                 
@@ -36,10 +29,11 @@ prompts = {
 
                         1. Select the metamodels to be analyzed for each relation in the list of relations.
                         2. For each pair of metamodel classes, analyze the domain considering the view description and elaborate a possible combination to relate both classes.
-                        3. Create the JSON array with the combination for each relation.
+                        3. Create the JSON array with the combination rule for the relation. The combination rule is a list  that constains the name of the first metaclass, the combination explanation and the name of the second metaclass.
+                        4. Create the JSON array with one rule per relation.
                         5. Provide the final answer.
 
-                        Your final answer should contain only the valid JSON and nothing else. Exclude any explanation or delimiter from the final response.
+                        Exclude any explanation or delimiter from the final response.
 
                         View description: {view_description}
                         Metamodel 1: {meta_1}

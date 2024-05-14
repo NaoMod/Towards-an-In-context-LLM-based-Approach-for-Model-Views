@@ -53,12 +53,13 @@ def generate_vpdl_skeleton(input_vpdl, meta_1, meta_2):
     vpdl_skeleton += f"\n\nfrom '{meta_1_uri}' as {meta_1_prefix},\n     {meta_2_uri}' as {meta_2_prefix},\n\nwhere "
     
     # Adding join conditions (WHERE clause)
-    for combination in input_vpdl['combinations']:
-        for relation_name, relation_rules in combination.items():
-            rules = ""
-            for _ , r in relation_rules.items():
-                rules += f"{r} and\n      "
-            vpdl_skeleton += f"{rules} for {relation_name}\n"
+    for combination in input_vpdl['combinations']['rules']:
+        relation_name = combination['name']
+        combination_rules_list = combination['rules']
+        rules = ""        
+        for rule in combination_rules_list:            
+            rules += f"{rule['metaclass_1']}, {rule['combination_rule']}, {rule['metaclass_2']} \n      "
+        vpdl_skeleton += f"{rules} for {relation_name}\n"
         
     return vpdl_skeleton
 
@@ -87,7 +88,10 @@ def execute_chain(llm, view_description , meta_1_path, meta_2_path):
     select_chain = select_runnable.get_runnable()
     cfg['tags'] += select_runnable.get_tags()
 
-    where_runnable = Where(llm)
+    where_runnable = Where()
+    where_runnable.set_model(llm)
+    where_runnable.set_parser()
+    where_runnable.set_prompt()
     where_chain = where_runnable.get_runnable()
     cfg['tags'] += where_runnable.get_tags()
 

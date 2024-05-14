@@ -1,0 +1,15 @@
+-- @nsURI Yakindu=hu.bme.mit.inf.yakindumm
+-- @nsURI Statechart=http://statecharts
+
+-- ATL Transformation for Yakindu to Statecharts
+module Yakindu2State;
+
+create OUT: Statechart from IN: Yakindu;
+
+-- Rule to map State to State
+rule StateToState {
+    from
+        src: Yakindu!State
+    to
+        dest: Statechart!State
+}
