@@ -1,14 +1,21 @@
-<?xml version="1.0" encoding="ASCII"?>
-<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="Class">
-  <Class name="Family">
-    <attr name="name" multiValued="false" type="/2"/>
-    <attr name="members" multiValued="true" type="/1"/>
-  </Class>
-  <Class name="Person">
-    <attr name="firstName" multiValued="false" type="/2"/>
-    <attr name="closestFriend" multiValued="false" type="/1"/>
-    <attr name="emailAddresses" multiValued="true" type="/2"/>
-  </Class>
-  <DataType name="String"/>
-  <DataType name="Integer"/>
-</xmi:XMI>
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="Class" nsURI="http://www.example.org/Class" nsPrefix="Class">
+  <eClassifiers xsi:type="ecore:EClass" name="NamedElt">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Classifier" eSuperTypes="#//NamedElt"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DataType" eSuperTypes="#//Classifier"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Class" eSuperTypes="#//Classifier">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="super" upperBound="-1" eType="#//Class"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attr" ordered="true" eType="#//Attribute" containment="true" eOpposite="#//Attribute/owner"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isAbstract" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Attribute" eSuperTypes="#//NamedElt">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="multiValued" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//Classifier"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="owner" eType="#//Class" eOpposite="#//Class/attr"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="Boolean"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Integer"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="String"/>
+</ecore:EPackage>

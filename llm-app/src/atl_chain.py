@@ -1,12 +1,8 @@
-from operator import itemgetter
 import os
 import pathlib
 
-from langchain_core.runnables import RunnablePassthrough
-
 from utils.config import Config
 from runnables.atl.join import Join
-
 
 from utils.ecore.parser import EcoreParser
 
@@ -32,19 +28,7 @@ def execute_chain(llm, transformation_description , meta_1_path, meta_2_path):
     join_runnable.set_parser(meta_1=meta_1_path, meta_2=meta_2_path)
     join_runnable.set_prompt()
     join_chain = join_runnable.get_runnable()
-    cfg = {"tags": join_runnable.get_tags()}
-
-    # full_chain = RunnablePassthrough.assign(relations=join_chain) | {
-    #         "meta_1": itemgetter("meta_1"),
-    #         "meta_2": itemgetter("meta_2"),
-    #         "meta_1_path": itemgetter("meta_1_path"),
-    #         "meta_2_path": itemgetter("meta_2_path"),
-    #         "transformation_description": itemgetter("transformation_description"),
-    #         "relations": itemgetter("relations"),
-    #         } | RunnablePassthrough.assign(select=select_chain) | \
-    #             RunnablePassthrough.assign(combinations=where_chain) | \
-    #             RunnablePassthrough.assign(vpdl_skeleton=generate_vpdl_skeleton_wrapper)
-    
+    cfg = {"tags": join_runnable.get_tags()} 
 
     full_result = join_chain.invoke(
         {
@@ -65,8 +49,11 @@ llm = config.get_llm()
 open_ai_key = config.get_open_ai_key()
 
 for folder in os.listdir(VIEWS_DIRECTORY):
-    #TODO temporary if to process only one view
-    if folder != "Families2Persons":
+    # ignore yakindu2state folder (don't have reference output)
+    if folder == "Yakindu2StateCharts":
+        continue
+    # #TODO temporary if to process only one view
+    if folder != "RSS2Atom":
         continue
     folder_path = os.path.join(VIEWS_DIRECTORY, folder)
     if os.path.isdir(folder_path):

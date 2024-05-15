@@ -1,0 +1,1 @@
+This transformation presents a basic example where a tree is transformed into a list. This kind of transformation is usually made by an imperative Depth First Traversal algorithm.

@@ -14,7 +14,7 @@ prompts = {
                         The classes are always given in order: the first string is a class from the first metamodel, and the second string is always a class from the second metamodel.
 
                         When generating the response, you should follow these rules:
-                        Only use class names that exist in the metamodels.
+                        Only use class names that exist in the provided PlantUML metamodels.
                         The relation's name can be any string, but it should be unique and meaningful for each relation.
 
                         The step-by-step process is as follows:

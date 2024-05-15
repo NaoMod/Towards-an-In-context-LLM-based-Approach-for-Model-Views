@@ -1,1 +1,3 @@
-This is the source code of the ATL Use Case: "Families to Persons". This use case describes a very simple model transformation example, some kind of ATL "hello world". 
+This is the source code of the ATL Use Case: "Families to Persons". This use case describes a very simple model transformation example.
+Initially we have a text describing a list of families.
+We want to transform this into another text describing a list of persons.

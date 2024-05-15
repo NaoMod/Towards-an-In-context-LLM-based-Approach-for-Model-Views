@@ -76,7 +76,8 @@ class EcoreLoader(BaseLoader):
             self.ecore_parser.register_metamodel(self.file_path)
             contents = self.ecore_parser.get_metamodel_contents(self.file_path)
             if self.serialization == "plantUML":
-                self.plant_uml_translate.generate(contents)
+                for content in contents:
+                    self.plant_uml_translate.generate(content)
                 text = '@startuml' + '\n'
                 text += self.plant_uml_translate.uml_string
                 text += '\n' + '@enduml'

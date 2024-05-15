@@ -65,7 +65,7 @@ class EcoreParser(metaclass=Singleton):
         """
         resource_path = self.resource_set.get_resource(URI(ecore_path))
         if resource_path is None or not resource_path.contents:
-                return
+            return
 
         content = resource_path.contents[0]
         if content is None or content.nsURI is None:
@@ -96,7 +96,7 @@ class EcoreParser(metaclass=Singleton):
             except:
                 return
 
-        return resource_path.contents[0]
+        return resource_path.contents
 
     def check_ecore_class(self, ecore_path: str, class_to_test: str) -> bool:
         """
@@ -123,12 +123,14 @@ class EcoreParser(metaclass=Singleton):
         metamodel_contents = self.get_metamodel_contents(ecore_path)
 
         # check class
-        for element in metamodel_contents.eAllContents():
-            if element.eClass.name == 'EClass':
-                class_name = element.name
-                if class_name == class_to_test:
-                    self.classes_per_metamodel[ecore_path].append(class_name)
-                    return True
+        for content in metamodel_contents:
+            if content.eClass.name == 'EPackage':
+                for element in content.eAllContents():
+                    if element.eClass.name == 'EClass':
+                        class_name = element.name
+                        if class_name == class_to_test:
+                            self.classes_per_metamodel[ecore_path].append(class_name)
+                            return True
 
         return False
     
@@ -170,13 +172,15 @@ class EcoreParser(metaclass=Singleton):
             self.resource_set.metamodel_registry[content.nsURI] = content
 
         # Iterate through elements to find the class and check its attributes
-        for element in resource_path.contents[0].eAllContents():
-            if element.name == class_to_test:
-                # Found the class, now check its attributes
-                for attribute in element.eAttributes:
-                    if attribute.name == attr_to_test:
-                        # Attribute found, return True
-                        return True
+        for content in resource_path.contents:
+            if content.eClass.name == 'EPackage':
+                for element in content.eAllContents():
+                    if element.name == class_to_test:
+                        # Found the class, now check its attributes
+                        for attribute in element.eAttributes:
+                            if attribute.name == attr_to_test:
+                                # Attribute found, return True
+                                return True
 
         # Attribute not found in the specified class
         return False

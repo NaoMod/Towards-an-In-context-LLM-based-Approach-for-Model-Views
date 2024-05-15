@@ -1,0 +1,3 @@
+RSS is a format for syndicating news and the content of news-like sites.
+Atom is an XML-based file format intended to allow lists of information, known as "feeds", to be synchronised between publishers and consumers.
+This transformation permits to get an ATOM model from an RSS model.
