@@ -11,7 +11,9 @@ from 'http://publication' as publication,
      'http://book' as book,
 
 where s.title = t.eContainer().title
-      and t = t.eContainer().eContents().first()
+      and t = t.eContainer().chapters.first()
       for firstChapter,
       s.title = t.eContainer().title
       for bookChapters
+      
+      //Test chapters

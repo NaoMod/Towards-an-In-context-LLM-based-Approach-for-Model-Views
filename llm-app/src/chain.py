@@ -128,8 +128,8 @@ for folder in os.listdir(VIEWS_DIRECTORY):
     if folder == "Traceability":
         continue
     #TODO temporary if to process only one view
-    # if folder != "Book_Publication":
-    #     continue
+    if folder != "Book_Publication":
+        continue
     folder_path = os.path.join(VIEWS_DIRECTORY, folder)
     if os.path.isdir(folder_path):
         metamodels_folder = os.path.join(folder_path, "metamodels")
@@ -147,9 +147,9 @@ for folder in os.listdir(VIEWS_DIRECTORY):
                 ecore_files.append(os.path.join(metamodels_folder, file))
                 print(os.path.join(metamodels_folder, file))
                 if len(ecore_files) == 2:
-                    try:
+                    # try:
                         execute_chain(llm, view_description, ecore_files[0], ecore_files[1])
                         print("Finished processing chain")
-                    except Exception as e:
-                        print("Error processing chain")
-                        print(e)
+                    # except Exception as e:
+                    #     print("Error processing chain")
+                    #     print(e)

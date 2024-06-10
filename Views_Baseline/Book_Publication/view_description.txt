@@ -1,1 +1,2 @@
-The Book metamodel has details about each chapter, while the Publication has more information about the publisher and publishing date. This is a simple example of two metamodels with overlapping and complementary information. The view we will create will bring all this information under a single (virtual) metamodel.
+The Book metamodel has details about each chapter, while the Publication has more information about the publisher and publishing date.
+I want a view of these two metamodels with two new attributes on the book metaclass representing respectively all the chapters and also the first chapter.

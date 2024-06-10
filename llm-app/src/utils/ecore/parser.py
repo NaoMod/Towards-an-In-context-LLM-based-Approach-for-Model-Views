@@ -21,6 +21,8 @@ class EcoreParser(metaclass=Singleton):
         The resource set used for managing Ecore resources.
     classes_per_metamodel : dict
         A dictionary that stores the list of classes per metamodel.
+    metamodels_uri : list
+        A list that stores the URIs of the metamodels.
 
     Methods
     -------
@@ -49,6 +51,7 @@ class EcoreParser(metaclass=Singleton):
         """
         self.resource_set = ResourceSet()
         self.classes_per_metamodel = {}
+        self.metamodels_uri = []
 
     def register_metamodel(self, ecore_path: str) -> None:
         """
@@ -211,5 +214,5 @@ class EcoreParser(metaclass=Singleton):
         if content is None or content.nsURI is None:
             return None
 
-        return content.nsURI, content.nsPrefix
+        return content.nsURI, content.nsPrefix or f'prefix_{content.nsURI}'
 
