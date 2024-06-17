@@ -1,0 +1,23 @@
+{
+    "relations": [
+        {
+            "rule": "TreeNodeRoot2RootElement",
+            "from": {
+                "rt": {
+                    "metamodel": "MMTree",
+                    "class": "Node"
+                }
+            },
+            "to": {
+                "lstRt": {
+                    "metamodel": "MMElementList",
+                    "class": "RootElement"
+                },
+                "elmLst": {
+                    "metamodel": "distinct MMElementList",
+                    "class": "CommonElement"
+                }
+            }
+        }
+    ]
+}

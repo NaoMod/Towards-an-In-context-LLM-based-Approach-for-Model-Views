@@ -1,0 +1,167 @@
+{
+    "relations": [
+        {
+            "rule": "Main",
+            "from": {
+                "bib": {
+                    "metamodel": "BibTeX",
+                    "class": "BibTeXFile"
+                }
+            },
+            "to": {
+                "doc": {
+                    "metamodel": "DocBook",
+                    "class": "DocBook"
+                },
+                "boo": {
+                    "metamodel": "DocBook",
+                    "class": "Book"
+                },
+                "art": {
+                    "metamodel": "DocBook",
+                    "class": "Article"
+                }
+            }
+        },
+        {
+            "rule": "Author",
+            "from": {
+                "a": {
+                    "metamodel": "BibTeX",
+                    "class": "Author"
+                }
+            },
+            "to": {
+                "p1": {
+                    "metamodel": "DocBook",
+                    "class": "Para"
+                }
+            }
+        },
+        {
+            "rule": "UntitledEntry",
+            "from": {
+                "e": {
+                    "metamodel": "BibTeX",
+                    "class": "BibTeXEntry"
+                }
+            },
+            "to": {
+                "p": {
+                    "metamodel": "DocBook",
+                    "class": "Para"
+                }
+            }
+        },
+        {
+            "rule": "TitledEntry_Title_NoArticle",
+            "from": {
+                "e": {
+                    "metamodel": "BibTeX",
+                    "class": "TitledEntry"
+                }
+            },
+            "to": {
+                "entry_para": {
+                    "metamodel": "DocBook",
+                    "class": "Para"
+                },
+                "title_para": {
+                    "metamodel": "DocBook",
+                    "class": "Para"
+                }
+            }
+        },
+        {
+            "rule": "TitledEntry_NoTitle_NoArticle",
+            "from": {
+                "e": {
+                    "metamodel": "BibTeX",
+                    "class": "TitledEntry"
+                }
+            },
+            "to": {
+                "entry_para": {
+                    "metamodel": "DocBook",
+                    "class": "Para"
+                }
+            }
+        },
+        {
+            "rule": "Article_Title_Journal",
+            "from": {
+                "e": {
+                    "metamodel": "BibTeX",
+                    "class": "Article"
+                }
+            },
+            "to": {
+                "entry_para": {
+                    "metamodel": "DocBook",
+                    "class": "Para"
+                },
+                "title_para": {
+                    "metamodel": "DocBook",
+                    "class": "Para"
+                },
+                "journal_para": {
+                    "metamodel": "DocBook",
+                    "class": "Para"
+                }
+            }
+        },
+        {
+            "rule": "Article_NoTitle_Journal",
+            "from": {
+                "e": {
+                    "metamodel": "BibTeX",
+                    "class": "Article"
+                }
+            },
+            "to": {
+                "entry_para": {
+                    "metamodel": "DocBook",
+                    "class": "Para"
+                },
+                "journal_para": {
+                    "metamodel": "DocBook",
+                    "class": "Para"
+                }
+            }
+        },
+        {
+            "rule": "Article_Title_NoJournal",
+            "from": {
+                "e": {
+                    "metamodel": "BibTeX",
+                    "class": "Article"
+                }
+            },
+            "to": {
+                "entry_para": {
+                    "metamodel": "DocBook",
+                    "class": "Para"
+                },
+                "title_para": {
+                    "metamodel": "DocBook",
+                    "class": "Para"
+                }
+            }
+        },
+        {
+            "rule": "Article_NoTitle_NoJournal",
+            "from": {
+                "e": {
+                    "metamodel": "BibTeX",
+                    "class": "Article"
+                }
+            },
+            "to": {
+                "entry_para": {
+                    "metamodel": "DocBook",
+                    "class": "Para"
+                }
+            }
+        }
+    ]
+}

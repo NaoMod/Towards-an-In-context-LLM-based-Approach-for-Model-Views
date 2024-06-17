@@ -1,0 +1,49 @@
+{
+    "relations": [
+        {
+            "rule": "Channel2ATOM",
+            "from": {
+                "At": {
+                    "metamodel": "RSS",
+                    "class": "Channel"
+                }
+            },
+            "to": {
+                "out": {
+                    "metamodel": "ATOM",
+                    "class": "ATOM"
+                }
+            }
+        },
+        {
+            "rule": "Item2Entry",
+            "from": {
+                "it": {
+                    "metamodel": "RSS",
+                    "class": "Item"
+                }
+            },
+            "to": {
+                "out": {
+                    "metamodel": "ATOM",
+                    "class": "Entry"
+                }
+            }
+        },
+        {
+            "rule": "Category2Category",
+            "from": {
+                "it": {
+                    "metamodel": "RSS",
+                    "class": "Category"
+                }
+            },
+            "to": {
+                "out": {
+                    "metamodel": "ATOM",
+                    "class": "Category"
+                }
+            }
+        }
+    ]
+}

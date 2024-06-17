@@ -1,0 +1,94 @@
+{
+    "relations": [
+        {
+            "rule": "Class2Table",
+            "from": {
+                "c": {
+                    "metamodel": "Class",
+                    "class": "Class"
+                }
+            },
+            "to": {
+                "out": {
+                    "metamodel": "Relational",
+                    "class": "Table"
+                }
+            }
+        },
+        {
+            "rule": "DataType2Type",
+            "from": {
+                "dt": {
+                    "metamodel": "Class",
+                    "class": "DataType"
+                }
+            },
+            "to": {
+                "out": {
+                    "metamodel": "Relational",
+                    "class": "Type"
+                }
+            }
+        },
+        {
+            "rule": "DataTypeAttribute2Column",
+            "from": {
+                "a": {
+                    "metamodel": "Class",
+                    "class": "Attribute"
+                }
+            },
+            "to": {
+                "out": {
+                    "metamodel": "Relational",
+                    "class": "Column"
+                }
+            }
+        },
+        {
+            "rule": "MultiValuedDataTypeAttribute2Column",
+            "from": {
+                "a": {
+                    "metamodel": "Class",
+                    "class": "Attribute"
+                }
+            },
+            "to": {
+                "out": {
+                    "metamodel": "Relational",
+                    "class": "Table"
+                }
+            }
+        },
+        {
+            "rule": "ClassAttribute2Column",
+            "from": {
+                "a": {
+                    "metamodel": "Class",
+                    "class": "Attribute"
+                }
+            },
+            "to": {
+                "foreignKey": {
+                    "metamodel": "Relational",
+                    "class": "Column"
+                }
+            }
+        },
+        {
+            "rule": "MultiValuedClassAttribute2Column",
+            "from": {
+                "a": {
+                    "metamodel": "Class",
+                    "class": "Attribute"
+                }
+            },
+            "to": {
+                "t": {
+                    "metamodel": "Relational",
+                    "class": "Table"
+                }
+            }
+        }
+    ]
+}

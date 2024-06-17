@@ -1,0 +1,19 @@
+{
+    "relations": [
+        {
+            "rule": "StateToState",
+            "from": {
+                "src": {
+                    "metamodel": "Yakindu",
+                    "class": "State"
+                }
+            },
+            "to": {
+                "dest": {
+                    "metamodel": "Statechart",
+                    "class": "State"
+                }
+            }
+        }
+    ]
+}

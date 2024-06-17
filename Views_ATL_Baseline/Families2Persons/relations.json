@@ -1,0 +1,34 @@
+{
+    "relations": [
+        {
+            "rule": "Member2Male",
+            "from": {
+                "s": {
+                    "metamodel": "Families",
+                    "class": "Member"
+                }
+            },
+            "to": {
+                "t": {
+                    "metamodel": "Persons",
+                    "class": "Male"
+                }
+            }
+        },
+        {
+            "rule": "Member2Female",
+            "from": {
+                "s": {
+                    "metamodel": "Families",
+                    "class": "Member"
+                }
+            },
+            "to": {
+                "t": {
+                    "metamodel": "Persons",
+                    "class": "Female"
+                }
+            }
+        }
+    ]
+}
