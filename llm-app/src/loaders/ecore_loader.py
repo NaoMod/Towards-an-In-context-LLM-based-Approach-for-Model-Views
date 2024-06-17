@@ -64,6 +64,7 @@ class EcoreLoader(BaseLoader):
         pass
 
     def lazy_load(self) -> Iterator[Document]:
+<<<<<<< Updated upstream
         """Load the Ecore file lazily.
 
         Returns:
@@ -88,3 +89,46 @@ class EcoreLoader(BaseLoader):
 
         metadata = {"source": str(self.file_path)}
         yield Document(page_content=text, metadata=metadata)
+=======
+        """Load file."""
+        # elements = self._get_elements()
+        # if self.mode == "elements":
+        #     for element in elements:
+        #         metadata = self._get_metadata()
+        #         # NOTE(MthwRobinson) - the attribute check is for backward compatibility
+        #         # with unstructured<0.4.9. The metadata attributed was added in 0.4.9.
+        #         if hasattr(element, "metadata"):
+        #             metadata.update(element.metadata.to_dict())
+        #         if hasattr(element, "category"):
+        #             metadata["category"] = element.category
+        #         yield Document(page_content=str(element), metadata=metadata)
+        # elif self.mode == "paged":
+        #     text_dict: Dict[int, str] = {}
+        #     meta_dict: Dict[int, Dict] = {}
+
+        #     for idx, element in enumerate(elements):
+        #         metadata = self._get_metadata()
+        #         if hasattr(element, "metadata"):
+        #             metadata.update(element.metadata.to_dict())
+        #         page_number = metadata.get("page_number", 1)
+
+        #         # Check if this page_number already exists in docs_dict
+        #         if page_number not in text_dict:
+        #             # If not, create new entry with initial text and metadata
+        #             text_dict[page_number] = str(element) + "\n\n"
+        #             meta_dict[page_number] = metadata
+        #         else:
+        #             # If exists, append to text and update the metadata
+        #             text_dict[page_number] += str(element) + "\n\n"
+        #             meta_dict[page_number].update(metadata)
+
+        #     # Convert the dict to a list of Document objects
+        #     for key in text_dict.keys():
+        #         yield Document(page_content=text_dict[key], metadata=meta_dict[key])
+        # elif self.mode == "single":
+        #     metadata = self._get_metadata()
+        #     text = "\n\n".join([str(el) for el in elements])
+        #     yield Document(page_content=text, metadata=metadata)
+        # else:
+        #     raise ValueError(f"mode of {self.mode} not supported.")
+>>>>>>> Stashed changes

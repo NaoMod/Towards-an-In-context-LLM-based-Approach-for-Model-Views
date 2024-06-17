@@ -1,0 +1,13 @@
+transformation_description,meta_1,meta_2
+"The BibTeXML to DocBook example describes a transformation of a BibTeXML model to a DocBook composed document. BibTeXML is an XML-based format for the BibTeX bibliographic tool.
+DocBook, as for it, is an XML-based format for document composition. The aim of this transformation is to generate, from a BibTeXML file, a DocBook document that presents the different entries of the bibliographic file within four different sections. The first section
+provides the full list of bibliographic entries. The second section provides the sorted list of the different authors referenced in the bibliography. The third section presents the titles of the bibliography titled
+entries (in a sorted way). Finally, the last section provides the list of referenced journals (in article entries).",BibTeX.ecore,DocBook.ecore
+The Class to Relational example describes the simplified transformation of a class schema model to a relational database model.,Class.ecore,Relational.ecore
+"This is the source code of the ATL Use Case: ""Families to Persons"". This use case describes a very simple model transformation example.
+Initially we have a text describing a list of families.
+We want to transform this into another text describing a list of persons.",Families.ecore,Persons.ecore
+"RSS is a format for syndicating news and the content of news-like sites.
+Atom is an XML-based file format intended to allow lists of information, known as ""feeds"", to be synchronised between publishers and consumers.
+This transformation permits to get an ATOM model from an RSS model.",ATOM.ecore,RSS.ecore
+This transformation presents a basic example where a tree is transformed into a list. This kind of transformation is usually made by an imperative Depth First Traversal algorithm.,List.ecore,Tree.ecore

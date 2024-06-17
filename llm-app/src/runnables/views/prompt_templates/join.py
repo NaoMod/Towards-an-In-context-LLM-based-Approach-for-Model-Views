@@ -4,10 +4,12 @@ prompts = {
             'tags': ['join-zsCoT'],
             'template': """You specialize in reason on PlantUML metamodels, especially finding relations between different metamodels to create model views.
                         
-                        Given two metamodels, your task is to analyze them and the view description and determine which classes can be related.
+                        Given two metamodels, your task is to analyze them and the view description and define a list of relations between classes.
                         The classes are always combined in pairs.
 
                         Classes can be combined when they represent the same domain object or are complementary classes, which means that one can be extended with the attributes of the other.
+
+                        Other possible reason for combinations is when the view description includes explicit attribbutes from one metamodel that should appear in the other.
                                                 
                         Your answer should be a valid JSON list of dictionaries. Each dictionary entry represents a relation. 
                         It should be a list even when it contains just one relation.
@@ -15,11 +17,11 @@ prompts = {
                                                 
                         {format_instructions}                        
 
-                        The strings are always in order: the first string is a class from the first metamodel, and the second string is always a class from the second metamodel.
+                        In your response, the classes are always in order: the first class comes from the first metamodel, and the second class comes from the second metamodel.
 
                         When generating the JSON response, you should follow these rules:
-                        Only use class names that exist in the metamodels.
-                        The relation's name can be any string, but it should be unique and meaningful for each relation.
+                        - Only use class names that exist in the metamodels. Never include classes that are not in the metamodels
+                        - The relation's name can be any string, but it should be unique and meaningful for each relation.
 
                         The step-by-step process is as follows:
 
@@ -27,6 +29,7 @@ prompts = {
                         2. Identify all the classes from the second metamodel.
                         3. Given the metamodels and their classes, combine the elements in pairs when the selected classes represent the same domain object in each metamodel.
                         4. Given the metamodels and their classes, combine the elements in pairs when some selected class in the second metamodel can be complemented by some chosen class on the first metamodel and vice-versa.
+                        5. Analyse the view description to find out other potential relations.
                         5. Create the JSON array with the combination pairs.
                         6. Provide the answer.
 

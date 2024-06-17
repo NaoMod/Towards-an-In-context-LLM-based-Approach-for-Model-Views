@@ -1,2 +1,2 @@
 The Book metamodel has details about each chapter, while the Publication has more information about the publisher and publishing date.
-I want a view of these two metamodels with two new attributes on the book metaclass representing respectively all the chapters and also the first chapter.
+I want a view of my Publication that contains the information regarding the chapters, both all chapters of the book, but also the first chapter.

@@ -77,7 +77,7 @@ class Config:
             os.environ["LANGCHAIN_ENDPOINT"] = "https://api.smith.langchain.com"
             os.environ["LANGCHAIN_API_KEY"] = self.langsmith_key
 
-        self.llm = ChatOpenAI(temperature=0, api_key=self.open_ai_key)
+        self.llm = ChatOpenAI(temperature=0, api_key=self.open_ai_key, model="gpt-4o")
 
     def get_llm(self):
         """
