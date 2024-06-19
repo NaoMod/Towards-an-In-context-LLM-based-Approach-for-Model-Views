@@ -40,10 +40,10 @@ for folder in os.listdir(VIEWS_DIRECTORY):
             filter_path = os.path.join(reference_folder, "filter.json")
             with open(filter_path, 'r') as filter_file:
                 filter_contents = filter_file.read()
-            relations_path = os.path.join(reference_folder, "filter.json")
+            relations_path = os.path.join(reference_folder, "relations.json")
             with open(relations_path, 'r') as relations_file:
                 relations_contents = relations_file.read()
-            rules_path = os.path.join(reference_folder, "filter.json")
+            rules_path = os.path.join(reference_folder, "rules.json")
             with open(rules_path, 'r') as rules_file:
                 rules_contents = rules_file.read()
             metamodel_folder = os.path.join(folder_path, "metamodels")
