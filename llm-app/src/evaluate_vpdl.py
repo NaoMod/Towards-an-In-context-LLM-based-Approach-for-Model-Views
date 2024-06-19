@@ -4,7 +4,8 @@ import pathlib
 
 from utils.config import Config
 from chain import execute_chain
-from evaluators.vpdl_evaluator import VpdlEvaluator
+from langsmith.evaluation import evaluate
+from evaluators.vpdl_evaluators import similarity_check, mock_check
 
 
 import langsmith
@@ -16,8 +17,13 @@ def find(name):
     for root, _ , files in os.walk(VIEWS_DIRECTORY):
         if name in files:
             return os.path.join(root, name)
+        
+def execute_chain_wrapper(input_: dict):
+    meta_1_path = find(input_["meta_1_path"])
+    meta_2_path = find(input_["meta_2_path"])
 
-
+    response = execute_chain(llm, input_["view_description"], meta_1_path, meta_2_path)
+    return response
 
 # Configure everything
 config = Config()
@@ -25,26 +31,13 @@ config.load_keys()
 llm = config.get_llm()
 open_ai_key = config.get_open_ai_key()
 
-def execute_chain_wrapper(input_: dict):
-    meta_1_path = find(input_["meta_1"])
-    meta_2_path = find(input_["meta_2"])
-
-    response = execute_chain(llm, input_["view_description"], meta_1_path, meta_2_path)
-    return response
-
 if __name__ == "__main__":
     client = langsmith.Client()
     dataset_name = "VPDL_FINAL_OneEX"
 
-    eval_config = RunEvalConfig(
-        evaluators=["exact_match"],
-        custom_evaluators=[VpdlEvaluator()],
-    )
-
-    client.run_on_dataset(
-        dataset_name=dataset_name,
-        llm_or_chain_factory=execute_chain_wrapper,
-        evaluation=eval_config,
-        verbose=True,
-        project_metadata={"version": "1.0.0", "model": llm},
+    results = evaluate(
+        execute_chain_wrapper,
+        data=client.list_examples(dataset_name=dataset_name),
+        evaluators=[similarity_check, mock_check],
+        experiment_prefix="Test 1",
     )

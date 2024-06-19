@@ -90,16 +90,16 @@ def execute_chain(llm, view_description , meta_1_path, meta_2_path):
     where_chain = where_runnable.get_runnable()
     cfg['tags'] += where_runnable.get_tags()
 
-    full_chain = RunnablePassthrough.assign(join=join_chain) | {
+    full_chain = RunnablePassthrough.assign(join=join_chain).with_config({"run_name": "JOIN"}) | {
             "meta_1": itemgetter("meta_1"),
             "meta_2": itemgetter("meta_2"),
             "meta_1_path": itemgetter("meta_1_path"),
             "meta_2_path": itemgetter("meta_2_path"),
             "view_description": itemgetter("view_description"),
             "join": itemgetter("join"),
-            } | RunnablePassthrough.assign(select=select_chain) | \
-                RunnablePassthrough.assign(where=where_chain) | \
-                RunnablePassthrough.assign(vpdl_draft=generate_vpdl_skeleton_wrapper)
+            } | RunnablePassthrough.assign(select=select_chain).with_config({"run_name": "SELECT"}) | \
+                RunnablePassthrough.assign(where=where_chain).with_config({"run_name": "WHERE"}) | \
+                RunnablePassthrough.assign(vpdl_draft=generate_vpdl_skeleton_wrapper).with_config({"run_name": "VPDL_DRAFT"})
     
 
     full_result = full_chain.invoke(
@@ -117,36 +117,40 @@ def execute_chain(llm, view_description , meta_1_path, meta_2_path):
     print(full_result['where'])
     print(full_result['vpdl_draft'])
 
-# Configure everything
-config = Config("FULL-CHAIN")
-config.load_keys()
-llm = config.get_llm()
-open_ai_key = config.get_open_ai_key()
+    return full_result
 
-for folder in os.listdir(VIEWS_DIRECTORY):
-    #TODO temporary if to process only one view
-    if folder != "Book_Publication":
-        continue
-    folder_path = os.path.join(VIEWS_DIRECTORY, folder)
-    if os.path.isdir(folder_path):
-        metamodels_folder = os.path.join(folder_path, "metamodels")
-        # check for extra folder for complementary metamodels
-        extra_folder = os.path.join(metamodels_folder, "extra")
-        if os.path.isdir(extra_folder):
-            for extra_ecore_file in os.listdir(extra_folder):
-                if extra_ecore_file.endswith(".ecore"):
-                    ecore_parser.register_metamodel(os.path.join(extra_folder, extra_ecore_file))
-        view_description_file = os.path.join(folder_path, "view_description.txt")
-        view_description = open(view_description_file, "r").read()
-        ecore_files = []
-        for file in os.listdir(metamodels_folder):
-            if file.endswith(".ecore"):
-                ecore_files.append(os.path.join(metamodels_folder, file))
-                print(os.path.join(metamodels_folder, file))
-                if len(ecore_files) == 2:
-                    # try:
-                        execute_chain(llm, view_description, ecore_files[0], ecore_files[1])
-                        print("Finished processing chain")
-                    # except Exception as e:
-                    #     print("Error processing chain")
-                    #     print(e)
+
+if __name__ == "__main__":
+    # Configure everything
+    config = Config("FULL-CHAIN")
+    config.load_keys()
+    llm = config.get_llm()
+    open_ai_key = config.get_open_ai_key()
+
+    for folder in os.listdir(VIEWS_DIRECTORY):
+        #TODO temporary if to process only one view
+        if folder != "Book_Publication":
+            continue
+        folder_path = os.path.join(VIEWS_DIRECTORY, folder)
+        if os.path.isdir(folder_path):
+            metamodels_folder = os.path.join(folder_path, "metamodels")
+            # check for extra folder for complementary metamodels
+            extra_folder = os.path.join(metamodels_folder, "extra")
+            if os.path.isdir(extra_folder):
+                for extra_ecore_file in os.listdir(extra_folder):
+                    if extra_ecore_file.endswith(".ecore"):
+                        ecore_parser.register_metamodel(os.path.join(extra_folder, extra_ecore_file))
+            view_description_file = os.path.join(folder_path, "view_description.txt")
+            view_description = open(view_description_file, "r").read()
+            ecore_files = []
+            for file in os.listdir(metamodels_folder):
+                if file.endswith(".ecore"):
+                    ecore_files.append(os.path.join(metamodels_folder, file))
+                    print(os.path.join(metamodels_folder, file))
+                    if len(ecore_files) == 2:
+                        # try:
+                            execute_chain(llm, view_description, ecore_files[0], ecore_files[1])
+                            print("Finished processing chain")
+                        # except Exception as e:
+                        #     print("Error processing chain")
+                        #     print(e)
