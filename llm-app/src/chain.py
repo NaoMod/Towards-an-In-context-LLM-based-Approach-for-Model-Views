@@ -124,9 +124,6 @@ llm = config.get_llm()
 open_ai_key = config.get_open_ai_key()
 
 for folder in os.listdir(VIEWS_DIRECTORY):
-    # ignore traceability folder (too long metamodels)
-    if folder == "Traceability":
-        continue
     #TODO temporary if to process only one view
     if folder != "Book_Publication":
         continue

@@ -8,7 +8,7 @@ def parse_atl_file(file_path):
     with open(file_path, 'r') as file:
         content = file.read()
         
-        # Regex pattern to match rule definitions and their associated classes
+        # Regex pattern to match rule definitions and their associated classes in ATL files
         rule_pattern = re.compile(r'rule\s+(\w+)\s*\{\s*from\s+(.+?)\s*to\s+(.+?)\s*\}', re.DOTALL)
         class_pattern = re.compile(r'(\w+)\s*:\s*([^!]+)!(\w+)')
         

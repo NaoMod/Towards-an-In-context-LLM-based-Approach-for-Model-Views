@@ -1,2 +1,0 @@
-The view is used to show a chain among different models related with the same software system.
-The 3 models are a ReqIF model for the requirements, a Log model for the logs and finally a Java model represents the PetStore app developed in Java.

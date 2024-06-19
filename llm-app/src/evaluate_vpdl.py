@@ -34,7 +34,7 @@ def execute_chain_wrapper(input_: dict):
 
 if __name__ == "__main__":
     client = langsmith.Client()
-    dataset_name = "VPDL_OneEx"
+    dataset_name = "VPDL_FINAL_OneEX"
 
     eval_config = RunEvalConfig(
         evaluators=["exact_match"],
