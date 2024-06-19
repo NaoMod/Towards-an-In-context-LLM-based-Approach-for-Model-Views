@@ -38,7 +38,7 @@ prompts = {
                         View description: {view_description}
                         Metamodel 1: {meta_1}
                         Metamodel 2: {meta_2}
-                        List of relations: {relations}
+                        List of relations: {join}
                         Select elements:""",
         },
         {

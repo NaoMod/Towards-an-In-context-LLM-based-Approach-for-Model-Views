@@ -30,7 +30,7 @@ class Select(RunnableInterface):
         if template is None:
             self.prompt = PromptTemplate(
                 template=select_templates["items"][0]["template"],
-                input_variables=["view_description", "meta_1", "meta_2", "relations"],
+                input_variables=["view_description", "meta_1", "meta_2", "join"],
                 partial_variables={"format_instructions":  self.parser.get_format_instructions()},
             )
 

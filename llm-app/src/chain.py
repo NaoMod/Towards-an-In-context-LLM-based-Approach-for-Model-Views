@@ -37,7 +37,7 @@ def generate_vpdl_skeleton(input_vpdl, meta_1, meta_2):
                 vpdl_skeleton += f"{meta_1_prefix}.{class_to_include}.{attr},\n"
     
     # JOIN
-    for relation in input_vpdl['relations']['relations']:
+    for relation in input_vpdl['join']['relations']:
                    
         class_name_1 = relation['classes'][0]
         class_name_2 = relation['classes'][0]
@@ -48,7 +48,7 @@ def generate_vpdl_skeleton(input_vpdl, meta_1, meta_2):
     vpdl_skeleton += f"\n\nfrom '{meta_1_uri}' as {meta_1_prefix},\n     {meta_2_uri}' as {meta_2_prefix},\n\nwhere "
     
     # Adding join conditions (WHERE clause)
-    for combination in input_vpdl['combinations']['rules']:
+    for combination in input_vpdl['where']['rules']:
         relation_name = combination['name']
         combination_rules_list = combination['rules']
         rules = ""        
@@ -90,16 +90,16 @@ def execute_chain(llm, view_description , meta_1_path, meta_2_path):
     where_chain = where_runnable.get_runnable()
     cfg['tags'] += where_runnable.get_tags()
 
-    full_chain = RunnablePassthrough.assign(relations=join_chain) | {
+    full_chain = RunnablePassthrough.assign(join=join_chain) | {
             "meta_1": itemgetter("meta_1"),
             "meta_2": itemgetter("meta_2"),
             "meta_1_path": itemgetter("meta_1_path"),
             "meta_2_path": itemgetter("meta_2_path"),
             "view_description": itemgetter("view_description"),
-            "relations": itemgetter("relations"),
+            "join": itemgetter("join"),
             } | RunnablePassthrough.assign(select=select_chain) | \
-                RunnablePassthrough.assign(combinations=where_chain) | \
-                RunnablePassthrough.assign(vpdl_skeleton=generate_vpdl_skeleton_wrapper)
+                RunnablePassthrough.assign(where=where_chain) | \
+                RunnablePassthrough.assign(vpdl_draft=generate_vpdl_skeleton_wrapper)
     
 
     full_result = full_chain.invoke(
@@ -112,10 +112,10 @@ def execute_chain(llm, view_description , meta_1_path, meta_2_path):
         },
         config=cfg)
 
-    print(full_result['relations'])
+    print(full_result['join'])
     print(full_result['select'])
-    print(full_result['combinations'])
-    print(full_result['vpdl_skeleton'])
+    print(full_result['where'])
+    print(full_result['vpdl_draft'])
 
 # Configure everything
 config = Config("FULL-CHAIN")
