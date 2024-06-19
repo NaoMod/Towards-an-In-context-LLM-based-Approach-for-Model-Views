@@ -1,14 +1,18 @@
-[
-    {
-        "firstChapter": [
-            "Publication",
-            "Chapter"
-        ]
-    },
-    {
-        "bookChapters": [
-            "Publication",
-            "Chapter"
-        ]
-    }
-]
+{
+    "relations": [
+        {
+            "name": "firstChapter",
+            "classes": [
+                "Publication",
+                "Chapter"
+            ]
+        },
+        {
+            "name": "bookChapters",
+            "classes": [
+                "Publication",
+                "Chapter"
+            ]
+        }
+    ]
+}

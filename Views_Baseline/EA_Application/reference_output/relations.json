@@ -1,20 +1,11 @@
-[
-    {
-        "detailedProcess": [
-            "EnterpriseArchitecture",
-            "BPMN.Process"
-        ]
-    },
-    {
-        "detailedRequirement": [
-            "EnterpriseArchitecture",
-            "ReqIf.SpecObject"
-        ]
-    },
-    {
-        "detailedProcess2": [
-            "EnterpriseArchitecture",
-            "BPMN.Process"
-        ]
-    }
-]
+{
+    "relations": [
+        {
+            "name": "detailedRequirement",
+            "classes": [
+                "Requirement",
+                "SpecObject"
+            ]
+        }
+    ]
+}

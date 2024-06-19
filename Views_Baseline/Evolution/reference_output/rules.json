@@ -1,12 +1,10 @@
-[
-    {
-        "old_to_new": [
-            "The internal elements in the original CAEX file should correspond to the internal elements in the new CAEX file."
-        ]
-    },
-    {
-        "traces": [
-            "The name of the internal element in the original CAEX file should match the name retrieved from the resource with the same ID in the traces."
-        ]
-    }
-]
+{
+    "rules": [
+        {
+            "name": "traces",
+            "rules": [
+                "The name of the internal element in the original CAEX file should match the name retrieved from the resource with the same ID in the traces."
+            ]
+        }
+    ]
+}

@@ -1,26 +1,11 @@
-[
-    {
-        "specification": [
-            "Trace.TraceabilityLink",
-            "B.Variable"
-        ]
-    },
-    {
-        "events": [
-            "Trace.TraceabilityLink",
-            "Log.Event"
-        ]
-    },
-    {
-        "events2": [
-            "Trace.TraceabilityLink",
-            "Log.Event"
-        ]
-    },
-    {
-        "designComponent": [
-            "Log.Trace",
-            "UML.Component"
-        ]
-    }
-]
+{
+    "relations": [
+        {
+            "name": "specification",
+            "classes": [
+                "TraceabilityLink",
+                "Variable"
+            ]
+        }
+    ]
+}

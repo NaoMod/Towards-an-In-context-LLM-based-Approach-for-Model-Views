@@ -1,37 +1,46 @@
-[
-    {
-        "BPMN.Process": {
-            "Process": [
-                "*"
-            ]
+{
+    "filters": [
+        {
+            "name": "detailedProcess",
+            "classAttributes": {
+                "Process": [
+                    "*"
+                ]
+            }
         },
-        "EnterpriseArchitecture": {
-            "EnterpriseArchitecture": [
-                "architectures"
-            ],
-            "BusinessArchitecture": [
-                "processes"
-            ],
-            "StrategicArchitecture": [
-                "strategicElements"
-            ],
-            "Process": [
-                "name"
-            ]
+        {
+            "name": "detailedProcess",
+            "classAttributes": {
+                "EnterpriseArchitecture": [
+                    "architectures"
+                ],
+                "BusinessArchitecture": [
+                    "processes"
+                ],
+                "StrategicArchitecture": [
+                    "strategicElements"
+                ],
+                "Process": [
+                    "name"
+                ]
+            }
         },
-        "ReqIf": {
-            "ReqIF": [
-                "coreContent"
-            ],
-            "ReqIFContent": [
-                "specObjects"
-            ],
-            "SpecObject": [
-                "values"
-            ],
-            "AttributeValueString": [
-                "theValue"
-            ]
+        {
+            "name": "detailedProcess",
+            "classAttributes": {
+                "ReqIF": [
+                    "coreContent"
+                ],
+                "ReqIFContent": [
+                    "specObjects"
+                ],
+                "SpecObject": [
+                    "values"
+                ],
+                "AttributeValueString": [
+                    "theValue"
+                ]
+            }
         }
-    }
-]
+    ]
+}
