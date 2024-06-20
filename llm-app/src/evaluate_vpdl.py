@@ -54,7 +54,7 @@ open_ai_key = config.get_open_ai_key()
 
 if __name__ == "__main__":
     client = Client()
-    dataset_name = "VPDL_FINAL_OneEX"
+    dataset_name = "VPDL_FINAL_FULL"
 
     string_distance_evaluator = LangChainStringEvaluator(  
             "string_distance",  
@@ -67,7 +67,8 @@ if __name__ == "__main__":
         config={  
             "criteria": {  
                 "helpfulness": (  
-                    """Only based on the given input and in the metamodels, how much effort would someone who knows the domain and the VPDL languange need to make to get the prediction to match the reference? 
+                    """The given input is a view description that should be specified using the VPDL language. 
+                    Given that, how much effort would someone who knows the domain, the underlying metamodels and the VPDL languange syntax need to make to get the prediction to match the reference? 
                     The less effort needed, the higher the score."""   
                 )  
             },
@@ -76,12 +77,13 @@ if __name__ == "__main__":
         prepare_data=lambda run, example: {
             "prediction": run.outputs["vpdl_draft"],
             "reference": example.outputs["vpdl_draft"],
-            "input": example.inputs["view_description"],} 
+            "input": example.inputs["view_description"]} 
     )
 
     results = evaluate(
         execute_chain_wrapper,
         data=client.list_examples(dataset_name=dataset_name),
         evaluators=[matched_relations, matched_filters, string_distance_evaluator, llm_vpdl_evaluator],
-        experiment_prefix="TestVPDL",
+        experiment_prefix="AgregatteVPDL",
+        num_repetitions=3,
     )
