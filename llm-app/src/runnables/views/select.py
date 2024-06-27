@@ -1,5 +1,4 @@
 from langchain.prompts import PromptTemplate
-from langchain_core.output_parsers import JsonOutputParser
 
 from .prompt_templates.select import prompts as select_templates
 from interfaces.runnable_interface import RunnableInterface

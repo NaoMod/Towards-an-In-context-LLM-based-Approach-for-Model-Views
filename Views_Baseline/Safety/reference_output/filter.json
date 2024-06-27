@@ -1,13 +1,48 @@
 {
-    "filters": [
-        {
-            "name": "specification",
-            "classAttributes": {
-                "TraceabilityLink": [
-                    "*"
-                ],
-                "Variable":["*"]
-            }
+    "filters": {
+        "Trace": {
+            "TraceabilityModel": [
+                "traceabilityLinks"
+            ],
+            "TraceabilityLink": [
+                "*"
+            ]
+        },
+        "B": {
+            "Program": [
+                "machines"
+            ],
+            "Machine": [
+                "sets"
+            ],
+            "Sets": [
+                "exprs"
+            ],
+            "Set": [
+                "elems"
+            ],
+            "Variable": [
+                "*"
+            ]
+        },
+        "Log": {
+            "Log": [
+                "events"
+            ],
+            "Event": [
+                "*"
+            ],
+            "Trace": [
+                "*"
+            ]
+        },
+        "UML": {
+            "Model": [
+                "elements"
+            ],
+            "Component": [
+                "*"
+            ]
         }
-    ]
+    }
 }

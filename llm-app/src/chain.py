@@ -28,13 +28,11 @@ def generate_vpdl_skeleton(input_vpdl, meta_1, meta_2):
     vpdl_skeleton = "create view NAME as\n\nselect "
     
     # FILTERS (SELECT clause)
-    for filter_per_relation in input_vpdl['select']['filters']:
+    for meta_name, filters in input_vpdl['select']['filters'].items():
 
-        # relation_name = filter_per_relation['name'] # not used
-        class_attributes = filter_per_relation['classAttributes']
-        for class_to_include, attributes in class_attributes.items():
+        for cls_name, attributes in filters.items():
             for attr in attributes:
-                vpdl_skeleton += f"{meta_1_prefix}.{class_to_include}.{attr},\n"
+                vpdl_skeleton += f"{meta_name}.{cls_name}.{attr},\n"
     
     # JOIN
     for relation in input_vpdl['join']['relations']:
@@ -42,7 +40,7 @@ def generate_vpdl_skeleton(input_vpdl, meta_1, meta_2):
         class_name_1 = relation['classes'][0]
         class_name_2 = relation['classes'][0]
     
-        vpdl_skeleton += f"{meta_1_prefix}.{class_name_1}, {meta_2_prefix}.{class_name_2} as {relation['name']},\n"
+        vpdl_skeleton += f"{meta_1_prefix}.{class_name_1} join {meta_2_prefix}.{class_name_2} as {relation['name']},\n"
     
     # including the metamodels and its identifiers
     vpdl_skeleton += f"\n\nfrom '{meta_1_uri}' as {meta_1_prefix},\n     {meta_2_uri}' as {meta_2_prefix},\n\nwhere "

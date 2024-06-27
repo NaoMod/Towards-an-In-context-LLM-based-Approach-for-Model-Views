@@ -1,17 +1,39 @@
 {
-    "filters": [
-        {
-            "name": "traces",
-            "classAttributes": {
-                "InternalElement": [
-                    "name",
-                    "attribute"
-                ],
-                "Event": [
-                    "fatureAndClass",
-                    "id"
-                ]
-            }
+    "filters": {
+        "CAEX_Original": {
+            "CAEXFile": [
+                "*"
+            ],
+            "InstanceHierarchy": [
+                "*"
+            ],
+            "InternalElement": [
+                "name",
+                "attribute"
+            ]
+        },
+        "CAEX_New": {
+            "CAEXFile": [
+                "*"
+            ],
+            "InstanceHierarchy": [
+                "*"
+            ],
+            "InternalElement": [
+                "*"
+            ]
+        },
+        "Traces": {
+            "Log": [
+                "*"
+            ],
+            "FeatureAndClass": [
+                "*"
+            ],
+            "Event": [
+                "fatureAndClass",
+                "id"
+            ]           
         }
-    ]
+    }
 }

@@ -9,7 +9,7 @@ def matched_filters(root_run: Run, example: Example) -> dict:
         relations = {}
         for relation in data.get("relations", []):
             classes = tuple(sorted(relation["classes"]))
-            relations[classes] = relation["name"]
+            relations[relation["name"]] = classes
         return relations
 
     def parse_filters(json_data):
@@ -41,12 +41,15 @@ def matched_filters(root_run: Run, example: Example) -> dict:
     main_run_filters = parse_filters(main_run.outputs.get('select'))
     example_filters_ground_truth = parse_filters(example.outputs.get('select'))
 
-    matched_filters_count = 0
+    matched_filters_count = 0 # true positives
+
     total_filters_count = 0
-    for cls, name in main_run_relations.items():
-        if cls in example_relations and name in main_run_filters and example_relations[cls] in example_filters_ground_truth:
-            main_filters_for_relation = main_run_filters[name]
-            example_filters_for_relation = example_filters_ground_truth[example_relations[cls]]
+    for name, cls in example_relations.items():
+        # find the corresponding relation in the main run based on the class pair        
+        predicted_relation_name = next(name for name, classes in main_run_relations.items() if classes == cls)
+        if predicted_relation_name in main_run_filters:
+            main_filters_for_relation = main_run_filters[predicted_relation_name]
+            example_filters_for_relation = example_filters_ground_truth[name]
             matched, total = compare_class_attributes(main_filters_for_relation, example_filters_for_relation)
             matched_filters_count += matched
             total_filters_count += total
@@ -117,12 +120,12 @@ def matched_relations(root_run: Run, example: Example) -> dict:
             'Match Percentage': match_percentage
         })
 
-    return {"results": [{"key": "Matched Classes", "value": matched_classes}, 
-                        {"key": "False Positives", "value": false_positives}, 
-                        {"key": "False Negatives", "value": false_negatives},
-                        {"key": "Recall", "value": recall},
-                        {"key": "Non-matched Classes", "value": false_positives + false_negatives},
-                        {"key": "Match Percentage", "value": match_percentage}]}
+    return {"results": [{"key": "Matched Classes", "score": matched_classes}, 
+                        {"key": "False Positives (cls)", "score": false_positives}, 
+                        {"key": "False Negatives (cls)", "score": false_negatives},
+                        {"key": "Recall (cls)", "score": recall},
+                        {"key": "Non-matched Classes", "score": false_positives + false_negatives},
+                        {"key": "Match Percentage (cls)", "score": match_percentage}]}
 
 
     

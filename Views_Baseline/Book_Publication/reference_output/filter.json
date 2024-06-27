@@ -1,23 +1,18 @@
 {
-    "filters": [
-        {
-            "name": "firstChapter",
-            "classAttributes": {
-                "Book": [
-                    "title"
-                ],
-                "Chapter": [
-                    "title"
-                ]
-            }
+    "filters": {
+        "publication": {
+            "Publication": [
+                "*"
+            ]
         },
-        {
-            "name": "bookChapters",
-            "classAttributes": {
-                "Publication": [
-                    "*"
-                ]
-            }
+        "book": {
+            "Book": [
+                "*",
+                "title"
+            ],
+            "Chapter": [
+                "title"
+            ]
         }
-    ]
+    }
 }
