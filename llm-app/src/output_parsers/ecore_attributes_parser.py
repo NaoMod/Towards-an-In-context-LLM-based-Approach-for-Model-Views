@@ -14,10 +14,13 @@ import jsonpatch  # type: ignore[import]
 from utils.ecore.parser import EcoreParser
 
 class ClassAttributes(BaseModel):
-    __root__: Dict[str, List[str]] = Field(..., description="Dictionary of class attributes")
+    __root__: List[str] = Field(..., description="List of class attributes")
+
+class MetamodelClasses(BaseModel):
+    __root__: Dict[str, ClassAttributes] = Field(..., description="Dictionary of classes with their attributes. The class name is the key.")
 
 class Filters(BaseModel):
-    filters: Dict[str, ClassAttributes] = Field(..., description="Dictionary of filters with their class attributes with the metamodel name as the key.")
+    filters: Dict[str, MetamodelClasses] = Field(..., description="Dictionary of filters with the metamodel name as the key.")
 
 class EcoreAttributesParser(BaseCumulativeTransformOutputParser[Any]):
     """	

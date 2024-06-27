@@ -83,7 +83,7 @@ if __name__ == "__main__":
     results = evaluate(
         execute_chain_wrapper,
         data=client.list_examples(dataset_name=dataset_name),
-        evaluators=[matched_relations, matched_filters, string_distance_evaluator, llm_vpdl_evaluator],
+        evaluators=[matched_relations, matched_filters, string_distance_evaluator],
         experiment_prefix="TestVPDL",
         # num_repetitions=3,
     )

@@ -27,7 +27,7 @@ prompts = {
 
                         When generating the response, you should follow these rules:
                          - Only use class and attribute names that actually exist in the metamodels. Don't make them up.
-                         - The symbol "*" should be used to indicate that all attributes of a given class should be selected. You can use it only once per class per metamodel.
+                         - The symbol "*" indicates that all attributes of a given class should be selected. You can use it only once per class per metamodel, and it replaces all other selected attributes.
 
                         The step-by-step process is as follows:
 
@@ -36,8 +36,9 @@ prompts = {
                         3. If the class is contained in another class, the container class and the attribute that collected the class should also appear in the list.
                         4. If the attribute is explicitly mentioned in the view description, it should be included in the list.
                         5. Include other relevant attributes that help the user understand the relation between the classes.
-                        6. Create the JSON array with the selected attributes for each metamodel.
-                        7. Provide the final answer.
+                        6. If all attributes were selected, use the "*" symbol to indicate it. It replaces all other selected attributes for that class.
+                        7. Create the JSON array with the selected attributes for each metamodel.
+                        8. Provide the final answer.
 
                         Your final answer should contain only the valid JSON and nothing else. Exclude any explanation or delimiter from the final response.
 
