@@ -34,11 +34,12 @@ class Where(RunnableInterface):
     Where class for managing the Where prompt templates.
     """
 
-    def __init__(self):
+    def __init__(self, pe_type = "zsCoT"):
         """
         Initialize the Where class.
         """
-        self.tags = where_templates["items"][0]["tags"]
+        self.tags = where_templates["items"][pe_type]["tags"]
+        self.pe_type = pe_type
 
     def set_model(self, llm):
         self.model = llm        
@@ -49,7 +50,7 @@ class Where(RunnableInterface):
     def set_prompt(self, template = None):
         if template is None:
             self.prompt = PromptTemplate(
-                template=where_templates["items"][0]["template"],
+                template=where_templates["items"][self.pe_type]["template"],
                 input_variables=["view_description", "meta_1", "meta_2", "join"],
                 partial_variables={"format_instructions":  self.parser.get_format_instructions()}
             )

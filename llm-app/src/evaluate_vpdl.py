@@ -1,9 +1,9 @@
 import os
 import pathlib
+import vpdl_chain
 
 from langchain_core.prompts.prompt import PromptTemplate
 from utils.config import Config
-from chain import execute_chain
 from langsmith.evaluation import evaluate, LangChainStringEvaluator
 from evaluators.vpdl_evaluators import matched_relations, matched_filters
 
@@ -37,7 +37,7 @@ def execute_chain_wrapper(input_: dict):
     meta_1_path = find(input_["meta_1_path"])
     meta_2_path = find(input_["meta_2_path"])
 
-    response = execute_chain(llm, input_["view_description"], meta_1_path, meta_2_path)
+    response = vpdl_chain.execute_chain(llm, input_["view_description"], meta_1_path, meta_2_path)
     return response
 
 def prepare_data(run, example):
@@ -83,7 +83,7 @@ if __name__ == "__main__":
     results = evaluate(
         execute_chain_wrapper,
         data=client.list_examples(dataset_name=dataset_name),
-        evaluators=[matched_relations, matched_filters, string_distance_evaluator],
-        experiment_prefix="TestVPDL",
-        # num_repetitions=3,
+        evaluators=[matched_relations, matched_filters, string_distance_evaluator, llm_vpdl_evaluator],
+        experiment_prefix="AggregateVPDL",
+        # num_repetitions=2,
     )

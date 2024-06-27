@@ -11,11 +11,12 @@ class Join(RunnableInterface):
     Join class for managing the Join prompt templates.
     """
 
-    def __init__(self):
+    def __init__(self, pe_type = "zsCoT"):
         """
         Initialize the Join class.
         """
-        self.tags = join_templates["items"][0]["tags"]
+        self.tags = join_templates["items"][pe_type]["tags"]
+        self.pe_type = pe_type
         
 
     def set_model(self, llm):
@@ -32,7 +33,7 @@ class Join(RunnableInterface):
     def set_prompt(self, template = None):
         if template is None:
             self.prompt = PromptTemplate(
-                template=join_templates["items"][0]["template"],
+                template=join_templates["items"][self.pe_type]["template"],
                 input_variables=["view_description", "meta_1", "meta_2"],
                 partial_variables={"format_instructions":  self.parser.get_format_instructions()},
             )

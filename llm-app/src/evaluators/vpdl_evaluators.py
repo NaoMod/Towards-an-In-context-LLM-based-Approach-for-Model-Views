@@ -54,8 +54,8 @@ def matched_filters(root_run: Run, example: Example) -> dict:
     recall = (matched_filters_count / (matched_filters_count + false_negatives_count)) * 100 if (matched_filters_count + false_negatives_count) > 0 else 0
 
     # Save values to a CSV file
-    output_csv_path = "filters_result.csv"
-    with open(output_csv_path, mode='w', newline='') as csv_file:
+    output_csv_path = "attr_result.csv"
+    with open(output_csv_path, mode='w+', newline='') as csv_file:
         fieldnames = ['Reference number', 'Matched Filters', 'False Positives', 'False Negatives', 'Recall', 'Non-matched Filters', 'Match Percentage']
         writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
         
@@ -76,8 +76,6 @@ def matched_filters(root_run: Run, example: Example) -> dict:
                         {"key": "Recall (attr)", "score": recall},
                         {"key": "Non-matched Filters", "score": false_positives_count + false_negatives_count},
                         {"key": "Match Percentage (attr)", "score": filter_match_percentage}]}
-
-    return {"score": filter_match_percentage, "key": "matched_filters"}
 
 def matched_relations(root_run: Run, example: Example) -> dict:
 
@@ -126,7 +124,7 @@ def matched_relations(root_run: Run, example: Example) -> dict:
     
     # Save values to a CSV file
     output_csv_path = "relations_result.csv"
-    with open(output_csv_path, mode='w', newline='') as csv_file:
+    with open(output_csv_path, mode='w+', newline='') as csv_file:
         fieldnames = ['Reference number', 'Matched Classes', 'False Positives', 'False Negatives', 'Recall', 'Non-matched Classes', 'Match Percentage']
         writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
         

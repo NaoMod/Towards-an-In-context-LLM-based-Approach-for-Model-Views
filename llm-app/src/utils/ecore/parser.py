@@ -1,6 +1,7 @@
 # PyEcore
 from typing import Tuple
 from pyecore.resources import ResourceSet, URI
+import os
 
 class Singleton(type):
     def __init__(self, name, bases, mmbs):
@@ -66,6 +67,15 @@ class EcoreParser(metaclass=Singleton):
         -------
         None
         """
+
+        # ensure that all inner metamodels are registered before the main one
+        metamodels_folder = os.path.dirname(ecore_path)
+        extra_folder = os.path.join(metamodels_folder, "extra")
+        if os.path.isdir(extra_folder):
+            for extra_ecore_file in os.listdir(extra_folder):
+                if extra_ecore_file.endswith(".ecore"):
+                    self.register_metamodel(os.path.join(extra_folder, extra_ecore_file))
+
         resource_path = self.resource_set.get_resource(URI(ecore_path))
         if resource_path is None or not resource_path.contents:
             return
