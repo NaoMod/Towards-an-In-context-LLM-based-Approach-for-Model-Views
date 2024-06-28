@@ -39,7 +39,7 @@ def execute_chain_wrapper(input_: dict):
     meta_2_path = find(input_["meta_2_path"])
 
     #### LINE TO BE CHANGED FOR EACH PROMPT TYPE####
-    prompt_type = "zsCoT"
+    prompt_type = "1sCoT"
 
     response = vpdl_chain.execute_chain(llm, input_["view_description"], meta_1_path, meta_2_path, prompt_type)
     return response
@@ -58,7 +58,7 @@ open_ai_key = config.get_open_ai_key()
 
 if __name__ == "__main__":
     client = Client()
-    dataset_name = "VPDL_FINAL_OneEX"
+    dataset_name = "VPDL_FINAL_4"
 
     string_distance_evaluator = LangChainStringEvaluator(  
             "string_distance",  
@@ -73,7 +73,8 @@ if __name__ == "__main__":
                 "helpfulness": (  
                     """The given input is a view description that should be specified using the VPDL language. 
                     Given that, how much effort would someone who knows the domain, the underlying metamodels and the VPDL languange syntax need to make to get the prediction to match the reference? 
-                    The less effort needed, the higher the score."""   
+                    The less effort needed, the higher the score.
+                    You should consider the VPDL language syntax, the metamodels, and the domain knowledge to evaluate the response, but you can ignore the where part."""   
                 )  
             },
             "llm": llm,
@@ -87,7 +88,7 @@ if __name__ == "__main__":
     results = evaluate(
         execute_chain_wrapper,
         data=client.list_examples(dataset_name=dataset_name),
-        evaluators=[matched_relations, matched_filters, string_distance_evaluator],
-        experiment_prefix="TestVPDL",
-        num_repetitions=1,
+        evaluators=[matched_relations, matched_filters, string_distance_evaluator, llm_vpdl_evaluator],
+        experiment_prefix="AllVPDL",
+        num_repetitions=3,
     )

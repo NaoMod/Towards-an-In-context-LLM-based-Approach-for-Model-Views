@@ -33,7 +33,7 @@ def generate_vpdl_skeleton(input_vpdl, meta_1, meta_2):
     for relation in input_vpdl['join']['relations']:
                    
         class_name_1 = relation['classes'][0]
-        class_name_2 = relation['classes'][0]
+        class_name_2 = relation['classes'][1]
     
         vpdl_skeleton += f"{meta_1_prefix}.{class_name_1} join {meta_2_prefix}.{class_name_2} as {relation['name']},\n"
     

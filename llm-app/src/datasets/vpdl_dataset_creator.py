@@ -17,7 +17,7 @@ llm = config.get_llm()
 open_ai_key = config.get_open_ai_key()
 
 client = Client()
-dataset_name = "VPDL_FINAL_FULL"
+dataset_name = "VPDL_FINAL_4"
 
 # Storing inputs in a dataset lets us
 # run chains and LLMs over a shared set of examples.
@@ -26,6 +26,8 @@ dataset = client.create_dataset(
 )
 
 for folder in os.listdir(VIEWS_DIRECTORY):
+        if folder != "Safety":
+            continue
         folder_path = os.path.join(VIEWS_DIRECTORY, folder)
         if os.path.isdir(folder_path):
             src_folder = os.path.join(folder_path, "src")

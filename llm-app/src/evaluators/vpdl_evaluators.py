@@ -23,7 +23,6 @@ def matched_filters(root_run: Run, example: Example) -> dict:
         false_negatives = 0
 
         for class_name, filters in filters_1.items():
-            total_filters += len(filters)
             if class_name in filters_2:
                 for filter in filters:
                     if filter in filters_2[class_name]:
@@ -34,6 +33,7 @@ def matched_filters(root_run: Run, example: Example) -> dict:
                 false_negatives += len(filters)
 
         for class_name, filters in filters_2.items():
+            total_filters += len(filters)
             if class_name in filters_1:
                 for filter in filters:
                     if filter not in filters_1[class_name]:
@@ -51,7 +51,7 @@ def matched_filters(root_run: Run, example: Example) -> dict:
     matched_filters_count, total_filters_count, false_positives_count, false_negatives_count = compare_class_attributes(main_run_filters, example_filters_ground_truth)
 
     filter_match_percentage = (matched_filters_count / total_filters_count) * 100 if total_filters_count > 0 else 0
-    recall = (matched_filters_count / (matched_filters_count + false_negatives_count)) * 100 if (matched_filters_count + false_negatives_count) > 0 else 0
+    recall = (matched_filters_count / (matched_filters_count + false_negatives_count)) if (matched_filters_count + false_negatives_count) > 0 else 0
 
     # Save values to a CSV file
     # output_csv_path = "attr_result.csv"
@@ -70,7 +70,7 @@ def matched_filters(root_run: Run, example: Example) -> dict:
     #         'Match Percentage': filter_match_percentage
     #     })
 
-    return {"results": [{"key": "Reference number", "score": total_filters_count},
+    return {"results": [{"key": "Reference number (attr)", "score": total_filters_count},
                         {"key": "Matched Filters", "score": matched_filters_count}, 
                         {"key": "False Positives (attr)", "score": false_positives_count}, 
                         {"key": "False Negatives (attr)", "score": false_negatives_count},
@@ -140,7 +140,7 @@ def matched_relations(root_run: Run, example: Example) -> dict:
     #         'Match Percentage': match_percentage
     #     })
 
-    return {"results": [{"key": "Reference number", "score": total_relations_ground_truth},
+    return {"results": [{"key": "Reference number (cls)", "score": total_relations_ground_truth},
                         {"key": "Matched Classes", "score": matched_classes}, 
                         {"key": "False Positives (cls)", "score": false_positives}, 
                         {"key": "False Negatives (cls)", "score": false_negatives},
