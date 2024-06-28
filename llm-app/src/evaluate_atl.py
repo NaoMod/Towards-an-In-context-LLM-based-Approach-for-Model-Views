@@ -1,35 +1,18 @@
 import os
 import pathlib
 
-import vpdl_chain
+import atl_chain
 
 from utils.config import Config
 from langsmith.evaluation import evaluate, LangChainStringEvaluator
-from evaluators.vpdl_evaluators import matched_relations, matched_filters
+from evaluators.atl_evaluators import matched_relations
 
 from langsmith import Client
 
-VIEWS_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..", "Views_Baseline")
-
-_PROMPT_TEMPLATE = """[Instruction]
-Please act as an impartial judge and evaluate the quality of the response provided by an AI assistant to the user question displayed below. For this evaluation, you should primarily consider the following criteria:
-helpfulness: How much effort would someone who knows the domain and the VPDL languange need to make to get the prediction to match the reference? The less effort needed, the higher the score.
-[Ground truth]
-{{vpdl_example}}
-      
-Begin your evaluation by providing a short explanation. Be as objective as possible. After providing your explanation, you must rate the response on a scale of 1 to 10 by strictly following this format: "[[rating]]", for example: "Rating: [[5]]".
-
-[Question]
-{{view_description}}
-
-[The Start of Assistant's Answer]
-{{vpdl_draft}}
-
-[The End of Assistant's Answer]
-"""  
+ATL_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..", "Views_ATL_Baseline")
   
 def find(name):
-    for root, _ , files in os.walk(VIEWS_DIRECTORY):
+    for root, _ , files in os.walk(ATL_DIRECTORY):
         if name in files:
             return os.path.join(root, name)
         
@@ -38,9 +21,9 @@ def execute_chain_wrapper(input_: dict):
     meta_2_path = find(input_["meta_2_path"])
 
     #### LINE TO BE CHANGED FOR EACH PROMPT TYPE####
-    prompt_type = "1sCoT"
+    prompt_type = "zsCoT"
 
-    response = vpdl_chain.execute_chain(llm, input_["view_description"], meta_1_path, meta_2_path, prompt_type)
+    response = atl_chain.execute_chain(llm, input_["transformation_description"], meta_1_path, meta_2_path, prompt_type)
     return response
 
 def prepare_data(run, example):
@@ -57,14 +40,8 @@ open_ai_key = config.get_open_ai_key()
 
 if __name__ == "__main__":
     client = Client()
-    dataset_name = "VPDL_FINAL_4"
+    dataset_name = "ATL_FINAL_1"
 
-    string_distance_evaluator = LangChainStringEvaluator(  
-            "string_distance",  
-            config={"distance": "levenshtein", "normalize_score": True},
-            prepare_data=prepare_data  
-    )
- 
     llm_vpdl_evaluator = LangChainStringEvaluator(  
         "labeled_score_string",  
         config={  
@@ -87,7 +64,7 @@ if __name__ == "__main__":
     results = evaluate(
         execute_chain_wrapper,
         data=client.list_examples(dataset_name=dataset_name),
-        evaluators=[matched_relations, matched_filters, string_distance_evaluator, llm_vpdl_evaluator],
-        experiment_prefix="AllVPDL",
-        num_repetitions=3,
+        evaluators=[matched_relations],
+        experiment_prefix="testATL",
+        num_repetitions=1,
     )
