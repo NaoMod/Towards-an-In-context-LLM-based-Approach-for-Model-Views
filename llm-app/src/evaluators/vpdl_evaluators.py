@@ -54,23 +54,24 @@ def matched_filters(root_run: Run, example: Example) -> dict:
     recall = (matched_filters_count / (matched_filters_count + false_negatives_count)) * 100 if (matched_filters_count + false_negatives_count) > 0 else 0
 
     # Save values to a CSV file
-    output_csv_path = "attr_result.csv"
-    with open(output_csv_path, mode='w+', newline='') as csv_file:
-        fieldnames = ['Reference number', 'Matched Filters', 'False Positives', 'False Negatives', 'Recall', 'Non-matched Filters', 'Match Percentage']
-        writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+    # output_csv_path = "attr_result.csv"
+    # with open(output_csv_path, mode='w+', newline='') as csv_file:
+    #     fieldnames = ['Reference number', 'Matched Filters', 'False Positives', 'False Negatives', 'Recall', 'Non-matched Filters', 'Match Percentage']
+    #     writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
         
-        writer.writeheader()
-        writer.writerow({
-            'Reference number': total_filters_count,
-            'Matched Filters': matched_filters_count,
-            'False Positives': false_positives_count,
-            'False Negatives': false_negatives_count,
-            'Recall': recall,
-            'Non-matched Filters': false_positives_count + false_negatives_count,
-            'Match Percentage': filter_match_percentage
-        })
+    #     writer.writeheader()
+    #     writer.writerow({
+    #         'Reference number': total_filters_count,
+    #         'Matched Filters': matched_filters_count,
+    #         'False Positives': false_positives_count,
+    #         'False Negatives': false_negatives_count,
+    #         'Recall': recall,
+    #         'Non-matched Filters': false_positives_count + false_negatives_count,
+    #         'Match Percentage': filter_match_percentage
+    #     })
 
-    return {"results": [{"key": "Matched Filters", "score": matched_filters_count}, 
+    return {"results": [{"key": "Reference number", "score": total_filters_count},
+                        {"key": "Matched Filters", "score": matched_filters_count}, 
                         {"key": "False Positives (attr)", "score": false_positives_count}, 
                         {"key": "False Negatives (attr)", "score": false_negatives_count},
                         {"key": "Recall (attr)", "score": recall},
@@ -123,23 +124,24 @@ def matched_relations(root_run: Run, example: Example) -> dict:
     #true_negatives = total_possible_relations - (matched_classes + false_positives + false_negatives)
     
     # Save values to a CSV file
-    output_csv_path = "relations_result.csv"
-    with open(output_csv_path, mode='w+', newline='') as csv_file:
-        fieldnames = ['Reference number', 'Matched Classes', 'False Positives', 'False Negatives', 'Recall', 'Non-matched Classes', 'Match Percentage']
-        writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+    # output_csv_path = "relations_result.csv"
+    # with open(output_csv_path, mode='w+', newline='') as csv_file:
+    #     fieldnames = ['Reference number', 'Matched Classes', 'False Positives', 'False Negatives', 'Recall', 'Non-matched Classes', 'Match Percentage']
+    #     writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
         
-        writer.writeheader()
-        writer.writerow({
-            'Reference number': total_relations_ground_truth,
-            'Matched Classes': matched_classes,
-            'False Positives': false_positives,
-            'False Negatives': false_negatives,
-            'Recall': recall,
-            'Non-matched Classes': false_positives + false_negatives,
-            'Match Percentage': match_percentage
-        })
+    #     writer.writeheader()
+    #     writer.writerow({
+    #         'Reference number': total_relations_ground_truth,
+    #         'Matched Classes': matched_classes,
+    #         'False Positives': false_positives,
+    #         'False Negatives': false_negatives,
+    #         'Recall': recall,
+    #         'Non-matched Classes': false_positives + false_negatives,
+    #         'Match Percentage': match_percentage
+    #     })
 
-    return {"results": [{"key": "Matched Classes", "score": matched_classes}, 
+    return {"results": [{"key": "Reference number", "score": total_relations_ground_truth},
+                        {"key": "Matched Classes", "score": matched_classes}, 
                         {"key": "False Positives (cls)", "score": false_positives}, 
                         {"key": "False Negatives (cls)", "score": false_negatives},
                         {"key": "Recall (cls)", "score": recall},
