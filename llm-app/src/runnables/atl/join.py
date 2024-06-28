@@ -1,5 +1,6 @@
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
+from langchain.output_parsers import OutputFixingParser
 
 
 from .prompt_templates.join import prompts as join_templates
@@ -9,17 +10,17 @@ from langchain_core.pydantic_v1 import BaseModel, Field
 
 from typing import List, Dict
 
-class RelationElement(BaseModel):
+class MetamodelClassElement(BaseModel):
     metamodel: str = Field(..., description="Name of the metamodel")
     class_: str = Field(..., description="Name of the class coming from the metamodel", alias="class")
 
 class Rule(BaseModel):
     rule: str = Field(..., description="Name of the relation")
-    from_: Dict[str, RelationElement] = Field(..., alias="from", description="Source class of the relation identified by an string alias")
-    to: Dict[str, RelationElement] = Field(..., description="Targets classes of the relation identified by an string alias")
+    from_: Dict[str, MetamodelClassElement] = Field(..., alias="from", description="Source class of the relation identified by a string alias")
+    to: Dict[str, MetamodelClassElement] = Field(..., description="Target classes of the relation identified by string aliases")
 
 class RulesList(BaseModel):
-    rules: List[Rule] = Field(..., description="List of rules")
+    relations: List[Rule] = Field(..., description="List of relations between classes in the input and output metamodels.")
 
 class Join(RunnableInterface):
     """
@@ -38,7 +39,8 @@ class Join(RunnableInterface):
         self.model = llm        
 
     def set_parser(self):        
-        self.parser = JsonOutputParser(pydantic_object=RulesList)
+        basic_parser = JsonOutputParser(pydantic_object=RulesList)
+        self.parser = OutputFixingParser.from_llm(parser=basic_parser, llm=self.model)
         
 
     def set_prompt(self, template = None):

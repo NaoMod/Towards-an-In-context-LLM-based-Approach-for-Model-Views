@@ -8,19 +8,23 @@ def matched_relations(root_run: Run, example: Example) -> dict:
 
     def parse_relations(json_data):
         data = json.loads(json_data) if isinstance(json_data, str) else json_data
-        relations = defaultdict(int)
-        
-        for relation in data.get("relations", []):
-            from_classes = frozenset((key, v['metamodel'], v['class']) for key, v in relation['from'].items())
-            to_classes = frozenset((key, v['metamodel'], v['class']) for key, v in relation['to'].items())
-            relations[(from_classes, to_classes)] += 1
-        
-        return relations
+        relations = []
 
-    main_run = root_run.child_runs[0]
-    
-    main_run_relations = parse_relations(main_run.outputs.get('join'))
-    example_relations = parse_relations(example.outputs.get('join'))
+        for relation in data.get("relations", []):
+            from_entry = relation.get("from", {})
+            to_entry = relation.get("to", {})
+
+            # Extract (metamodel, class) from the from entry
+            from_class = (from_entry.get("metamodel", ""), from_entry.get("class", ""))
+
+            # Extract (metamodel, class) from the to entry and add to the list under from_class key
+            to_classes = [(to_value.get("metamodel", ""), to_value.get("class", "")) for _, to_value in to_entry.items()]
+            relations[from_class].extend(to_classes)
+
+        return relations
+  
+    main_run_relations = parse_relations(root_run.outputs.get('join'))
+    example_relations = parse_relations(example.outputs.get('relations'))
 
     matched_classes = 0  # true positives
     false_positives = 0  # Predicted but not actually present in the example

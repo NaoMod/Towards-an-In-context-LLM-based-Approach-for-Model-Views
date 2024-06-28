@@ -26,12 +26,6 @@ def execute_chain_wrapper(input_: dict):
     response = atl_chain.execute_chain(llm, input_["transformation_description"], meta_1_path, meta_2_path, prompt_type)
     return response
 
-def prepare_data(run, example):
-    return {
-       "prediction": run.outputs['vpdl_draft'],
-       "reference": example.outputs['vpdl_draft']
-    }
-
 # Configure everything
 config = Config()
 config.load_keys()
