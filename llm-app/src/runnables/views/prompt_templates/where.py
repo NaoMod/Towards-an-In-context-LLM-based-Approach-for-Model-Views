@@ -1,7 +1,7 @@
 prompts = {
     "items": {
          "zsCoT": {
-            'tags': ['where-zsCot'],
+            'tags': ['where-zsCoT'],
             'template': """You specialize in reason on PlantUML metamodels, especially combining and merging them.
                         
                         Given two metamodels, a list of relations containing classes' pairs, and a view description, your task is to define how to combine the given classes.

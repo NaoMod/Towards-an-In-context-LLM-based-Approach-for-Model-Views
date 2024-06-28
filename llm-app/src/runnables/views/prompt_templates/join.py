@@ -5,14 +5,12 @@ prompts = {
             'template': """You are now a PlantUML analyst that find relations between classes from two metamodels.
                         
                         # TASK
-                        Your task is to analyze the input metamodel and the view description and define a list of relations between the metamodels' classes.
+                        Your task is to analyze the input metamodels and the view description and define a list of relations between the metamodels' classes.
                         The classes are always combined in pairs, being one coming from the first metamodel and the other coming from the second metamodel.
                         Classes can be combined when they represent the same domain object or when they are complementary classes, which means that one can be extended with the attributes of the other.
 
                         Other possible reason for combinations is when the view description includes explicit attribbutes from one metamodel that should appear in the other.
                                                 
-                        Your answer should be a valid JSON list of dictionaries where each dictionary entry represents a relation. 
-                        It should be a list even when it contains just one relation.
                         Each relation always contains precisely one class coming from each metamodel.
                         In your response, the classes are always in order: the first class comes from the first metamodel, and the second class comes from the second metamodel.
 

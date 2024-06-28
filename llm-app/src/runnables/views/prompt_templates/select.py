@@ -1,7 +1,7 @@
 prompts = {
     "items": {
         "zsCoT": {
-            'tags': ['select-zsCot'], 
+            'tags': ['select-zsCoT'], 
             'template': """You specialize in reason on PlantUML metamodels, especially selecting and filtering each class's attributes.
                     
                         Given two metamodels, a view description and a list of relations containing classes' pairs, your task is to select a set of attributes for the metamodels' classes.

@@ -6,21 +6,12 @@ from interfaces.runnable_interface import RunnableInterface
 
 from typing import List
 
-from langchain_core.pydantic_v1 import BaseModel, Field, validator
+from langchain_core.pydantic_v1 import BaseModel, Field
 
 class RuleElement(BaseModel):
     metaclass_1: str = Field(..., description="Name of the metaclass from metamodel 1")
     combination_rule: str = Field(..., description="Combination rule string explaining how the classes can be logically connected according to the domain's semantics")
     metaclass_2: str = Field(..., description="Name of the metaclass from metamodel 2")
-
-# class Rule(BaseModel):
-#     rule_elements: RuleElement = Field(..., description="List of rules")
-
-#     # @validator('rule_elements')
-#     # def check_length(cls, v):
-#     #     if len(v) != 3:
-#     #         raise ValueError('List must contain exactly 3 elements')
-#     #     return v
 
 class Rules(BaseModel):
     name: str = Field(..., description="Name of the relation")

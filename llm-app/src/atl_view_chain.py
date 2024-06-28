@@ -124,9 +124,6 @@ llm = config.get_llm()
 open_ai_key = config.get_open_ai_key()
 
 for folder in os.listdir(VIEWS_DIRECTORY):
-    if folder == "Yakindu2StateCharts":
-        continue
-    # #TODO temporary if to process only one view
     if folder != "BibTex2DocBlock":
         continue
     folder_path = os.path.join(VIEWS_DIRECTORY, folder)
