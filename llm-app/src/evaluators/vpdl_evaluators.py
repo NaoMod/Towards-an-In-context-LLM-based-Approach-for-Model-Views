@@ -1,6 +1,5 @@
 from langsmith.schemas import Example, Run
 import json
-import csv
 
 def matched_filters(root_run: Run, example: Example) -> dict:
 
@@ -53,23 +52,6 @@ def matched_filters(root_run: Run, example: Example) -> dict:
     filter_match_percentage = (matched_filters_count / total_filters_count) * 100 if total_filters_count > 0 else 0
     recall = (matched_filters_count / (matched_filters_count + false_negatives_count)) if (matched_filters_count + false_negatives_count) > 0 else 0
 
-    # Save values to a CSV file
-    # output_csv_path = "attr_result.csv"
-    # with open(output_csv_path, mode='w+', newline='') as csv_file:
-    #     fieldnames = ['Reference number', 'Matched Filters', 'False Positives', 'False Negatives', 'Recall', 'Non-matched Filters', 'Match Percentage']
-    #     writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
-        
-    #     writer.writeheader()
-    #     writer.writerow({
-    #         'Reference number': total_filters_count,
-    #         'Matched Filters': matched_filters_count,
-    #         'False Positives': false_positives_count,
-    #         'False Negatives': false_negatives_count,
-    #         'Recall': recall,
-    #         'Non-matched Filters': false_positives_count + false_negatives_count,
-    #         'Match Percentage': filter_match_percentage
-    #     })
-
     return {"results": [{"key": "Reference number (attr)", "score": total_filters_count},
                         {"key": "Matched Filters", "score": matched_filters_count}, 
                         {"key": "False Positives (attr)", "score": false_positives_count}, 
@@ -116,29 +98,6 @@ def matched_relations(root_run: Run, example: Example) -> dict:
 
     # how many of the actually present relations (matched_classes + false_negatives) were correctly identified (matched_classes).
     recall = matched_classes / (matched_classes + false_negatives) if matched_classes + false_negatives > 0 else 0
-    
-    # Calculate true negatives - don't make sense, since we don't have the full set of possible relations
-    # Calculate the union of all possible class pairs
-    # all_classes = set(main_run_relations.keys()).union(set(example_relations.keys()))
-    # total_possible_relations = len(all_classes)
-    #true_negatives = total_possible_relations - (matched_classes + false_positives + false_negatives)
-    
-    # Save values to a CSV file
-    # output_csv_path = "relations_result.csv"
-    # with open(output_csv_path, mode='w+', newline='') as csv_file:
-    #     fieldnames = ['Reference number', 'Matched Classes', 'False Positives', 'False Negatives', 'Recall', 'Non-matched Classes', 'Match Percentage']
-    #     writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
-        
-    #     writer.writeheader()
-    #     writer.writerow({
-    #         'Reference number': total_relations_ground_truth,
-    #         'Matched Classes': matched_classes,
-    #         'False Positives': false_positives,
-    #         'False Negatives': false_negatives,
-    #         'Recall': recall,
-    #         'Non-matched Classes': false_positives + false_negatives,
-    #         'Match Percentage': match_percentage
-    #     })
 
     return {"results": [{"key": "Reference number (cls)", "score": total_relations_ground_truth},
                         {"key": "Matched Classes", "score": matched_classes}, 
@@ -149,4 +108,25 @@ def matched_relations(root_run: Run, example: Example) -> dict:
                         {"key": "Match Percentage (cls)", "score": match_percentage}]}
 
 
+# Calculate true negatives - don't make sense, since we don't have the full set of possible relations
+# Calculate the union of all possible class pairs
+# all_classes = set(main_run_relations.keys()).union(set(example_relations.keys()))
+# total_possible_relations = len(all_classes)
+#true_negatives = total_possible_relations - (matched_classes + false_positives + false_negatives)
+
+# Save values to a CSV file
+# output_csv_path = "relations_result.csv"
+# with open(output_csv_path, mode='w+', newline='') as csv_file:
+#     fieldnames = ['Reference number', 'Matched Classes', 'False Positives', 'False Negatives', 'Recall', 'Non-matched Classes', 'Match Percentage']
+#     writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
     
+#     writer.writeheader()
+#     writer.writerow({
+#         'Reference number': total_relations_ground_truth,
+#         'Matched Classes': matched_classes,
+#         'False Positives': false_positives,
+#         'False Negatives': false_negatives,
+#         'Recall': recall,
+#         'Non-matched Classes': false_positives + false_negatives,
+#         'Match Percentage': match_percentage
+#     })   
