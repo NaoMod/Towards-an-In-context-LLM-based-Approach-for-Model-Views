@@ -15,7 +15,8 @@ prompts = {
                 When generating the response, follow these rules:
                 - Only use class names existing in the provided PlantUML metamodels. Don't make them up.
                 - The relation's name can be any string, but it must be unique and meaningful for each relation.
-                - A relation always contains a from class (source) and a to class (target) and each class comes from a different metamodel.
+                - A relation always contains a from entry (source class) and a to entry (target classes).
+                - Each from entry and to entry is named with an alias.
                 - A source class can be mapped to multiple target classes, but each target class should be mapped from a single source class.
                 - Every class from the input metamodel should be mapped to at least one class in the output metamodel.
 
@@ -50,7 +51,8 @@ prompts = {
                 When generating the response, follow these rules:
                 - Only use class names existing in the provided PlantUML metamodels. Don't make them up.
                 - The relation's name can be any string, but it must be unique and meaningful for each relation.
-                - A relation always contains a from class (source) and a to class (target) and each class comes from a different metamodel.
+                - A relation always contains a from entry (source class) and a to entry (target classes).
+                - Each from entry and to entry is named with an alias.
                 - A source class can be mapped to multiple target classes, but each target class should be mapped from a single source class.
                 - Every class from the input metamodel should be mapped to at least one class in the output metamodel.
 

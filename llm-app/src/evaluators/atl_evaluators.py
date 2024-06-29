@@ -8,10 +8,13 @@ def matched_relations(root_run: Run, example: Example) -> dict:
 
     def parse_relations(json_data):
         data = json.loads(json_data) if isinstance(json_data, str) else json_data
-        relations = []
+        relations = {}
 
         for relation in data.get("relations", []):
-            from_entry = relation.get("from", {})
+            from_dict = relation.get("from", {})
+            from_key = next(iter(from_dict)) # Get the first entry in the from dictionary assuming there is only one
+            from_entry = from_dict[from_key]
+
             to_entry = relation.get("to", {})
 
             # Extract (metamodel, class) from the from entry
@@ -19,7 +22,10 @@ def matched_relations(root_run: Run, example: Example) -> dict:
 
             # Extract (metamodel, class) from the to entry and add to the list under from_class key
             to_classes = [(to_value.get("metamodel", ""), to_value.get("class", "")) for _, to_value in to_entry.items()]
-            relations[from_class].extend(to_classes)
+            if from_class not in relations:
+                relations[from_class] = to_classes
+            else:
+                relations[from_class].extend(to_classes)
 
         return relations
   
@@ -29,20 +35,30 @@ def matched_relations(root_run: Run, example: Example) -> dict:
     matched_classes = 0  # true positives
     false_positives = 0  # Predicted but not actually present in the example
     false_negatives = 0  # Actually present in the example but not predicted
+    total_relations_ground_truth = 0  # Total number of relations in the example
 
     # Calculate matched classes (true positives)
-    for value, count in example_relations.items():
-        if value in main_run_relations:
-            matched_classes += min(count, main_run_relations[value])
+    for from_entry, to_entries in main_run_relations.items():
+        if from_entry in example_relations:
+            for to_entry in to_entries:
+                if to_entry in example_relations[from_entry]:
+                    matched_classes += 1
+                else:
+                    false_positives += 1
         else:
-            false_negatives += count
+            false_positives += len(to_entries) 
 
-    # Calculate false positives (values in main_run_relations not in example_relations)
-    for value, count in main_run_relations.items():
-        if value not in example_relations:
-            false_positives += count
+    # Calculate false negatives
+    for from_entry, to_entries in example_relations.items():
+        if from_entry not in main_run_relations:
+            false_negatives += len(to_entries)
+        else:
+            for to_entry in to_entries:
+                if to_entry not in main_run_relations[from_entry]:
+                    false_negatives += 1
 
-    total_relations_ground_truth = sum(example_relations.values())
+        total_relations_ground_truth += len(to_entries)
+
     match_percentage = (matched_classes / total_relations_ground_truth) * 100 if total_relations_ground_truth > 0 else 0
 
     # how many of the actually present relations (matched_classes + false_negatives) were correctly identified (matched_classes).
