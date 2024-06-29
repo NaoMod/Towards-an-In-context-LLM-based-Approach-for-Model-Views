@@ -15,5 +15,3 @@ where s.title = t.eContainer().title
       for firstChapter,
       s.title = t.eContainer().title
       for bookChapters
-      
-      //Test chapters

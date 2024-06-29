@@ -46,7 +46,7 @@ def generate_vpdl_skeleton(input_vpdl, meta_1, meta_2):
         combination_rules_list = combination['rules']
         rules = ""        
         for rule in combination_rules_list:            
-            rules += f"{rule['metaclass_1']}, {rule['combination_rule']}, {rule['metaclass_2']} \n      "
+            rules += f"`{rule['combination_rule']}`\n      "
         vpdl_skeleton += f"{rules} for {relation_name}\n"
         
     return vpdl_skeleton
