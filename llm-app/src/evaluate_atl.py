@@ -21,7 +21,7 @@ def execute_chain_wrapper(input_: dict):
     meta_2_path = find(input_["meta_2_path"])
 
     #### LINE TO BE CHANGED FOR EACH PROMPT TYPE####
-    prompt_type = "zsCoT"
+    prompt_type = "1sCoT"
 
     response = atl_chain.execute_chain(llm, input_["transformation_description"], meta_1_path, meta_2_path, prompt_type)
     return response
@@ -34,7 +34,7 @@ open_ai_key = config.get_open_ai_key()
 
 if __name__ == "__main__":
     client = Client()
-    dataset_name = "ATL_FINAL_1"
+    dataset_name = "ATL_FINAL_5"
 
     llm_vpdl_evaluator = LangChainStringEvaluator(  
         "labeled_score_string",  
