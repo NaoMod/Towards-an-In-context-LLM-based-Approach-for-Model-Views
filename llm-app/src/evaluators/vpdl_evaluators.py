@@ -24,12 +24,12 @@ def get_metamodel_plus_class_name(class_name: str, meta_1_path: str, meta_2_path
     check_metamodel_2 = ecore_parser.check_ecore_class(meta_2_path, class_name)
 
     if check_metamodel_1:
-        return f"{ecore_parser.get_metamodel_uri(meta_1_path)}:{class_name}"
+        return f"{ecore_parser.get_metamodel_uri(meta_1_path)[0]}:{class_name}"
     elif check_metamodel_2:
-        return f"{ecore_parser.get_metamodel_uri(meta_2_path)}:{class_name}"
+        return f"{ecore_parser.get_metamodel_uri(meta_2_path)[0]}:{class_name}"
     
 def expand_star_attribute(full_class_name: str) -> list:
-    metamodel_name, class_name = full_class_name.split(":")
+    metamodel_name, class_name = full_class_name.rsplit(":", 1)
     ecore_parser = EcoreParser()
     return ecore_parser.get_all_class_properties(metamodel_name, class_name)
 
@@ -47,32 +47,32 @@ def matched_filters(root_run: Run, example: Example) -> dict:
                 for attr in attributes:
                     # if attribute is *, it should expand to all attributes of the class
                     if attr == "*":
-                        filters_to_return[full_class_name].extend(expand_star_attribute(full_class_name))
+                        filters_to_return[full_class_name] += [prop for prop in expand_star_attribute(full_class_name) if prop not in filters_to_return[full_class_name]]
                     else:
-                        filters_to_return[full_class_name].append(attr)
+                        filters_to_return[full_class_name] += [attr] if attr not in filters_to_return[full_class_name] else []
         return filters_to_return
 
-    def compare_class_attributes(filters_1, filters_2):
+    def compare_class_attributes(predicted_filters, reference_filters):
         matched_filters = 0 # true positives
-        non_matched_relations = 0 # false positives (Predicted but not actually present in the example)
+        non_matched_filters = 0 # false positives (Predicted but not actually present in the example)
         reference_number = 0
 
-        for class_name, filters in filters_1.items():
-            if class_name in filters_2:
-                for filter in filters:
-                    if filter in filters_2[class_name]:
-                        matched_filters += 1
-
-        for class_name, filters in filters_2.items():
+        for class_name, filters in reference_filters.items():
             reference_number += len(filters)
-            if class_name in filters_1:
+            if class_name in predicted_filters:
                 for filter in filters:
-                    if filter not in filters_1[class_name]:
-                        non_matched_relations += 1
+                    if filter not in predicted_filters[class_name]:
+                        non_matched_filters += 1
             else:
-                non_matched_relations += len(filters)
+                non_matched_filters += len(filters)
 
-        return matched_filters, reference_number, non_matched_relations
+        for class_name, filters in predicted_filters.items():
+            if class_name in reference_filters:
+                for filter in filters:
+                    if filter in reference_filters[class_name]:
+                        matched_filters += 1        
+
+        return matched_filters, reference_number, non_matched_filters
 
     main_run = root_run.child_runs[0]
     

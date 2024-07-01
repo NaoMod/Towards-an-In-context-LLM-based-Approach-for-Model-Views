@@ -243,13 +243,18 @@ class EcoreParser(metaclass=Singleton):
             A list of properties of the specified class.
         """
         properties = []
-        for content in self.resource_set.resources:
-            if content.uri == meta_model_uri:
-                for element in content.contents:
-                    if element.eClass.name == 'EPackage':
-                        for sub_element in element.eAllContents():
-                            if sub_element.eClass.name == 'EClass' and sub_element.name == class_name:
-                                for attribute in sub_element.eProperties:
-                                    properties.append(attribute.name)
+        for _ , resource in self.resource_set.resources.items():
+            content = resource.contents[0]
+
+            if content.nsURI.strip() == meta_model_uri.strip():
+
+                # Iterate through elements to find the class and add its properties
+                for content in resource.contents:
+                    if content.eClass.name == 'EPackage':
+                        for element in content.eAllContents():
+                            if element.name == class_name:
+                                # Found the class, now check its properties
+                                for property_ in element.eAllStructuralFeatures():
+                                    properties.append(property_.name)
         return properties
 

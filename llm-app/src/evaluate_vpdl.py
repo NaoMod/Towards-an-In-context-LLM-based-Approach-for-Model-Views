@@ -70,7 +70,7 @@ if __name__ == "__main__":
     results = evaluate(
         execute_chain_wrapper,
         data=client.list_examples(dataset_name=dataset_name),
-        evaluators=[matched_relations, matched_filters],
+        evaluators=[matched_filters],
         experiment_prefix="AllVPDL",
         num_repetitions=1,
     )
