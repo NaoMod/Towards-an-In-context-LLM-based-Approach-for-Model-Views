@@ -225,4 +225,31 @@ class EcoreParser(metaclass=Singleton):
             return None
 
         return content.nsURI, content.nsPrefix or f'prefix_{content.nsURI}'
+    
+    def get_all_class_properties(self, meta_model_uri: str, class_name: str) -> list:
+        """
+        Get all properties of the specified class in the metamodel.
+
+        Parameters
+        ----------
+        metamodel_name : str
+            The name of the metamodel.
+        class_name : str
+            The name of the class.
+
+        Returns
+        -------
+        list
+            A list of properties of the specified class.
+        """
+        properties = []
+        for content in self.resource_set.resources:
+            if content.uri == meta_model_uri:
+                for element in content.contents:
+                    if element.eClass.name == 'EPackage':
+                        for sub_element in element.eAllContents():
+                            if sub_element.eClass.name == 'EClass' and sub_element.name == class_name:
+                                for attribute in sub_element.eProperties:
+                                    properties.append(attribute.name)
+        return properties
 

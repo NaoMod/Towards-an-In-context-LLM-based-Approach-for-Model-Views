@@ -14,11 +14,6 @@
                 "name"
             ]
         },
-        "BPMN": {
-            "Process": [
-                "*"
-            ]
-        },
         "ReqIf": {
             "ReqIF": [
                 "coreContent"

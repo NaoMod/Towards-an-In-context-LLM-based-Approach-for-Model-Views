@@ -56,6 +56,7 @@ for folder in os.listdir(VIEWS_DIRECTORY):
             if file.endswith(".ecore"):
                 ecore_files.append(file)
                 if len(ecore_files) == 2:
+                        # TODO remember to solve the order for Book_Publication example
                         meta_1_path = ecore_files[0]
                         meta_2_path = ecore_files[1]
                         break

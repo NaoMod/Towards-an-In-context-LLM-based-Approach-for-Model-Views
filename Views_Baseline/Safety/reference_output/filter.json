@@ -24,25 +24,6 @@
             "Variable": [
                 "*"
             ]
-        },
-        "Log": {
-            "Log": [
-                "events"
-            ],
-            "Event": [
-                "*"
-            ],
-            "Trace": [
-                "*"
-            ]
-        },
-        "UML": {
-            "Model": [
-                "elements"
-            ],
-            "Component": [
-                "*"
-            ]
         }
     }
 }

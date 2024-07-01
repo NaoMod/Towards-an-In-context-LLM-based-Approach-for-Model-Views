@@ -1,72 +1,112 @@
+import os
+import pathlib
 from langsmith.schemas import Example, Run
 import json
 
+from utils.ecore.parser import EcoreParser
+
+VIEWS_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..", "..", "Views_Baseline")
+
+def find(name):
+    if name.startswith("c:") or name.startswith("C:") or name.startswith("file://") or name.startswith("http://") or name.startswith("https://"):
+        return name
+    for root, _ , files in os.walk(VIEWS_DIRECTORY):
+        if name in files:
+            return os.path.join(root, name)
+        
+def get_metamodel_uri(metamodel_path: str) -> str:
+    ecore_parser = EcoreParser()
+    return ecore_parser.get_metamodel_uri(metamodel_path)
+
+def get_metamodel_plus_class_name(class_name: str, meta_1_path: str, meta_2_path: str) -> str:
+    ecore_parser = EcoreParser()
+    check_metamodel_1 = ecore_parser.check_ecore_class(meta_1_path, class_name)
+    check_metamodel_2 = ecore_parser.check_ecore_class(meta_2_path, class_name)
+
+    if check_metamodel_1:
+        return f"{ecore_parser.get_metamodel_uri(meta_1_path)}:{class_name}"
+    elif check_metamodel_2:
+        return f"{ecore_parser.get_metamodel_uri(meta_2_path)}:{class_name}"
+    
+def expand_star_attribute(full_class_name: str) -> list:
+    metamodel_name, class_name = full_class_name.split(":")
+    ecore_parser = EcoreParser()
+    return ecore_parser.get_all_class_properties(metamodel_name, class_name)
+
 def matched_filters(root_run: Run, example: Example) -> dict:
 
-    def parse_filters(json_data):
+    def parse_filters(json_data, meta_1_path, meta_2_path):
         data = json.loads(json_data) if isinstance(json_data, str) else json_data
         filters_to_return = {}
         for _ , filters in data['filters'].items():
             for cls_name, attributes in filters.items():
-                if cls_name not in filters_to_return:
-                    filters_to_return[cls_name] = []
+                # find the metamodel of the given class and get the full name f"{metamodel_uri}:{class_name}"
+                full_class_name  = get_metamodel_plus_class_name(cls_name, find(meta_1_path), find(meta_2_path))
+                if full_class_name not in filters_to_return:
+                    filters_to_return[full_class_name] = []
                 for attr in attributes:
-                    # assuming that the class name can come from different metamodels. For evaluation, this is not important.
-                    filters_to_return[cls_name].append(attr)
+                    # if attribute is *, it should expand to all attributes of the class
+                    if attr == "*":
+                        filters_to_return[full_class_name].extend(expand_star_attribute(full_class_name))
+                    else:
+                        filters_to_return[full_class_name].append(attr)
         return filters_to_return
 
     def compare_class_attributes(filters_1, filters_2):
-        matched = 0
-        total_filters = 0
-        false_positives = 0
-        false_negatives = 0
+        matched_filters = 0 # true positives
+        non_matched_relations = 0 # false positives (Predicted but not actually present in the example)
+        reference_number = 0
 
         for class_name, filters in filters_1.items():
             if class_name in filters_2:
                 for filter in filters:
                     if filter in filters_2[class_name]:
-                        matched += 1
-                    else:
-                        false_negatives += 1
-            else:
-                false_negatives += len(filters)
+                        matched_filters += 1
 
         for class_name, filters in filters_2.items():
-            total_filters += len(filters)
+            reference_number += len(filters)
             if class_name in filters_1:
                 for filter in filters:
                     if filter not in filters_1[class_name]:
-                        false_positives += 1
+                        non_matched_relations += 1
             else:
-                false_positives += len(filters)
+                non_matched_relations += len(filters)
 
-        return matched, total_filters, false_positives, false_negatives
+        return matched_filters, reference_number, non_matched_relations
 
     main_run = root_run.child_runs[0]
     
-    main_run_filters = parse_filters(main_run.outputs.get('select'))
-    example_filters_ground_truth = parse_filters(example.outputs.get('select'))
+    main_run_filters = parse_filters(main_run.outputs.get('select'), main_run.inputs.get('meta_1_path'), main_run.inputs.get('meta_2_path'))
+    example_filters_ground_truth = parse_filters(example.outputs.get('select'), example.inputs.get('meta_1_path'), example.inputs.get('meta_2_path'))
 
-    matched_filters_count, total_filters_count, false_positives_count, false_negatives_count = compare_class_attributes(main_run_filters, example_filters_ground_truth)
+    matched_filters, reference_number, non_matched_relations = compare_class_attributes(main_run_filters, example_filters_ground_truth)
 
-    filter_match_percentage = (matched_filters_count / total_filters_count) * 100 if total_filters_count > 0 else 0
-    recall = (matched_filters_count / (matched_filters_count + false_negatives_count)) if (matched_filters_count + false_negatives_count) > 0 else 0
-
-    return {"results": [{"key": "Reference number (attr)", "score": total_filters_count},
-                        {"key": "Matched Filters", "score": matched_filters_count}, 
-                        {"key": "False Positives (attr)", "score": false_positives_count}, 
-                        {"key": "False Negatives (attr)", "score": false_negatives_count},
+    precision = matched_filters / (matched_filters + non_matched_relations) if (matched_filters + non_matched_relations) > 0 else 0
+    recall = matched_filters / reference_number if reference_number > 0 else 0
+    
+    return {"results": [{"key": "Reference number (attr)", "score": reference_number},
+                        {"key": "Matched Filters", "score": matched_filters}, 
+                        {"key": "Precision (attr)", "score": precision},
                         {"key": "Recall (attr)", "score": recall},
-                        {"key": "Non-matched Filters", "score": false_positives_count + false_negatives_count},
-                        {"key": "Match Percentage (attr)", "score": filter_match_percentage}]}
+                        {"key": "Non-matched Filters", "score": non_matched_relations}]}
 
 def matched_relations(root_run: Run, example: Example) -> dict:
 
-    def parse_relations(json_data):
+    def parse_relations(json_data, meta_1_path, meta_2_path):
         data = json.loads(json_data) if isinstance(json_data, str) else json_data
         relations = {}
         for relation in data.get("relations", []):
-            classes = tuple(sorted(relation["classes"]))
+            # each relation contains exact one class per metamodel
+            # get the metamodel uri and use it combined with the class name to create a unique key
+            metamodel_1_uri = get_metamodel_uri(find(meta_1_path))[0]
+            class_name_1 = relation["classes"][0]
+            key_1 = f"{metamodel_1_uri}:{class_name_1}"
+
+            metamodel_2_uri = get_metamodel_uri(find(meta_2_path))[0]
+            class_name_2 = relation["classes"][1]
+            key_2 = f"{metamodel_2_uri}:{class_name_2}"
+
+            classes = tuple(sorted((key_1, key_2)))
             if classes not in relations:
                 relations[classes] = 0
             relations[classes] += 1
@@ -74,59 +114,33 @@ def matched_relations(root_run: Run, example: Example) -> dict:
 
     main_run = root_run.child_runs[0]
     
-    main_run_relations = parse_relations(main_run.outputs.get('join'))
-    example_relations = parse_relations(example.outputs.get('join'))
+    main_run_relations = parse_relations(main_run.outputs.get('join'), main_run.inputs.get('meta_1_path'), main_run.inputs.get('meta_2_path'))
+    reference_relations = parse_relations(example.outputs.get('join'), example.inputs.get('meta_1_path'), example.inputs.get('meta_2_path'))
 
-    matched_classes = 0 # true positives
-    false_positives = 0 # Predicted but not actually present in the example
-    false_negatives = 0 # Actually present in the example but not predicted
+    matched_relations = 0 # true positives
+    non_matched_relations = 0 # false positives (Predicted but not actually present in the example)
+    reference_number = 0
 
-    # Calculate matched classes (true positives)
-    for value, count in example_relations.items():
+    precision   = 0 
+    recall      = 0
+
+    for value, count in reference_relations.items():
+        reference_number += count
         if value in main_run_relations:
-            matched_classes += min(count, main_run_relations[value])
-        else:
-            false_negatives += count
+            matched_relations += min(count, main_run_relations[value])
 
-    # Calculate false positives (values in main_run_relations not in example_relations)
     for value, count in main_run_relations.items():
-        if value not in example_relations:
-            false_positives += count
+        if value not in reference_relations:
+            non_matched_relations += count
+        else:
+            non_matched_relations += max(0, count - reference_relations[value])
 
-    total_relations_ground_truth = sum(example_relations.values())
-    match_percentage = (matched_classes / total_relations_ground_truth) * 100 if total_relations_ground_truth > 0 else 0
-
-    # how many of the actually present relations (matched_classes + false_negatives) were correctly identified (matched_classes).
-    recall = matched_classes / (matched_classes + false_negatives) if matched_classes + false_negatives > 0 else 0
-
-    return {"results": [{"key": "Reference number (cls)", "score": total_relations_ground_truth},
-                        {"key": "Matched Classes", "score": matched_classes}, 
-                        {"key": "False Positives (cls)", "score": false_positives}, 
-                        {"key": "False Negatives (cls)", "score": false_negatives},
-                        {"key": "Recall (cls)", "score": recall},
-                        {"key": "Non-matched Classes", "score": false_positives + false_negatives},
-                        {"key": "Match Percentage (cls)", "score": match_percentage}]}
-
-
-# Calculate true negatives - don't make sense, since we don't have the full set of possible relations
-# Calculate the union of all possible class pairs
-# all_classes = set(main_run_relations.keys()).union(set(example_relations.keys()))
-# total_possible_relations = len(all_classes)
-#true_negatives = total_possible_relations - (matched_classes + false_positives + false_negatives)
-
-# Save values to a CSV file
-# output_csv_path = "relations_result.csv"
-# with open(output_csv_path, mode='w+', newline='') as csv_file:
-#     fieldnames = ['Reference number', 'Matched Classes', 'False Positives', 'False Negatives', 'Recall', 'Non-matched Classes', 'Match Percentage']
-#     writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+    precision = matched_relations / (matched_relations + non_matched_relations) if (matched_relations + non_matched_relations) > 0 else 0
+    recall = matched_relations / reference_number if reference_number > 0 else 0
     
-#     writer.writeheader()
-#     writer.writerow({
-#         'Reference number': total_relations_ground_truth,
-#         'Matched Classes': matched_classes,
-#         'False Positives': false_positives,
-#         'False Negatives': false_negatives,
-#         'Recall': recall,
-#         'Non-matched Classes': false_positives + false_negatives,
-#         'Match Percentage': match_percentage
-#     })   
+
+    return {"results": [{"key": "Reference number (cls)", "score": reference_number},
+                        {"key": "Matched Classes", "score": matched_relations}, 
+                        {"key": "Precision (cls)", "score": precision},
+                        {"key": "Recall (cls)", "score": recall},
+                        {"key": "Non-matched Classes", "score": non_matched_relations}]}
