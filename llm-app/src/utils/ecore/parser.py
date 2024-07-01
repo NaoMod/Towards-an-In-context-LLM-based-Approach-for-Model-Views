@@ -252,9 +252,10 @@ class EcoreParser(metaclass=Singleton):
                 for content in resource.contents:
                     if content.eClass.name == 'EPackage':
                         for element in content.eAllContents():
-                            if element.name == class_name:
+                            if hasattr(element, 'name') and element.name == class_name:
                                 # Found the class, now check its properties
-                                for property_ in element.eAllStructuralFeatures():
-                                    properties.append(property_.name)
+                                if callable(getattr(element, "eAllStructuralFeatures", None)):
+                                    for property_ in element.eAllStructuralFeatures():
+                                        properties.append(property_.name)
         return properties
 
