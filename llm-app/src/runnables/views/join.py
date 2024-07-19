@@ -1,12 +1,18 @@
+import sys
+import os
+
 from langchain.prompts import PromptTemplate
-from langchain.output_parsers import OutputFixingParser
-from langchain.output_parsers import RetryOutputParser
 from langchain_core.runnables import RunnableLambda, RunnableParallel
 
 from .prompt_templates.join import prompts as join_templates
 from interfaces.runnable_interface import RunnableInterface
 
 from output_parsers.ecore_classes_parser import EcoreClassesParser, RelationsGroup, Relation
+
+# Add the directory containing utils to the Python path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from utils.alt_retry import RetryOutputParser
 
 class Join(RunnableInterface):
     """
@@ -29,8 +35,7 @@ class Join(RunnableInterface):
         if meta_1 is None or meta_2 is None:
             raise ValueError("Metamodels are required to parse the output using Ecore checkers.")
         basic_parser = EcoreClassesParser(meta_1=meta_1, meta_2=meta_2)
-        # self.parser = OutputFixingParser.from_llm(parser=basic_parser, llm=self.model)
-        self.parser = RetryOutputParser.from_llm(parser=basic_parser, llm=self.model.with_structured_output(RelationsGroup), max_retries=3)
+        self.parser = RetryOutputParser.from_llm(parser=basic_parser, llm=self.model.with_structured_output(RelationsGroup), max_retries=2)
         
 
     def set_prompt(self, template = None):
@@ -62,6 +67,7 @@ class Join(RunnableInterface):
             return self.parser.parse_with_prompt(**args)
 
         chain = self.prompt | self.model.with_structured_output(RelationsGroup, include_raw=False)
+        
         return RunnableParallel(
             completion=chain, prompt_value=self.prompt
         ) | RunnableLambda(parse_with_prompt)

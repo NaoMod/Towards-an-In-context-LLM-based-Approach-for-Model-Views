@@ -36,6 +36,16 @@ class EcoreAttributesParser(BaseCumulativeTransformOutputParser[Any]):
         """
         return jsonpatch.make_patch(prev, next).patch
     
+    def _get_metamodel_containing_class_name(self, class_name: str, meta_1_path: str, meta_2_path: str) -> str:
+        ecore_parser = EcoreParser()
+        check_metamodel_1 = ecore_parser.check_ecore_class(meta_1_path, class_name)
+        check_metamodel_2 = ecore_parser.check_ecore_class(meta_2_path, class_name)
+
+        if check_metamodel_1:
+            return meta_1_path
+        elif check_metamodel_2:
+            return meta_2_path
+    
     def parse_result(self, result: List[Generation], *, partial: bool = False) -> Any:
         """
         Parse the result of the output.
@@ -68,37 +78,21 @@ class EcoreAttributesParser(BaseCumulativeTransformOutputParser[Any]):
                 )
         except Exception as e:
             raise e
-        for filter_per_relation in filters_to_check['filters']:
-
-            # relation_name = filter_per_relation['name'] # not used
-            class_attributes = filter_per_relation['classAttributes']
-            for class_to_test, attributes in class_attributes.items():
+                    
+        for _ , filters in filters_to_check['filters'].items():
+            for cls_name, attributes in filters.items():
+                # find the metamodel of the given class and get the full name f"{metamodel_uri}:{class_name}"
+                metamodel_to_test  = self._get_metamodel_containing_class_name(cls_name, self.meta_1, self.meta_2)
                 for attr in attributes:
-                    attr_checked = ecore_parser.check_ecore_attribute(self.meta_1, class_to_test, attr)
-                    if not attr_checked:
-                        raise OutputParserException(
-                            f"The output contains an invalid attribute: {attr}"
-                        )
+                    # if attribute is *, it's not necessary to check existence
+                    if attr != "*":
+                        # check if attribute exist in the given metamodel and throw exception when it's not
+                        attr_checked = ecore_parser.check_ecore_attribute(metamodel_to_test, cls_name, attr)
+                        if not attr_checked:
+                            raise OutputParserException(
+                                f"The output contains an invalid attribute: {attr}"
+                            )
 
-        #     filters_for_meta_1 = filter_to_check[0]
-        #     filters_for_meta_2 = filter_to_check[1]
-        #     for _, filters_1 in filters_for_meta_1.items():
-        #         for class_to_test, attributes in filters_1.items():
-        #             for attr in attributes:
-        #                 attr_checked = ecore_parser.check_ecore_attribute(self.meta_1, class_to_test, attr)
-        #                 if not attr_checked:
-        #                     raise OutputParserException(
-        #                         f"The output contains an invalid attribute: {attr}"
-        #                     )
-
-        # for _, filters_2 in filters_for_meta_2.items():
-        #     for class_to_test, attributes in filters_2.items():
-        #         for attr in attributes:
-        #             attr_checked = ecore_parser.check_ecore_attribute(self.meta_2, class_to_test, attr)
-        #             if not attr_checked:
-        #                 raise OutputParserException(
-        #                     f"The output contains an invalid attribute: {attr}"
-        #                 )            
         return filters_to_check
     
     def get_format_instructions(self) -> str:
