@@ -32,7 +32,7 @@ if __name__ == "__main__":
             metamodels_folder = os.path.join(folder_path, "metamodels")
             
             view_description_file = os.path.join(folder_path, "view_description_paper.txt")
-            if not view_description_file.is_file():
+            if not os.path.isfile(view_description_file):
                 view_description_file = os.path.join(folder_path, "view_description.txt")
             view_description = open(view_description_file, "r").read()
 

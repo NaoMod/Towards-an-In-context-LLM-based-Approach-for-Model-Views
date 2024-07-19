@@ -24,7 +24,7 @@ class Filters(BaseModel):
 
 class EcoreAttributesParser(BaseCumulativeTransformOutputParser[Any]):
     """	
-    EcoreAttributesParser class for managing the ecore attributes parser.
+    EcoreAttributesParser class for managing the ecore attributes parser.z
     """
     meta_1: str = None
     meta_2: str = None
