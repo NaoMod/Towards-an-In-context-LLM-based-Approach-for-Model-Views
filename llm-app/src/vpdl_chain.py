@@ -69,7 +69,7 @@ def execute_chain(llm, view_description , meta_1_path, meta_2_path, pe_type = "z
     join_chain = join_runnable.get_runnable()
     cfg = {"tags": join_runnable.get_tags()}
 
-    select_runnable = Select(pe_type)
+    select_runnable = Select()
     select_runnable.set_model(llm)
     select_runnable.set_parser(meta_1=meta_1_path, meta_2=meta_2_path)
     select_runnable.set_prompt()

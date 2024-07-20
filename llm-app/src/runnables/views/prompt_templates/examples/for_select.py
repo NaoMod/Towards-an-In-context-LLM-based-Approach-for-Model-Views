@@ -48,8 +48,27 @@ examples = [
         }}
     ]
 }}
-"""
-},
+""",
+"filters": """
+{{
+    "filters": {{
+        "Customer": {{
+            "Customer": [
+                "name",
+                "email"
+            ]
+        }},
+        "ItemOrder": {{
+            "Item": [
+                "name"
+            ],
+            "Order": [
+                "*"
+            ]
+        }}
+    }}
+}}
+"""},
 {
 "view_desc": "The view should display the name and department of an employee along with the project they are working on and the manager supervising the project.",
 "ex_meta_1":
@@ -111,6 +130,27 @@ examples = [
         }}
     ]
 }}
+""",
+"filters": """
+{{
+    "filters": {{
+        "Employee": {{
+            "Employee": [
+                "name",
+                "department"
+            ],
+            "Manager": [
+                "name",
+                "department"
+            ],
+        }},
+        "Project": {{
+            "Project": [
+                "*"
+            ]
+        }}
+    }}
+}}
 """
 },
 {
@@ -157,6 +197,22 @@ examples = [
             ]
         }}
     ]
+}}
+""",
+"filters": """
+{{
+    "filters": {{
+        "ResearchPaper": {{
+            "ResearchPaper": [
+                "title",
+                "publicationDate"
+            ],
+            "Author": [
+                "name",
+                "affiliation"
+            ]
+        }}
+    }}
 }}
 """
 },
@@ -208,15 +264,29 @@ examples = [
                 "Product",
                 "Supplier"
             ]
-        }},
-        {{
-            "name": "productStoredInWarehouse",
-            "classes": [
-                "Product",
-                "Warehouse"
-            ]
         }}
     ]
+}}
+""",
+"filters": """
+{{
+    "filters": {{
+        "Products": {{
+            "Product": [
+                "name",
+                "price"
+            ],
+            "Warehouse": [
+                "name"
+            ]
+        }},
+        "Supplier": {{
+            "Supplier": [
+                "name",
+                "contactInfo"
+            ]
+        }}
+    }}
 }}
 """
 }

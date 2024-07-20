@@ -19,12 +19,13 @@ class Select(RunnableInterface):
     Select class for managing the select prompt templates.
     """
 
-    def __init__(self, pe_type = "zsCoT"):
+    def __init__(self, pe_type = "baseline", examples_no = 1):
         """
         Initialize the Select class.
         """
         self.tags = select_templates["items"][pe_type]["tags"]
         self.pe_type = pe_type
+        self.examples_no = examples_no
 
     def set_model(self, llm):
         self.model = llm        

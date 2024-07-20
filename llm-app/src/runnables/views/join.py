@@ -20,7 +20,7 @@ class Join(RunnableInterface):
     Join class for managing the Join prompt templates.
     """
 
-    def __init__(self, prompt_label = "few-shot", examples_no = 1):
+    def __init__(self, prompt_label = "baseline", examples_no = 1):
         """
         Initialize the Join class.
         """
