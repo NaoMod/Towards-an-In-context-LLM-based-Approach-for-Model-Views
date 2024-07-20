@@ -66,7 +66,7 @@ prompts = {
                     Metamodel 2: {meta_2}
                     Relations:"""
         },
-        "few-shot": {
+        "few-shot-cot": {
             'tags': ['few-shot', 'CoT'],
             'template': """You are now a PlantUML analyst that find relations between classes from two metamodels.
                         
@@ -106,6 +106,57 @@ prompts = {
 
                     # EXAMPLES
                     """,
+        },
+        "few-shot": {
+            'tags': ['few-shot'],
+            'template': """You are now a PlantUML analyst that find relations between classes from two metamodels.
+                        
+                    # TASK
+                    Your task is to analyze the input metamodel and the view description and define a list of relations between the metamodels' classes.
+                    The classes are always combined in pairs, being one coming from the first metamodel and the other coming from the second metamodel.
+                    Classes can be combined when they represent the same domain object or when they are complementary classes, which means that one can be extended with the attributes of the other.
+
+                    Other possible reason for combinations is when the view description includes explicit attribbutes from one metamodel that should appear in the other.
+                                            
+                    Your answer should be a valid JSON list of dictionaries where each dictionary entry represents a relation. 
+                    It should be a list even when it contains just one relation.
+                    Each relation always contains precisely one class coming from each metamodel.
+                    In your response, the classes are always in order: the first class comes from the first metamodel, and the second class comes from the second metamodel.
+
+                    # OUTPUT DATA FORMAT                        
+                    {format_instructions}                       
+                    
+                    # RULES
+                    When generating the JSON response, you should follow these rules:
+                    - Only use class names that exist in the metamodels. Never include classes that are not in the metamodels
+                    - The relation's name can be any string, but it should be unique and meaningful for each relation.
+
+                    Your final answer should contain only the valid JSON and nothing else. Exclude any explanation or delimiter from the final response.
+
+                    # EXAMPLES
+                    """,
+        },
+        "simplified": {
+            'tags': ['no-techniques'],
+            'template': """                        
+                    # TASK
+                    Analyze the input metamodel and the view description to define relations between the metamodel classes.
+
+                        - Each relation pairs a class from the first metamodel with a class from the second metamodel.
+                        - Classes are paired if they represent the same domain object, are complementary (one can be extended with the attributes of the other), or if the view description explicitly includes attributes from one metamodel that should appear in the other.
+
+                    Your response should be a JSON list of dictionaries, where each dictionary represents a relation. Even if there's only one relation, it should still be a list. Each dictionary must have one class from each metamodel, always in the order: first metamodel class, then second metamodel class.
+
+                    # OUTPUT DATA FORMAT                        
+                    {format_instructions}
+
+                    Your final answer should contain only the valid JSON and nothing else. Exclude any explanation or delimiter from the final response.
+
+                    # INPUT
+                    View description: {view_description}
+                    Metamodel 1: {meta_1}
+                    Metamodel 2: {meta_2}
+                    Relations:""",
         }
     }        
 }

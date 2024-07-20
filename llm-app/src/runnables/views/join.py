@@ -20,12 +20,13 @@ class Join(RunnableInterface):
     Join class for managing the Join prompt templates.
     """
 
-    def __init__(self, pe_type = "few-shot"):
+    def __init__(self, prompt_label = "few-shot", examples_no = 1):
         """
         Initialize the Join class.
         """
-        self.tags = join_templates["items"][pe_type]["tags"]
-        self.pe_type = pe_type
+        self.tags = join_templates["items"][prompt_label]["tags"]
+        self.prompt_label = prompt_label
+        self.examples_no = examples_no
         
 
     def set_model(self, llm):
@@ -42,18 +43,18 @@ class Join(RunnableInterface):
     def set_prompt(self, template = None):
         if template is None:
             # check if it should be created with exmaples
-            if self.pe_type == "few-shot":
+            if self.prompt_label == "few-shot":
                 example_prompt_template = PromptTemplate(
                     input_variables=["view_desc", "ex_meta_1", "ex_meta_2", "relations"],
                     template="View description:{view_desc}\nMetamodel 1: {ex_meta_1}\nMetamodel 2: {ex_meta_2}\nRelations:{relations}"
                 )
                 self.prompt = FewShotPromptTemplate(
                     # These are the examples we want to insert into the prompt.
-                    examples=join_examples,
+                    examples=join_examples[:self.examples_no],
                     # The prompt to format the examples
                     example_prompt= example_prompt_template,
                     # The instructions prompt
-                    prefix=join_templates["items"][self.pe_type]["template"],
+                    prefix=join_templates["items"][self.prompt_label]["template"],
                     # The input from the user
                     suffix="#INPUT\nView description:{view_description}\nMetamodel 1: {meta_1}\nMetamodel 2: {meta_2}\nRelations:",
                     # The original variables for any prompt
@@ -64,7 +65,7 @@ class Join(RunnableInterface):
                 )
             else:
                 self.prompt = PromptTemplate(
-                    template=join_templates["items"][self.pe_type]["template"],
+                    template=join_templates["items"][self.prompt_label]["template"],
                     input_variables=["view_description", "meta_1", "meta_2"],
                     partial_variables={"format_instructions":  self.parser.get_format_instructions()},
                 )
