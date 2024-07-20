@@ -62,7 +62,7 @@ def execute_chain(llm, view_description , meta_1_path, meta_2_path, pe_type = "z
     meta_2 = meta_2_loader.load()
     meta_2_content = meta_2[0].page_content
 
-    join_runnable = Join(pe_type)
+    join_runnable = Join()
     join_runnable.set_model(llm)
     join_runnable.set_parser(meta_1=meta_1_path, meta_2=meta_2_path)
     join_runnable.set_prompt()

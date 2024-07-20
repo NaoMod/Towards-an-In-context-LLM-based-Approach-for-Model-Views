@@ -54,21 +54,11 @@ class Select(RunnableInterface):
         Returns:
             Runnable: The runnable object.
         """
-        def parse_with_prompt(args):
-            completion = args['completion']
-            if (type(completion) is Filters):
-                args = args.copy()
-                del args['completion']
-                completion = completion.json(ensure_ascii=False)
-                args['completion'] = completion
-
-            return self.parser.parse_with_prompt(**args)
-
         chain = self.prompt | self.model.with_structured_output(Filters, include_raw=False)
         
         return RunnableParallel(
             completion=chain, prompt_value=self.prompt
-        ) | RunnableLambda(parse_with_prompt)
+        ) | RunnableLambda(lambda x: self.parser.parse_with_prompt(**x))
 
     def get_tags(self):
         """

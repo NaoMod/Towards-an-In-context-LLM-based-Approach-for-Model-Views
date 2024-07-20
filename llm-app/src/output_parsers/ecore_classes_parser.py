@@ -46,9 +46,11 @@ class EcoreClassesParser(BaseCumulativeTransformOutputParser[Any]):
                 raise OutputParserException(msg, llm_output=text) from e
         
 
-    def parse(self, output: str) -> dict:
+    def parse(self, output) -> dict:
         ecore_parser = EcoreParser()
         try:
+            if type(output) is RelationsGroup:
+                output = output.json(ensure_ascii=False)
             relations_to_check = self.parse_result([Generation(text=output)])
             if relations_to_check is None:
                 raise OutputParserException(

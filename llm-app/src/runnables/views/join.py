@@ -1,10 +1,11 @@
 import sys
 import os
 
-from langchain.prompts import PromptTemplate
+from langchain.prompts import PromptTemplate, FewShotPromptTemplate
 from langchain_core.runnables import RunnableLambda, RunnableParallel
 
 from .prompt_templates.join import prompts as join_templates
+from .prompt_templates.examples.for_join import examples as join_examples
 from interfaces.runnable_interface import RunnableInterface
 
 from output_parsers.ecore_classes_parser import EcoreClassesParser, RelationsGroup, Relation
@@ -19,7 +20,7 @@ class Join(RunnableInterface):
     Join class for managing the Join prompt templates.
     """
 
-    def __init__(self, pe_type = "zsCoT"):
+    def __init__(self, pe_type = "few-shot"):
         """
         Initialize the Join class.
         """
@@ -40,11 +41,33 @@ class Join(RunnableInterface):
 
     def set_prompt(self, template = None):
         if template is None:
-            self.prompt = PromptTemplate(
-                template=join_templates["items"][self.pe_type]["template"],
-                input_variables=["view_description", "meta_1", "meta_2"],
-                partial_variables={"format_instructions":  self.parser.get_format_instructions()},
-            )
+            # check if it should be created with exmaples
+            if self.pe_type == "few-shot":
+                example_prompt_template = PromptTemplate(
+                    input_variables=["view_desc", "ex_meta_1", "ex_meta_2", "relations"],
+                    template="View description:{view_desc}\nMetamodel 1: {ex_meta_1}\nMetamodel 2: {ex_meta_2}\nRelations:{relations}"
+                )
+                self.prompt = FewShotPromptTemplate(
+                    # These are the examples we want to insert into the prompt.
+                    examples=join_examples,
+                    # The prompt to format the examples
+                    example_prompt= example_prompt_template,
+                    # The instructions prompt
+                    prefix=join_templates["items"][self.pe_type]["template"],
+                    # The input from the user
+                    suffix="#INPUT\nView description:{view_description}\nMetamodel 1: {meta_1}\nMetamodel 2: {meta_2}\nRelations:",
+                    # The original variables for any prompt
+                    input_variables=["view_description", "meta_1", "meta_2"],
+                    # The example_separator is the string we will use to join the prefix, examples, and suffix together with.
+                    example_separator="\n\n",
+                    partial_variables={"format_instructions":  self.parser.get_format_instructions()},
+                )
+            else:
+                self.prompt = PromptTemplate(
+                    template=join_templates["items"][self.pe_type]["template"],
+                    input_variables=["view_description", "meta_1", "meta_2"],
+                    partial_variables={"format_instructions":  self.parser.get_format_instructions()},
+                )
 
     def get_runnable(self):
         """
@@ -56,21 +79,11 @@ class Join(RunnableInterface):
         Returns:
             Runnable: The runnable object.
         """
-        def parse_with_prompt(args):
-            completion = args['completion']
-            if (type(completion) is RelationsGroup):
-                args = args.copy()
-                del args['completion']
-                completion = completion.json(ensure_ascii=False)
-                args['completion'] = completion
-
-            return self.parser.parse_with_prompt(**args)
-
         chain = self.prompt | self.model.with_structured_output(RelationsGroup, include_raw=False)
         
         return RunnableParallel(
             completion=chain, prompt_value=self.prompt
-        ) | RunnableLambda(parse_with_prompt)
+        ) | RunnableLambda(lambda x: self.parser.parse_with_prompt(**x))
     
     def get_tags(self):
         """
