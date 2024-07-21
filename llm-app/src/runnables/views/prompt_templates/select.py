@@ -101,7 +101,7 @@ prompts = {
                 Select elements:"""
         },
         "few-shot-cot":{
-            'tags': ['select-1sCot'],
+            'tags': ['few-shot', 'CoT'],
             'template': """You specialize in reasoning about PlantUML metamodels, particularly in selecting and filtering each class's attributes.
 
                 # TASK
@@ -147,6 +147,69 @@ prompts = {
 
                 # EXAMPLES""",
         },
+        "few-shot-only": {
+            "tags": ['few-shot'],
+            'template': """You specialize in reasoning about PlantUML metamodels, particularly in selecting and filtering each class's attributes.
+
+                # TASK
+                Given two metamodels, a view description, and a list of relations containing class pairs, your task is to select a set of attributes for the metamodels' classes.
+
+                An attribute should be selected in the following situations:
+                - The attribute is unique among two classes in a relation.
+                - The attribute is a container of one of the classes in a relation.
+                - The attribute was explicitly mentioned in the view description.
+                - The attribute helps the user to understand the relation between the classes.
+
+                You may assume the following template for the input relations list:
+                
+                {{
+                    "relations": [
+                        {{
+                            "name": "relationName",
+                            "classes": ["class_name_from_first_metamodel", "class_name_from_second_metamodel"]
+                        }}
+                    ]
+                }}
+                
+
+                # OUTPUT DATA FORMAT
+                {format_instructions}
+
+                # RULES
+                When generating the response, follow these rules:
+                - Only use class and attribute names that actually exist in the metamodels. Don't make them up.
+                - The symbol "*" indicates that all attributes of a given class should be selected. Use it only once per class per metamodel, and it replaces all other selected attributes.
+
+                Your final answer should contain only the valid JSON and nothing else. Exclude any explanation or delimiter from the final response.
+
+                # EXAMPLES"""
+        },
+        'simplified': {
+            'tags': ['no-techniques'],
+            'template': """
+                Given two metamodels, a view description, and a list of class relations, your task is to select attributes for the metamodels' classes.
+
+                Select an attribute if:
+                - It is unique among two classes in a relation.
+                - It is a container of one of the classes in a relation.
+                - It is explicitly mentioned in the view description.
+                - It helps the user understand the relation between the classes.
+
+                Assume the following template for the input relations list:
+
+                {{
+                    "relations": [
+                        {{
+                            "name": "relationName",
+                            "classes": ["class_name_from_first_metamodel", "class_name_from_second_metamodel"]
+                        }}
+                    ]
+                }}
+                
+                Your final answer should contain only the valid JSON and nothing else. Exclude any explanation or delimiter from the final response.
+
+                """,
+        }
     }
         
 }

@@ -107,7 +107,7 @@ prompts = {
                     # EXAMPLES
                     """,
         },
-        "few-shot": {
+        "few-shot-only": {
             'tags': ['few-shot'],
             'template': """You are now a PlantUML analyst that find relations between classes from two metamodels.
                         

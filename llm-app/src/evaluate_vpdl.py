@@ -40,13 +40,13 @@ open_ai_key = config.get_open_ai_key()
 
 if __name__ == "__main__":
     client = Client()
-    dataset_name = "VPDL_FINAL_4"
+    dataset_name = "VPDL_FINAL_1"
 
-    # string_distance_evaluator = LangChainStringEvaluator(  
-    #         "string_distance",  
-    #         config={"distance": "levenshtein", "normalize_score": True},
-    #         prepare_data=prepare_data  
-    # )
+    string_distance_evaluator = LangChainStringEvaluator(  
+            "string_distance",  
+            config={"distance": "levenshtein", "normalize_score": True},
+            prepare_data=prepare_data  
+    )
  
     # llm_vpdl_evaluator = LangChainStringEvaluator(  
     #     "labeled_score_string",  
@@ -70,7 +70,7 @@ if __name__ == "__main__":
     results = evaluate(
         execute_chain_wrapper,
         data=client.list_examples(dataset_name=dataset_name),
-        evaluators=[matched_relations,matched_filters],
+        evaluators=[string_distance_evaluator,matched_relations,matched_filters],
         experiment_prefix="FinalVPDL",
         num_repetitions=3,
     )

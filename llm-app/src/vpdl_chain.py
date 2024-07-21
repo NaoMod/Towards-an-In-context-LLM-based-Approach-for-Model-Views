@@ -51,7 +51,7 @@ def generate_vpdl_skeleton(input_vpdl, meta_1, meta_2):
         
     return vpdl_skeleton
 
-def execute_chain(llm, view_description , meta_1_path, meta_2_path, pe_type = "zsCoT"):
+def execute_chain(llm, view_description , meta_1_path, meta_2_path, pe_type = "baseline"):
 
     # LOADERS
     meta_1_loader = EcoreLoader(meta_1_path)    
@@ -62,14 +62,14 @@ def execute_chain(llm, view_description , meta_1_path, meta_2_path, pe_type = "z
     meta_2 = meta_2_loader.load()
     meta_2_content = meta_2[0].page_content
 
-    join_runnable = Join()
+    join_runnable = Join(prompt_label=pe_type)
     join_runnable.set_model(llm)
     join_runnable.set_parser(meta_1=meta_1_path, meta_2=meta_2_path)
     join_runnable.set_prompt()
     join_chain = join_runnable.get_runnable()
     cfg = {"tags": join_runnable.get_tags()}
 
-    select_runnable = Select()
+    select_runnable = Select(prompt_label=pe_type)
     select_runnable.set_model(llm)
     select_runnable.set_parser(meta_1=meta_1_path, meta_2=meta_2_path)
     select_runnable.set_prompt()

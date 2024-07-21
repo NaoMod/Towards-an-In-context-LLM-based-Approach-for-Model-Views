@@ -1,10 +1,11 @@
 import sys
 import os
 
-from langchain.prompts import PromptTemplate
+from langchain.prompts import PromptTemplate, FewShotPromptTemplate
 from langchain_core.runnables import RunnableLambda, RunnableParallel
 
 from .prompt_templates.select import prompts as select_templates
+from .prompt_templates.examples.for_select import examples as select_examples
 from interfaces.runnable_interface import RunnableInterface
 
 from output_parsers.ecore_attributes_parser import EcoreAttributesParser, Filters, MetamodelClasses, ClassAttributes
@@ -19,12 +20,12 @@ class Select(RunnableInterface):
     Select class for managing the select prompt templates.
     """
 
-    def __init__(self, pe_type = "baseline", examples_no = 1):
+    def __init__(self, prompt_label = "baseline", examples_no = 1):
         """
         Initialize the Select class.
         """
-        self.tags = select_templates["items"][pe_type]["tags"]
-        self.pe_type = pe_type
+        self.tags = select_templates["items"][prompt_label]["tags"]
+        self.prompt_label = prompt_label
         self.examples_no = examples_no
 
     def set_model(self, llm):
@@ -39,11 +40,26 @@ class Select(RunnableInterface):
 
     def set_prompt(self, template = None):
         if template is None:
-            self.prompt = PromptTemplate(
-                template=select_templates["items"][self.pe_type]["template"],
-                input_variables=["view_description", "meta_1", "meta_2", "join"],
-                partial_variables={"format_instructions":  self.parser.get_format_instructions()},
-            )
+            if self.prompt_label == "few-shot":
+                example_prompt_template = PromptTemplate(
+                    input_variables=["view_desc", "ex_meta_1", "ex_meta_2", "relations"],
+                    template="View description:{view_desc}\nMetamodel 1: {ex_meta_1}\nMetamodel 2: {ex_meta_2}\nRelations:{relations}\nSelect elements:{filters}"
+                )
+                self.prompt = FewShotPromptTemplate(                    
+                    examples=select_examples[:self.examples_no],                    
+                    example_prompt= example_prompt_template,                    
+                    prefix=select_templates["items"][self.prompt_label]["template"],
+                    suffix="#INPUT\nView description:{view_description}\nMetamodel 1: {meta_1}\nMetamodel 2: {meta_2}\nList of relations: {join}\nSelect elements:",
+                    input_variables=["view_description", "meta_1", "meta_2", "join"],
+                    example_separator="\n\n",
+                    partial_variables={"format_instructions":  self.parser.get_format_instructions()},
+                )
+            else:
+                self.prompt = PromptTemplate(
+                    template=select_templates["items"][self.prompt_label]["template"],
+                    input_variables=["view_description", "meta_1", "meta_2", "join"],
+                    partial_variables={"format_instructions":  self.parser.get_format_instructions()},
+                )
 
     def get_runnable(self):
         """

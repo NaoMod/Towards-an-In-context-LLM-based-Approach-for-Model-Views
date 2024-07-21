@@ -1,7 +1,8 @@
-from langchain.prompts import PromptTemplate
+from langchain.prompts import PromptTemplate, FewShotPromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 
 from .prompt_templates.where import prompts as where_templates
+from .prompt_templates.examples.for_where import examples as where_examples
 from interfaces.runnable_interface import RunnableInterface
 
 from typing import List
@@ -25,12 +26,13 @@ class Where(RunnableInterface):
     Where class for managing the Where prompt templates.
     """
 
-    def __init__(self, pe_type = "zsCoT"):
+    def __init__(self, prompt_label = "baseline", examples_no = 1):
         """
         Initialize the Where class.
         """
-        self.tags = where_templates["items"][pe_type]["tags"]
-        self.pe_type = pe_type
+        self.tags = where_templates["items"][prompt_label]["tags"]
+        self.prompt_label = prompt_label
+        self.examples_no = examples_no
 
     def set_model(self, llm):
         self.model = llm        
@@ -40,11 +42,26 @@ class Where(RunnableInterface):
 
     def set_prompt(self, template = None):
         if template is None:
-            self.prompt = PromptTemplate(
-                template=where_templates["items"][self.pe_type]["template"],
-                input_variables=["view_description", "meta_1", "meta_2", "join"],
-                partial_variables={"format_instructions":  self.parser.get_format_instructions()}
-            )
+            if self.prompt_label == "few-shot":
+                example_prompt_template = PromptTemplate(
+                    input_variables=["view_desc", "ex_meta_1", "ex_meta_2", "relations"],
+                    template="View description:{view_desc}\nMetamodel 1: {ex_meta_1}\nMetamodel 2: {ex_meta_2}\nRelations:{relations}\nSelect elements:{filters}"
+                )
+                self.prompt = FewShotPromptTemplate(                    
+                    examples=where_examples[:self.examples_no],                    
+                    example_prompt= example_prompt_template,                    
+                    prefix=where_templates["items"][self.prompt_label]["template"],
+                    suffix="#INPUT\nView description:{view_description}\nMetamodel 1: {meta_1}\nMetamodel 2: {meta_2}\nList of relations: {join}\nSelect elements:",
+                    input_variables=["view_description", "meta_1", "meta_2", "join"],
+                    example_separator="\n\n",
+                    partial_variables={"format_instructions":  self.parser.get_format_instructions()},
+                )
+            else:
+                self.prompt = PromptTemplate(
+                    template=where_templates["items"][self.prompt_label]["template"],
+                    input_variables=["view_description", "meta_1", "meta_2", "join"],
+                    partial_variables={"format_instructions":  self.parser.get_format_instructions()}
+                )
 
     def get_runnable(self):
         """

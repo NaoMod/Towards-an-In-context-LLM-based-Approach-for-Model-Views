@@ -49,26 +49,19 @@ examples = [
     ]
 }}
 """,
-"filters": """
+"combination_rules":"""
 {{
-    "filters": {{
-        "Customer": {{
-            "Customer": [
-                "name",
-                "email"
-            ]
-        }},
-        "ItemOrder": {{
-            "Item": [
-                "name"
-            ],
-            "Order": [
-                "*"
-            ]
-        }}
+"rules": [
+    {{
+        "name": "itemBoughtByCustomer",
+        "rules": [
+            "The customerName of Order should be equal to the name of the Customer that bought the Item"
+        ]
     }}
+]
 }}
-"""},
+"""
+},
 {
 "view_desc": "The view should display the name and department of an employee along with the project they are working on and the manager supervising the project.",
 "ex_meta_1":
@@ -131,25 +124,22 @@ examples = [
     ]
 }}
 """,
-"filters": """
+"combination_rules": """
 {{
-    "filters": {{
-        "Employee": {{
-            "Employee": [
-                "name",
-                "department"
-            ],
-            "Manager": [
-                "name",
-                "department"
-            ],
+    "rules": [
+        {{
+            "name": "employeeAssignedToProject",
+            "rules": [
+                "The employeeName of Assignment should be equal to the name of the Employee assigned to the Project"
+            ]
         }},
-        "Project": {{
-            "Project": [
-                "*"
+        {{
+            "name": "projectSupervisedByManager",
+            "rules": [
+                "The employeeName of Assignment should be equal to the name of the Employee assigned to the Project and the role should be equal to Manager"
             ]
         }}
-    }}
+    ]
 }}
 """
 },
@@ -200,20 +190,16 @@ examples = [
     ]
 }}
 """,
-"filters": """
+"combination_rules": """
 {{
-    "filters": {{
-        "ResearchPaper": {{
-            "ResearchPaper": [
-                "title",
-                "publicationDate"
-            ],
-            "Author": [
-                "name",
-                "affiliation"
+    "rules": [
+        {{
+            "name": "paperWrittenByAuthor",
+            "rules": [
+                "The researchPaperTitle of Citation should be equal to the title of the ResearchPaper and the authorName should also be equal to the name of the Author"
             ]
         }}
-    }}
+    ]
 }}
 """
 },
@@ -265,29 +251,33 @@ examples = [
                 "Product",
                 "Supplier"
             ]
+        }},
+        {{
+            "name": "productStoredInWarehouse",
+            "classes": [
+                "Product",
+                "Warehouse"
+            ]
         }}
     ]
 }}
 """,
-"filters": """
+"combination_rules": """
 {{
-    "filters": {{
-        "Products": {{
-            "Product": [
-                "name",
-                "price"
-            ],
-            "Warehouse": [
-                "name"
+    "rules": [
+        {{
+            "name": "productSuppliedBySupplier",
+            "rules": [
+                "The productName of SupplyOrder should be equal to the name of the Product supplied by the Supplier"
             ]
         }},
-        "Supplier": {{
-            "Supplier": [
-                "name",
-                "contactInfo"
+        {{
+            "name": "productStoredInWarehouse",
+            "rules": [
+                "The productName of Product should be stored in the Warehouse specified"
             ]
         }}
-    }}
+    ]
 }}
 """
 }

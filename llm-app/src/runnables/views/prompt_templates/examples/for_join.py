@@ -141,6 +141,7 @@ examples = [
         +int citationId
         +Date citationDate
         +String researchPaperTitle
+        +String authorName
     }}
 
     @enduml
