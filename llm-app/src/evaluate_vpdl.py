@@ -10,6 +10,9 @@ from evaluators.vpdl_evaluators import matched_relations, matched_filters
 from langsmith import Client
 
 VIEWS_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..", "Views_Baseline")
+PROMPT_TYPE = "baseline"
+EXAMPLES_NO = 1
+REPETITIONS = 1
   
 def find(name):
     for root, _ , files in os.walk(VIEWS_DIRECTORY):
@@ -20,10 +23,7 @@ def execute_chain_wrapper(input_: dict):
     meta_1_path = find(input_["meta_1_path"])
     meta_2_path = find(input_["meta_2_path"])
 
-    #### LINE TO BE CHANGED FOR EACH PROMPT TYPE####
-    prompt_type = "1sCoT"
-
-    response = vpdl_chain.execute_chain(llm, input_["view_description"], meta_1_path, meta_2_path, prompt_type)
+    response = vpdl_chain.execute_chain(llm, input_["view_description"], meta_1_path, meta_2_path, PROMPT_TYPE, EXAMPLES_NO)
     return response
 
 def prepare_data(run, example):
@@ -38,9 +38,20 @@ config.load_keys()
 llm = config.get_llm()
 open_ai_key = config.get_open_ai_key()
 
-if __name__ == "__main__":
+def execute_evaluation (dataset_name, prompt_type, examples_no = 1, repetitions = 1):
+
+    global EXAMPLES_NO 
+    global REPETITIONS 
+    global PROMPT_TYPE
+    EXAMPLES_NO = examples_no
+    REPETITIONS = repetitions
+    PROMPT_TYPE = prompt_type
+
+    print(f'Executing evaluation for dataset:{dataset_name} for prompt type:{prompt_type} with {examples_no} examples (if applicable) and {repetitions} repetitions')
+
+
     client = Client()
-    dataset_name = "VPDL_FINAL_1"
+    dataset_name = dataset_name
 
     string_distance_evaluator = LangChainStringEvaluator(  
             "string_distance",  
@@ -71,6 +82,12 @@ if __name__ == "__main__":
         execute_chain_wrapper,
         data=client.list_examples(dataset_name=dataset_name),
         evaluators=[string_distance_evaluator,matched_relations,matched_filters],
-        experiment_prefix="FinalVPDL",
-        num_repetitions=3,
+        experiment_prefix=PROMPT_TYPE+"_"+str(EXAMPLES_NO),
+        num_repetitions=REPETITIONS,
     )
+
+    print(results)    
+
+if __name__ == "__main__":
+
+    execute_evaluation("VPDL_FINAL_1", "baseline", 1, 1)
