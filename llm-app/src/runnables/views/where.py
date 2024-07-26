@@ -42,10 +42,10 @@ class Where(RunnableInterface):
 
     def set_prompt(self, template = None):
         if template is None:
-            if self.prompt_label == "few-shot":
+            if self.prompt_label == "few-shot-cot" or self.prompt_label == "few-shot-only":
                 example_prompt_template = PromptTemplate(
                     input_variables=["view_desc", "ex_meta_1", "ex_meta_2", "relations"],
-                    template="View description:{view_desc}\nMetamodel 1: {ex_meta_1}\nMetamodel 2: {ex_meta_2}\nRelations:{relations}\nSelect elements:{filters}"
+                    template="View description:{view_desc}\nMetamodel 1: {ex_meta_1}\nMetamodel 2: {ex_meta_2}\nRelations:{relations}\nSelect elements:{combination_rules}"
                 )
                 self.prompt = FewShotPromptTemplate(                    
                     examples=where_examples[:self.examples_no],                    

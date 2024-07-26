@@ -1,19 +1,29 @@
 import sys
 import os
 
+from typing import List
+
 from langchain.prompts import PromptTemplate, FewShotPromptTemplate
 from langchain_core.runnables import RunnableLambda, RunnableParallel
+from langchain_core.pydantic_v1 import BaseModel, Field
 
 from .prompt_templates.join import prompts as join_templates
 from .prompt_templates.examples.for_join import examples as join_examples
 from interfaces.runnable_interface import RunnableInterface
 
-from output_parsers.ecore_classes_parser import EcoreClassesParser, RelationsGroup, Relation
+from output_parsers.ecore_classes_parser import EcoreClassesParser
 
 # Add the directory containing utils to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from utils.alt_retry import RetryOutputParser
+
+class Relation(BaseModel):
+    name: str = Field(..., description="Name of the relation")
+    classes: List[str] = Field(..., description="List of two classes. The first coming from the first metamodel and the second from the second metamodel")
+
+class RelationsGroup(BaseModel):
+    relations: List[Relation] = Field(..., description="List of relations")
 
 class Join(RunnableInterface):
     """
@@ -36,14 +46,13 @@ class Join(RunnableInterface):
         # raise error if some of the parameters are missing
         if meta_1 is None or meta_2 is None:
             raise ValueError("Metamodels are required to parse the output using Ecore checkers.")
-        basic_parser = EcoreClassesParser(meta_1=meta_1, meta_2=meta_2)
-        self.parser = RetryOutputParser.from_llm(parser=basic_parser, llm=self.model.with_structured_output(RelationsGroup), max_retries=2)
+        self.parser = EcoreClassesParser(meta_1=meta_1, meta_2=meta_2, pydantic_object=RelationsGroup)
         
 
     def set_prompt(self, template = None):
         if template is None:
             # check if it should be created with exmaples
-            if self.prompt_label == "few-shot":
+            if self.prompt_label == "few-shot-cot" or self.prompt_label == "few-shot-only":
                 example_prompt_template = PromptTemplate(
                     input_variables=["view_desc", "ex_meta_1", "ex_meta_2", "relations"],
                     template="View description:{view_desc}\nMetamodel 1: {ex_meta_1}\nMetamodel 2: {ex_meta_2}\nRelations:{relations}"
@@ -80,11 +89,13 @@ class Join(RunnableInterface):
         Returns:
             Runnable: The runnable object.
         """
-        chain = self.prompt | self.model.with_structured_output(RelationsGroup, include_raw=False)
+        chain = self.prompt | self.model
+
+        retry_parser = RetryOutputParser.from_llm(parser=self.parser, llm=self.model, max_retries=2)
         
         return RunnableParallel(
             completion=chain, prompt_value=self.prompt
-        ) | RunnableLambda(lambda x: self.parser.parse_with_prompt(**x))
+        ) | RunnableLambda(lambda x: retry_parser.parse_with_prompt(**x))
     
     def get_tags(self):
         """

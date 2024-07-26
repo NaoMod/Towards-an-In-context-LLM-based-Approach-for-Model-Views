@@ -1,6 +1,7 @@
 import os
 
 from langchain_openai import ChatOpenAI
+from langchain_mistralai import ChatMistralAI
 from langchain_core.messages import HumanMessage, SystemMessage
 
 
@@ -19,7 +20,7 @@ class Config:
         The Open AI key used for language translation.
     langsmith_key : str or None
         The LangSmith key used for configuring the environment variables.
-    llm : ChatOpenAI or None
+    llm : ChatOpenAI, ChatMistralAI or None
         The LLM instance used for language translation.
     project_name : str
         The name of the project.
@@ -77,7 +78,7 @@ class Config:
             os.environ["LANGCHAIN_ENDPOINT"] = "https://api.smith.langchain.com"
             os.environ["LANGCHAIN_API_KEY"] = self.langsmith_key
 
-        self.llm = ChatOpenAI(temperature=0.2, api_key=self.open_ai_key, model="gpt-4o-mini")
+        self.llm = ChatMistralAI(temperature=0.2, api_key=self.open_ai_key, model_name="mistral-large-latest")
 
     def get_llm(self):
         """

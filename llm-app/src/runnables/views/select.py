@@ -1,19 +1,31 @@
 import sys
 import os
 
+from typing import List, Dict
+
 from langchain.prompts import PromptTemplate, FewShotPromptTemplate
 from langchain_core.runnables import RunnableLambda, RunnableParallel
+from langchain_core.pydantic_v1 import BaseModel, Field
 
 from .prompt_templates.select import prompts as select_templates
 from .prompt_templates.examples.for_select import examples as select_examples
 from interfaces.runnable_interface import RunnableInterface
 
-from output_parsers.ecore_attributes_parser import EcoreAttributesParser, Filters, MetamodelClasses, ClassAttributes
+from output_parsers.ecore_attributes_parser import EcoreAttributesParser
 
 # Add the directory containing utils to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from utils.alt_retry import RetryOutputParser
+
+class ClassAttributes(BaseModel):
+    __root__: List[str] = Field(..., description="List of class attributes")
+
+class MetamodelClasses(BaseModel):
+    __root__: Dict[str, ClassAttributes] = Field(..., description="Dictionary of classes with their attributes. The class name is the key.")
+
+class Filters(BaseModel):
+    filters: Dict[str, MetamodelClasses] = Field(..., description="Dictionary of filters with the metamodel name as the key.")
 
 class Select(RunnableInterface):
     """
@@ -35,12 +47,11 @@ class Select(RunnableInterface):
         # raise error if some of the parameters are missing
         if meta_1 is None or meta_2 is None:
             raise ValueError("Metamodels are required to parse the output using Ecore checkers.")
-        basic_parser = EcoreAttributesParser(meta_1=meta_1, meta_2=meta_2)
-        self.parser = RetryOutputParser.from_llm(parser=basic_parser, llm=self.model.with_structured_output(Filters), max_retries=2)
+        self.parser = EcoreAttributesParser(meta_1=meta_1, meta_2=meta_2, pydantic_object=Filters)
 
     def set_prompt(self, template = None):
         if template is None:
-            if self.prompt_label == "few-shot":
+            if self.prompt_label == "few-shot-cot" or self.prompt_label == "few-shot-only":
                 example_prompt_template = PromptTemplate(
                     input_variables=["view_desc", "ex_meta_1", "ex_meta_2", "relations"],
                     template="View description:{view_desc}\nMetamodel 1: {ex_meta_1}\nMetamodel 2: {ex_meta_2}\nRelations:{relations}\nSelect elements:{filters}"
@@ -71,11 +82,13 @@ class Select(RunnableInterface):
         Returns:
             Runnable: The runnable object.
         """
-        chain = self.prompt | self.model.with_structured_output(Filters, include_raw=False)
+        chain = self.prompt | self.model
+
+        retry_parser = RetryOutputParser.from_llm(parser=self.parser, llm=self.model, max_retries=2)
         
         return RunnableParallel(
             completion=chain, prompt_value=self.prompt
-        ) | RunnableLambda(lambda x: self.parser.parse_with_prompt(**x))
+        ) | RunnableLambda(lambda x: retry_parser.parse_with_prompt(**x))
 
     def get_tags(self):
         """
