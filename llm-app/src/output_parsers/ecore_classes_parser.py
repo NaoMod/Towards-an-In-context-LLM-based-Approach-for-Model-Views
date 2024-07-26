@@ -41,14 +41,25 @@ class EcoreClassesParser(MainParser):
                        
             class_name_1 = relation['classes'][0]
             meta_1_checked = ecore_parser.check_ecore_class(self.meta_1, class_name_1)
+            # if false, test the second metamodel to be sure that the class is indeed invalid and not only changed the order
+            if not meta_1_checked:
+                meta_1_checked = ecore_parser.check_ecore_class(self.meta_2, class_name_1)
             
             class_name_2 = relation['classes'][1]
             meta_2_checked = ecore_parser.check_ecore_class(self.meta_2, class_name_2)
+            if not meta_2_checked:
+                meta_2_checked = ecore_parser.check_ecore_class(self.meta_1, class_name_2)
+            
             if not meta_1_checked or not meta_2_checked:
                 raise OutputParserException(
                     f"The output contains an invalid class: {class_name_1 if not meta_1_checked else class_name_2}"
                 )
         return output
+    
+    @property
+    def OutputType(self) -> Type[TBaseModel]:
+        """Return the pydantic model."""
+        return self.pydantic_object
     
     @property
     def _type(self) -> str:

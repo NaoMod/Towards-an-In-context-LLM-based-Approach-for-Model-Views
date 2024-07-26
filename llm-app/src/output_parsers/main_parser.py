@@ -24,6 +24,17 @@ TBaseModel = TypeVar("TBaseModel", bound=PydanticBaseModel)
 class MainParser(JsonOutputParser, Generic[TBaseModel]):
     
     def _parse_obj(self, obj: dict) -> TBaseModel:
+        """Parse the output of an LLM call to a pydantic object.
+
+        Args:
+            obj: The output of the LLM call.
+            
+        Returns:
+            The parsed pydantic object.
+
+        Raises:
+            OutputParserException: If the output cannot be parsed.
+        """
         if PYDANTIC_MAJOR_VERSION == 2:
             try:
                 if issubclass(self.pydantic_object, pydantic.BaseModel):
@@ -64,6 +75,12 @@ class MainParser(JsonOutputParser, Generic[TBaseModel]):
         return super().parse(completion)
     
     def get_format_instructions(self) -> str:
+        """ 
+        Get the format instructions for the Pydantic object.
+        
+        Returns:
+            str: The format instructions.
+        """
         # The code below was adapted from the Pydantic output parser in LangChain library.
         # Copy schema to avoid altering original Pydantic schema.
         schema = {k: v for k, v in self.pydantic_object.schema().items()}

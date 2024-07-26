@@ -14,16 +14,6 @@ class EcoreAttributesParser(MainParser):
     meta_2: str = None
     pydantic_object: Type[TBaseModel]  # type: ignore
     """The pydantic model to parse."""
-   
-    def _get_metamodel_containing_class_name(self, class_name: str, meta_1_path: str, meta_2_path: str) -> str:
-        ecore_parser = EcoreParser()
-        check_metamodel_1 = ecore_parser.check_ecore_class(meta_1_path, class_name)
-        check_metamodel_2 = ecore_parser.check_ecore_class(meta_2_path, class_name)
-
-        if check_metamodel_1:
-            return meta_1_path
-        elif check_metamodel_2:
-            return meta_2_path 
 
     def parse_result(
         self, result: List[Generation], *, partial: bool = False
@@ -52,19 +42,29 @@ class EcoreAttributesParser(MainParser):
                   
         for _ , filters in output['filters'].items():
             for cls_name, attributes in filters.items():
-                # find the metamodel of the given class and get the full name f"{metamodel_uri}:{class_name}"
-                metamodel_to_test  = self._get_metamodel_containing_class_name(cls_name, self.meta_1, self.meta_2)
+                # find the metamodel of the given class
+                check_metamodel_1 = ecore_parser.check_ecore_class(self.meta_1, cls_name)
+                check_metamodel_2 = ecore_parser.check_ecore_class(self.meta_2, cls_name)
+                if check_metamodel_1:
+                    meta_path = self.meta_1
+                elif check_metamodel_2:
+                    meta_path = self.meta_2
                 for attr in attributes:
                     # if attribute is *, it's not necessary to check existence
                     if attr != "*":
                         # check if attribute exist in the given metamodel and throw exception when it's not
-                        attr_checked = ecore_parser.check_ecore_attribute(metamodel_to_test, cls_name, attr)
+                        attr_checked = ecore_parser.check_ecore_attribute(meta_path, cls_name, attr)
                         if not attr_checked:
                             raise OutputParserException(
-                                f"The output contains an invalid attribute: {attr}"
+                                f"The output contains an invalid attribute {attr} for class: {cls_name} in metamodel: {meta_path}"
                             )
 
         return output
+    
+    @property
+    def OutputType(self) -> Type[TBaseModel]:
+        """Return the pydantic model."""
+        return self.pydantic_object
     
     @property
     def _type(self) -> str:
