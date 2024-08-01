@@ -50,7 +50,7 @@ prompts = {
                 List of relations: {join}
                 Select elements:""",
         },
-        "improved": {
+        "alternative": {
             'tags': ['CoT'],
             "template": """
                 You specialize in reasoning about PlantUML metamodels, focusing on selecting and filtering attributes for each class.

@@ -11,7 +11,7 @@ VIEWS_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Usage: python chain.py <prompt_type>. Assuming default value: baseline")
-        print("prompt_type: baseline, improved", "few-shot-cot", "few-shot", "simplified")
+        print("prompt_type: baseline, alternative", "few-shot-cot", "few-shot", "simplified")
         prompt_type = "baseline"
     else:
         prompt_type = sys.argv[1].strip()

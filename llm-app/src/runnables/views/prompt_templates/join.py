@@ -33,7 +33,7 @@ prompts = {
                     Metamodel 2: {meta_2}
                     Relations:""",
         },
-        "improved": {
+        "alternative": {
             'tags': ['CoT'],
             'template': """You are now a PlantUML analyst with the task of identifying relationships between classes from two metamodels.
 

@@ -42,7 +42,7 @@ prompts = {
                 List of relations: {join}
                 Combination rules:""",
          },
-         "improved": {
+         "alternative": {
              "tags": ['CoT'],
              "template": """You are an expert in reasoning with PlantUML metamodels, particularly in combining and merging them.
 

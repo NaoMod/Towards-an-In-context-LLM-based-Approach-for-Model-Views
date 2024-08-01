@@ -11,7 +11,7 @@ if __name__ == "__main__":
     if experiment == "vpdl":
         from evaluate_vpdl import execute_evaluation
         
-        prompt_types = ["baseline", "improved", "few-shot-cot", "few-shot-only", "simplified"]
+        prompt_types = ["baseline", "alternative", "few-shot-cot", "few-shot-only", "simplified"]
         few_shot_examples = [1, 2, 4]
         temperatures = [0, 0.01, 0.5, 1, 2]
         repetitions = 1
