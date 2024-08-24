@@ -75,6 +75,13 @@ def matched_filters(root_run: Run, example: Example) -> dict:
         return matched_filters, reference_number, non_matched_filters
 
     main_run = root_run.child_runs[0]
+
+    if main_run.outputs is None:
+        return {"results": [{"key": "Reference number (attr)", "score": 0},
+                            {"key": "Matched Filters", "score": 0}, 
+                            {"key": "Precision (attr)", "score": 0},
+                            {"key": "Recall (attr)", "score": 0},
+                            {"key": "Non-matched Filters", "score": 0}]}
     
     main_run_filters = parse_filters(main_run.outputs.get('select'), main_run.inputs.get('meta_1_path'), main_run.inputs.get('meta_2_path'))
     example_filters_ground_truth = parse_filters(example.outputs.get('select'), example.inputs.get('meta_1_path'), example.inputs.get('meta_2_path'))
@@ -113,6 +120,14 @@ def matched_relations(root_run: Run, example: Example) -> dict:
         return relations
 
     main_run = root_run.child_runs[0]
+
+    if main_run.outputs is None:
+        return {"results": [{"key": "Reference number (cls)", "score": 0},
+                            {"key": "Matched Classes", "score": 0}, 
+                            {"key": "Precision (cls)", "score": 0},
+                            {"key": "Recall (cls)", "score": 0},
+                            {"key": "Non-matched Classes", "score": 0}]}
+    
     
     main_run_relations = parse_relations(main_run.outputs.get('join'), main_run.inputs.get('meta_1_path'), main_run.inputs.get('meta_2_path'))
     reference_relations = parse_relations(example.outputs.get('join'), example.inputs.get('meta_1_path'), example.inputs.get('meta_2_path'))

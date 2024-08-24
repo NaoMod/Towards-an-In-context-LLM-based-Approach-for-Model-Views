@@ -35,6 +35,8 @@ prompts = {
                 4. Compile JSON Array: Compile a JSON array with one rule per relation.
                 5. Provide Final Answer: Deliver the final JSON array as the response.
 
+                Your output should contain only the valid JSON and nothing else. Exclude any explanation or delimiter from the final response.
+
                 # INPUT
                 View description: {view_description}
                 Metamodel 1: {meta_1}
@@ -76,6 +78,8 @@ prompts = {
                 3. Formulate Combination Rule: Construct a JSON array with the combination rule for each relation. Each rule should include the name of the first metaclass, an explanation of the combination, and the name of the second metaclass.
                 4. Assemble JSON Array: Create a JSON array with one rule per relation.
                 5. Submit Final Answer: Provide the final JSON array as the output.
+
+                Your output should contain only the valid JSON and nothing else. Exclude any explanation or delimiter from the final response.
 
                 # INPUT
                 View description: {view_description}
@@ -119,7 +123,7 @@ prompts = {
                 4. Compile JSON Array: Compile a JSON array with one rule per relation.
                 5. Provide Final Answer: Deliver the final JSON array as the response.
 
-                Exclude any explanation or delimiter from the final response.
+                Your output should contain only the valid JSON and nothing else. Exclude any explanation or delimiter from the final response.
 
                 # EXAMPLES"""
         },
@@ -150,7 +154,7 @@ prompts = {
                 When generating the response text, follow these rules:
                 - Only use class and attribute names that actually exist in the metamodels. Do not invent new names.
                 - The combination_rule should explain how the classes can be connected according to the domain's semantics, including the type of comparisons used to connect the classes in the relation.
-                Exclude any explanation or delimiter from the final response.
+                Your output should contain only the valid JSON and nothing else. Exclude any explanation or delimiter from the final response.
 
                 # EXAMPLES"""
         },
@@ -176,7 +180,15 @@ prompts = {
 
                 # OUTPUT DATA FORMAT
                 {format_instructions}
-            """
+
+                Your output should contain only the valid JSON and nothing else. Exclude any explanation or delimiter from the final response.
+
+                # INPUT
+                View description: {view_description}
+                Metamodel 1: {meta_1}
+                Metamodel 2: {meta_2}
+                List of relations: {join}
+                Combination rules:"""
         }        
     }
 }

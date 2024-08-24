@@ -13,6 +13,8 @@ VIEWS_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "
 PROMPT_TYPE = "baseline"
 EXAMPLES_NO = 1
 REPETITIONS = 1
+TEMPERATURE = 0
+LLM = None
   
 def find(name):
     for root, _ , files in os.walk(VIEWS_DIRECTORY):
@@ -23,7 +25,7 @@ def execute_chain_wrapper(input_: dict):
     meta_1_path = find(input_["meta_1_path"])
     meta_2_path = find(input_["meta_2_path"])
 
-    response = vpdl_chain.execute_chain(llm, input_["view_description"], meta_1_path, meta_2_path, PROMPT_TYPE, EXAMPLES_NO)
+    response = vpdl_chain.execute_chain(LLM, input_["view_description"], meta_1_path, meta_2_path, PROMPT_TYPE, EXAMPLES_NO)
     return response
 
 def prepare_data(run, example):
@@ -32,23 +34,24 @@ def prepare_data(run, example):
        "reference": example.outputs['vpdl_draft']
     }
 
-# Configure everything
-config = Config()
-config.load_keys()
-llm = config.get_llm()
-open_ai_key = config.get_open_ai_key()
-
-def execute_evaluation (dataset_name, prompt_type, examples_no = 1, repetitions = 1):
+def execute_evaluation (dataset_name, prompt_type, temperature, examples_no = 1, repetitions = 1):
 
     global EXAMPLES_NO 
     global REPETITIONS 
     global PROMPT_TYPE
+    global TEMPERATURE
+    global LLM
     EXAMPLES_NO = examples_no
     REPETITIONS = repetitions
     PROMPT_TYPE = prompt_type
+    TEMPERATURE = temperature
 
-    print(f'Executing evaluation for dataset:{dataset_name} for prompt type:{prompt_type} with {examples_no} examples (if applicable) and {repetitions} repetitions')
+    print(f'Executing evaluation for dataset:{dataset_name} for prompt type:{prompt_type} with {examples_no} examples (if applicable) and {repetitions} repetitions. Temperature is: {temperature}')
 
+    # Configure everything
+    config = Config()
+    config.load_keys()
+    LLM = config.get_llm()
 
     client = Client()
     dataset_name = dataset_name
@@ -82,7 +85,7 @@ def execute_evaluation (dataset_name, prompt_type, examples_no = 1, repetitions 
         execute_chain_wrapper,
         data=client.list_examples(dataset_name=dataset_name),
         evaluators=[string_distance_evaluator,matched_relations,matched_filters],
-        experiment_prefix=PROMPT_TYPE+"_"+str(EXAMPLES_NO),
+        experiment_prefix=PROMPT_TYPE+"_T:"+str(TEMPERATURE)+"_E:"+str(EXAMPLES_NO),
         num_repetitions=REPETITIONS,
     )
 

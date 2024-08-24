@@ -37,11 +37,12 @@ class Config:
         Test the LLM functionality by sending messages to the LLM instance.
     """
 
-    def __init__(self, project_name: str = "MULTI-AGENT"):
+    def __init__(self, project_name: str = "MULTI-AGENT", temperature: float = 0):
         self.open_ai_key = None
         self.langsmith_key = None
         self.llm = None
         self.project_name = project_name
+        self.temperature = temperature
 
     def load_keys(self):
         """
@@ -78,7 +79,7 @@ class Config:
             os.environ["LANGCHAIN_ENDPOINT"] = "https://api.smith.langchain.com"
             os.environ["LANGCHAIN_API_KEY"] = self.langsmith_key
 
-        self.llm = ChatMistralAI(temperature=0.2, api_key=self.open_ai_key, model_name="mistral-large-latest")
+        self.llm = ChatOpenAI(temperature=self.temperature, api_key=self.open_ai_key, model_name="gpt-4o-2024-08-06")
 
     def get_llm(self):
         """
