@@ -1,0 +1,697 @@
+reference.join,reference.where,reference.select,reference.vpdl_draft,outputs.output,execution_time,error,id,feedback.matched classes,feedback.matched filters,feedback.non-matched classes,feedback.non-matched filters,feedback.precision (attr),feedback.precision (cls),feedback.recall (attr),feedback.recall (cls),feedback.reference number (attr),feedback.reference number (cls),input.input_.meta_1_path,input.input_.meta_2_path,input.input_.view_description
+"{
+    ""relations"": [
+        {
+            ""name"": ""firstChapter"",
+            ""classes"": [
+                ""Publication"",
+                ""Chapter""
+            ]
+        },
+        {
+            ""name"": ""bookChapters"",
+            ""classes"": [
+                ""Publication"",
+                ""Chapter""
+            ]
+        }
+    ]
+}","{
+    ""rules"": [
+        {
+            ""name"": ""firstChapter"",
+            ""rules"": [
+                ""The title of the book should be the same of the title of the publication and it should include only the first chapter of the publication.""
+            ]
+        },
+        {
+            ""name"": ""bookChapters"",
+            ""rules"": [
+                ""The title of the book should be the same of the title of the publication""
+            ]
+        }
+    ]
+}","{
+    ""filters"": {
+        ""publication"": {
+            ""Publication"": [
+                ""*""
+            ]
+        },
+        ""book"": {
+            ""Book"": [
+                ""*"",
+                ""title""
+            ],
+            ""Chapter"": [
+                ""title""
+            ]
+        }
+    }
+}
+","create view publicationsAndBooks as
+
+select publication.Publication.*,
+       book.Book.*,
+       book.Book.title,
+       book.Chapter.title,
+       publication.Publication join book.Chapter as firstChapter,
+       publication.Publication join book.Chapter as bookChapters,
+
+from 'http://publication' as publication,
+     'http://book' as book,
+
+where s.title = t.eContainer().title
+      and t = t.eContainer().chapters.first()
+      for firstChapter,
+      s.title = t.eContainer().title
+      for bookChapters",,10.999825,"OutputParserException('Failed to parse Filters from completion {""selectedAttributes"": [{""relationName"": ""relationName"", ""attributes"": [""uniqueAttributeFromFirstClass"", ""uniqueAttributeFromSecondClass"", ""containerAttributeFromFirstClass"", ""containerAttributeFromSecondClass"", ""explicitlyMentionedAttribute"", ""understandingAttribute""]}]}. Got: 1 validation error for Filters\nfilters\n  field required (type=value_error.missing)')
+
+Traceback (most recent call last):
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\output_parsers\main_parser.py"", line 43, in _parse_obj
+    return self.pydantic_object.parse_obj(obj)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\pydantic\v1\main.py"", line 526, in parse_obj
+    return cls(**obj)
+           ^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\pydantic\v1\main.py"", line 341, in __init__
+    raise validation_error
+pydantic.v1.error_wrappers.ValidationError: 1 validation error for Filters
+filters
+  field required (type=value_error.missing)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langsmith\run_helpers.py"", line 577, in wrapper
+    function_result = run_container[""context""].run(func, *args, **kwargs)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\evaluate_vpdl.py"", line 28, in execute_chain_wrapper
+    response = vpdl_chain.execute_chain(LLM, input_[""view_description""], meta_1_path, meta_2_path, PROMPT_TYPE, EXAMPLES_NO)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\vpdl_chain.py"", line 98, in execute_chain
+    full_result = full_chain.invoke(
+                  ^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 2824, in invoke
+    input = step.invoke(input, config)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 5006, in invoke
+    return self.bound.invoke(
+           ^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\passthrough.py"", line 495, in invoke
+    return self._call_with_config(self._invoke, input, config, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 1734, in _call_with_config
+    context.run(
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\config.py"", line 379, in call_func_with_variable_args
+    return func(input, **kwargs)  # type: ignore[call-arg]
+           ^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\passthrough.py"", line 482, in _invoke
+    **self.mapper.invoke(
+      ^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 3511, in invoke
+    output = {key: future.result() for key, future in zip(steps, futures)}
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 3511, in <dictcomp>
+    output = {key: future.result() for key, future in zip(steps, futures)}
+                   ^^^^^^^^^^^^^^^
+  File ""C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\concurrent\futures\_base.py"", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File ""C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\concurrent\futures\_base.py"", line 401, in __get_result
+    raise self._exception
+  File ""C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\concurrent\futures\thread.py"", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 2824, in invoke
+    input = step.invoke(input, config)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 4387, in invoke
+    return self._call_with_config(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 1734, in _call_with_config
+    context.run(
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\config.py"", line 379, in call_func_with_variable_args
+    return func(input, **kwargs)  # type: ignore[call-arg]
+           ^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 4243, in _invoke
+    output = call_func_with_variable_args(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\config.py"", line 379, in call_func_with_variable_args
+    return func(input, **kwargs)  # type: ignore[call-arg]
+           ^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\runnables\views\select.py"", line 91, in <lambda>
+    ) | RunnableLambda(lambda x: retry_parser.parse_with_prompt(**x))
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\runnables\utils\alt_retry.py"", line 93, in parse_with_prompt
+    raise e
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\runnables\utils\alt_retry.py"", line 90, in parse_with_prompt
+    return self.parser.parse(completion)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\output_parsers\main_parser.py"", line 75, in parse
+    return super().parse(completion)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\output_parsers\json.py"", line 98, in parse
+    return self.parse_result([Generation(text=text)])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\output_parsers\ecore_attributes_parser.py"", line 34, in parse_result
+    self._parse_obj(json_object)
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\output_parsers\main_parser.py"", line 50, in _parse_obj
+    raise self._parser_exception(e, obj)
+langchain_core.exceptions.OutputParserException: Failed to parse Filters from completion {""selectedAttributes"": [{""relationName"": ""relationName"", ""attributes"": [""uniqueAttributeFromFirstClass"", ""uniqueAttributeFromSecondClass"", ""containerAttributeFromFirstClass"", ""containerAttributeFromSecondClass"", ""explicitlyMentionedAttribute"", ""understandingAttribute""]}]}. Got: 1 validation error for Filters
+filters
+  field required (type=value_error.missing)
+",155f3c12-fcd9-4923-845c-ccdbf3d70f40,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,Book.ecore,Publication.ecore,"The Book metamodel has details about each chapter, while the Publication has more information about the publisher and publishing date.
+I want a view of my Publication that contains the information regarding the chapters, both all chapters of the book, but also the first chapter."
+"{
+    ""relations"": [
+        {
+            ""name"": ""specification"",
+            ""classes"": [
+                ""TraceabilityLink"",
+                ""Variable""
+            ]
+        }
+    ]
+}","{
+    ""rules"": [
+        {
+            ""name"": ""specification"",
+            ""rules"": [
+                ""The traceability link should be related to a variable in the B program.""
+            ]
+        },
+        {
+            ""name"": ""events"",
+            ""rules"": [
+                ""The traceability link should be related to an event in the log.""
+            ]
+        },
+        {
+            ""name"": ""events2"",
+            ""rules"": [
+                ""The traceability link should be related to another event in the log.""
+            ]
+        },
+        {
+            ""name"": ""designComponent"",
+            ""rules"": [
+                ""The name of the trace in the log should start with the sensor specified in the traceability link, and it should correspond to a component in the UML model.""
+            ]
+        }
+    ]
+}","{
+    ""filters"": {
+        ""Trace"": {
+            ""TraceabilityModel"": [
+                ""traceabilityLinks""
+            ],
+            ""TraceabilityLink"": [
+                ""*""
+            ]
+        },
+        ""B"": {
+            ""Program"": [
+                ""machines""
+            ],
+            ""Machine"": [
+                ""sets""
+            ],
+            ""Sets"": [
+                ""exprs""
+            ],
+            ""Set"": [
+                ""elems""
+            ],
+            ""Variable"": [
+                ""*""
+            ]
+        }
+    }
+}
+","create view safety as
+
+select Trace.TraceabilityModel.traceabilityLinks,
+       Trace.TraceabilityLink.*,
+       B.Program.machines,
+       B.Machine.sets,
+       B.Sets.exprs,
+       B.Set.elems,
+       B.Variable.*,
+       Log.Log.events,
+       Log.Event.*,
+       Log.Trace.*,
+       UML.Model.elements,
+       UML.Component.*,
+       Trace.TraceabilityLink join B.Variable as specification,
+       Trace.TraceabilityLink join Log.Event as events,
+       Trace.TraceabilityLink join Log.Event as events2,
+       Log.Trace join UML.Component as designComponent
+       
+
+from 'http://www.clearsy.com/B-extended' as B,
+     'http://SimpleUMLComponents' as UML,
+     'http://log' as Log,
+     'http://TraceabilityMetamodel' as Trace
+     
+where s.rightLinkEnd.traceableArtefact.includes(t) for specification,
+      s.leftLinkEnd.traceableArtefact.includes(t) for events,
+      s.leftLinkEnd.traceableArtefact.includes(t) for events2,
+      t.name.startsWith(s.sensor) for designComponent
+      
+      
+      ",,7.191463,"OutputParserException('Failed to parse Filters from completion {""attributes"": [{""class"": ""class_name_from_first_metamodel"", ""attributes"": [""uniqueAttribute1"", ""containerAttribute1"", ""explicitlyMentionedAttribute1"", ""relationUnderstandingAttribute1""]}, {""class"": ""class_name_from_second_metamodel"", ""attributes"": [""uniqueAttribute2"", ""containerAttribute2"", ""explicitlyMentionedAttribute2"", ""relationUnderstandingAttribute2""]}]}. Got: 1 validation error for Filters\nfilters\n  field required (type=value_error.missing)')
+
+Traceback (most recent call last):
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\output_parsers\main_parser.py"", line 43, in _parse_obj
+    return self.pydantic_object.parse_obj(obj)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\pydantic\v1\main.py"", line 526, in parse_obj
+    return cls(**obj)
+           ^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\pydantic\v1\main.py"", line 341, in __init__
+    raise validation_error
+pydantic.v1.error_wrappers.ValidationError: 1 validation error for Filters
+filters
+  field required (type=value_error.missing)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langsmith\run_helpers.py"", line 577, in wrapper
+    function_result = run_container[""context""].run(func, *args, **kwargs)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\evaluate_vpdl.py"", line 28, in execute_chain_wrapper
+    response = vpdl_chain.execute_chain(LLM, input_[""view_description""], meta_1_path, meta_2_path, PROMPT_TYPE, EXAMPLES_NO)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\vpdl_chain.py"", line 98, in execute_chain
+    full_result = full_chain.invoke(
+                  ^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 2824, in invoke
+    input = step.invoke(input, config)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 5006, in invoke
+    return self.bound.invoke(
+           ^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\passthrough.py"", line 495, in invoke
+    return self._call_with_config(self._invoke, input, config, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 1734, in _call_with_config
+    context.run(
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\config.py"", line 379, in call_func_with_variable_args
+    return func(input, **kwargs)  # type: ignore[call-arg]
+           ^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\passthrough.py"", line 482, in _invoke
+    **self.mapper.invoke(
+      ^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 3511, in invoke
+    output = {key: future.result() for key, future in zip(steps, futures)}
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 3511, in <dictcomp>
+    output = {key: future.result() for key, future in zip(steps, futures)}
+                   ^^^^^^^^^^^^^^^
+  File ""C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\concurrent\futures\_base.py"", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File ""C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\concurrent\futures\_base.py"", line 401, in __get_result
+    raise self._exception
+  File ""C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\concurrent\futures\thread.py"", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 2824, in invoke
+    input = step.invoke(input, config)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 4387, in invoke
+    return self._call_with_config(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 1734, in _call_with_config
+    context.run(
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\config.py"", line 379, in call_func_with_variable_args
+    return func(input, **kwargs)  # type: ignore[call-arg]
+           ^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 4243, in _invoke
+    output = call_func_with_variable_args(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\config.py"", line 379, in call_func_with_variable_args
+    return func(input, **kwargs)  # type: ignore[call-arg]
+           ^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\runnables\views\select.py"", line 91, in <lambda>
+    ) | RunnableLambda(lambda x: retry_parser.parse_with_prompt(**x))
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\runnables\utils\alt_retry.py"", line 93, in parse_with_prompt
+    raise e
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\runnables\utils\alt_retry.py"", line 90, in parse_with_prompt
+    return self.parser.parse(completion)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\output_parsers\main_parser.py"", line 75, in parse
+    return super().parse(completion)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\output_parsers\json.py"", line 98, in parse
+    return self.parse_result([Generation(text=text)])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\output_parsers\ecore_attributes_parser.py"", line 34, in parse_result
+    self._parse_obj(json_object)
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\output_parsers\main_parser.py"", line 50, in _parse_obj
+    raise self._parser_exception(e, obj)
+langchain_core.exceptions.OutputParserException: Failed to parse Filters from completion {""attributes"": [{""class"": ""class_name_from_first_metamodel"", ""attributes"": [""uniqueAttribute1"", ""containerAttribute1"", ""explicitlyMentionedAttribute1"", ""relationUnderstandingAttribute1""]}, {""class"": ""class_name_from_second_metamodel"", ""attributes"": [""uniqueAttribute2"", ""containerAttribute2"", ""explicitlyMentionedAttribute2"", ""relationUnderstandingAttribute2""]}]}. Got: 1 validation error for Filters
+filters
+  field required (type=value_error.missing)
+",2c752f5d-b8f1-4d3d-81a0-1d3223ede0fe,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1_TraceabilityMetamodel.ecore,2_B.ecore,"We propose to build a view that aggregates together all the models seen so far. This allows the system engineer to transparently point to the relevant information (spread in different models) while also allowing him/her to have a better vision of the full picture.
+
+We add a new bidirectional association designComponent, between Trace and Component, which allows the system engineer to navigate from a runtime trace back to the component that emitted it, and from a component to all its emitted traces.
+
+We also rename the features leftLinkEnd (which holds references to B variables) and rightLinkEnd (references to events and traces) to specification and events, making the view more useful to the engineer. We perform such a renaming by filtering the existing features and creating new associations;"
+"{
+    ""relations"": [
+        {
+            ""name"": ""traces"",
+            ""classes"": [
+                ""InternalElement"",
+                ""Event""
+            ]
+        }
+    ]
+}","{
+    ""rules"": [
+        {
+            ""name"": ""traces"",
+            ""rules"": [
+                ""The name of the internal element in the original CAEX file should match the name retrieved from the resource with the same ID in the traces.""
+            ]
+        }
+    ]
+}","{
+    ""filters"": {
+        ""CAEX_Original"": {
+            ""CAEXFile"": [
+                ""*""
+            ],
+            ""InstanceHierarchy"": [
+                ""*""
+            ],
+            ""InternalElement"": [
+                ""name"",
+                ""attribute""
+            ]
+        },
+        ""CAEX_New"": {
+            ""CAEXFile"": [
+                ""*""
+            ],
+            ""InstanceHierarchy"": [
+                ""*""
+            ],
+            ""InternalElement"": [
+                ""*""
+            ]
+        },
+        ""Traces"": {
+            ""Log"": [
+                ""*""
+            ],
+            ""FeatureAndClass"": [
+                ""*""
+            ],
+            ""Event"": [
+                ""fatureAndClass"",
+                ""id""
+            ]           
+        }
+    }
+}
+","create view evolution as
+
+select CAEX_Original.CAEXFile.*,
+       CAEX_Original.InstanceHierarchy.*,
+	   CAEX_Original.InternalElement[name,attribute],
+	   CAEX_New.CAEXFile.*,
+       CAEX_New.InstanceHierarchy.*,
+	   CAEX_New.InternalElement.*,
+	   Traces.Log.*,
+	   Traces.Event[fatureAndClass,id],
+	   Traces.FeatureAndClass.*,
+	   CAEX_Original.InternalElement join CAEX_New.InternalElement as old_to_new,
+	   CAEX_Original.InternalElement join Traces.Event as traces
+
+from 'http://www.dke.de/CAEX/300' as CAEX_Original,
+     'http://www.dke.de/CAEX/300' as CAEX_New,
+     'http://www.example.org/ecoreXES' as Traces,
+
+
+where s.name = t.name for old_to_new,
+      s.name = s.eResource().getEObject(t.id.name).name for traces",,6.889766,"OutputParserException('The output contains an invalid class: ChangeMode')
+
+Traceback (most recent call last):
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langsmith\run_helpers.py"", line 577, in wrapper
+    function_result = run_container[""context""].run(func, *args, **kwargs)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\evaluate_vpdl.py"", line 28, in execute_chain_wrapper
+    response = vpdl_chain.execute_chain(LLM, input_[""view_description""], meta_1_path, meta_2_path, PROMPT_TYPE, EXAMPLES_NO)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\vpdl_chain.py"", line 98, in execute_chain
+    full_result = full_chain.invoke(
+                  ^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 2822, in invoke
+    input = step.invoke(input, config, **kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 5006, in invoke
+    return self.bound.invoke(
+           ^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\passthrough.py"", line 495, in invoke
+    return self._call_with_config(self._invoke, input, config, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 1734, in _call_with_config
+    context.run(
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\config.py"", line 379, in call_func_with_variable_args
+    return func(input, **kwargs)  # type: ignore[call-arg]
+           ^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\passthrough.py"", line 482, in _invoke
+    **self.mapper.invoke(
+      ^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 3511, in invoke
+    output = {key: future.result() for key, future in zip(steps, futures)}
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 3511, in <dictcomp>
+    output = {key: future.result() for key, future in zip(steps, futures)}
+                   ^^^^^^^^^^^^^^^
+  File ""C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\concurrent\futures\_base.py"", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File ""C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\concurrent\futures\_base.py"", line 401, in __get_result
+    raise self._exception
+  File ""C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\concurrent\futures\thread.py"", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 2824, in invoke
+    input = step.invoke(input, config)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 4387, in invoke
+    return self._call_with_config(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 1734, in _call_with_config
+    context.run(
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\config.py"", line 379, in call_func_with_variable_args
+    return func(input, **kwargs)  # type: ignore[call-arg]
+           ^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 4243, in _invoke
+    output = call_func_with_variable_args(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\config.py"", line 379, in call_func_with_variable_args
+    return func(input, **kwargs)  # type: ignore[call-arg]
+           ^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\runnables\views\join.py"", line 98, in <lambda>
+    ) | RunnableLambda(lambda x: retry_parser.parse_with_prompt(**x))
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\runnables\utils\alt_retry.py"", line 93, in parse_with_prompt
+    raise e
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\runnables\utils\alt_retry.py"", line 90, in parse_with_prompt
+    return self.parser.parse(completion)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\output_parsers\main_parser.py"", line 75, in parse
+    return super().parse(completion)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\output_parsers\json.py"", line 98, in parse
+    return self.parse_result([Generation(text=text)])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\output_parsers\ecore_classes_parser.py"", line 36, in parse_result
+    return self._parse_relations(json_object)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\output_parsers\ecore_classes_parser.py"", line 54, in _parse_relations
+    raise OutputParserException(
+langchain_core.exceptions.OutputParserException: The output contains an invalid class: ChangeMode
+",8d0b6483-f2b5-4251-bd6d-f52a8d5cfa61,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,caex.ecore,ecoreXES.ecore,"I want to follow the evolution of a engineering system.
+It shows to different versions of the same system modeled using the CAEX metamodel.
+Based on the changes performed in the models, the changes are captured into a model that conforms to a Traces metamodel.
+"
+"{
+    ""relations"": [
+        {
+            ""name"": ""detailedRequirement"",
+            ""classes"": [
+                ""Requirement"",
+                ""SpecObject""
+            ]
+        }
+    ]
+}","{
+    ""rules"": [
+        {
+            ""name"": ""detailedRequirement"",
+            ""rules"": [
+                ""The values of the detailed requirement should contain the name of the enterprise architecture process.""
+            ]
+        }
+    ]
+}","{
+    ""filters"": {
+        ""EnterpriseArchitecture"": {
+            ""EnterpriseArchitecture"": [
+                ""architectures""
+            ],
+            ""BusinessArchitecture"": [
+                ""processes""
+            ],
+            ""StrategicArchitecture"": [
+                ""strategicElements""
+            ],
+            ""Process"": [
+                ""name""
+            ]
+        },
+        ""ReqIf"": {
+            ""ReqIF"": [
+                ""coreContent""
+            ],
+            ""ReqIFContent"": [
+                ""specObjects""
+            ],
+            ""SpecObject"": [
+                ""values""
+            ],
+            ""AttributeValueString"": [
+                ""theValue""
+            ]
+        }
+    }
+}
+","create view EAView as
+
+select EnterpriseArchitecture.EnterpriseArchitecture.architectures,
+       EnterpriseArchitecture.BusinessArchitecture.processes,
+       EnterpriseArchitecture.StrategicArchitecture.strategicElements,
+       EnterpriseArchitecture.Process.name,
+       BPMN.Process.*,
+       ReqIf.ReqIF.coreContent,
+       ReqIf.ReqIFContent.specObjects,
+       ReqIf.SpecObject.values,
+       ReqIf.AttributeValueString.theValue,
+       EnterpriseArchitecture.Process join BPMN.Process as detailedProcess,
+       EnterpriseArchitecture.Requirement join ReqIf.SpecObject as detailedRequirement,
+       EnterpriseArchitecture.Process join BPMN.Process as detailedProcess2,
+
+from 'http://www.obeonetwork.org/dsl/togaf/contentfwk/9.0.0' as EnterpriseArchitecture,
+     'http://www.omg.org/spec/ReqIF/20110401/reqif.xsd' as ReqIf,
+     'http://www.omg.org/spec/BPMN/20100524/MODEL-XMI' as BPMN
+
+where s.name = t.name
+      for detailedProcess,
+      t.values.exists(v | v.theValue=s.name)
+      for detailedRequirement,
+      s.detailedProcess  = t for detailedProcess2",,6.323501,"OutputParserException('Failed to parse Filters from completion {""attributes"": [{""class"": ""class_name_from_first_metamodel"", ""attributes"": [""uniqueAttribute1"", ""containerAttribute1"", ""explicitlyMentionedAttribute1"", ""relationUnderstandingAttribute1""]}, {""class"": ""class_name_from_second_metamodel"", ""attributes"": [""uniqueAttribute2"", ""containerAttribute2"", ""explicitlyMentionedAttribute2"", ""relationUnderstandingAttribute2""]}]}. Got: 1 validation error for Filters\nfilters\n  field required (type=value_error.missing)')
+
+Traceback (most recent call last):
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\output_parsers\main_parser.py"", line 43, in _parse_obj
+    return self.pydantic_object.parse_obj(obj)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\pydantic\v1\main.py"", line 526, in parse_obj
+    return cls(**obj)
+           ^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\pydantic\v1\main.py"", line 341, in __init__
+    raise validation_error
+pydantic.v1.error_wrappers.ValidationError: 1 validation error for Filters
+filters
+  field required (type=value_error.missing)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langsmith\run_helpers.py"", line 577, in wrapper
+    function_result = run_container[""context""].run(func, *args, **kwargs)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\evaluate_vpdl.py"", line 28, in execute_chain_wrapper
+    response = vpdl_chain.execute_chain(LLM, input_[""view_description""], meta_1_path, meta_2_path, PROMPT_TYPE, EXAMPLES_NO)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\vpdl_chain.py"", line 98, in execute_chain
+    full_result = full_chain.invoke(
+                  ^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 2824, in invoke
+    input = step.invoke(input, config)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 5006, in invoke
+    return self.bound.invoke(
+           ^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\passthrough.py"", line 495, in invoke
+    return self._call_with_config(self._invoke, input, config, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 1734, in _call_with_config
+    context.run(
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\config.py"", line 379, in call_func_with_variable_args
+    return func(input, **kwargs)  # type: ignore[call-arg]
+           ^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\passthrough.py"", line 482, in _invoke
+    **self.mapper.invoke(
+      ^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 3511, in invoke
+    output = {key: future.result() for key, future in zip(steps, futures)}
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 3511, in <dictcomp>
+    output = {key: future.result() for key, future in zip(steps, futures)}
+                   ^^^^^^^^^^^^^^^
+  File ""C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\concurrent\futures\_base.py"", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File ""C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\concurrent\futures\_base.py"", line 401, in __get_result
+    raise self._exception
+  File ""C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\concurrent\futures\thread.py"", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 2824, in invoke
+    input = step.invoke(input, config)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 4387, in invoke
+    return self._call_with_config(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 1734, in _call_with_config
+    context.run(
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\config.py"", line 379, in call_func_with_variable_args
+    return func(input, **kwargs)  # type: ignore[call-arg]
+           ^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\base.py"", line 4243, in _invoke
+    output = call_func_with_variable_args(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\runnables\config.py"", line 379, in call_func_with_variable_args
+    return func(input, **kwargs)  # type: ignore[call-arg]
+           ^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\runnables\views\select.py"", line 91, in <lambda>
+    ) | RunnableLambda(lambda x: retry_parser.parse_with_prompt(**x))
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\runnables\utils\alt_retry.py"", line 93, in parse_with_prompt
+    raise e
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\runnables\utils\alt_retry.py"", line 90, in parse_with_prompt
+    return self.parser.parse(completion)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\output_parsers\main_parser.py"", line 75, in parse
+    return super().parse(completion)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\ENV\Lib\site-packages\langchain_core\output_parsers\json.py"", line 98, in parse
+    return self.parse_result([Generation(text=text)])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\output_parsers\ecore_attributes_parser.py"", line 34, in parse_result
+    self._parse_obj(json_object)
+  File ""C:\Users\James\Projects\Papers\LLM\llm-app\src\output_parsers\main_parser.py"", line 50, in _parse_obj
+    raise self._parser_exception(e, obj)
+langchain_core.exceptions.OutputParserException: Failed to parse Filters from completion {""attributes"": [{""class"": ""class_name_from_first_metamodel"", ""attributes"": [""uniqueAttribute1"", ""containerAttribute1"", ""explicitlyMentionedAttribute1"", ""relationUnderstandingAttribute1""]}, {""class"": ""class_name_from_second_metamodel"", ""attributes"": [""uniqueAttribute2"", ""containerAttribute2"", ""explicitlyMentionedAttribute2"", ""relationUnderstandingAttribute2""]}]}. Got: 1 validation error for Filters
+filters
+  field required (type=value_error.missing)
+",75ece7f6-4543-40ad-9997-79cd94fa1470,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,contentfwk.ecore,reqif.ecore,"The considered view combines an Enterprise Architecture model and a Requirements model (specified in a CSV file that can be opened in a spreadsheet such as Excel).
+We want to use Requirements to comprehend the enterprise elements better."
