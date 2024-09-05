@@ -17,15 +17,13 @@ llm = config.get_llm()
 open_ai_key = config.get_open_ai_key()
 
 client = Client()
-dataset_name = "ATL_FINAL_5"
+dataset_name = "ATL_FINAL_EVALUATION"
 
 dataset = client.create_dataset(
-    dataset_name=dataset_name, description="Tree2List transformation with paths and partial outputs",
+    dataset_name=dataset_name, description="All transformations with paths and partial outputs",
 )
 
 for folder in os.listdir(ATL_DIRECTORY):
-    if folder != "Tree2List":
-        continue
     folder_path = os.path.join(ATL_DIRECTORY, folder)
     if os.path.isdir(folder_path):
         metamodel_folder = os.path.join(folder_path, "metamodels")

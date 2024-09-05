@@ -1,7 +1,7 @@
 import os
 
 from langchain_openai import ChatOpenAI
-from langchain_mistralai import ChatMistralAI
+from langchain_mistralai import ChatMistralAI # alternative model
 from langchain_core.messages import HumanMessage, SystemMessage
 
 

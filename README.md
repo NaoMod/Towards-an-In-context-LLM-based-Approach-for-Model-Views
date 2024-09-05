@@ -1,8 +1,6 @@
 ## Towards an In-context LLM-based Approach for Automating the Definition of Model Views
 
-This repository contains all the artifacts for the paper "Towards an In-context LLM-based Approach for Automating the Definition of Model Views," submitted to the 17th International Conference on Software Language Engineering (SLE 2024).
-
-### PRIVATE REPOSITORY. ONLY ACCESSIBLE ANONYMOUSLY
+This repository contains all the artifacts for the paper "Towards an In-context LLM-based Approach for Automating the Definition of Model Views," accepted at the 17th International Conference on Software Language Engineering (SLE '24).
 
 ### Environment Preparation ⚙️
 
@@ -11,16 +9,17 @@ How to prepare the environment to execute the tool.
 #### Requirements
 
 - Python >= 3.8 
-- To execute the tool, it's necessary to have an [OpenAI API key](https://platform.openai.com/docs/api-reference/introduction). The service is paid.
-- To execute and check the evaluation results in the LangSmith UI, it's necessary to have a [LangSmith API key](https://docs.smith.langchain.com/how_to_guides/setup/create_account_api_key). The service is paid but has a free quota.
+- To execute the tool, it's necessary to have an [OpenAI API key](https://platform.openai.com/docs/api-reference/introduction). It is a paid service, and an OpenAI account is mandatory. The price may vary depending on the selected model.
+- To execute and check the evaluation results in the LangSmith UI, it's necessary to have a [LangSmith API key](https://docs.smith.langchain.com/how_to_guides/setup/create_account_api_key). It is a paid service, and an LangSmith account is mandatory. They have a free quota that is enough for execute the tests provided on this paper. If not provided, the code still works.
+    - <small>Both OpenAI and LangSmith are independent companies with no relations with the authors. Carefully read their Terms and Conditions to check how they treat personal data.</small>
 
 #### Project Preparation
 
-- The directory `llm-app` contains all the necessary Python files to execute the tool. All references to execute a file should consider it as the root folder. The following commands should be executed from the root folder.
+- The directory `llm-app` is the root folder containing all the necessary Python files to execute the tool. Unless explicitly mentioned otherwise, all references to execute a file should consider that the given path lives in the root folder.
 
 ##### Using a Virtual Environment to Avoid Global Installation
 
-It is possible to ignore these commands, but global package installation can lead your environment to unstable states (tested on Ubuntu/Linux and Windows 11).
+It is possible to ignore these commands, but global package installation can lead your environment to unstable states (the commands were tested on Ubuntu/Linux and Windows 11).
 
 - `python -m venv ENV`
     - This command will create an `ENV` folder at the root level.
@@ -31,21 +30,21 @@ It is possible to ignore these commands, but global package installation can lea
 
 - `pip install -r requirements.txt`
 
-Now, your environment is ready to go with the provided solution.
+Now, your environment is ready to go with the provided code.
 
-### Use the Tool to Reproduce the Paper Results 🚀
+### Use the Tool 🚀
 
 1. Copy the content from the file `token_ex.txt` to a `token.txt` file (`copy token_ex.txt token.txt`).
 2. Fill the new file by replacing the word "test" with your API keys (`token` for OpenAI key and `langsmith` for LangSmith key).
 3. Execute the experiments by running (ENV)`python src/vpdl.py` for the View experiments and/or (ENV)`python src/atl.py` for the ATL experiments.
-4. The results will be printed in the console, and you can copy and paste them into the actual tool in use (EMF Views or ATL editor).
+4. The results will be printed in the console, and you can copy and paste them into the actual tool in use (EMF Views or ATL editor, respectvely).
 
-### Running the Evaluation ✍️
+### Running the Evaluation to Reproduce the Paper Results ✍️
 
 (LangSmith use is mandatory for this process)
 1. Create the datasets by running the scripts (ENV)`python src/datasets/vpdl_dataset_creator.py` and (ENV)`python src/datasets/atl_dataset_creator.py`.
     - These will create the datasets in your LangSmith environment.
-2. Execute the scripts (ENV)`python src/evaluate_vpdl.py` for the View experiments and/or (ENV)`python src/evaluate_atl.py` for the ATL experiments.
+2. Execute the script (ENV)`python src/evaluate_vpdl.py` for the View experiments and/or (ENV)`python src/evaluate_atl.py` for the ATL experiments.
 3. The console will print the success/error status of the execution.
 4. The results should be accessible in your LangSmith workspace.
     - Note: Due to the nature of the LLMs, the results may or may not match exactly those presented in the paper, but they should match on average.

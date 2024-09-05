@@ -10,6 +10,11 @@ from evaluators.atl_evaluators import matched_relations
 from langsmith import Client
 
 ATL_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..", "Views_ATL_Baseline")
+PROMPT_TYPE = "baseline"
+EXAMPLES_NO = 1
+REPETITIONS = 1
+TEMPERATURE = 0
+LLM = None
   
 def find(name):
     for root, _ , files in os.walk(ATL_DIRECTORY):
@@ -20,10 +25,7 @@ def execute_chain_wrapper(input_: dict):
     meta_1_path = find(input_["meta_1_path"])
     meta_2_path = find(input_["meta_2_path"])
 
-    #### LINE TO BE CHANGED FOR EACH PROMPT TYPE####
-    prompt_type = "1sCoT"
-
-    response = atl_chain.execute_chain(llm, input_["transformation_description"], meta_1_path, meta_2_path, prompt_type)
+    response = atl_chain.execute_chain(llm, input_["transformation_description"], meta_1_path, meta_2_path, PROMPT_TYPE, EXAMPLES_NO)
     return response
 
 # Configure everything
@@ -32,11 +34,29 @@ config.load_keys()
 llm = config.get_llm()
 open_ai_key = config.get_open_ai_key()
 
-if __name__ == "__main__":
-    client = Client()
-    dataset_name = "ATL_FINAL_5"
+def execute_evaluation (dataset_name, prompt_type, temperature, examples_no = 1, repetitions = 1):
 
-    llm_vpdl_evaluator = LangChainStringEvaluator(  
+    global EXAMPLES_NO 
+    global REPETITIONS 
+    global PROMPT_TYPE
+    global TEMPERATURE
+    global LLM
+    EXAMPLES_NO = examples_no
+    REPETITIONS = repetitions
+    PROMPT_TYPE = prompt_type
+    TEMPERATURE = temperature
+
+    print(f'Executing evaluation for dataset:{dataset_name} for prompt type:{prompt_type} with {examples_no} examples (if applicable) and {repetitions} repetitions. Temperature is: {temperature}')
+
+    # Configure everything
+    config = Config()
+    config.load_keys()
+    LLM = config.get_llm()
+
+    client = Client()
+    dataset_name = dataset_name
+ 
+    llm_atl_evaluator = LangChainStringEvaluator(  
         "labeled_score_string",  
         config={  
             "criteria": {  
@@ -59,7 +79,12 @@ if __name__ == "__main__":
     results = evaluate(
         execute_chain_wrapper,
         data=client.list_examples(dataset_name=dataset_name),
-        evaluators=[matched_relations, llm_vpdl_evaluator],
-        experiment_prefix="testATL",
-        num_repetitions=3,
+        evaluators=[matched_relations, llm_atl_evaluator],
+        experiment_prefix=PROMPT_TYPE+"_T:"+str(TEMPERATURE)+"_E:"+str(EXAMPLES_NO),
+        num_repetitions=REPETITIONS,
     )
+
+    print(results)
+
+if __name__ == "__main__":
+    execute_evaluation("ATL_FINAL_5", "baseline", 1)
