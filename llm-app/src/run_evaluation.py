@@ -21,9 +21,10 @@ if __name__ == "__main__":
         
         for prompt_type in prompt_types:
             for temperature in temperatures:
-                time.sleep(60)
+                time.sleep(60) # To avoid error 419 regarding token rate limit per minute
                 if prompt_type == "few-shot-cot" or prompt_type == "few-shot-only":
                     for examples_no in few_shot_examples:
+                        time.sleep(130)
                         execute_evaluation(
                             dataset_name=dataset_name,
                             prompt_type=prompt_type,
