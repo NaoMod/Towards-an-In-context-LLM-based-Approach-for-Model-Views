@@ -21,7 +21,7 @@ if __name__ == "__main__":
         #prompt_types = ["baseline", "alternative", "few-shot-cot", "few-shot-only", "simplified"]
         #few_shot_examples = [1, 2, 4]
         #temperatures = [0, 0.01, 0.5, 1, 2]
-        repetitions = 3
+        repetitions = 1
 
         dataset_name = "VPDL_FINAL_EVALUATION"
         

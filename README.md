@@ -37,22 +37,25 @@ Now, your environment is ready to go with the provided code.
 1. Copy the content from the file `token_ex.txt` to a `token.txt` file (`copy token_ex.txt token.txt`).
 2. Fill the new file by replacing the word "test" with your API keys (`token` for OpenAI key and `langsmith` for LangSmith key).
 3. Execute the experiments by running (ENV)`python src/vpdl.py` for the View experiments and/or (ENV)`python src/atl.py` for the ATL experiments.
-4. The results will be printed in the console, and you can copy and paste them into the actual tool in use (EMF Views or ATL editor, respectvely).
+    - Notes: If Langsmith key was provided, both executions will create traces under the project name `FULL-CHAIN` on the Langsmith UI.
+4. The results will be printed in the console, and you can copy and paste them into the actual tool in use (EMF Views or ATL editor, respectvely) to be adjusted and executed.
 
 ### Running the Evaluation to Reproduce the Paper Results ✍️
 
 (LangSmith use is mandatory for this process)
 1. Create the datasets by running the scripts (ENV)`python src/datasets/vpdl_dataset_creator.py` and (ENV)`python src/datasets/atl_dataset_creator.py`.
     - These will create the datasets in your LangSmith environment.
-2. Execute the script (ENV)`python src/evaluate_vpdl.py` for the View experiments and/or (ENV)`python src/evaluate_atl.py` for the ATL experiments.
+2. Execute the script (ENV)`python src/run_evaluation.py vpdl` for the View experiments and/or (ENV)`python src/run_evaluation.py atl` for the ATL experiments.
+    - Note: The file `src/run_evaluation.py` comments contain instructions to setup different configurations other than used in the paper.
 3. The console will print the success/error status of the execution.
 4. The results should be accessible in your LangSmith workspace.
-    - Note: Due to the nature of the LLMs, the results may or may not match exactly those presented in the paper, but they should match on average.
+    - Important note: Due to the probabilistic nature of the LLMs, the results may or may not match exactly those presented in the paper, but they should match on average.
 
 ### Other Artifacts
 
-- The directory `paper_data` contains the prompts used in the ChatGPT experiments, including both the prompt and the completion, together with a public link to access them.
-- The directory `Views_Baseline` contains all the EMF Views projects. Each one contains a specific README file with more information.
+- The directory `(repository_root)/paper_data/chatgpt_experiment` contains the prompts used in the ChatGPT experiments (referenceed as baseline in the paper), including both the prompt and the completion, together with a public link to access them on ChatGPT platform.
+- The directory `(repository_root)/paper_data/prompts` contains all exact prompts used in our experiments for reference.
+- The directory `(repository_root)/Views_Baseline` contains all the EMF Views projects. Each one contains a specific README file with more information.
     - To run them, you need to have an Eclipse instance with the [EMF Views plugin](https://www.atlanmod.org/emfviews/manual/user.html) installed.
-- The directory `Views_ATL_Baseline` contains all the ATL projects.
-    - To run them, you need to have an Eclipse instance with [ATL installed](https://eclipse.dev/atl/).
+- The directory `(repository_root)/Views_ATL_Baseline` contains all the ATL projects.
+    - To run them, you need to have an Eclipse instance with [ATL](https://eclipse.dev/atl/) installed.
