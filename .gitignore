@@ -275,3 +275,6 @@ token.txt
 relations_result.csv
 attr_result.csv
 example.py
+
+llm-app/notebooks/agent-join.ipynb
+llm-app/notebooks/agent-select.ipynb
