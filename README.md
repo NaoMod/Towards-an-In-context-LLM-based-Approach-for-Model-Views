@@ -51,7 +51,7 @@ Now, your environment is ready to go with the provided code.
 
 ### Other Artifacts
 
-- The directory `artifacts_evaluation` contains the prompts used in the ChatGPT experiments, including both the prompt and the completion, together with a public link to access them.
+- The directory `paper_data` contains the prompts used in the ChatGPT experiments, including both the prompt and the completion, together with a public link to access them.
 - The directory `Views_Baseline` contains all the EMF Views projects. Each one contains a specific README file with more information.
     - To run them, you need to have an Eclipse instance with the [EMF Views plugin](https://www.atlanmod.org/emfviews/manual/user.html) installed.
 - The directory `Views_ATL_Baseline` contains all the ATL projects.
