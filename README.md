@@ -8,11 +8,12 @@ This artifact enables the reproduction of the results discussed in the paper.
 
 ## Table of Contents
 
-- [Environment Preparation ⚙️](#environment-preparation-)
+- [Environment Preparation ⚙️](#environment-preparation-⚙️)
   - [Requirements](#requirements)
   - [Project Preparation](#project-preparation)
 - [Use the Tool 🚀](#use-the-tool-🚀)
 - [Running the Evaluation to Reproduce the Paper Results ✍️](#running-the-evaluation-to-reproduce-the-paper-results-✍️)
+- [Troubleshooting](#troubleshooting)
 - [Other Artifacts](#other-artifacts)
 
 ## Environment Preparation ⚙️
@@ -22,9 +23,12 @@ This artifact enables the reproduction of the results discussed in the paper.
 - **Python**: Version 3.8 or higher
 - **OpenAI API Key**: Obtain from [OpenAI API](https://platform.openai.com/docs/api-reference/introduction). Note that this is a paid service. The price may vary depending on the selected model.
 - **LangSmith API Key**: Obtain from [LangSmith API](https://docs.smith.langchain.com/how_to_guides/setup/create_account_api_key). Note that this is also a paid service, but they offer a free quota sufficient for the tests described in the paper.
-    <small>Both OpenAI and LangSmith are independent companies. Please review their Terms and Conditions regarding personal data.</small>
+   - <small>Both OpenAI and LangSmith are independent companies. Please review their Terms and Conditions regarding personal data.</small>
+   - <small>We didn't provide any pre-paid API keys to preserve the users' data since they can leak user information into the metadata that we would have access to</small>
 
 ### Project Preparation
+
+All instructions below should consider that the project's root folder is the `llm-app`, except when explicitly mentioned. 
 
 #### Using a Virtual Environment
 
@@ -47,6 +51,8 @@ It is possible to ignore these commands, but global package installation can lea
    ```bash
    (ENV) python -m pip install --upgrade pip
    ```
+
+For MacOS users, it can be necessary to create the environment using the environment marker for pywin32.
 
 #### Install Dependencies
 
@@ -101,6 +107,16 @@ pip install -r requirements.txt
 
 3. **Check Results**:
    - Results will be accessible in your LangSmith workspace. Note that due to the probabilistic nature of LLMs, results may vary slightly from those in the paper but should be consistent on average.
+
+## Troubleshooting
+
+Below are listed some potential problems executing the tool and what to do in these cases:
+
+- Problem: The OpenAI API sent error code 404. This means that the model is not working correctly.
+   - Solution: The file `\src\utils\config.py` line 83 can be edited changing the parameter model_name from "gpt-4o-2024-08-06" to any available model at [OpenAI gpt-4o](https://platform.openai.com/docs/models/gpt-4o) page using the string identifier. Note that we cannot ensure that other models will not change the expected results.
+- Problem: The OpenAI API sent error code 429. This means you have reached the token limit per minute on their API.
+   - Solution: Wait from 1 to 2 minutes before trying again.
+
 
 ## Other Artifacts
 

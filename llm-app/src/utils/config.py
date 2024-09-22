@@ -79,6 +79,7 @@ class Config:
             os.environ["LANGCHAIN_ENDPOINT"] = "https://api.smith.langchain.com"
             os.environ["LANGCHAIN_API_KEY"] = self.langsmith_key
 
+        # IF YOU NEED TO CHANGE THE LLM MODEL, CHANGE BELOW THE PARAMETER model_name WITH THE STRING THAT IDENTIFIES THE MODEL.
         self.llm = ChatOpenAI(temperature=self.temperature, api_key=self.open_ai_key, model_name="gpt-4o-2024-08-06")
 
     def get_llm(self):
