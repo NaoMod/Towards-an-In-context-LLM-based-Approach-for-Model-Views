@@ -28,7 +28,7 @@ This artifact enables the reproduction of the results discussed in the paper.
 
 ### Project Preparation
 
-All instructions below should consider that the project's root folder is the `llm-app`, except when explicitly mentioned. 
+All instructions below should consider that the project's root folder is the `llm-app`, except when explicitly mentioned.
 
 #### Using a Virtual Environment
 
@@ -116,9 +116,14 @@ Below are listed some potential problems executing the tool and what to do in th
    - Solution: The file `\src\utils\config.py` line 83 can be edited changing the parameter model_name from "gpt-4o-2024-08-06" to any available model at [OpenAI gpt-4o](https://platform.openai.com/docs/models/gpt-4o) page using the string identifier. Note that we cannot ensure that other models will not change the expected results.
 - Problem: The OpenAI API sent error code 429. This means you have reached the token limit per minute on their API.
    - Solution: Wait from 1 to 2 minutes before trying again.
+- Problems during dependencies installation: Errors with pip management tool could occur depending on the OS
+   - Solution: The essential packages can be installed manually in your environment using your preferred package management. Below is an example of using pip to install the essential packages in this project without using requirements.txt.
+    `pip install langchain langchain_community langchain_core langchain_mistralai langchain_openai openai pydantic pyecore langsmith`
 
 
 ## Other Artifacts
+
+Navigate through these files from the `repository_root`
 
 - **ChatGPT Prompts**: Found in `(repository_root)/paper_data/chatgpt_experiment`. Includes prompts and completions used as a baseline.
 - **Experiment Prompts**: Located in `(repository_root)/paper_data/prompts`. Contains all exact prompts used in our experiments.
