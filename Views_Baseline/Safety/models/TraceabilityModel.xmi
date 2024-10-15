@@ -4,18 +4,18 @@
     xmlns:xmi="http://www.omg.org/XMI"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:TraceabilityMetamodel="http://TraceabilityMetamodel"
-    xsi:schemaLocation="http://TraceabilityMetamodel ../Metamodels/TraceabilityMetamodel.ecore#/0">
+    xsi:schemaLocation="http://TraceabilityMetamodel ASPm-PrimitiveTypes#/0">
   <traceabilityLinks
       name="M21">
     <rightLinkEnd
         name="Component M21">
       <traceableArtefact
-          href="../models/components.xmi#_ulQ5kCODEei_4cw9e9cViw"/>
+          href="components.xmi#_ulQ5kCODEei_4cw9e9cViw"/>
     </rightLinkEnd>
     <leftLinkEnd
         name="Trace Position M21">
       <traceableArtefact
-          href="../models/shortoutputs_sample.xmi#//@events.5/@traces.3"/>
+          href="shortoutputs_sample.xmi#//@events.5/@traces.3"/>
     </leftLinkEnd>
   </traceabilityLinks>
   <traceabilityLinks
@@ -23,12 +23,17 @@
     <rightLinkEnd
         name="Component M24">
       <traceableArtefact
-          href="../models/components.xmi#_QNuogCOFEei_4cw9e9cViw"/>
+          href="components.xmi#_QNuogCOFEei_4cw9e9cViw"/>
+    </rightLinkEnd>
+    <rightLinkEnd
+        name="var2">
+      <traceableArtefact
+          href="b_specification.xmi#//@machines.2/@operations/@operations.0/@outputs.0"/>
     </rightLinkEnd>
     <leftLinkEnd
         name="Trace Position M24">
       <traceableArtefact
-          href="../models/shortoutputs_sample.xmi#//@events.10/@traces.2"/>
+          href="shortoutputs_sample.xmi#//@events.10/@traces.2"/>
     </leftLinkEnd>
   </traceabilityLinks>
   <traceabilityLinks
@@ -36,12 +41,22 @@
     <rightLinkEnd
         name="Component M11">
       <traceableArtefact
-          href="../models/components.xmi#_Q67swCOFEei_4cw9e9cViw"/>
+          href="components.xmi#_Q67swCOFEei_4cw9e9cViw"/>
+    </rightLinkEnd>
+    <rightLinkEnd
+        name="var1">
+      <traceableArtefact
+          href="b_specification.xmi#//@implementations.3/@operations/@operations.1/@body/@in/@exprs.1/@exprs.0/@then/@vars.0"/>
     </rightLinkEnd>
     <leftLinkEnd
         name="Trace fallback M11">
       <traceableArtefact
-          href="../models/shortoutputs_sample.xmi#//@events.11/@traces.2"/>
+          href="shortoutputs_sample.xmi#//@events.11/@traces.2"/>
+    </leftLinkEnd>
+    <leftLinkEnd
+        name="testing">
+      <traceableArtefact
+          href="shortoutputs_sample.xmi#//@events.1"/>
     </leftLinkEnd>
   </traceabilityLinks>
 </TraceabilityMetamodel:TraceabilityModel>

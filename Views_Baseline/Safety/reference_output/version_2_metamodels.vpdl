@@ -1,0 +1,53 @@
+create view safety as
+
+select Trace.TraceabilityModel.traceabilityLinks,
+       Trace.TraceabilityLink.*,
+       B.Program.machines,
+       B.Machine.sets,
+       B.Sets.exprs,
+       B.Set.elems,
+       B.Variable.*,
+       Trace.TraceabilityLink join B.Variable as specification,       
+
+from 'http://www.clearsy.com/B-extended' as B,
+     'http://TraceabilityMetamodel' as Trace
+     
+where s.rightLinkEnd.traceableArtefact.includes(t) for specification,
+
+
+
+create view NAME as
+
+select TraceabilityMetamodel.TraceabilityLink.id,
+TraceabilityMetamodel.TraceabilityLink.name,
+TraceabilityMetamodel.TraceabilityLink.description,
+TraceabilityMetamodel.TraceabilityLink.rightLinkEnd,
+TraceabilityMetamodel.TraceabilityLinkEnd.name,
+TraceabilityMetamodel.TraceabilityLinkEnd.traceableArtefact,
+TraceabilityMetamodel.TraceabilityModel.name,
+TraceabilityMetamodel.TraceabilityModel.traceabilityLinks,
+TraceabilityMetamodel.TraceabilityContext.name,
+TraceabilityMetamodel.TraceabilityContext.description,
+TraceabilityMetamodel.TraceabilityContext.traceabilityContextData,
+b.Variable.name,
+b.Machine.*,
+b.Abstraction.name,
+TraceabilityMetamodel.TraceabilityLink join b.Variable as TraceabilityLinkToVariable,
+TraceabilityMetamodel.TraceabilityLinkEnd join b.Variable as TraceabilityLinkEndToVariable,
+TraceabilityMetamodel.TraceabilityModel join b.Machine as TraceabilityModelToMachine,
+TraceabilityMetamodel.TraceabilityContext join b.Abstraction as TraceabilityContextToAbstraction,
+
+from 'http://TraceabilityMetamodel' as TraceabilityMetamodel,
+'http://www.clearsy.com/B-extended' as b,
+
+where Combine TraceabilityLink with Variable by matching the traceableArtefact in rightLinkEnd with the Variable's name to provide detailed trace information.
+for TraceabilityLinkToVariable
+Link TraceabilityLinkEnd to Variable by ensuring the traceableArtefact in TraceabilityLinkEnd corresponds to a Variable's name, establishing a traceability connection.
+for TraceabilityLinkEndToVariable
+Integrate TraceabilityModel with Machine by associating traceabilityLinks in the model with the Machine's concreteVariables, ensuring traceability of machine specifications.
+for TraceabilityModelToMachine
+Connect TraceabilityContext to Abstraction by linking traceabilityContextData with the Abstraction's properties, facilitating context-aware traceability.
+for TraceabilityContextToAbstraction
+      
+      
+      

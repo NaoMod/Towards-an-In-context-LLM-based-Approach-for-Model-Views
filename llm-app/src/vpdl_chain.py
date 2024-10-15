@@ -38,7 +38,7 @@ def generate_vpdl_skeleton(input_vpdl, meta_1, meta_2):
         vpdl_skeleton += f"{meta_1_prefix}.{class_name_1} join {meta_2_prefix}.{class_name_2} as {relation['name']},\n"
     
     # including the metamodels and its identifiers
-    vpdl_skeleton += f"\n\nfrom '{meta_1_uri}' as {meta_1_prefix},\n     {meta_2_uri}' as {meta_2_prefix},\n\nwhere "
+    vpdl_skeleton += f"\n\nfrom '{meta_1_uri}' as {meta_1_prefix},\n     '{meta_2_uri}' as {meta_2_prefix},\n\nwhere "
     
     # Adding join conditions (WHERE clause)
     for combination in input_vpdl['where']['rules']:

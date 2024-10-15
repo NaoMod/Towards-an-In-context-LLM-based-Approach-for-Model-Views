@@ -1,0 +1,369 @@
+@namespace(uri="http://www.clearsy.com/B-extended", prefix="b")
+package b;
+
+class Abstraction {
+	attr String name;
+	val Sees sees;
+	val ConcreteConstants concreteConstants;
+	val Definitions definitions;
+	val Properties properties;
+	val Operations operations;
+}
+
+class Machine extends Abstraction {
+	val ConcreteVariables concreteVariables;
+	val Invariant invariant;
+	val Initialisation initialisation;
+	val Assertions assertions;
+	val Sets sets;
+}
+
+class Implementation extends Abstraction {
+	ref Machine refine;
+	val Imports imports;
+	val Values values;
+	val LocalOperations localOperations;
+}
+
+class Sees {
+	!unique ref Abstraction[*] seens;
+}
+
+class Imports {
+	!unique ref Abstraction[*] imports;
+}
+
+class Values {
+	val ValueExpr[*] exprs;
+}
+
+class ValueExpr {
+	ref Variable constant;
+	attr String value;
+}
+
+class ConcreteVariables {
+	val Variable[*] variables;
+}
+
+class Variable {
+	attr String name;
+}
+
+class ConcreteConstants {
+	val Variable[*] constants;
+}
+
+class Invariant {
+	val InvariantExpr[*] exprs;
+}
+
+class InvariantExpr {
+	ref Variable variable;
+	val Type type;
+}
+
+class Type {
+}
+
+enum PrimitiveTypeEnum {
+	BOOL = 0;
+	INT = 1;
+	NAT = 2;
+	NAT1 = 3;
+	STRING = 4;
+}
+
+class Initialisation {
+	val InitialisationExpr[*] exprs;
+}
+
+class InitialisationExpr {
+	ref Variable variable;
+	val Type type;
+}
+
+class Properties {
+	val PropertyExpr[*] exprs;
+	val PropertyExpr[*] expr;
+}
+
+class PropertyExpr {
+	ref Variable constant;
+}
+
+class Range {
+	attr int lowerBound;
+	ref Variable upperBound;
+}
+
+class Assertions {
+	val AssertionExpr[*] exprs;
+}
+
+class AssertionExpr {
+	ref Variable constant;
+	val Type type;
+}
+
+class Definitions {
+	val Definition[*] exprs;
+}
+
+class Definition {
+	attr String name;
+	val Variable[*] args;
+	val LogicalExpr expr;
+}
+
+class LogicalExpr {
+}
+
+enum InequalityOp {
+	LESS = 0;
+	LESS_EQ = 1;
+	GREATER = 2;
+	GREATER_EQ = 3;
+}
+
+class DefinitionCall extends LogicalExpr {
+	ref Definition def;
+	val Arg[*] args;
+}
+
+class IntLiteral extends LogicalExpr, Condition, Arg {
+	attr int value;
+}
+
+enum BoolLiteralEnum {
+	TRUE = 0;
+	FALSE = 1;
+}
+
+class Sets {
+	val Set[*] exprs;
+}
+
+class Set {
+	val Variable name;
+	val Variable[*] elems;
+}
+
+class Operations {
+	val Operation[*] operations;
+}
+
+class Operation {
+	val Variable[*] outputs;
+	attr String name;
+	val Variable[*] args;
+	val Body body;
+}
+
+class Body {
+}
+
+class Expr {
+}
+
+class Skip extends Body, Expr {
+}
+
+class Statement {
+}
+
+class If extends Body, Expr, FinalExpr {
+	val IfCond[*] exprs;
+	val Expr else;
+}
+
+class IfCond {
+	val Condition condition;
+	val Expr then;
+}
+
+class Condition {
+}
+
+class Pre extends Body {
+	val PreExpr[*] exprs;
+	val Expr expr;
+}
+
+class PreExpr {
+	ref Variable var;
+	val Type type;
+}
+
+class Var extends Body, Expr, FinalExpr {
+	val Variable[*] vars;
+	val Seq in;
+}
+
+class Begin extends Body {
+	val BeginBody expr;
+}
+
+class BeginBody {
+}
+
+class Assign extends Expr, Statement {
+	ref Variable var;
+	val ReturnExpr value;
+}
+
+class Return extends Expr, FinalExpr {
+}
+
+class ReturnTypeExpr extends Return {
+	ref Variable var;
+	val Type type;
+}
+
+class ReturnExpr {
+}
+
+class Case extends Expr, FinalExpr {
+	ref Variable var;
+	val CaseExpr[*] cases;
+}
+
+class CaseExpr {
+	ref Variable test;
+	val Expr expr;
+}
+
+class Seq extends Body, BeginBody {
+	val Expr[*] exprs;
+}
+
+class FinalExpr extends BeginBody {
+}
+
+class Call extends Expr, Statement {
+	!unique ref Variable[*] rets;
+	ref Operation ~op;
+	val Arg[*] args;
+}
+
+class SimpleCall {
+	ref Operation ~op;
+	val Arg[*] args;
+}
+
+class Arg {
+}
+
+class LocalOperations {
+	val Operation[*] operations;
+}
+
+class PrimitiveType extends Type {
+	attr PrimitiveTypeEnum type;
+}
+
+class Ref extends Type, LogicalExpr, Condition, ReturnExpr, Arg {
+	ref Variable type;
+	ref Variable var;
+}
+
+class PropertyTyped extends PropertyExpr {
+	val Type type;
+}
+
+class PropertyRange extends PropertyExpr {
+	val Range range;
+}
+
+class AndExpr extends LogicalExpr {
+	val LogicalExpr[*] exprs;
+}
+
+class ImplyExpr extends LogicalExpr {
+	val LogicalExpr left;
+	val LogicalExpr right;
+}
+
+class InequalityExpr extends LogicalExpr {
+	val LogicalExpr left;
+	attr InequalityOp ~op;
+	val LogicalExpr right;
+}
+
+class EqualExpr extends LogicalExpr {
+	val LogicalExpr left;
+	val LogicalExpr right;
+}
+
+class NegExpr extends LogicalExpr {
+	val LogicalExpr expr;
+}
+
+class BoolTest extends LogicalExpr, ReturnExpr {
+	val LogicalExpr expr;
+}
+
+class TypeConstraint extends LogicalExpr {
+	ref Variable var;
+	val Type type;
+}
+
+class ConstantExpr extends LogicalExpr {
+	attr BoolLiteralEnum constant;
+}
+
+class CondAnd extends Condition {
+	val Condition[*] exprs;
+}
+
+class CondEq extends Condition {
+	val Condition left;
+	val Condition right;
+}
+
+class CondLessThan extends Condition {
+	val Condition left;
+	val Condition right;
+}
+
+class CondMinus extends Condition {
+	val Condition left;
+	val Condition right;
+}
+
+class CondNeg extends Condition {
+	val Condition expr;
+}
+
+class BoolLiteral extends Condition, ReturnExpr, Arg {
+	attr BoolLiteralEnum value;
+	attr BoolLiteralEnum constant;
+}
+
+class ReturnTuple extends Return {
+	!unique ref Variable[*] vars;
+	val LogicalExpr value;
+}
+
+class ReturnOr extends ReturnTypeExpr {
+	val ReturnTypeExpr[*] exprs;
+}
+
+class Neg extends ReturnExpr {
+	val ReturnExpr expr;
+}
+
+class ArgMinus extends Arg {
+	val Arg left;
+	val Arg right;
+}
+
+class StringLiteral extends Arg {
+	attr String value;
+}
+
+class Program {
+	val Machine[*] machines;
+	val Implementation[*] implementations;
+}
+

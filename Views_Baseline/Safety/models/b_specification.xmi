@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<b:Program 
-xmi:version="2.0" 
-xmlns:xmi="http://www.omg.org/XMI" 
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-xmlns:b="http://www.clearsy.com/B-extended" 
-xsi:schemaLocation="http://www.clearsy.com/B-extended /jtl.log2b-extended/metamodels/B.ecore">
+<b:Program xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:b="http://www.clearsy.com/B-extended">
   <machines name="Train">
     <operations>
       <operations name="is_train_in_par"/>

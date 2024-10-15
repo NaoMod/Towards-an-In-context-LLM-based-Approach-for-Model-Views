@@ -190,7 +190,7 @@ class EcoreParser(metaclass=Singleton):
                 for element in content.eAllContents():
                     if element.name == class_to_test:
                         # Found the class, now check its attributes
-                        for attribute in element.eAttributes:
+                        for attribute in element.eStructuralFeatures:
                             if attribute.name == attr_to_test:
                                 # Attribute found, return True
                                 return True

@@ -1,0 +1,16 @@
+Create a view that combines data from two different models: an Enterprise Architecture model and a Requirements Interchange Format (ReqIF) model. 
+The goal of this view is to link business processes, strategic elements, and requirements with their associated values in a structured manner. 
+
+Retrieve architecture-related data from the Enterprise Architecture (EA) model, and requirement-related data from the ReqIF model. 
+The infor,qtion to retrieve include:
+   - Business processes and strategic elements from the EA model.
+   - Core content, specification objects, and attribute values from the ReqIF model.
+
+Establish a link between requirements from the Enterprise Architecture model and detailed requirement data from the ReqIF model. Specifically, the field `Requirement` in the Enterprise Architecture model should be joined with the `SpecObject` in the ReqIF model.
+
+Apply a filter that ensures the selected values (`theValue`) from the `SpecObject` are related to the process name from the EA model.
+
+- The architecture data comes from the TOGAF model (`http://www.obeonetwork.org/dsl/togaf/contentfwk/9.0.0`).
+- The requirement data comes from the ReqIF specification (`http://www.omg.org/spec/ReqIF/20110401/reqif.xsd`).
+
+The goal is to combine business, strategic, and requirement elements into a single unified view (`EAView`).

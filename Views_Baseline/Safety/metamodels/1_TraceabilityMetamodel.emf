@@ -1,0 +1,49 @@
+@namespace(uri="top", prefix="top")
+package top;
+
+@namespace(uri="http://TraceabilityMetamodel", prefix="TraceabilityMetamodel")
+package TraceabilityMetamodel {
+	class TraceabilityModel {
+		attr PrimitiveTypes.String name;
+		val TraceabilityLink[*] traceabilityLinks;
+	}
+
+	class TraceabilityLink {
+		attr PrimitiveTypes.Integer ~id;
+		attr PrimitiveTypes.String name;
+		attr PrimitiveTypes.String description;
+		val TraceabilityLinkEnd[*] rightLinkEnd;
+		val TraceabilityLinkEnd[*] leftLinkEnd;
+		val TraceabilityContext traceabilityContext;
+	}
+
+	class TraceabilityLinkEnd {
+		attr PrimitiveTypes.String name;
+		ref EObject[1] traceableArtefact;
+	}
+
+	class TraceabilityContext {
+		attr PrimitiveTypes.String name;
+		attr PrimitiveTypes.String description;
+		val TraceabilityContextData[*] traceabilityContextData;
+	}
+
+	class TraceabilityContextData {
+		attr PrimitiveTypes.String name;
+		attr PrimitiveTypes.String value;
+	}
+
+}
+
+@namespace(uri="ASPm-PrimitiveTypes", prefix="pt")
+package PrimitiveTypes {
+	datatype Boolean : boolean;
+
+	datatype Double : double;
+
+	datatype Integer : int;
+
+	datatype String : java.lang.String;
+
+}
+

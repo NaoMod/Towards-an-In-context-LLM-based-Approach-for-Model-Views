@@ -1,0 +1,10 @@
+Create a view named that integrates traceability data and machine specifications. 
+This view aims to link traceability information with machine elements and variables. 
+   - Retrieve traceability data from the Traceability Model (Trace), including traceability links and detailed link information.
+   - Retrieve machine and variable data from the B model, including machines, sets of machines, and their elements.
+   - Establish a link between the `TraceabilityLink` in the Traceability Model and `Variable` data in the B model. 
+   Specifically, traceability links will be joined with variables to provide detailed trace information. 
+   - Apply a condition where the `traceableArtefact` in the traceability link (`rightLinkEnd`) must include a matching 
+   specification (`t`), which is part of the variables from the B model.
+The overall goal is to create a comprehensive view that ties machine data to traceability links, ensuring that machine 
+specifications can be traced back to specific requirements or artifacts.

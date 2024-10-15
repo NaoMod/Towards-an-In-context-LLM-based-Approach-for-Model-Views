@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SimpleUMLComponents:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SimpleUMLComponents="http://SimpleUMLComponents" xsi:schemaLocation="http://SimpleUMLComponents ../Metamodels/SimpleUMLComponents.ecore">
+<SimpleUMLComponents:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SimpleUMLComponents="http://SimpleUMLComponents">
   <elements xsi:type="SimpleUMLComponents:Component" xmi:id="_gUedUB4ZEeimxaqxxOlH4A" name="M22 Door LCU1"/>
   <elements xsi:type="SimpleUMLComponents:Component" xmi:id="_ulQ5kCODEei_4cw9e9cViw" name="M21 Positioning LCU1"/>
   <elements xsi:type="SimpleUMLComponents:Component" xmi:id="_PR6ggCOFEei_4cw9e9cViw" name="M23 Door LCU2"/>

@@ -17,16 +17,16 @@ if __name__ == "__main__":
         prompt_type = sys.argv[1].strip()
 
     # Configure everything
-    config = Config("FULL-CHAIN")
+    config = Config("SLE-Presentation")
     config.load_keys()
     llm = config.get_llm()
     open_ai_key = config.get_open_ai_key()
 
     #execute the chain for each view
     for folder in os.listdir(VIEWS_DIRECTORY):
-        #Uncomment below if want to proccess a single view. Use the name of the folder in Views_Baseline
-        # if folder != "Book_Publication":
-        #     continue
+        # Uncomment below if want to proccess a single view. Use the name of the folder in Views_Baseline
+        if folder != "Book_Publication":
+            continue
         folder_path = os.path.join(VIEWS_DIRECTORY, folder)
         if os.path.isdir(folder_path):
             metamodels_folder = os.path.join(folder_path, "metamodels")

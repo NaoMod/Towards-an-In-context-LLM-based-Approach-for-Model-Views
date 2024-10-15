@@ -2,7 +2,6 @@ create view publicationsAndBooks as
 
 select publication.Publication.*,
        book.Book.*,
-       book.Book.title,
        book.Chapter.title,
        publication.Publication join book.Chapter as firstChapter,
        publication.Publication join book.Chapter as bookChapters,
