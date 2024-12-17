@@ -1,6 +1,6 @@
 import os
 
-from langchain_openai import ChatOpenAI
+from langchain_openai import AzureChatOpenAI
 from langchain_mistralai import ChatMistralAI # alternative model
 from langchain_core.messages import HumanMessage, SystemMessage
 
@@ -80,7 +80,12 @@ class Config:
             os.environ["LANGCHAIN_API_KEY"] = self.langsmith_key
 
         # IF YOU NEED TO CHANGE THE LLM MODEL, CHANGE BELOW THE PARAMETER model_name WITH THE STRING THAT IDENTIFIES THE MODEL.
-        self.llm = ChatOpenAI(temperature=self.temperature, api_key=self.open_ai_key, model_name="gpt-4o-2024-08-06")
+        self.llm = AzureChatOpenAI(
+            azure_endpoint="https://models.inference.ai.azure.com",
+            temperature=self.temperature,
+            api_key=self.open_ai_key,
+            openai_api_version="2024-09-01-preview", 
+            model_name="gpt-4o")
 
     def get_llm(self):
         """

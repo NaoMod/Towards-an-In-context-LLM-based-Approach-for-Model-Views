@@ -42,9 +42,9 @@ if __name__ == "__main__":
                     ecore_files.append(os.path.join(metamodels_folder, file))
                     print(os.path.join(metamodels_folder, file))
                     if len(ecore_files) == 2:
-                        try:
-                            execute_chain(llm, view_description, ecore_files[0], ecore_files[1], prompt_type)
-                            print("Finished processing chain")
-                        except Exception as e:
-                            print("Error processing chain")
-                            print(e)
+                        # try:
+                        execute_chain(llm, view_description, ecore_files[0], ecore_files[1], prompt_type)
+                        print("Finished processing chain")
+                        # except Exception as e:
+                        #     print("Error processing chain")
+                        #     print(e)

@@ -6,6 +6,7 @@ from typing import List
 from langchain.prompts import PromptTemplate, FewShotPromptTemplate
 from langchain_core.runnables import RunnableLambda, RunnableParallel
 from langchain_core.pydantic_v1 import BaseModel, Field
+from langchain.output_parsers import RetryOutputParser
 
 from .prompt_templates.join import prompts as join_templates
 from .prompt_templates.examples.for_join import examples as join_examples
@@ -13,10 +14,10 @@ from interfaces.runnable_interface import RunnableInterface
 
 from output_parsers.ecore_classes_parser import EcoreClassesParser
 
-# Add the directory containing utils to the Python path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+# # Add the directory containing utils to the Python path
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from utils.alt_retry import RetryOutputParser
+# from utils.alt_retry import RetryOutputParser
 
 class Relation(BaseModel):
     name: str = Field(..., description="Name of the relation")
