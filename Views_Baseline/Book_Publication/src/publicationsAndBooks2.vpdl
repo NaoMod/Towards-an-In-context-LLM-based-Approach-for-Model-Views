@@ -1,0 +1,28 @@
+create view publicationsAndBooks as
+
+select Book.Book.*, 
+       Book.Chapter.*, 
+       Publication.Publication.*, 
+       Book.Book join Publication.Publication as BookToPublication, 
+       Book.Chapter join Publication.Publication as ChapterToPublication,
+
+from 'http://book' as Book,
+     'http://publication' as Publication,
+
+where "Combine Book and Publication by matching the 'title' attribute of Book 
+	   with the 'title' attribute of Publication." 
+      for BookToPublication, 
+      "Combine Chapter and Publication by matching the 'title' 
+       attribute of Chapter with the 'title'
+       attribute of Publication."
+      for ChapterToPublication
+      
+      
+      
+      
+      
+
+      
+      
+      
+

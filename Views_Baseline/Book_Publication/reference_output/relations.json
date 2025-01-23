@@ -8,10 +8,10 @@
             ]
         },
         {
-            "name": "bookChapters",
+            "name": "bookPublisher",
             "classes": [
                 "Publication",
-                "Chapter"
+                "Book"
             ]
         }
     ]

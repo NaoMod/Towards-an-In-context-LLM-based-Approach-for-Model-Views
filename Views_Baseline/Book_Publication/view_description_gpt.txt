@@ -1,0 +1,8 @@
+You’re working with two data sets: one for Publication, which contains general information like the publisher and release date, and one for Chapter, which includes detailed information about chapters of books.
+
+Your goal is to create a unified view where:
+
+All chapters are linked to the corresponding publication, providing an overview of all the chapters associated with each publication.
+The first chapter of each book is explicitly highlighted and linked to the corresponding publication in a distinct relation.
+
+This ensures that the view includes two specific relationships: one that captures the connection between all chapters and their publications, and another that focuses exclusively on the first chapter and its publication.

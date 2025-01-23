@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Publication:Publication xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI"
+                         xmlns:Publication="http://publication"
+                         title="The Lord of the Rings"
+                         author="J.R.R. Tolkien"
+                         publisher="Georde Allen &amp; Unwin"
+                         year="1954">
+
+</Publication:Publication>
