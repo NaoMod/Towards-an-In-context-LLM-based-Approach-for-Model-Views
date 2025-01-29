@@ -2,14 +2,14 @@
 
 This repository contains artifacts for the paper "Towards an In-context LLM-based Approach for Automating the Definition of Model Views," accepted at the 17th International Conference on Software Language Engineering (SLE '24).
 
+This repository includes all the necessary tools to replicate the experiments described in the paper, including scripts for generating the datasets.
+Additionally, the artifact contains all prompt data used in the experiments and baseline model views in VPDL (EMF Views DSL) and ATL.
+This artifact enables the reproduction of the results discussed in the paper.
+
 - You can access the paper at [HAL](https://hal.science/hal-04698209v1/).
 - The slides deck for the presentation is available at this [link](https://zenodo.org/records/14446887)
 
-NOTE: The code may have changed since the paper publication. The `paper_artifact` branch and the [Zenodo permalink](https://zenodo.org/records/13827683) for these artifacts (DOI: 10.5281/zenodo.13827683) contain the exact code that supports the paper results.
-
-This repository contains all the necessary tools to replicate the experiments described in the paper, including scripts for generating the datasets.
-Additionally, the artifact contains all prompt data used in the experiments and baseline model views in VPDL (EMF Views DSL) and ATL.
-This artifact enables the reproduction of the results discussed in the paper.
+**IMPORTANT NOTE**: The code may have changed since the paper publication. The `paper_artifact` branch and the [Zenodo permalink](https://zenodo.org/records/13827683) for these artifacts (DOI: 10.5281/zenodo.13827683) contain the exact code that supports the paper results.
 
 ## Table of Contents
 

@@ -20,7 +20,6 @@ if __name__ == "__main__":
     config = Config("SLE-Presentation")
     config.load_keys()
     llm = config.get_llm()
-    open_ai_key = config.get_open_ai_key()
 
     #execute the chain for each view
     for folder in os.listdir(VIEWS_DIRECTORY):
