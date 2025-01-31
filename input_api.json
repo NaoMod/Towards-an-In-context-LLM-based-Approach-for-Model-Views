@@ -1,0 +1,1 @@
+{"view_name": "Book_Publication", "prompt_type": "baseline", "relations": "{\"relations\": [{\"name\": \"BookToPublication\", \"classes\": [\"Book\", \"Publication\"]}, {\"name\": \"ChapterToPublication\", \"classes\": [\"Chapter\", \"Publication\"]}]}"}

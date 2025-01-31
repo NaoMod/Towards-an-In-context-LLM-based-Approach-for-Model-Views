@@ -3,37 +3,33 @@ from flask import Flask, request, jsonify
 import os
 import pathlib
 
-from utils.config import Config
+from utils.api.config import Config
 
-from cli.steps.execute_select import execute_chain as execute_select_chain
-from cli.steps.execute_where import execute_chain as execute_where_chain
-from cli.steps.execute_join import execute_chain as execute_join_chain
+from core.vpdl_select_chain import execute_chain as execute_select_chain
+from core.vpdl_where_chain import execute_chain as execute_where_chain
+from core.vpdl_join_chain import execute_chain as execute_join_chain
 from core.vpdl_chain import execute_chain as execute_vpdl_chain
 
 VIEWS_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..", "Views_Baseline")
 
-
 app = Flask(__name__)
 
-@app.route("/select/execute", methods=["POST"])
-def process_file1():
-    print(request.data)  # Raw request body
-    print(request.headers)
+@app.route("/select", methods=["POST"])
+def select():
     data = request.get_json()
-    arg1 = data.get("arg1")
-    arg2 = data.get("arg2")
+    view_name = data.get("view_name")
+    prompt_type = data.get("prompt_type")
+    relations = data.get("relations")
 
-    if not arg1 or not arg2:
-        return jsonify({"error": "arg1 and arg2 are required"}), 400
+    if not view_name or not relations or not prompt_type:
+        return jsonify({"error": "view_name, prompt_type and relations are required"}), 400
     
     # Configure everything
-    config = Config("Test-API-Select")
+    config = Config()
     config.load_keys()
     llm = config.get_llm()
-   
-    relations = "{'relations': [{'name': 'BookToPublication', 'classes': ['Book', 'Publication']}, {'name': 'ChapterToPublication', 'classes': ['Chapter', 'Publication']}]}"
     
-    folder_path = os.path.join(VIEWS_DIRECTORY, "Book_Publication")
+    folder_path = os.path.join(VIEWS_DIRECTORY, view_name)
     if os.path.isdir(folder_path):
         metamodels_folder = os.path.join(folder_path, "metamodels")
         

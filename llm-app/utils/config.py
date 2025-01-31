@@ -1,7 +1,9 @@
 import os
 
 from langchain_openai import AzureChatOpenAI
-from langchain_mistralai import ChatMistralAI # alternative model
+# alternative models
+from langchain_mistralai import ChatMistralAI 
+from langchain_ollama import ChatOllama
 from langchain_core.messages import HumanMessage, SystemMessage
 
 
@@ -12,7 +14,7 @@ class Config:
     Parameters
     ----------
     project_name : str, optional
-        The name of the project. Default is "MULTI-AGENT".
+        The name of the project. Default is "SLE-Presentation".
 
     Attributes
     ----------
@@ -37,7 +39,7 @@ class Config:
         Test the LLM functionality by sending messages to the LLM instance.
     """
 
-    def __init__(self, project_name: str = "MULTI-AGENT", temperature: float = 0):
+    def __init__(self, project_name: str = "SLE-Presentation", temperature: float = 0):
         self.open_ai_key = None
         self.langsmith_key = None
         self.llm = None

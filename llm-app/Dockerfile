@@ -5,6 +5,12 @@ FROM python:3.11-slim
 ENV PYTHONDONTWRITEBYTECODE=1  
 ENV PYTHONUNBUFFERED=1
 
+# Variables to use with the Flask api
+ENV LLM_NAME=${LLM_NAME}
+ENV LLM_SECRET=${LLM_API_KEY}
+ENV LLM_API_URL=${LLM_API_URL}
+ENV LLM_TEMPERATURE=${LLM_TEMPERATURE}
+
 # Set the working directory inside the container
 WORKDIR /llm-app
 
