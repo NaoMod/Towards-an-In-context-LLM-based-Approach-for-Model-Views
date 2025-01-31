@@ -105,9 +105,6 @@ def execute_chain(llm, view_description , meta_1_path, meta_2_path, pe_type = "b
         },
         config=cfg)
 
-    print(full_result['join'])
-    print(full_result['select'])
-    print(full_result['where'])
     print(full_result['vpdl_draft'])
 
-    return full_result
+    return full_result['vpdl_draft']
