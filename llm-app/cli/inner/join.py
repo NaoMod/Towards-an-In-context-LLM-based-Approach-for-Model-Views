@@ -24,7 +24,6 @@ if __name__ == "__main__":
     config = Config("SLE-Presentation-Join")
     config.load_keys()
     llm = config.get_llm()
-    open_ai_key = config.get_open_ai_key()
     
     folder_path = os.path.join(VIEWS_DIRECTORY, view_name)
     if os.path.isdir(folder_path):
