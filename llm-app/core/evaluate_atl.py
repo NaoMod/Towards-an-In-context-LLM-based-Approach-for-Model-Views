@@ -32,7 +32,6 @@ def execute_chain_wrapper(input_: dict):
 config = Config()
 config.load_keys()
 llm = config.get_llm()
-open_ai_key = config.get_open_ai_key()
 
 def execute_evaluation (dataset_name, prompt_type, temperature, examples_no = 1, repetitions = 1):
 

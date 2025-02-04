@@ -15,28 +15,23 @@ class Config:
         Load the keys
     get_llm()
         Get the LLM instance to be used during the execution.
-    get_open_ai_key()
-        Get the Open AI Key to be used during the execution.
-    test_llm()
-        Test the LLM functionality by sending messages to the LLM instance.
     """
 
     def __init__(self):
         self.llm_name = os.getenv("LLM_NAME", "AzureChatOpenAI")
-        self.llm = None
         self.temperature = os.getenv("LLM_TEMPERATURE", 0)
+        self.open_ai_key = os.getenv("LLM_SECRET", None)
+        self.llm = None
 
     def load_keys(self):
         """
-        Load the keys
+        Load the keys and configure the LLM
 
         Returns
         -------
         None
 
         """
-        self.open_ai_key = os.getenv("LLM_SECRET", 0)
-
         if self.llm_name == "AzureChatOpenAI":
             self.llm = AzureChatOpenAI(
                 azure_endpoint="https://models.inference.ai.azure.com",
@@ -65,14 +60,3 @@ class Config:
             The LLM instance.
         """
         return self.llm
-    # TODO: erase?
-    def get_open_ai_key(self):
-        """
-        Get the Open AI Key to be used during the execution.
-
-        Returns
-        -------
-        str
-            The Open AI Key.
-        """
-        return self.open_ai_key

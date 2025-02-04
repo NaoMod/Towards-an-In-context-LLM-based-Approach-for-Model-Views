@@ -4,6 +4,7 @@ FROM python:3.11-slim
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1  
 ENV PYTHONUNBUFFERED=1
+ENV PYTHONPATH="/llm-app"
 
 # Variables to use with the Flask api
 ENV LLM_NAME=${LLM_NAME}
@@ -27,4 +28,4 @@ COPY . /llm-app
 EXPOSE 5000
 
 # Default command to run the Flask app
-CMD ["python", "api/app.py"]
+CMD ["python", "-m", "api.app"]

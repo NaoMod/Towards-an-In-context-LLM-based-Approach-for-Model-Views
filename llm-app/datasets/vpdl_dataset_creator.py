@@ -11,7 +11,6 @@ VIEWS_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "
 config = Config()
 config.load_keys()
 llm = config.get_llm()
-open_ai_key = config.get_open_ai_key()
 
 client = Client()
 dataset_name = "VPDL_FINAL_EVALUATION"
