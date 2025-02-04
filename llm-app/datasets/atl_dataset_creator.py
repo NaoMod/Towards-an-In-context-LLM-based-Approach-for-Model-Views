@@ -5,7 +5,7 @@ from langsmith import Client
 
 from utils.config import Config
 
-ATL_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..", "..", "Views_ATL_Baseline")
+ATL_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..", "..", "ATL_Baseline")
 
 # Configure everything
 config = Config()

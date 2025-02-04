@@ -9,7 +9,7 @@ from evaluators.vpdl_evaluators import matched_relations, matched_filters
 
 from langsmith import Client
 
-VIEWS_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..", "Views_Baseline")
+VIEWS_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "Views_Baseline")
 PROMPT_TYPE = "baseline"
 EXAMPLES_NO = 1
 REPETITIONS = 1

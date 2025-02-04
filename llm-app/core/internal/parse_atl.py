@@ -46,5 +46,5 @@ def process_folders(base_folder):
                 print(f'Processed folder: {folder_name}')
 
 if __name__ == "__main__":
-    base_folder = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..", "..", "Views_ATL_Baseline")
+    base_folder = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..", "..", "ATL_Baseline")
     process_folders(base_folder)

@@ -6,7 +6,7 @@ from utils.config import Config
 
 from core.atl_chain import execute_chain
 
-ATL_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..", "Views_ATL_Baseline")
+ATL_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..", "ATL_Baseline")
 
 if __name__ == "__main__":
     transformation_name = "BibTex2DocBlock"

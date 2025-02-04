@@ -11,8 +11,8 @@ from core.vpdl_join_chain import execute_chain as execute_join_chain
 from core.vpdl_chain import execute_chain as execute_vpdl_chain
 from core.atl_chain import execute_chain as execute_atl_chain
 
-VIEWS_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..", "Views_Baseline")
-ATL_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..", "Views_ATL_Baseline")
+VIEWS_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "Views_Baseline")
+ATL_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "ATL_Baseline")
 
 app = Flask(__name__)
 

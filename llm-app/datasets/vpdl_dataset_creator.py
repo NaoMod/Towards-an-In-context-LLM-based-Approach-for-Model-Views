@@ -3,12 +3,9 @@ import sys
 import pathlib
 from langsmith import Client
 
-# # Add the directory containing utils to the Python path
-# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 from utils.config import Config
 
-VIEWS_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..", "..", "Views_Baseline")
+VIEWS_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..", "Views_Baseline")
 
 # Configure everything
 config = Config()

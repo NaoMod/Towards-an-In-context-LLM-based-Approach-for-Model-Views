@@ -7,7 +7,7 @@ from core.runnables.atl.join import Join
 
 from core.loaders.ecore_loader import EcoreLoader
 
-ATL_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..", "Views_ATL_Baseline")
+ATL_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..", "ATL_Baseline")
 
 def execute_chain(llm, transformation_description , meta_1_path, meta_2_path, pe_type = "baseline", examples_no = 1):
 

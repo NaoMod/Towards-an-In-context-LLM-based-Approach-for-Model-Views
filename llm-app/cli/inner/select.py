@@ -6,7 +6,7 @@ from utils.config import Config
 
 from core.vpdl_select_chain import execute_chain
 
-VIEWS_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..","..", "Views_Baseline")
+VIEWS_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..", "Views_Baseline")
 
 if __name__ == "__main__":
     view_name = "Book_Publication"

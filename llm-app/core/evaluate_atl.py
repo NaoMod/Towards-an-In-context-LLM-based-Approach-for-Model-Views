@@ -9,7 +9,7 @@ from evaluators.atl_evaluators import matched_relations
 
 from langsmith import Client
 
-ATL_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..", "Views_ATL_Baseline")
+ATL_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..", "ATL_Baseline")
 PROMPT_TYPE = "baseline"
 EXAMPLES_NO = 1
 REPETITIONS = 1
