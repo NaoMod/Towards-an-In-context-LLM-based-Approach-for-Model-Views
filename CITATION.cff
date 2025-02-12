@@ -1,0 +1,47 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite the following paper."
+title: "Towards an In-Context LLM-Based Approach for Automating the Definition of Model Views"
+authors:
+  - family-names: "Pontes Miranda"
+    given-names: "James William"
+  - family-names: "Bruneliere"
+    given-names: "Hugo"
+  - family-names: "Tisi"
+    given-names: "Massimo"
+  - family-names: "Sunyé"
+    given-names: "Gerson"
+date-released: "2024-10-17"
+version: "1.0.0"
+doi: "10.1145/3687997.3695650"
+url: "https://dl.acm.org/doi/10.1145/3687997.3695650"
+repository-code: "https://github.com/NaoMod/Towards-an-In-context-LLM-based-Approach-for-Model-Views"
+license: "MIT"
+
+preferred-citation:
+  type: "article"
+  title: "Towards an In-Context LLM-Based Approach for Automating the Definition of Model Views"
+  authors:
+    - family-names: "Pontes Miranda"
+      given-names: "James William"
+    - family-names: "Bruneliere"
+      given-names: "Hugo"
+    - family-names: "Tisi"
+      given-names: "Massimo"
+    - family-names: "Sunyé"
+      given-names: "Gerson"
+  date-released: "2024-10-17"
+  version: "1.0.0"
+  doi: "10.1145/3687997.3695650"
+  url: "https://dl.acm.org/doi/10.1145/3687997.3695650"
+
+
+alternative-citation:
+  type: "software"
+  title: "LLM-based Model Views Repository"
+  authors:
+    - family-names: "Miranda"
+      given-names: "James Pontes"
+  version: "1.0.0"
+  repository-code: "https://github.com/NaoMod/Towards-an-In-context-LLM-based-Approach-for-Model-Views"
+  license: "MIT"
+  date-released: "2024-10-17"
