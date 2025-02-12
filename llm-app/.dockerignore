@@ -16,3 +16,6 @@ tests/
 *.idea
 .DS_Store
 .vscode
+
+# Ignore ENV variables
+.env

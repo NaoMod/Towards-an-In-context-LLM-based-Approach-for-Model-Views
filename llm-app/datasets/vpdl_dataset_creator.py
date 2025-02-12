@@ -1,11 +1,10 @@
 import os
-import sys
 import pathlib
 from langsmith import Client
 
 from utils.config import Config
 
-VIEWS_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "..", "Views_Baseline")
+VIEWS_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "Views_Baseline")
 
 # Configure everything
 config = Config()
@@ -13,7 +12,7 @@ config.load_keys()
 llm = config.get_llm()
 
 client = Client()
-dataset_name = "VPDL_FINAL_EVALUATION"
+dataset_name = "VPDL_FINAL_EVALUATION2"
 
 dataset = client.create_dataset(
     dataset_name=dataset_name, description="All VPDL examples with paths and partial outputs",
