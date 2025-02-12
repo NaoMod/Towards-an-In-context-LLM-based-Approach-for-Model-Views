@@ -42,7 +42,7 @@ This artifact enables the reproduction of the results discussed in the paper.
 #### Pulling docker image
 
 ```bash
-   docker pull atlanmod/llm-for-emf-views:v1
+   docker pull atlanmod/llm-based-model-views:v1
 ```
 
 #### Include new Views and Transformations (optional)
@@ -68,7 +68,7 @@ The text files are used only with the CLI tool. For the API, the description is 
 1. Start the API with the following Docker command:
 
 ```bash
-    docker run --env-file .env -p 5000:5000 atlanmod/llm-for-emf-views:v1
+    docker run --env-file .env -p 5000:5000 atlanmod/llm-based-model-views:v1
 ```
 
 This will start the API and give you access to it through the `localhost:5000`
@@ -83,7 +83,7 @@ The inner [README](llm-app/README.md) contains the API documentation.
 
 ### Use the CLI
 
-1. **With the running container (`docker start atlanmod/llm-for-emf-views:v1`), get the container ID**:
+1. **With the running container (`docker start atlanmod/llm-based-model-views:v1`), get the container ID**:
 
 ```bash
    docker ps
