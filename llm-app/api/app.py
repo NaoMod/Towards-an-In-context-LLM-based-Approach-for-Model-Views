@@ -43,6 +43,8 @@ def select():
                 print(os.path.join(metamodels_folder, file))
                 if len(ecore_files) == 2:
                     result = execute_select_chain(llm, view_description, relations, ecore_files[0], ecore_files[1])
+    else:
+       return jsonify({"error": "wrong view_name. There is no folder with the given name"}), 400 
 
     return jsonify({"result": result})
 
@@ -73,6 +75,8 @@ def where():
                 print(os.path.join(metamodels_folder, file))
                 if len(ecore_files) == 2:
                     result = execute_where_chain(llm, view_description, relations, ecore_files[0], ecore_files[1])
+    else:
+       return jsonify({"error": "wrong view_name. There is no folder with the given name"}), 400 
 
     return jsonify({"result": result})
 
@@ -102,6 +106,8 @@ def join():
                 print(os.path.join(metamodels_folder, file))
                 if len(ecore_files) == 2:
                     result = execute_join_chain(llm, view_description, ecore_files[0], ecore_files[1])
+    else:
+       return jsonify({"error": "wrong view_name. There is no folder with the given name"}), 400 
 
     return jsonify({"result": result})
 
@@ -131,15 +137,17 @@ def vpdl():
                 print(os.path.join(metamodels_folder, file))
                 if len(ecore_files) == 2:
                     result = execute_vpdl_chain(llm, view_description, ecore_files[0], ecore_files[1])
+    else:
+       return jsonify({"error": "wrong view_name. There is no folder with the given name"}), 400 
 
     return jsonify({"result": result})
 
 @app.route("/atl", methods=["POST"])
 def atl():
     data = request.get_json()
-    transformation_name = data.get("view_name")
+    transformation_name = data.get("transformation_name")
     prompt_type = data.get("prompt_type")
-    view_description = data.get("view_description")
+    view_description = data.get("transformation_description")
 
     if not transformation_name or not prompt_type:
         return jsonify({"error": "view_name, prompt_type, and view_description are required"}), 400
@@ -160,6 +168,8 @@ def atl():
                 print(os.path.join(metamodels_folder, file))
                 if len(ecore_files) == 2:
                     result = execute_atl_chain(llm, view_description, ecore_files[0], ecore_files[1])
+    else:
+       return jsonify({"error": "wrong transformation_name. There is no folder with the given name"}), 400 
 
     return jsonify({"result": result})
 
